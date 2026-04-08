@@ -1,5 +1,8 @@
 # 💧 Туристичний портал "Поляна-Інфо" (Poliana-Info)
 
+[![Live Demo](https://img.shields.io/badge/demo-online-blue.svg?style=for-the-badge)](https://poliana-info.vercel.app/)
+[![Version](https://img.shields.io/badge/version-1.0.0-orange.svg?style=for-the-badge)](https://github.com/RomanKozar/poliana-portal/releases)
+
 ![Головна сторінка Поляна-Інфо](public/preview.png)
 
 ## 📌 Про проект
