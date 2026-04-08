@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💧 Туристичний портал "Поляна-Інфо" (Poliana-Info)
 
-## Getting Started
+![Головна сторінка Поляна-Інфо](public/preview.png)
 
-First, run the development server:
+## 📌 Про проект
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Комплексна інформаційна та комерційна платформа для розвитку бренду громади Поляна як "Туристичної дестинації №1 на Закарпатті".
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Головна мета:** Змінити позиціонування курорту. Поляна — це більше, ніж просто бальнеологічний курорт і мінеральна вода. Через єдину платформу ми об'єднуємо партнерів (PolianSki, ресторан Катерина та ін.), показуємо нові локації та продаємо комплексні пакети відпочинку.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Візуальна концепція:** В основі лежить "крапля" мінеральної води, що символізує джерело, від якого розходяться хвилі нових сучасних туристичних продуктів.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🏗️ Структура веб-сайту
 
-To learn more about Next.js, take a look at the following resources:
+Платформа поєднує функціонал новинного порталу та системи бронювання/продажу турів.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Основні розділи головної сторінки:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Про громаду Поляна:** Туристична дестинація №1. (Яскраві фото локацій, мінеральні води, бювети).
+2. **Де відпочити:** Інтеграція локальних партнерів для утримання користувача на сайті (PolianSki, Катерина та ін.).
+3. **Дитячі літні табори:** Огляд усіх таборів громади (включаючи інтеграцію з розширеною платформою для літніх таборів).
+4. **Івент-туризм:** Організація випускних та корпоративних заїздів (на базі успішного досвіду роботи з групами).
+5. **Наші партнери:** Динамічний каталог партнерів (готелі, гірськолижні витяги, ресторани), що постійно поповнюється.
+6. **Що нового в Поляні? (Блог/Новини):** Анонси (веломаршрути, велопрокат, ролердром, сувенірна продукція).
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📱 Маркетингова стратегія та Соцмережі
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Facebook
+
+- **Оформлення:** Тематичний банер, фото профілю у вигляді логотипу-краплі з веб-адресою сайту.
+- **Перший пост:** Привітання на сторінці, місія проекту ("будемо інформувати про відпочинок, запрошуємо в Поляну").
+
+### Instagram
+
+- **Оформлення:** Оптимізований опис (біо), фірмове фото профілю.
+- **Перший пост:** Яскраве професійне фото локації з детальним описом нових можливостей курорту.
+
+### 🏢 Туристично-інформаційний центр (Офлайн)
+
+Фізичне представництво порталу.
+
+- **Оформлення приміщення:** Брендована стійка, тематичний банер (бренд-волл) позаду.
+- **Функціонал:** Куточок із сувенірною продукцією, інста-зона (можливо, дзеркало чи ролап для фотографій туристів).
+
+---
+
+## 💻 Технічний стек (Current)
+
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS
+- **Language:** TypeScript
