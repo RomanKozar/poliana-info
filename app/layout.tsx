@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: 'POLIANA INFO',
-	description: 'Poliana Infop',
+	title: 'POLIANA.INFO | Туристична дестинація №1',
+	description:
+		'Офіційний туристичний портал громади Поляна. Від мінеральної води до сучасного відпочинку серед природи: гірськолижні спуски, гастрономія та табори.',
 }
 
 export default function RootLayout({
