@@ -3,22 +3,20 @@ import Image from 'next/image'
 export default function Home() {
 	return (
 		<div className='min-h-screen flex flex-col justify-between items-center bg-[#F9FAF9] text-[#064E3B] font-sans px-4 py-6 sm:p-6'>
-			<main className='flex-1 flex flex-col justify-center max-w-2xl w-full items-center text-center space-y-8 sm:space-y-10 my-8'>
-				{/* Блок Логотипу (Тимчасова SVG-версія концепції) */}
-				<div className='flex flex-col items-center mb-2'>
-					<div className='relative w-28 h-32 flex items-end justify-center'>
+			<main className='flex-1 flex flex-col justify-center max-w-2xl w-full items-center text-center space-y-6 sm:space-y-8 my-8'>
+				{/* Блок Логотипу */}
+				<div className='flex flex-col items-center mb-1'>
+					<div className='relative transition-transform duration-500 hover:scale-105'>
 						<Image
-							src='/logo1.png'
+							src='/Poliana_info.png'
 							alt='Poliana Info Logo'
-							width={120}
-							height={150}
+							// Збільшуємо базові розміри
+							width={320}
+							height={100}
+							// Додаємо класи для адаптивного розміру на різних екранах
+							className='w-[200px] h-auto sm:w-[320px] md:w-[400px]'
 							priority
 						/>
-					</div>
-
-					{/* Назва бренду */}
-					<div className='mt-4 flex items-center gap-1 text-2xl sm:text-3xl font-bold tracking-widest text-[#064E3B]'>
-						POLIANA<span className='text-[#FF6F61]'>.</span>INFO
 					</div>
 				</div>
 

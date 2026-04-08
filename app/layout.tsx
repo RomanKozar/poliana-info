@@ -1,34 +1,52 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
+import type { Metadata } from 'next'
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
-})
-
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
-	subsets: ['latin'],
+// Налаштовуємо шрифт Geometria
+const geometria = localFont({
+	src: [
+		{
+			path: './fonts/Geometria.ttf',
+			weight: '400',
+			style: 'normal',
+		},
+		{
+			path: './fonts/Geometria-Medium.ttf',
+			weight: '500',
+			style: 'normal',
+		},
+		{
+			path: './fonts/Geometria-Bold.ttf',
+			weight: '700',
+			style: 'normal',
+		},
+		{
+			path: './fonts/Geometria-ExtraBold.ttf',
+			weight: '800',
+			style: 'normal',
+		},
+		{
+			path: './fonts/Geometria-Heavy.ttf',
+			weight: '900',
+			style: 'normal',
+		},
+	],
+	variable: '--font-geometria', // Створюємо CSS-змінну
 })
 
 export const metadata: Metadata = {
 	title: 'POLIANA.INFO | Туристична дестинація №1',
-	description:
-		'Офіційний туристичний портал громади Поляна. Від мінеральної води до сучасного відпочинку серед природи: гірськолижні спуски, гастрономія та табори.',
+	description: 'Офіційний туристичний портал громади Поляна.',
 }
 
 export default function RootLayout({
 	children,
-}: Readonly<{
+}: {
 	children: React.ReactNode
-}>) {
+}) {
 	return (
-		<html
-			lang='en'
-			className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-		>
-			<body className='min-h-full flex flex-col'>{children}</body>
+		<html lang='uk' className={`${geometria.variable} h-full antialiased`}>
+			<body className='min-h-full flex flex-col font-sans'>{children}</body>
 		</html>
 	)
 }
