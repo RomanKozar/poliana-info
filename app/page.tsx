@@ -2,59 +2,81 @@ import Image from 'next/image'
 
 export default function Home() {
 	return (
-		<div className='min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-50 via-cyan-50 to-white text-slate-800 font-sans p-6'>
-			{/* Контейнер для контенту */}
-			<main className='max-w-2xl w-full flex flex-col items-center text-center space-y-10'>
-				{/* Логотип / Іконка краплі (поки що стилізоване коло/крапля на CSS) */}
-				<div className='w-24 h-24 bg-gradient-to-tr from-blue-600 to-cyan-400 rounded-full rounded-tr-none rotate-45 shadow-lg shadow-blue-200 flex items-center justify-center mb-4'>
-					<span className='-rotate-45 text-white font-bold text-2xl tracking-wider'>
-						П
-					</span>
+		<div className='min-h-screen flex flex-col justify-between items-center bg-[#F9FAF9] text-[#064E3B] font-sans px-4 py-6 sm:p-6'>
+			<main className='flex-1 flex flex-col justify-center max-w-2xl w-full items-center text-center space-y-8 sm:space-y-10 my-8'>
+				{/* Блок Логотипу (Тимчасова SVG-версія концепції) */}
+				<div className='flex flex-col items-center mb-2'>
+					<div className='relative w-28 h-32 flex items-end justify-center'>
+						<Image
+							src='/logo1.png'
+							alt='Poliana Info Logo'
+							width={120}
+							height={150}
+							priority
+						/>
+					</div>
+
+					{/* Назва бренду */}
+					<div className='mt-4 flex items-center gap-1 text-2xl sm:text-3xl font-bold tracking-widest text-[#064E3B]'>
+						POLIANA<span className='text-[#FF6F61]'>.</span>INFO
+					</div>
 				</div>
 
 				{/* Головні заголовки */}
 				<div className='space-y-4'>
-					<h1 className='text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900'>
-						Поляна відкривається по-новому
+					<h1 className='text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight'>
+						Повна склянка вражень
 					</h1>
-					<p className='text-lg sm:text-xl text-slate-600 max-w-xl mx-auto leading-relaxed'>
-						Туристична дестинація №1 на Закарпатті. Ми готуємо для вас дещо
-						особливе: від мінеральних джерел до сучасних гірськолижних спусків
-						та дитячих таборів.
+					<p className='text-base sm:text-lg md:text-xl font-medium max-w-xl mx-auto leading-relaxed px-2 opacity-90'>
+						Від мінеральної води до сучасного відпочинку серед природи.
+					</p>
+					<p className='text-sm sm:text-base opacity-75 max-w-lg mx-auto'>
+						Поляна — це не лише джерело, це повний досвід. Тут є все — і навіть
+						більше, ніж очікуєш.
 					</p>
 				</div>
 
-				{/* Блоки-тизери */}
-				<div className='grid grid-cols-2 md:grid-cols-4 gap-4 w-full mt-8'>
-					<div className='bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center'>
-						<span className='text-2xl mb-2'>🏔️</span>
-						<span className='text-sm font-medium'>PolianSki</span>
+				{/* Блоки-тизери (Контейнери досвіду) */}
+				<div className='grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full mt-6 sm:mt-8'>
+					<div className='bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm border border-emerald-100/50 flex flex-col items-center justify-center transition-all hover:border-[#FF6F61]/30'>
+						<span className='text-2xl sm:text-3xl mb-1 sm:mb-2'>🏔️</span>
+						<span className='text-xs sm:text-sm font-semibold uppercase tracking-wide'>
+							PolianSki
+						</span>
 					</div>
-					<div className='bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center'>
-						<span className='text-2xl mb-2'>🍽️</span>
-						<span className='text-sm font-medium'>Гастрономія</span>
+					<div className='bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm border border-emerald-100/50 flex flex-col items-center justify-center transition-all hover:border-[#FF6F61]/30'>
+						<span className='text-2xl sm:text-3xl mb-1 sm:mb-2'>🍽️</span>
+						<span className='text-xs sm:text-sm font-semibold uppercase tracking-wide'>
+							Гастрономія
+						</span>
 					</div>
-					<div className='bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center'>
-						<span className='text-2xl mb-2'>🏕️</span>
-						<span className='text-sm font-medium'>Табори</span>
+					<div className='bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm border border-emerald-100/50 flex flex-col items-center justify-center transition-all hover:border-[#FF6F61]/30'>
+						<span className='text-2xl sm:text-3xl mb-1 sm:mb-2'>🏕️</span>
+						<span className='text-xs sm:text-sm font-semibold uppercase tracking-wide'>
+							Табори
+						</span>
 					</div>
-					<div className='bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center'>
-						<span className='text-2xl mb-2'>💧</span>
-						<span className='text-sm font-medium'>Оздоровлення</span>
+					<div className='bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm border border-emerald-100/50 flex flex-col items-center justify-center transition-all hover:border-[#FF6F61]/30'>
+						<span className='text-2xl sm:text-3xl mb-1 sm:mb-2 text-[#FF6F61]'>
+							💧
+						</span>
+						<span className='text-xs sm:text-sm font-semibold uppercase tracking-wide'>
+							Оздоровлення
+						</span>
 					</div>
 				</div>
 
-				{/* Кнопка / Заклик до дії */}
-				<div className='pt-8'>
-					<div className='inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-full hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600'>
+				{/* Кнопка (Кораловий акцент) */}
+				<div className='pt-4 sm:pt-8 w-full sm:w-auto'>
+					<div className='w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold tracking-wide text-white transition-all duration-200 bg-[#FF6F61] border border-transparent rounded-full hover:bg-[#e85b4d] hover:shadow-lg hover:shadow-[#FF6F61]/20 active:scale-95 cursor-default'>
 						Сайт у розробці
 					</div>
 				</div>
 			</main>
 
 			{/* Футер */}
-			<footer className='absolute bottom-6 text-sm text-slate-400'>
-				© {new Date().getFullYear()} Громада Поляна. Усі права захищено.
+			<footer className='w-full text-center text-xs sm:text-sm opacity-60 mt-4 font-medium'>
+				© {new Date().getFullYear()} POLIANA.INFO. Туристична дестинація №1.
 			</footer>
 		</div>
 	)
