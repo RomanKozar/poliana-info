@@ -1,6 +1,11 @@
 import Image from 'next/image'
 
 export default function Home() {
+	const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+	const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+	const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey)
+	const projectRef = supabaseUrl?.replace('https://', '').split('.')[0]
+
 	return (
 		<div className='min-h-screen flex flex-col justify-between items-center bg-[#F9FAF9] text-[#064E3B] font-sans px-4 py-6 sm:p-6'>
 			<main className='flex-1 flex flex-col justify-center max-w-2xl w-full items-center text-center space-y-6 sm:space-y-8 my-8'>
@@ -69,6 +74,27 @@ export default function Home() {
 					<div className='w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold tracking-wide text-white transition-all duration-200 bg-[#FF6F61] border border-transparent rounded-full hover:bg-[#e85b4d] hover:shadow-lg hover:shadow-[#FF6F61]/20 active:scale-95 cursor-default'>
 						Сайт у розробці
 					</div>
+				</div>
+
+				{/* Перевірка підключення до Supabase */}
+				<div className='w-full bg-white p-4 rounded-xl sm:rounded-2xl shadow-sm border border-emerald-100/50 text-left'>
+					<p className='text-sm font-semibold mb-2'>Статус Supabase</p>
+					{isSupabaseConfigured ? (
+						<>
+							<p className='text-xs sm:text-sm text-emerald-700 mb-1'>
+								Supabase підключено. Конфігурація збережена у проєкті.
+							</p>
+							<p className='text-xs sm:text-sm opacity-75'>
+								Project ref:{' '}
+								<span className='font-semibold'>{projectRef ?? 'невідомо'}</span>
+							</p>
+						</>
+					) : (
+						<p className='text-xs sm:text-sm text-red-600'>
+							Не знайдено `NEXT_PUBLIC_SUPABASE_URL` або
+							`NEXT_PUBLIC_SUPABASE_ANON_KEY` у `.env.local`.
+						</p>
+					)}
 				</div>
 			</main>
 
