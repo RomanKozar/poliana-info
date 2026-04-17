@@ -2,6 +2,8 @@ import localFont from 'next/font/local'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
 // Налаштовуємо шрифт Geometria
 const geometria = localFont({
@@ -48,7 +50,9 @@ export default function RootLayout({
 	return (
 		<html lang='uk' className={`${geometria.variable} h-full antialiased`}>
 			<body className='min-h-full flex flex-col font-sans'>
-				{children}
+				<Header />
+				<main className='flex-1 w-full'>{children}</main>
+				<Footer />
 				<Analytics />
 			</body>
 		</html>
