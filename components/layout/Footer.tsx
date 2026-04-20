@@ -38,7 +38,7 @@ export default function Footer() {
 				<div className='mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between'>
 					<div className='flex items-center gap-3 text-white'>
 						<span className='flex size-9 items-center justify-center rounded-full bg-white/20'>
-							<FaEnvelope className='size-4' />
+							<FaPhoneAlt className='size-4' />
 						</span>
 						<p className='text-sm font-semibold leading-tight sm:text-base'>
 							Дізнавайся про нові місця
@@ -48,8 +48,8 @@ export default function Footer() {
 
 					<form className='flex w-full max-w-xl flex-col gap-2 sm:flex-row sm:items-center'>
 						<input
-							type='email'
-							placeholder='Введіть Ваш email'
+							type='tel'
+							placeholder='Введіть Ваш номер телефону'
 							className='h-10 w-full rounded-md border border-transparent bg-white px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none'
 						/>
 						<button
@@ -75,7 +75,9 @@ export default function Footer() {
 							/>
 						</Link>
 						<p className='max-w-xs text-xs leading-relaxed text-white/70'>
-							Туристичний гід по Закарпатті. Відпочинок у Поляні - легко та зручно.
+							Створено у 2026 році з метою підвищення культурно-історичної, пізнавальної
+							грамотності читачів, популяризації Поляни, підтримки діяльності суб’єктів
+							індустрії туризму, розвитку культурних традицій та промоції регіону
 						</p>
 						<div className='flex items-center gap-3 text-white/75'>
 							<Link href='https://instagram.com' target='_blank' rel='noreferrer'>
@@ -134,11 +136,11 @@ export default function Footer() {
 						<ul className='space-y-2 text-xs text-white/70'>
 							<li className='flex items-center gap-2'>
 								<FaPhoneAlt className='size-3.5 text-[#53C4DA]' />
-								<span>+38 (050) 123 45 67</span>
+								<span>0 (50) 214 92 66</span>
 							</li>
 							<li className='flex items-center gap-2'>
 								<FaEnvelope className='size-3.5 text-[#53C4DA]' />
-								<span>info@poliana.info</span>
+								<span>polianainfo.ua@gmail.com</span>
 							</li>
 							<li className='flex items-center gap-2'>
 								<FaMapMarkerAlt className='size-3.5 text-[#53C4DA]' />

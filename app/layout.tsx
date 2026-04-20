@@ -51,7 +51,7 @@ export default function RootLayout({
 		<html lang='uk' className={`${geometria.variable} h-full antialiased`}>
 			<body className='min-h-full flex flex-col font-sans'>
 				<Header />
-				<main className='flex-1 w-full'>{children}</main>
+				<main className='flex-1 w-full pt-[68px] md:pt-[80px]'>{children}</main>
 				<Footer />
 				<Analytics />
 			</body>
