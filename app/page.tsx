@@ -251,6 +251,7 @@ export default function Home() {
 	const [activeHeroSlide, setActiveHeroSlide] = useState(0)
 	const [openFaqIndexes, setOpenFaqIndexes] = useState<Set<number>>(new Set())
 	const [mapError, setMapError] = useState<string | null>(null)
+	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
 	const [isMobileSearch, setIsMobileSearch] = useState(false)
 	const mapContainerRef = useRef<HTMLDivElement | null>(null)
 	const faqColumns = faqItems.reduce(
@@ -276,7 +277,8 @@ export default function Home() {
 		const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
 
 		if (!apiKey) {
-			setMapError('Google Maps API key не знайдено. Додайте NEXT_PUBLIC_GOOGLE_MAPS_API_KEY.')
+			setIsMapFallbackMode(true)
+			setMapError('API ключ не знайдено, показуємо fallback-карту.')
 			return
 		}
 
@@ -369,7 +371,10 @@ export default function Home() {
 			script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&language=uk&region=UA&callback=initPolianaHotelsMap`
 			script.async = true
 			script.defer = true
-			script.onerror = () => setMapError('Не вдалося завантажити Google Maps. Перевірте API key.')
+			script.onerror = () => {
+				setMapError('Не вдалося завантажити Google Maps API. Показуємо fallback-карту.')
+				setIsMapFallbackMode(true)
+			}
 			document.head.appendChild(script)
 		} else {
 			const retryId = window.setInterval(() => {
@@ -801,7 +806,17 @@ export default function Home() {
 				<div className='mx-auto w-full max-w-7xl'>
 					<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Карта готелів Поляни</h2>
 					<div className='relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm'>
-						<div ref={mapContainerRef} className='h-[420px] w-full' />
+						{isMapFallbackMode ? (
+							<iframe
+								title='Fallback карта готелів Поляни'
+								src='https://maps.google.com/maps?hl=uk&q=%D0%93%D0%BE%D1%82%D0%B5%D0%BB%D1%8C+%D0%9A%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0+%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0&t=k&z=14&ie=UTF8&iwloc=B&output=embed'
+								className='h-[420px] w-full'
+								loading='lazy'
+								referrerPolicy='no-referrer-when-downgrade'
+							/>
+						) : (
+							<div ref={mapContainerRef} className='h-[420px] w-full' />
+						)}
 						<a
 							href='https://maps.google.com/?q=%D0%93%D0%BE%D1%82%D0%B5%D0%BB%D1%8C+%D0%9A%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0+%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0'
 							target='_blank'
@@ -811,7 +826,7 @@ export default function Home() {
 							Відкрити на Картах ↗
 						</a>
 						{mapError ? (
-							<div className='absolute inset-0 flex items-center justify-center bg-white/90 p-4 text-center text-sm font-medium text-slate-600'>
+							<div className='pointer-events-none absolute bottom-14 left-1/2 -translate-x-1/2 rounded-md bg-white/90 px-3 py-1 text-xs font-medium text-slate-600 shadow-sm'>
 								{mapError}
 							</div>
 						) : null}
