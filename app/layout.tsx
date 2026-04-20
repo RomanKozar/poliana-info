@@ -40,6 +40,32 @@ const geometria = localFont({
 export const metadata: Metadata = {
 	title: 'POLIANA.INFO | Туристична дестинація №1',
 	description: 'Офіційний туристичний портал громади Поляна.',
+	metadataBase: new URL('https://poliana-info.vercel.app'),
+	alternates: {
+		canonical: '/',
+	},
+	openGraph: {
+		title: 'POLIANA.INFO | Туристична дестинація №1',
+		description: 'Офіційний туристичний портал громади Поляна.',
+		url: 'https://poliana-info.vercel.app',
+		siteName: 'POLIANA.INFO',
+		locale: 'uk_UA',
+		type: 'website',
+		images: [
+			{
+				url: '/preview-v2.png',
+				width: 1200,
+				height: 630,
+				alt: 'POLIANA.INFO - Туристична дестинація №1',
+			},
+		],
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'POLIANA.INFO | Туристична дестинація №1',
+		description: 'Офіційний туристичний портал громади Поляна.',
+		images: ['/preview-v2.png'],
+	},
 }
 
 export default function RootLayout({
