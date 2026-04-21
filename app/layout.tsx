@@ -38,17 +38,22 @@ const geometria = localFont({
 })
 
 export const metadata: Metadata = {
-	title: 'POLIANA.INFO | Туристична дестинація №1',
+	title: 'POLYANA.INFO | Туристична дестинація №1',
 	description: 'Офіційний туристичний портал громади Поляна.',
 	metadataBase: new URL('https://poliana-info.vercel.app'),
 	alternates: {
 		canonical: '/',
 	},
+	icons: {
+		icon: '/images/branding/info1-tab.svg',
+		shortcut: '/images/branding/info1-tab.svg',
+		apple: '/images/branding/info1.png',
+	},
 	openGraph: {
-		title: 'POLIANA.INFO | Туристична дестинація №1',
+		title: 'POLYANA.INFO | Туристична дестинація №1',
 		description: 'Офіційний туристичний портал громади Поляна.',
 		url: 'https://poliana-info.vercel.app',
-		siteName: 'POLIANA.INFO',
+		siteName: 'POLYANA.INFO',
 		locale: 'uk_UA',
 		type: 'website',
 		images: [
@@ -56,13 +61,13 @@ export const metadata: Metadata = {
 				url: '/preview-v2.png',
 				width: 1200,
 				height: 630,
-				alt: 'POLIANA.INFO - Туристична дестинація №1',
+				alt: 'POLYANA.INFO - Туристична дестинація №1',
 			},
 		],
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'POLIANA.INFO | Туристична дестинація №1',
+		title: 'POLYANA.INFO | Туристична дестинація №1',
 		description: 'Офіційний туристичний портал громади Поляна.',
 		images: ['/preview-v2.png'],
 	},
@@ -75,9 +80,11 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='uk' className={`${geometria.variable} h-full antialiased`}>
-			<body className='min-h-full flex flex-col font-sans'>
+			<body className='min-h-full flex flex-col overflow-x-hidden font-sans'>
 				<Header />
-				<main className='flex-1 w-full pt-[68px] md:pt-[80px]'>{children}</main>
+				<main className='flex-1 w-full' style={{ paddingTop: 'var(--header-offset, 68px)' }}>
+					{children}
+				</main>
 				<Footer />
 				<Analytics />
 			</body>

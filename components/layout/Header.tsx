@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -11,6 +11,7 @@ export default function Header() {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [isMobileNewsOpen, setIsMobileNewsOpen] = useState(false)
 	const [isDesktopNewsOpen, setIsDesktopNewsOpen] = useState(false)
+	const headerRef = useRef<HTMLElement | null>(null)
 	const pathname = usePathname()
 
 	const isActivePath = (href: string) => {
@@ -31,9 +32,32 @@ export default function Header() {
 		}
 	}
 
+	useEffect(() => {
+		const headerElement = headerRef.current
+		if (!headerElement) {
+			return
+		}
+
+		const root = document.documentElement
+		const syncHeaderOffset = () => {
+			const headerHeight = Math.ceil(headerElement.getBoundingClientRect().height)
+			root.style.setProperty('--header-offset', `${headerHeight}px`)
+		}
+
+		syncHeaderOffset()
+		const observer = new ResizeObserver(syncHeaderOffset)
+		observer.observe(headerElement)
+		window.addEventListener('resize', syncHeaderOffset)
+
+		return () => {
+			observer.disconnect()
+			window.removeEventListener('resize', syncHeaderOffset)
+		}
+	}, [])
+
 	return (
-		<header className='fixed left-0 top-0 z-50 w-full bg-gradient-to-r from-[#2B3138] to-[#3D424A] text-cyan-400'>
-			<div className='flex w-full items-center justify-start gap-4 bg-cyan-500 px-4 py-3 text-cyan-400 sm:px-6 lg:gap-6 lg:px-24'>
+		<header ref={headerRef} className='fixed left-0 top-0 z-50 w-full bg-gradient-to-r from-[#2B3138] to-[#3D424A] text-cyan-400'>
+			<div className='flex w-full items-center justify-start gap-1 bg-cyan-500 px-3 py-3 text-cyan-400 sm:gap-4 sm:px-16 lg:gap-6 lg:px-24'>
 				<button
 					type='button'
 					onClick={() => {
@@ -42,25 +66,29 @@ export default function Header() {
 					}}
 					aria-label='Відкрити меню'
 					aria-expanded={isMobileMenuOpen}
-					className='inline-flex h-10 w-10 flex-col items-center justify-center gap-1 rounded-sm bg-[#0E7992] text-white lg:hidden'
+					className='inline-flex h-8 w-8 flex-col items-center justify-center gap-0.5 rounded-[3px] bg-[#0E7992] text-white sm:h-10 sm:w-10 sm:gap-1 sm:rounded-sm lg:hidden'
 				>
-					<span className='block h-0.5 w-5 bg-white' />
-					<span className='block h-0.5 w-5 bg-white' />
-					<span className='block h-0.5 w-5 bg-white' />
+					<span className='block h-px w-3 bg-white sm:h-0.5 sm:w-5' />
+					<span className='block h-px w-3 bg-white sm:h-0.5 sm:w-5' />
+					<span className='block h-px w-3 bg-white sm:h-0.5 sm:w-5' />
 				</button>
 
-				<Link href='/' onClick={handleLogoClick} className='shrink-0 flex items-center text-white'>
+				<Link
+					href='/'
+					onClick={handleLogoClick}
+					className='shrink-0 flex items-center overflow-hidden text-white sm:-ml-3'
+				>
 					<Image
-						src='/images/branding/Poliana_info_white_header.png'
-						alt='POLIANA INFO'
-						width={300}
-						height={92}
+						src='/images/branding/Polyana_info_3.png'
+						alt='POLYANA INFO'
+						width={130}
+						height={40}
 						priority
-						className='h-10 w-auto object-contain sm:h-12 md:h-14'
+						className='h-10 w-[130px] scale-125 object-cover sm:h-12 sm:w-[156px] md:h-14 md:w-[182px] lg:h-10 lg:w-[130px] xl:h-12 xl:w-[156px] 2xl:h-14 2xl:w-[182px]'
 					/>
 				</Link>
 
-				<nav className='hidden min-w-0 items-center gap-2 text-sm font-semibold text-white lg:ml-4 lg:flex xl:gap-3 xl:text-base'>
+				<nav className='hidden min-w-0 items-center gap-1 text-[10px] font-semibold text-white lg:ml-2 lg:flex xl:ml-3 xl:gap-2 xl:text-xs 2xl:gap-3 2xl:text-sm'>
 					{siteNavigation.map(item =>
 						item.children ? (
 							<div
@@ -70,7 +98,7 @@ export default function Header() {
 								onMouseLeave={() => setIsDesktopNewsOpen(false)}
 							>
 								<span
-									className={`inline-flex cursor-pointer items-center gap-1 whitespace-nowrap rounded-lg px-2 py-1.5 font-semibold text-white transition-colors hover:bg-cyan-600 hover:text-white ${
+									className={`inline-flex cursor-pointer items-center gap-1 whitespace-nowrap rounded-lg px-1 py-1.5 font-semibold text-white transition-colors hover:bg-cyan-600 hover:text-white xl:px-2 ${
 										isDesktopNewsOpen ? 'bg-cyan-600 text-white shadow-sm' : ''
 									}`}
 								>
@@ -104,7 +132,7 @@ export default function Header() {
 							<Link
 								key={item.href}
 								href={item.href}
-								className={`whitespace-nowrap rounded-lg px-2 py-1.5 font-semibold text-white transition-colors hover:bg-cyan-600 hover:text-white ${
+								className={`whitespace-nowrap rounded-lg px-1 py-1.5 font-semibold text-white transition-colors hover:bg-cyan-600 hover:text-white xl:px-2 ${
 									isActivePath(item.href) ? 'bg-cyan-600 text-white shadow-sm' : ''
 								}`}
 							>
@@ -114,13 +142,13 @@ export default function Header() {
 					)}
 				</nav>
 
-				<div className='ml-auto flex items-center gap-2 text-sm font-semibold text-white sm:gap-3'>
+				<div className='ml-auto flex items-center gap-1 text-sm font-semibold text-white sm:gap-2 xl:gap-3'>
 					<Link
 						href='https://instagram.com'
 						target='_blank'
 						rel='noreferrer'
 						aria-label='Instagram'
-						className='hidden text-white transition-opacity hover:opacity-90 2xl:inline-block'
+						className='hidden text-white transition-opacity hover:opacity-90 lg:inline-block'
 					>
 						<FaInstagram className='size-4 text-white' />
 					</Link>
@@ -129,7 +157,7 @@ export default function Header() {
 						target='_blank'
 						rel='noreferrer'
 						aria-label='Facebook'
-						className='hidden text-white transition-opacity hover:opacity-90 2xl:inline-block'
+						className='hidden text-white transition-opacity hover:opacity-90 lg:inline-block'
 					>
 						<FaFacebookF className='size-3.5 text-white' />
 					</Link>
@@ -138,14 +166,14 @@ export default function Header() {
 						target='_blank'
 						rel='noreferrer'
 						aria-label='TikTok'
-						className='hidden text-white transition-opacity hover:opacity-90 2xl:inline-block'
+						className='hidden text-white transition-opacity hover:opacity-90 lg:inline-block'
 					>
 						<FaTiktok className='size-3.5 text-white' />
 					</Link>
 
 					<a
 						href='tel:0502149266'
-						className='shrink-0 whitespace-nowrap rounded-md bg-cyan-600 px-2.5 py-1.5 text-xs font-bold text-white transition-colors hover:bg-cyan-400 sm:px-3 sm:py-2 sm:text-sm lg:px-4 lg:text-base'
+						className='shrink-0 whitespace-nowrap rounded-md bg-cyan-600 px-2.5 py-1.5 text-xs font-bold text-white transition-colors hover:bg-cyan-400 sm:px-3 sm:py-2 sm:text-sm lg:px-3 lg:text-sm xl:px-4 xl:text-base'
 					>
 						0 (50) 214 92 66
 					</a>
@@ -171,7 +199,41 @@ export default function Header() {
 					style={{ transitionDelay: isMobileMenuOpen ? '360ms' : '160ms' }}
 					onClick={event => event.stopPropagation()}
 				>
-					<div className='flex justify-end'>
+					<div
+						className={`flex items-center justify-between transition-all duration-[980ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+							isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
+						}`}
+						style={{ transitionDelay: isMobileMenuOpen ? '620ms' : '0ms' }}
+					>
+						<div className='flex items-center gap-4'>
+							<Link
+								href='https://instagram.com'
+								target='_blank'
+								rel='noreferrer'
+								aria-label='Instagram'
+								className='inline-flex size-11 items-center justify-center rounded-full bg-cyan-600/95 text-white ring-1 ring-white/25 transition-colors hover:bg-cyan-700'
+							>
+								<FaInstagram className='size-5 text-white' />
+							</Link>
+							<Link
+								href='https://facebook.com'
+								target='_blank'
+								rel='noreferrer'
+								aria-label='Facebook'
+								className='inline-flex size-11 items-center justify-center rounded-full bg-cyan-600/95 text-white ring-1 ring-white/25 transition-colors hover:bg-cyan-700'
+							>
+								<FaFacebookF className='size-[18px] text-white' />
+							</Link>
+							<Link
+								href='https://tiktok.com'
+								target='_blank'
+								rel='noreferrer'
+								aria-label='TikTok'
+								className='inline-flex size-11 items-center justify-center rounded-full bg-cyan-600/95 text-white ring-1 ring-white/25 transition-colors hover:bg-cyan-700'
+							>
+								<FaTiktok className='size-[18px] text-white' />
+							</Link>
+						</div>
 						<button
 							type='button'
 							onClick={() => {

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function PolianaPage() {
+export default function PolyanaPage() {
 	return (
 		<div className='bg-[#F5F6F7]'>
 			<section className='relative overflow-hidden'>

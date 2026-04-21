@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Polyana info icon">
+  <path
+    d="M32 3C24.6 8.7 7 23.3 7 38c0 13.8 11.2 25 25 25s25-11.2 25-25C57 23.3 39.4 8.7 32 3Z"
+    fill="#62b7cf"
+  />
+  <text
+    x="32"
+    y="41"
+    text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="14"
+    font-weight="700"
+    fill="#ffffff"
+  >
+    INFO
+  </text>
+</svg>

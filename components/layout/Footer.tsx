@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -19,19 +22,57 @@ const informationLinks = [
 
 const supportLinks = [
 	{ href: '/contacts', label: 'Контакти' },
-	{ href: '/#', label: 'Платити та відповідей' },
 	{ href: '/#', label: 'Умови використання' },
 	{ href: '/#', label: 'Політика конфіденційності' },
 ]
 
 const aboutLinks = [
-	{ href: '/about', label: 'Про Poliana Info' },
-	{ href: '/about', label: 'Про нас' },
-	{ href: '/contacts', label: 'Реклама на сайті' },
-	{ href: '/blog', label: 'Блог' },
+	{ href: '/about', label: 'Про Polyana Info' },
+	{ href: '/team', label: 'Наша команда' },
 ]
 
 export default function Footer() {
+	const [phone, setPhone] = useState('')
+	const [notice, setNotice] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+	const noticeTimerRef = useRef<number | null>(null)
+
+	useEffect(() => {
+		return () => {
+			if (noticeTimerRef.current) {
+				window.clearTimeout(noticeTimerRef.current)
+			}
+		}
+	}, [])
+
+	const showNotice = (type: 'success' | 'error', text: string) => {
+		setNotice({ type, text })
+
+		if (noticeTimerRef.current) {
+			window.clearTimeout(noticeTimerRef.current)
+		}
+
+		noticeTimerRef.current = window.setTimeout(() => {
+			setNotice(null)
+		}, 3400)
+	}
+
+	const handlePhoneChange = (value: string) => {
+		const digitsOnly = value.replace(/\D/g, '').slice(0, 12)
+		setPhone(digitsOnly)
+	}
+
+	const handleSubscribe = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+
+		if (phone.length < 10 || phone.length > 12) {
+			showNotice('error', 'Введіть коректний номер: лише цифри, від 10 до 12 символів.')
+			return
+		}
+
+		showNotice('success', 'Готово! Ви у списку перших, хто отримує акції Поляни.')
+		setPhone('')
+	}
+
 	return (
 		<footer className='w-full'>
 			<div className='bg-[#53C4DA]'>
@@ -46,18 +87,38 @@ export default function Footer() {
 						</p>
 					</div>
 
-					<form className='flex w-full max-w-xl flex-col gap-2 sm:flex-row sm:items-center'>
+					<form
+						onSubmit={handleSubscribe}
+						noValidate
+						className='relative flex w-full max-w-xl flex-col gap-2 sm:flex-row sm:items-center'
+					>
 						<input
 							type='tel'
+							inputMode='numeric'
+							pattern='[0-9]*'
+							maxLength={12}
+							value={phone}
+							onChange={event => handlePhoneChange(event.target.value)}
 							placeholder='Введіть Ваш номер телефону'
+							aria-invalid={notice?.type === 'error'}
 							className='h-10 w-full rounded-md border border-transparent bg-white px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none'
 						/>
 						<button
-							type='button'
+							type='submit'
 							className='h-10 cursor-pointer rounded-md bg-[#2F3640] px-6 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#222831] hover:shadow-md'
 						>
 							ПІДПИСАТИСЬ
 						</button>
+						{notice ? (
+							<div
+								role={notice.type === 'error' ? 'alert' : 'status'}
+								className={`pointer-events-none absolute -top-11 right-0 rounded-md px-3 py-1.5 text-xs font-semibold text-white shadow-md ${
+									notice.type === 'success' ? 'bg-emerald-600/95' : 'bg-rose-600/95'
+								}`}
+							>
+								{notice.text}
+							</div>
+						) : null}
 					</form>
 				</div>
 			</div>
@@ -67,11 +128,11 @@ export default function Footer() {
 					<div className='space-y-3'>
 						<Link href='/' className='inline-flex'>
 							<Image
-								src='/images/branding/Poliana_info_white_header.png'
-								alt='POLIANA INFO'
+								src='/images/branding/Polyana_info_3.png'
+								alt='POLYANA INFO'
 								width={190}
 								height={58}
-								className='h-10 w-auto object-contain'
+								className='h-10 w-[190px] -translate-x-8 object-cover object-left'
 							/>
 						</Link>
 						<p className='max-w-xs text-xs leading-relaxed text-white/70'>
@@ -136,15 +197,29 @@ export default function Footer() {
 						<ul className='space-y-2 text-xs text-white/70'>
 							<li className='flex items-center gap-2'>
 								<FaPhoneAlt className='size-3.5 text-[#53C4DA]' />
-								<span>0 (50) 214 92 66</span>
+								<a href='tel:0502149266' className='transition-colors hover:text-white'>
+									0 (50) 214 92 66
+								</a>
 							</li>
 							<li className='flex items-center gap-2'>
 								<FaEnvelope className='size-3.5 text-[#53C4DA]' />
-								<span>polianainfo.ua@gmail.com</span>
+								<a
+									href='mailto:polianainfo.ua@gmail.com'
+									className='transition-colors hover:text-white'
+								>
+									polianainfo.ua@gmail.com
+								</a>
 							</li>
 							<li className='flex items-center gap-2'>
 								<FaMapMarkerAlt className='size-3.5 text-[#53C4DA]' />
-								<span>с. Поляна, Закарпатська обл.</span>
+								<a
+									href='https://www.google.com/maps/search/?api=1&query=%D1%81.%20%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0%2C%20%D0%97%D0%B0%D0%BA%D0%B0%D1%80%D0%BF%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%20%D0%BE%D0%B1%D0%BB.'
+									target='_blank'
+									rel='noreferrer'
+									className='transition-colors hover:text-white'
+								>
+									с. Поляна, Закарпатська обл.
+								</a>
 							</li>
 						</ul>
 					</div>

@@ -17,3 +17,184 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+html,
+body {
+  overflow-x: clip;
+}
+
+.hero-input-container {
+  position: relative;
+  margin: 0;
+}
+
+.hero-input-field {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  padding: 8px 0;
+  background-color: transparent;
+  outline: none;
+  color: #fff;
+  font-size: 12px;
+}
+
+.hero-input-label {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.hero-input-field:focus ~ .hero-input-label,
+.hero-input-field:not(:placeholder-shown) ~ .hero-input-label {
+  top: -15px;
+  font-size: 10px;
+  color: #fff;
+}
+
+.hero-input-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #53c4da;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.hero-input-field:focus ~ .hero-input-underline,
+.hero-input-field:not(:placeholder-shown) ~ .hero-input-underline {
+  transform: scaleX(1);
+}
+
+@media (min-width: 640px) {
+  .hero-input-field {
+    font-size: 15px;
+  }
+
+  .hero-input-label {
+    font-size: 15px;
+  }
+
+  .hero-input-field:focus ~ .hero-input-label,
+  .hero-input-field:not(:placeholder-shown) ~ .hero-input-label {
+    top: -18px;
+    font-size: 12px;
+  }
+}
+
+.heart-container {
+  --heart-color: rgb(255, 91, 137);
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 20;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 9999px;
+  background-color: #c8d3e3;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.2);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.heart-container:hover {
+  transform: scale(1.08);
+}
+
+.heart-container:active {
+  transform: scale(0.95);
+}
+
+.heart-svg-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart-svg-outline,
+.heart-svg-filled,
+.heart-svg-celebrate {
+  position: absolute;
+}
+
+.heart-svg-outline {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: #f8fafc;
+  stroke-width: 1.8;
+}
+
+.heart-svg-filled {
+  width: 17px;
+  height: 17px;
+  fill: var(--heart-color);
+  display: none;
+}
+
+.heart-svg-celebrate {
+  width: 22px;
+  height: 22px;
+  stroke: var(--heart-color);
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  display: none;
+}
+
+.heart-svg-container.is-active .heart-svg-outline {
+  stroke: var(--heart-color);
+}
+
+.heart-svg-container.is-active .heart-svg-filled {
+  display: block;
+  animation: heartSvgFilled 0.5s ease;
+}
+
+.heart-svg-container.is-active .heart-svg-celebrate {
+  display: block;
+  animation: heartSvgCelebrate 0.5s ease forwards;
+}
+
+@keyframes heartSvgFilled {
+  0% {
+    transform: scale(0);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+    filter: brightness(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes heartSvgCelebrate {
+  0% {
+    transform: scale(0);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.5);
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
