@@ -23,7 +23,7 @@ const informationLinks = [
 const supportLinks = [
 	{ href: '/contacts', label: 'Контакти' },
 	{ href: '/#', label: 'Умови використання' },
-	{ href: '/#', label: 'Політика конфіденційності' },
+	{ href: '/privacy', label: 'Політика конфіденційності' },
 ]
 
 const aboutLinks = [

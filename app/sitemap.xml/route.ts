@@ -17,6 +17,7 @@ const paths: string[] = [
 	'/kids-camps',
 	'/poliana',
 	'/polianski',
+	'/privacy',
 	'/spa',
 	'/team',
 	'/wellness',
