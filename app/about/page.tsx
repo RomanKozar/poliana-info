@@ -1,4 +1,12 @@
 import Image from 'next/image'
+import { definePageMetadata } from '@/lib/seo'
+
+export const metadata = definePageMetadata({
+	title: 'Про Polyana.info',
+	description:
+		'Хто ми: туристично-інформаційний центр Поляни. Мета порталу — популяризувати курорт, допомогти з плануванням відпочинку та підтримати локальний туризм.',
+	pathname: '/about',
+})
 
 export default function AboutPage() {
 	return (

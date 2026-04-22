@@ -1,5 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { definePageMetadata } from '@/lib/seo'
+
+export const metadata = definePageMetadata({
+	title: 'Літній відпочинок у Поляні',
+	description:
+		'Літо в Поляні: табори, SPA, тюбінг, вело та сімейний відпочинок. Поради, що взяти з собою й куди поїхати на Закарпатті.',
+	pathname: '/blog/summer-vacation',
+})
 
 export default function SummerVacationPage() {
 	return (

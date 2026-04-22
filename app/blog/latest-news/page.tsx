@@ -1,4 +1,12 @@
 import Image from 'next/image'
+import { definePageMetadata } from '@/lib/seo'
+
+export const metadata = definePageMetadata({
+	title: 'Останні новини Поляни та туризму на Закарпатті',
+	description:
+		'Новини курорту Поляна: розвиток інфраструктури, туристичний збір, інвестиції та тренди відпочинку у 2025–2026 роках.',
+	pathname: '/blog/latest-news',
+})
 
 export default function LatestNewsPage() {
 	return (

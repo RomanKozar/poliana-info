@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { SITE_URL } from '@/lib/seo'
 
 // Налаштовуємо шрифт Geometria
 const geometria = localFont({
@@ -37,22 +38,29 @@ const geometria = localFont({
 	variable: '--font-geometria', // Створюємо CSS-змінну
 })
 
+/** Верифікація Google Search Console (видно в HTML; можна перевизначити через NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION). */
+const googleSiteVerification =
+	process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() ||
+	'Hkhwl1rZKipYTUNMgJO1f0ST9tZe7ReWVLVEuk2hXug'
+
 export const metadata: Metadata = {
-	title: 'POLYANA.INFO | Туристична дестинація №1',
-	description: 'Офіційний туристичний портал громади Поляна.',
-	metadataBase: new URL('https://poliana-info.vercel.app'),
-	alternates: {
-		canonical: '/',
+	metadataBase: new URL(SITE_URL),
+	title: {
+		default: 'POLYANA.INFO — туристичний портал Поляни',
+		template: '%s | POLYANA.INFO',
 	},
+	description:
+		'Туристичний портал Поляни на Закарпатті: житло, SPA, чани, табори, розваги, новини та корисні поради для відпочинку.',
 	icons: {
 		icon: '/images/branding/info1-tab.svg',
 		shortcut: '/images/branding/info1-tab.svg',
 		apple: '/images/branding/info1.png',
 	},
 	openGraph: {
-		title: 'POLYANA.INFO | Туристична дестинація №1',
-		description: 'Офіційний туристичний портал громади Поляна.',
-		url: 'https://poliana-info.vercel.app',
+		title: 'POLYANA.INFO — туристичний портал Поляни',
+		description:
+			'Туристичний портал Поляни на Закарпатті: житло, SPA, чани, табори та ідеї для відпочинку.',
+		url: SITE_URL,
 		siteName: 'POLYANA.INFO',
 		locale: 'uk_UA',
 		type: 'website',
@@ -67,10 +75,12 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'POLYANA.INFO | Туристична дестинація №1',
-		description: 'Офіційний туристичний портал громади Поляна.',
+		title: 'POLYANA.INFO — туристичний портал Поляни',
+		description:
+			'Туристичний портал Поляни на Закарпатті: житло, SPA, чани, табори та ідеї для відпочинку.',
 		images: ['/preview-v2.png'],
 	},
+	verification: { google: googleSiteVerification },
 }
 
 export default function RootLayout({

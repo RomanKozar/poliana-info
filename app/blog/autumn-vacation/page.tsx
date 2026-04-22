@@ -1,5 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { definePageMetadata } from '@/lib/seo'
+
+export const metadata = definePageMetadata({
+	title: 'Осінній відпочинок у Поляні',
+	description:
+		'Осінь у Поляні: чани, гастрономія, тихі маршрути та затишні вікенди в Карпатах. Ідеї для романтичної та сімейної поїздки.',
+	pathname: '/blog/autumn-vacation',
+})
 
 export default function AutumnVacationPage() {
 	return (

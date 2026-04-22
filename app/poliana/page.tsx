@@ -1,4 +1,12 @@
 import Image from 'next/image'
+import { definePageMetadata } from '@/lib/seo'
+
+export const metadata = definePageMetadata({
+	title: 'Поляна — туризм, відпочинок і пригоди в Карпатах',
+	description:
+		'Дізнайтеся про Поляну як туристичну дестинацію: що подивитися, санаторії Поляни, ціни на послуги, активності та план подорожі на Закарпаття.',
+	pathname: '/poliana',
+})
 
 export default function PolyanaPage() {
 	return (
