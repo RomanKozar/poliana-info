@@ -83,6 +83,16 @@ export const metadata: Metadata = {
 	verification: { google: googleSiteVerification },
 }
 
+const websiteJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: 'POLYANA.INFO',
+	alternateName: ['Поляна інфо', 'Polyana Info', 'туристичний портал Поляни'],
+	url: SITE_URL,
+	description: 'Туристичний портал села Поляна на Закарпатті: житло, SPA, чани, табори та відпочинок.',
+	inLanguage: 'uk-UA',
+}
+
 export default function RootLayout({
 	children,
 }: {
@@ -91,6 +101,10 @@ export default function RootLayout({
 	return (
 		<html lang='uk' className={`${geometria.variable} h-full antialiased`}>
 			<body className='min-h-full flex flex-col overflow-x-hidden font-sans'>
+				<script
+					type='application/ld+json'
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+				/>
 				<Header />
 				<main className='flex-1 w-full' style={{ paddingTop: 'var(--header-offset, 68px)' }}>
 					{children}
