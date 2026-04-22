@@ -21,7 +21,7 @@ const informationLinks = [
 ]
 
 const supportLinks = [
-	{ href: '/contacts', label: 'Контакти' },
+	{ href: '/contacts', label: "Зворотний зв'язок" },
 	{ href: '/#', label: 'Умови використання' },
 	{ href: '/privacy', label: 'Політика конфіденційності' },
 ]
@@ -124,104 +124,108 @@ export default function Footer() {
 			</div>
 
 			<div className='bg-[#2D333D] text-white/90'>
-				<div className='mx-auto grid w-full max-w-7xl gap-8 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-5'>
-					<div className='space-y-3'>
-						<Link href='/' className='inline-flex'>
-							<Image
-								src='/images/branding/Polyana_info_3.png'
-								alt='POLYANA INFO'
-								width={190}
-								height={58}
-								className='h-10 w-[190px] -translate-x-8 object-cover object-left'
-							/>
-						</Link>
-						<p className='max-w-xs text-xs leading-relaxed text-white/70'>
-							Створено у 2026 році з метою підвищення культурно-історичної, пізнавальної
-							грамотності читачів, популяризації Поляни, підтримки діяльності суб’єктів
-							індустрії туризму, розвитку культурних традицій та промоції регіону
-						</p>
-						<div className='flex items-center gap-3 text-white/75'>
-							<Link href='https://instagram.com' target='_blank' rel='noreferrer'>
-								<FaInstagram className='size-4 transition-colors hover:text-white' />
+				<div className='mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:py-12'>
+					<div className='flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-14'>
+						<div className='max-w-md space-y-4 lg:shrink-0'>
+							<Link href='/' className='inline-flex'>
+								<Image
+									src='/images/branding/Polyana_info_3.png'
+									alt='POLYANA INFO'
+									width={190}
+									height={58}
+									className='h-10 w-[190px] object-cover object-left sm:-ml-1 lg:-translate-x-6'
+								/>
 							</Link>
-							<Link href='https://facebook.com' target='_blank' rel='noreferrer'>
-								<FaFacebookF className='size-3.5 transition-colors hover:text-white' />
-							</Link>
-							<Link href='https://tiktok.com' target='_blank' rel='noreferrer'>
-								<FaTiktok className='size-3.5 transition-colors hover:text-white' />
-							</Link>
+							<p className='text-xs leading-relaxed text-white/70 sm:text-[13px]'>
+								Створено у 2026 році з метою підвищення культурно-історичної, пізнавальної
+								грамотності читачів, популяризації Поляни, підтримки діяльності суб’єктів
+								індустрії туризму, розвитку культурних традицій та промоції регіону
+							</p>
+							<div className='flex items-center gap-3 text-white/75'>
+								<Link href='https://instagram.com' target='_blank' rel='noreferrer'>
+									<FaInstagram className='size-4 transition-colors hover:text-white' />
+								</Link>
+								<Link href='https://facebook.com' target='_blank' rel='noreferrer'>
+									<FaFacebookF className='size-3.5 transition-colors hover:text-white' />
+								</Link>
+								<Link href='https://tiktok.com' target='_blank' rel='noreferrer'>
+									<FaTiktok className='size-3.5 transition-colors hover:text-white' />
+								</Link>
+							</div>
 						</div>
-					</div>
 
-					<div>
-						<p className='mb-3 text-sm font-semibold text-white'>Про нас</p>
-						<ul className='space-y-2 text-xs text-white/70'>
-							{aboutLinks.map(item => (
-								<li key={item.label}>
-									<Link href={item.href} className='transition-colors hover:text-white'>
-										{item.label}
-									</Link>
-								</li>
-							))}
-						</ul>
-					</div>
+						<div className='grid min-w-0 flex-1 grid-cols-2 gap-x-6 gap-y-9 sm:gap-x-10 md:grid-cols-4 md:gap-y-8'>
+							<div className='min-w-0'>
+								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>Про нас</p>
+								<ul className='space-y-2.5 text-xs leading-snug text-white/70 sm:text-[13px]'>
+									{aboutLinks.map(item => (
+										<li key={item.label}>
+											<Link href={item.href} className='transition-colors hover:text-white'>
+												{item.label}
+											</Link>
+										</li>
+									))}
+								</ul>
+							</div>
 
-					<div>
-						<p className='mb-3 text-sm font-semibold text-white'>Інформація</p>
-						<ul className='space-y-2 text-xs text-white/70'>
-							{informationLinks.map(item => (
-								<li key={item.label}>
-									<Link href={item.href} className='transition-colors hover:text-white'>
-										{item.label}
-									</Link>
-								</li>
-							))}
-						</ul>
-					</div>
+							<div className='min-w-0'>
+								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>Інформація</p>
+								<ul className='space-y-2.5 text-xs leading-snug text-white/70 sm:text-[13px]'>
+									{informationLinks.map(item => (
+										<li key={item.label}>
+											<Link href={item.href} className='transition-colors hover:text-white'>
+												{item.label}
+											</Link>
+										</li>
+									))}
+								</ul>
+							</div>
 
-					<div>
-						<p className='mb-3 text-sm font-semibold text-white'>Підтримка</p>
-						<ul className='space-y-2 text-xs text-white/70'>
-							{supportLinks.map(item => (
-								<li key={item.label}>
-									<Link href={item.href} className='transition-colors hover:text-white'>
-										{item.label}
-									</Link>
-								</li>
-							))}
-						</ul>
-					</div>
+							<div className='min-w-0'>
+								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>Підтримка</p>
+								<ul className='space-y-2.5 text-xs leading-snug text-white/70 sm:text-[13px]'>
+									{supportLinks.map(item => (
+										<li key={item.label}>
+											<Link href={item.href} className='transition-colors hover:text-white'>
+												{item.label}
+											</Link>
+										</li>
+									))}
+								</ul>
+							</div>
 
-					<div>
-						<p className='mb-3 text-sm font-semibold text-white'>Контакти</p>
-						<ul className='space-y-2 text-xs text-white/70'>
-							<li className='flex items-center gap-2'>
-								<FaPhoneAlt className='size-3.5 text-[#53C4DA]' />
-								<a href='tel:0502149266' className='transition-colors hover:text-white'>
-									0 (50) 214 92 66
-								</a>
-							</li>
-							<li className='flex items-center gap-2'>
-								<FaEnvelope className='size-3.5 text-[#53C4DA]' />
-								<a
-									href='mailto:polianainfo.ua@gmail.com'
-									className='transition-colors hover:text-white'
-								>
-									polianainfo.ua@gmail.com
-								</a>
-							</li>
-							<li className='flex items-center gap-2'>
-								<FaMapMarkerAlt className='size-3.5 text-[#53C4DA]' />
-								<a
-									href='https://www.google.com/maps/search/?api=1&query=%D1%81.%20%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0%2C%20%D0%97%D0%B0%D0%BA%D0%B0%D1%80%D0%BF%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%20%D0%BE%D0%B1%D0%BB.'
-									target='_blank'
-									rel='noreferrer'
-									className='transition-colors hover:text-white'
-								>
-									с. Поляна, Закарпатська обл.
-								</a>
-							</li>
-						</ul>
+							<div className='min-w-0'>
+								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>Контакти</p>
+								<ul className='space-y-2.5 text-xs leading-snug text-white/70 sm:text-[13px]'>
+									<li className='flex items-start gap-2'>
+										<FaPhoneAlt className='mt-0.5 size-3.5 shrink-0 text-[#53C4DA]' />
+										<a href='tel:0502149266' className='transition-colors hover:text-white'>
+											0 (50) 214 92 66
+										</a>
+									</li>
+									<li className='flex items-start gap-2'>
+										<FaEnvelope className='mt-0.5 size-3.5 shrink-0 text-[#53C4DA]' />
+										<a
+											href='mailto:polianainfo.ua@gmail.com'
+											className='break-all transition-colors hover:text-white'
+										>
+											polianainfo.ua@gmail.com
+										</a>
+									</li>
+									<li className='flex items-start gap-2'>
+										<FaMapMarkerAlt className='mt-0.5 size-3.5 shrink-0 text-[#53C4DA]' />
+										<a
+											href='https://www.google.com/maps/search/?api=1&query=%D1%81.%20%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0%2C%20%D0%97%D0%B0%D0%BA%D0%B0%D1%80%D0%BF%D0%B0%D1%82%D1%81%D1%8C%D0%BA%D0%B0%20%D0%BE%D0%B1%D0%BB.'
+											target='_blank'
+											rel='noreferrer'
+											className='transition-colors hover:text-white'
+										>
+											с. Поляна, Закарпатська обл.
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

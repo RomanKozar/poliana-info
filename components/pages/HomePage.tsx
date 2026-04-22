@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import Image from 'next/image'
 import type { IconType } from 'react-icons'
 import {
@@ -228,51 +228,312 @@ const hotelsMapMarkers = [
 	},
 ]
 
-/** Магазини Поляни / Сонячного Закарпаття — координати можна уточнити в Google Maps і підставити точніше. */
-const shopsMapMarkers = [
+/** Кафе та ресторани Поляни (координати та рейтинги з Google Maps). */
+const diningMapMarkers = [
 	{
-		name: 'SnowTeam',
-		address: 'вул. Сонячна, 55-б, Поляна',
-		category: 'Спортивний магазин, прокат спорядження',
-		image: '/images/gallery/golovna-foto.jpeg',
-		position: { lat: 48.62155, lng: 22.97035 },
+		name: 'Ресторан «Катерина»',
+		address: 'вул. Сонячна, 55-Б, Поляна, Закарпатська обл., 89313',
+		category:
+			'Ресторан готельного комплексу «Катерина»: закарпатська й українська кухня (бограч, банош, деруни), форель з власного ставка, тераса й винна карта — зручно для сімейного обіду в Поляні.',
+		image: '/images/accommodation/kateryna-v1.jpg',
+		position: { lat: 48.621246497414745, lng: 22.971365350910737 },
 	},
 	{
-		name: 'Продукти',
-		address: 'вул. Сонячна, Поляна',
-		category: 'Продуктовий магазин',
+		name: 'EQUATOR',
+		address: 'вул. Духновича, Поляна, Закарпатська обл., 89313',
+		category:
+			'★ 4,6 (309) · кафе · орієнтовно 200–400 ₴ · їжа в закладі, замовлення з вулиці, доставка · до 22:00 · 098 929 2202',
 		image: '/images/gallery/golovna-foto-2.jpeg',
-		position: { lat: 48.62095, lng: 22.9691 },
+		position: { lat: 48.62173358568664, lng: 22.967105354571046 },
 	},
 	{
-		name: 'Крамниця смаколиків',
-		address: 'центр Поляни',
-		category: 'Сувеніри, локальні товари',
+		name: 'Coffee Line',
+		address: 'вул. Духновича, 88б, Поляна, Закарпатська обл., 89313',
+		category:
+			'★ 5,0 (33) · кав’ярня · орієнтовно 1–200 ₴ · їжа в закладі, із собою, доставка · 095 639 7993',
 		image: '/images/gallery/golovna-foto-3.jpg',
-		position: { lat: 48.6211, lng: 22.9712 },
+		position: { lat: 48.62426419571715, lng: 22.96902223943357 },
 	},
 	{
-		name: 'Торгівельна зона «Сонячне Закарпаття»',
-		address: 'санаторій «Сонячне Закарпаття», Поляна',
-		category: 'Магазини на території ОЗ',
+		name: 'Good Zone',
+		address: 'вул. Курортна, Поляна, Закарпатська обл., 89313',
+		category:
+			'★ 4,7 (1 085) · ресторан · їжа в закладі, із собою, доставка · до 23:30 · меню на good-zone.ctl.net.ua · 066 647 8918',
 		image: '/images/gallery/golovna-foto.jpeg',
-		position: { lat: 48.6198, lng: 22.9735 },
+		position: { lat: 48.624618551922836, lng: 22.946096953186508 },
+	},
+	{
+		name: 'ПанОрама',
+		address: 'вул. Курортна, Поляна, Закарпатська обл., 89313',
+		category: '★ 4,5 (665) · кафе · орієнтовно 200–400 ₴ · їжа в закладі, з вулиці, доставка · до 22:00 · 050 808 5879',
+		image: '/images/entertainment/tybinh-v2-3.webp',
+		position: { lat: 48.626204712025924, lng: 22.945207647879602 },
+	},
+	{
+		name: 'Лілея',
+		address: 'вул. Курортна, Поляна, Закарпатська обл., 89313',
+		category: '★ 3,9 (1 496) · ресторан при готельно-ресторанному комплексі',
+		image: '/images/gallery/golovna-foto-2.jpeg',
+		position: { lat: 48.62671402968627, lng: 22.94738223808272 },
+	},
+	{
+		name: 'Siesta family cafe',
+		address: 'ТЦ Polayna Plaza, вул. Духновича, 56, Поляна, Закарпатська обл., 89313',
+		category: '★ 4,2 (69) · кафе · орієнтовно 200–400 ₴ · до 22:00',
+		image: '/images/gallery/golovna-foto-3.jpg',
+		position: { lat: 48.621581391228176, lng: 22.967498727610323 },
 	},
 ]
 
-/** Помаранчевий пін з білою обводкою та іконкою сумки (можна замінити на PNG через icon у Marker). */
-const shopMapPinIconDataUrl = (() => {
+/** Продуктові мережі та спеціалізовані магазини в Поляні (Google Maps). */
+const shopsMapMarkers = [
+	{
+		name: 'Копійочка',
+		address: 'вул. Духновича, 56, Поляна, Закарпатська обл., 89313',
+		category: '★ 3,2 (9) · магазин господарських товарів · kopiyochka.com.ua · 0800 502 990',
+		image: '/images/gallery/golovna-foto.jpeg',
+		position: { lat: 48.621467383655634, lng: 22.96762098879696 },
+	},
+	{
+		name: 'Супермаркет',
+		address: 'вул. Духновича, 5, Поляна (ТЦ Polayna Plaza), Закарпатська обл., 89313',
+		category: '★ 4,6 (7) · супермаркет · до 22:00',
+		image: '/images/gallery/golovna-foto-2.jpeg',
+		position: { lat: 48.62152356911222, lng: 22.967642765451984 },
+	},
+	{
+		name: 'Амбар Маркет',
+		address: 'вул. Духновича, 65, Поляна, Закарпатська обл., 89313',
+		category: '★ 4,3 (9) · супермаркет',
+		image: '/images/gallery/golovna-foto-3.jpg',
+		position: { lat: 48.621451094236136, lng: 22.966283208147484 },
+	},
+	{
+		name: 'Алкомаркет «Тиса»',
+		address: 'Поляна, Закарпатська обл., 89313',
+		category: '★ 4,1 (8) · алкомаркет',
+		image: '/images/gallery/golovna-foto.jpeg',
+		position: { lat: 48.62158274103911, lng: 22.966256386059687 },
+	},
+	{
+		name: 'Будівельний магазин',
+		address: 'вул. Духновича, 41, Поляна, Закарпатська обл., 89313',
+		category: 'Будівельний маркет — матеріали та інструменти',
+		image: '/images/gallery/golovna-foto-2.jpeg',
+		position: { lat: 48.6211049645062, lng: 22.967164113166138 },
+	},
+]
+
+/** Аптеки та медичні точки (Google Maps). */
+const pharmacyMapMarkers: Array<{
+	name: string
+	address: string
+	category: string
+	image: string
+	position: { lat: number; lng: number }
+	badge: string
+}> = [
+	{
+		name: 'Аптека «Подорожник»',
+		address: 'вул. Духновича, 56, Поляна, Закарпатська обл., 89313',
+		category:
+			'★ 4,2 (22) · аптека · покупки й самовивіз, доставка · зачиняється о 21:00',
+		image: '/images/gallery/golovna-foto-3.jpg',
+		position: { lat: 48.62142192423074, lng: 22.967409720203054 },
+		badge: 'Аптека',
+	},
+	{
+		name: 'Амбулаторія загальної практики-сімейної медицини',
+		address: 'вул. Духновича, 108, Поляна, Закарпатська обл., 89313',
+		category: '★ 4,8 (4) · амбулаторія сімейної медицини · 03133 74599',
+		image: '/images/gallery/golovna-foto.jpeg',
+		position: { lat: 48.62675756921276, lng: 22.97237635248425 },
+		badge: 'Медзаклад',
+	},
+	{
+		name: 'Аптека «Подорожник»',
+		address: 'вул. Курортна, 3Б, Поляна, Закарпатська обл., 89313',
+		category: '★ 4,7 (18) · аптека · podorozhnyk.ua · 0800 303 111 · самовивіз і доставка',
+		image: '/images/gallery/golovna-foto-2.jpeg',
+		position: { lat: 48.62526979873458, lng: 22.94656504413456 },
+		badge: 'Аптека',
+	},
+]
+
+/**
+ * Помаранчевий пін — їжа (іконка FoodBank з `@mui/icons-material`).
+ */
+const diningMapPinIconDataUrl = (() => {
+	const foodBankPath =
+		'M12 3 4 9v12h16V9zm.5 9.5c0 .83-.67 1.5-1.5 1.5v4h-1v-4c-.83 0-1.5-.67-1.5-1.5v-3h1v3h.5v-3h1v3h.5v-3h1zM15 18h-1v-3.5h-1v-3c0-1.1.9-2 2-2z'
 	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56">
   <path fill="#ffffff" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
   <g transform="translate(24 18) scale(0.82) translate(-24 -18)">
     <path fill="#F97316" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
   </g>
   <g transform="translate(24 17) scale(0.72) translate(-12 -12)" fill="#ffffff">
-    <path d="M18 6h-2v2h-2v2H8v14h16V10h-6V8h-2V6zm-2 2v2h-8v10h12V8h-8V8z"/>
+    <path d="${foodBankPath}"/>
   </g>
 </svg>`
 	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
 })()
+
+/**
+ * Фіолетовий пін (#6D28D9 — «ритейл / покупки»), іконка ShoppingCart з `@mui/icons-material`.
+ */
+const shoppingMapPinIconDataUrl = (() => {
+	const cartPath =
+		'M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2M1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2'
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56">
+  <path fill="#ffffff" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  <g transform="translate(24 18) scale(0.82) translate(-24 -18)">
+    <path fill="#6D28D9" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  </g>
+  <g transform="translate(24 17) scale(0.72) translate(-12 -12)" fill="#ffffff">
+    <path d="${cartPath}"/>
+  </g>
+</svg>`
+	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
+})()
+
+/**
+ * Смарагдовий пін (#047857 — «аптека / медицина»), іконка LocalPharmacy з `@mui/icons-material`.
+ */
+const pharmacyMapPinIconDataUrl = (() => {
+	const pharmacyPath =
+		'M21 5h-2.64l1.14-3.14L17.15 1l-1.46 4H3v2l2 6-2 6v2h18v-2l-2-6 2-6zm-5 9h-3v3h-2v-3H8v-2h3V9h2v3h3z'
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56">
+  <path fill="#ffffff" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  <g transform="translate(24 18) scale(0.82) translate(-24 -18)">
+    <path fill="#047857" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  </g>
+  <g transform="translate(24 17) scale(0.72) translate(-12 -12)" fill="#ffffff">
+    <path d="${pharmacyPath}"/>
+  </g>
+</svg>`
+	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
+})()
+
+/**
+ * Червоний пін з іконкою Hotel (той самий path, що й `Hotel` з `@mui/icons-material`).
+ */
+const hotelMapPinIconDataUrl = (() => {
+	const hotelPath =
+		'M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3m12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4'
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56">
+  <path fill="#ffffff" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  <g transform="translate(24 18) scale(0.82) translate(-24 -18)">
+    <path fill="#DC2626" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  </g>
+  <g transform="translate(24 17) scale(0.72) translate(-12 -12)" fill="#ffffff">
+    <path d="${hotelPath}"/>
+  </g>
+</svg>`
+	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
+})()
+
+/**
+ * Бірюзово-циановий пін (#0E7490 — «вода / велнес»), окремо від готелів, їжі та магазинів.
+ * та іконка HotTub з `@mui/icons-material` (коло + path).
+ */
+const spaMapPinIconDataUrl = (() => {
+	const hotTubCircle = '<circle cx="7" cy="6" r="2"/>'
+	const hotTubPath =
+		'M11.15 12c-.31-.22-.59-.46-.82-.72l-1.4-1.55c-.19-.21-.43-.38-.69-.5-.29-.14-.62-.23-.96-.23h-.03C6.01 9 5 10.01 5 11.25V12H2v8c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-8zM7 20H5v-6h2zm4 0H9v-6h2zm4 0h-2v-6h2zm4 0h-2v-6h2zm-.35-14.14-.07-.07c-.57-.62-.82-1.41-.67-2.2L18 3h-1.89l-.06.43c-.2 1.36.27 2.71 1.3 3.72l.07.06c.57.62.82 1.41.67 2.2l-.11.59h1.91l.06-.43c.21-1.36-.27-2.71-1.3-3.71m-4 0-.07-.07c-.57-.62-.82-1.41-.67-2.2L14 3h-1.89l-.06.43c-.2 1.36.27 2.71 1.3 3.72l.07.06c.57.62.82 1.41.67 2.2l-.11.59h1.91l.06-.43c.21-1.36-.27-2.71-1.3-3.71'
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56">
+  <path fill="#ffffff" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  <g transform="translate(24 18) scale(0.82) translate(-24 -18)">
+    <path fill="#0E7490" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  </g>
+  <g transform="translate(24 17) scale(0.72) translate(-12 -12)" fill="#ffffff">
+    ${hotTubCircle}
+    <path d="${hotTubPath}"/>
+  </g>
+</svg>`
+	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
+})()
+
+/** SPA, чани та оздоровлення в Поляні (координати з Google Maps / уточнення на місці). */
+const spaMapMarkers = [
+	{
+		name: 'Чан на території «Катерина»',
+		address: 'готель «Катерина», вул. Сонячна, 55-Б, Поляна, Закарпатська обл.',
+		category: 'Гарячий чан на території готельно-ресторанного комплексу «Катерина».',
+		image: '/images/spa/maliy-chan.png',
+		position: { lat: 48.621390668230035, lng: 22.970576982649888 },
+	},
+	{
+		name: 'Чан (SPA на гарячій плиті)',
+		address: 'вул. Курортна, 27, Поляна, Закарпатська обл.',
+		category: '★ 5,0 (4) · SPA-процедури на гарячій кам’яній плиті',
+		image: '/images/spa/fitobochka.png',
+		position: { lat: 48.624395001303014, lng: 22.95056637197927 },
+	},
+	{
+		name: 'SPA та оздоровлення «Континент»',
+		address: 'готель «Континент», вул. Сонячна, 59, Поляна, Закарпатська обл.',
+		category:
+			'Оздоровчий комплекс готелю «Континент»: критий басейн, сауна; у описах комплексу також згадують масажі та SPA-послуги для гостей.',
+		image: '/images/accommodation/kontinent.jpg',
+		position: { lat: 48.62058462616725, lng: 22.9702754849307 },
+	},
+]
+
+/**
+ * Темно-зелений пін (#166534 — «Карпати / гори / природа»), іконка FilterHdr з `@mui/icons-material`.
+ */
+const touristCityMapPinIconDataUrl = (() => {
+	const filterHdrPath = 'm14 6-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22z'
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56">
+  <path fill="#ffffff" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  <g transform="translate(24 18) scale(0.82) translate(-24 -18)">
+    <path fill="#166534" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
+  </g>
+  <g transform="translate(24 17) scale(0.72) translate(-12 -12)" fill="#ffffff">
+    <path d="${filterHdrPath}"/>
+  </g>
+</svg>`
+	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
+})()
+
+/** Гірські оглядові точки та туристичні пам’ятки (координати з Google Maps). */
+const touristCityMapMarkers = [
+	{
+		name: 'Гора Рожок — Chalet Family, оглядовий майданчик',
+		address: 'с. Голубине, Закарпатська обл.',
+		category: '★ 4,9 (12) · зона для прогулянок · оглядовий майданчик',
+		image: '/images/gallery/golovna-foto.jpeg',
+		position: { lat: 48.608805906666305, lng: 23.01986710639653 },
+	},
+	{
+		name: 'Гора Малий Вижень',
+		address: 'с. Уклин, Закарпатська обл.',
+		category: '★ 5,0 (6) · туристична пам’ятка',
+		image: '/images/gallery/golovna-foto-2.jpeg',
+		position: { lat: 48.673916128142324, lng: 22.947541351811637 },
+	},
+	{
+		name: 'Гора Великий Вижень',
+		address: 'с. Верхня Грабівниця, Закарпатська обл.',
+		category: '★ 4,7 (6) · туристична пам’ятка',
+		image: '/images/gallery/golovna-foto-3.jpg',
+		position: { lat: 48.70178118047461, lng: 22.957258642049577 },
+	},
+	{
+		name: 'Гора Ведмежа',
+		address: 'с. Уклин, Закарпатська обл.',
+		category: '★ 4,8 (5) · зона для прогулянок',
+		image: '/images/entertainment/tybinh-v2-1.webp',
+		position: { lat: 48.65316352015213, lng: 22.965168433299574 },
+	},
+	{
+		name: 'Гора Липча',
+		address: 'с. Уклин, Закарпатська обл. (E471)',
+		category: 'Туристична пам’ятка · огляд з висоти',
+		image: '/images/entertainment/tybinh-v2-2.webp',
+		position: { lat: 48.66332239338579, lng: 23.02946671577749 },
+	},
+]
 
 const faqItems = [
 	{
@@ -318,21 +579,122 @@ const faqItems = [
 ]
 
 const campYears = ['2026', '2025', '2024'] as const
-const skiSeasons = ['ЗИМА', 'ВСЕСЕЗОН', 'ЛІТО'] as const
 const heroSlides = [
 	'/images/gallery/golovna-foto.jpeg',
 	'/images/gallery/golovna-foto-2.jpeg',
 	'/images/gallery/golovna-foto-3.jpg',
 ]
+
+/** Ті самі path, що в пінах карти (MUI Hotel, FoodBank, ShoppingCart, LocalPharmacy, HotTub, FilterHdr). */
+function MapLegendRow({
+	pinClassName,
+	labelClassName,
+	label,
+	description,
+	children,
+}: {
+	pinClassName: string
+	labelClassName: string
+	label: string
+	description: string
+	children: ReactNode
+}) {
+	return (
+		<li className='flex gap-2'>
+			<span
+				className={`mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md shadow-sm ring-1 ring-white/80 ${pinClassName}`}
+				aria-hidden
+			>
+				<svg viewBox='0 0 24 24' className='size-[15px] text-white' fill='currentColor'>
+					{children}
+				</svg>
+			</span>
+			<span>
+				<span className={`font-semibold ${labelClassName}`}>{label}</span> — {description}
+			</span>
+		</li>
+	)
+}
+
+const mapLegendListClass =
+	'pointer-events-auto space-y-2 text-[10px] leading-snug text-slate-700 sm:text-xs'
+
+function MapLegendTitle({ id }: { id?: string }) {
+	return (
+		<p
+			id={id}
+			className='pointer-events-auto mb-2 border-b border-slate-200/80 pb-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-600 sm:text-[11px]'
+		>
+			Умовні позначення
+		</p>
+	)
+}
+
+function MapLegendList({ className = mapLegendListClass }: { className?: string }) {
+	return (
+		<ul className={className}>
+			<MapLegendRow
+				pinClassName='bg-[#dc2626]'
+				labelClassName='text-[#dc2626]'
+				label='Готелі Поляни'
+				description='житло та готельні комплекси курорту'
+			>
+				<path d='M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3m12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4' />
+			</MapLegendRow>
+			<MapLegendRow
+				pinClassName='bg-[#f97316]'
+				labelClassName='text-[#ea580c]'
+				label='Їжа'
+				description='заклади харчування'
+			>
+				<path d='M12 3 4 9v12h16V9zm.5 9.5c0 .83-.67 1.5-1.5 1.5v4h-1v-4c-.83 0-1.5-.67-1.5-1.5v-3h1v3h.5v-3h1v3h.5v-3h1zM15 18h-1v-3.5h-1v-3c0-1.1.9-2 2-2z' />
+			</MapLegendRow>
+			<MapLegendRow
+				pinClassName='bg-[#6d28d9]'
+				labelClassName='text-[#6d28d9]'
+				label='Магазини'
+				description='кошик'
+			>
+				<path d='M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2M1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2' />
+			</MapLegendRow>
+			<MapLegendRow
+				pinClassName='bg-[#047857]'
+				labelClassName='text-[#047857]'
+				label='Аптеки'
+				description='аптека та медзаклади'
+			>
+				<path d='M21 5h-2.64l1.14-3.14L17.15 1l-1.46 4H3v2l2 6-2 6v2h18v-2l-2-6 2-6zm-5 9h-3v3h-2v-3H8v-2h3V9h2v3h3z' />
+			</MapLegendRow>
+			<MapLegendRow
+				pinClassName='bg-[#0e7490]'
+				labelClassName='text-[#0e7490]'
+				label='SPA'
+				description='чани та SPA'
+			>
+				<circle cx='7' cy='6' r='2' />
+				<path d='M11.15 12c-.31-.22-.59-.46-.82-.72l-1.4-1.55c-.19-.21-.43-.38-.69-.5-.29-.14-.62-.23-.96-.23h-.03C6.01 9 5 10.01 5 11.25V12H2v8c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-8zM7 20H5v-6h2zm4 0H9v-6h2zm4 0h-2v-6h2zm4 0h-2v-6h2zm-.35-14.14-.07-.07c-.57-.62-.82-1.41-.67-2.2L18 3h-1.89l-.06.43c-.2 1.36.27 2.71 1.3 3.72l.07.06c.57.62.82 1.41.67 2.2l-.11.59h1.91l.06-.43c.21-1.36-.27-2.71-1.3-3.71m-4 0-.07-.07c-.57-.62-.82-1.41-.67-2.2L14 3h-1.89l-.06.43c-.2 1.36.27 2.71 1.3 3.72l.07.06c.57.62.82 1.41.67 2.2l-.11.59h1.91l.06-.43c.21-1.36-.27-2.71-1.3-3.71' />
+			</MapLegendRow>
+			<MapLegendRow
+				pinClassName='bg-[#166534]'
+				labelClassName='text-[#166534]'
+				label='Огляд'
+				description='оглядові точки'
+			>
+				<path d='m14 6-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22z' />
+			</MapLegendRow>
+		</ul>
+	)
+}
+
 export default function HomePage() {
 	const [favoriteAccommodations, setFavoriteAccommodations] = useState<Record<string, boolean>>({})
 	const [activeCampYear, setActiveCampYear] = useState<(typeof campYears)[number]>('2026')
-	const [activeSkiSeason, setActiveSkiSeason] = useState<(typeof skiSeasons)[number]>('ЗИМА')
 	const [activeHeroSlide, setActiveHeroSlide] = useState(0)
 	const [openFaqIndexes, setOpenFaqIndexes] = useState<Set<number>>(new Set())
 	const [mapError, setMapError] = useState<string | null>(null)
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
 	const [isMobileSearch, setIsMobileSearch] = useState(false)
+	const [isMapLegendExpanded, setIsMapLegendExpanded] = useState(true)
 	const mapContainerRef = useRef<HTMLDivElement | null>(null)
 	const faqColumns = faqItems.reduce(
 		(columns, item, index) => {
@@ -388,9 +750,11 @@ export default function HomePage() {
 				center: hotelsMapMarkers[0].position,
 				zoom: 14,
 				mapTypeId: 'hybrid',
-				streetViewControl: false,
-				fullscreenControl: true,
+				/* Усе зайве вимкнено; лишаємо лише тип карти та повноекран — стилізовані в globals.css (як легенда). */
+				disableDefaultUI: true,
 				mapTypeControl: true,
+				fullscreenControl: true,
+				keyboardShortcuts: false,
 				clickableIcons: false,
 				styles: [
 					{ featureType: 'poi', stylers: [{ visibility: 'off' }] },
@@ -404,18 +768,48 @@ export default function HomePage() {
 			let activeInfoWindow: any = null
 			const bounds = new win.google.maps.LatLngBounds()
 
-			const shopIcon = {
-				url: shopMapPinIconDataUrl,
+			const diningIcon = {
+				url: diningMapPinIconDataUrl,
 				scaledSize: new win.google.maps.Size(44, 52),
 				anchor: new win.google.maps.Point(22, 52),
 			}
 
-			hotelsMapMarkers.forEach((hotel, index) => {
+			const shoppingIcon = {
+				url: shoppingMapPinIconDataUrl,
+				scaledSize: new win.google.maps.Size(44, 52),
+				anchor: new win.google.maps.Point(22, 52),
+			}
+
+			const pharmacyIcon = {
+				url: pharmacyMapPinIconDataUrl,
+				scaledSize: new win.google.maps.Size(44, 52),
+				anchor: new win.google.maps.Point(22, 52),
+			}
+
+			const hotelIcon = {
+				url: hotelMapPinIconDataUrl,
+				scaledSize: new win.google.maps.Size(44, 52),
+				anchor: new win.google.maps.Point(22, 52),
+			}
+
+			const spaIcon = {
+				url: spaMapPinIconDataUrl,
+				scaledSize: new win.google.maps.Size(44, 52),
+				anchor: new win.google.maps.Point(22, 52),
+			}
+
+			const touristCityIcon = {
+				url: touristCityMapPinIconDataUrl,
+				scaledSize: new win.google.maps.Size(44, 52),
+				anchor: new win.google.maps.Point(22, 52),
+			}
+
+			hotelsMapMarkers.forEach(hotel => {
 				const marker = new win.google.maps.Marker({
 					position: hotel.position,
 					map,
 					title: hotel.name,
-					label: index === 0 ? '★' : undefined,
+					icon: hotelIcon,
 				})
 
 				bounds.extend(hotel.position)
@@ -491,38 +885,38 @@ export default function HomePage() {
 				})
 			})
 
-			shopsMapMarkers.forEach(shop => {
+			diningMapMarkers.forEach(place => {
 				const marker = new win.google.maps.Marker({
-					position: shop.position,
+					position: place.position,
 					map,
-					title: shop.name,
-					icon: shopIcon,
+					title: place.name,
+					icon: diningIcon,
 				})
 
-				bounds.extend(shop.position)
+				bounds.extend(place.position)
 
 				const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-					`${shop.name}, ${shop.address}`
+					`${place.name}, ${place.address}`
 				)}`
 				const saveLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-					`${shop.name}, ${shop.address}`
+					`${place.name}, ${place.address}`
 				)}`
 
 				const infoWindow = new win.google.maps.InfoWindow({
 					content: `<div style="width:296px;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 12px 22px rgba(15,23,42,.2);line-height:1.35">
 						<div style="position:relative;height:98px;overflow:hidden">
 							<img
-								src="${shop.image}"
-								alt="${shop.name}"
+								src="${place.image}"
+								alt="${place.name}"
 								style="display:block;width:100%;height:100%;object-fit:cover"
 							/>
 							<div style="position:absolute;left:8px;top:8px;background:rgba(249,115,22,.95);padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;color:#fff">
-								Магазин
+								Їжа
 							</div>
 						</div>
 						<div style="padding:10px 12px 12px">
 							<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-								<div style="font-size:16px;font-weight:700;color:#2d333d;line-height:1.2">${shop.name}</div>
+								<div style="font-size:16px;font-weight:700;color:#2d333d;line-height:1.2">${place.name}</div>
 								<div style="display:flex;gap:8px;flex-shrink:0">
 									<a
 										href="${routeLink}"
@@ -549,8 +943,300 @@ export default function HomePage() {
 									</a>
 								</div>
 							</div>
-							<div style="margin-top:6px;font-size:12px;color:#475569">${shop.category}</div>
-							<div style="margin-top:4px;font-size:12px;color:#64748b">${shop.address}</div>
+							<div style="margin-top:6px;font-size:12px;color:#475569">${place.category}</div>
+							<div style="margin-top:4px;font-size:12px;color:#64748b">${place.address}</div>
+						</div>
+					</div>`,
+				})
+
+				marker.addListener('click', () => {
+					if (activeInfoWindow) {
+						activeInfoWindow.close()
+					}
+					infoWindow.open({ anchor: marker, map })
+					activeInfoWindow = infoWindow
+				})
+			})
+
+			shopsMapMarkers.forEach(store => {
+				const marker = new win.google.maps.Marker({
+					position: store.position,
+					map,
+					title: store.name,
+					icon: shoppingIcon,
+				})
+
+				bounds.extend(store.position)
+
+				const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+					`${store.name}, ${store.address}`
+				)}`
+				const saveLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+					`${store.name}, ${store.address}`
+				)}`
+
+				const infoWindow = new win.google.maps.InfoWindow({
+					content: `<div style="width:296px;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 12px 22px rgba(15,23,42,.2);line-height:1.35">
+						<div style="position:relative;height:98px;overflow:hidden">
+							<img
+								src="${store.image}"
+								alt="${store.name}"
+								style="display:block;width:100%;height:100%;object-fit:cover"
+							/>
+							<div style="position:absolute;left:8px;top:8px;background:rgba(109,40,217,.95);padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;color:#fff">
+								Магазин
+							</div>
+						</div>
+						<div style="padding:10px 12px 12px">
+							<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+								<div style="font-size:16px;font-weight:700;color:#2d333d;line-height:1.2">${store.name}</div>
+								<div style="display:flex;gap:8px;flex-shrink:0">
+									<a
+										href="${routeLink}"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Маршрути"
+										style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#ede9fe;color:#6d28d9;font-size:13px;text-decoration:none;cursor:pointer"
+									>
+										<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+											<path d="M12 2 22 12 12 22 2 12Z" fill="#6d28d9" />
+											<path d="M9 12h6M12 9l3 3-3 3" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+										</svg>
+									</a>
+									<a
+										href="${saveLink}"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Зберегти"
+										style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#ede9fe;color:#6d28d9;font-size:13px;text-decoration:none;cursor:pointer"
+									>
+										<svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+											<path d="M7 4h10a1 1 0 0 1 1 1v14l-6-2.8L6 19V5a1 1 0 0 1 1-1Z" stroke="#6d28d9" stroke-width="1.8" stroke-linejoin="round" />
+										</svg>
+									</a>
+								</div>
+							</div>
+							<div style="margin-top:6px;font-size:12px;color:#475569">${store.category}</div>
+							<div style="margin-top:4px;font-size:12px;color:#64748b">${store.address}</div>
+						</div>
+					</div>`,
+				})
+
+				marker.addListener('click', () => {
+					if (activeInfoWindow) {
+						activeInfoWindow.close()
+					}
+					infoWindow.open({ anchor: marker, map })
+					activeInfoWindow = infoWindow
+				})
+			})
+
+			pharmacyMapMarkers.forEach(ph => {
+				const marker = new win.google.maps.Marker({
+					position: ph.position,
+					map,
+					title: ph.name,
+					icon: pharmacyIcon,
+				})
+
+				bounds.extend(ph.position)
+
+				const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+					`${ph.name}, ${ph.address}`
+				)}`
+				const saveLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+					`${ph.name}, ${ph.address}`
+				)}`
+
+				const infoWindow = new win.google.maps.InfoWindow({
+					content: `<div style="width:296px;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 12px 22px rgba(15,23,42,.2);line-height:1.35">
+						<div style="position:relative;height:98px;overflow:hidden">
+							<img
+								src="${ph.image}"
+								alt="${ph.name}"
+								style="display:block;width:100%;height:100%;object-fit:cover"
+							/>
+							<div style="position:absolute;left:8px;top:8px;background:rgba(4,120,87,.95);padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;color:#fff">
+								${ph.badge}
+							</div>
+						</div>
+						<div style="padding:10px 12px 12px">
+							<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+								<div style="font-size:16px;font-weight:700;color:#2d333d;line-height:1.2">${ph.name}</div>
+								<div style="display:flex;gap:8px;flex-shrink:0">
+									<a
+										href="${routeLink}"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Маршрути"
+										style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#d1fae5;color:#047857;font-size:13px;text-decoration:none;cursor:pointer"
+									>
+										<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+											<path d="M12 2 22 12 12 22 2 12Z" fill="#047857" />
+											<path d="M9 12h6M12 9l3 3-3 3" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+										</svg>
+									</a>
+									<a
+										href="${saveLink}"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Зберегти"
+										style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#d1fae5;color:#047857;font-size:13px;text-decoration:none;cursor:pointer"
+									>
+										<svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+											<path d="M7 4h10a1 1 0 0 1 1 1v14l-6-2.8L6 19V5a1 1 0 0 1 1-1Z" stroke="#047857" stroke-width="1.8" stroke-linejoin="round" />
+										</svg>
+									</a>
+								</div>
+							</div>
+							<div style="margin-top:6px;font-size:12px;color:#475569">${ph.category}</div>
+							<div style="margin-top:4px;font-size:12px;color:#64748b">${ph.address}</div>
+						</div>
+					</div>`,
+				})
+
+				marker.addListener('click', () => {
+					if (activeInfoWindow) {
+						activeInfoWindow.close()
+					}
+					infoWindow.open({ anchor: marker, map })
+					activeInfoWindow = infoWindow
+				})
+			})
+
+			spaMapMarkers.forEach(spot => {
+				const marker = new win.google.maps.Marker({
+					position: spot.position,
+					map,
+					title: spot.name,
+					icon: spaIcon,
+				})
+
+				bounds.extend(spot.position)
+
+				const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+					`${spot.name}, ${spot.address}`
+				)}`
+				const saveLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+					`${spot.name}, ${spot.address}`
+				)}`
+
+				const infoWindow = new win.google.maps.InfoWindow({
+					content: `<div style="width:296px;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 12px 22px rgba(15,23,42,.2);line-height:1.35">
+						<div style="position:relative;height:98px;overflow:hidden">
+							<img
+								src="${spot.image}"
+								alt="${spot.name}"
+								style="display:block;width:100%;height:100%;object-fit:cover"
+							/>
+							<div style="position:absolute;left:8px;top:8px;background:rgba(14,116,144,.95);padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;color:#fff">
+								SPA
+							</div>
+						</div>
+						<div style="padding:10px 12px 12px">
+							<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+								<div style="font-size:16px;font-weight:700;color:#2d333d;line-height:1.2">${spot.name}</div>
+								<div style="display:flex;gap:8px;flex-shrink:0">
+									<a
+										href="${routeLink}"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Маршрути"
+										style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#cffafe;color:#0e7490;font-size:13px;text-decoration:none;cursor:pointer"
+									>
+										<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+											<path d="M12 2 22 12 12 22 2 12Z" fill="#0e7490" />
+											<path d="M9 12h6M12 9l3 3-3 3" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+										</svg>
+									</a>
+									<a
+										href="${saveLink}"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Зберегти"
+										style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#cffafe;color:#0e7490;font-size:13px;text-decoration:none;cursor:pointer"
+									>
+										<svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+											<path d="M7 4h10a1 1 0 0 1 1 1v14l-6-2.8L6 19V5a1 1 0 0 1 1-1Z" stroke="#0e7490" stroke-width="1.8" stroke-linejoin="round" />
+										</svg>
+									</a>
+								</div>
+							</div>
+							<div style="margin-top:6px;font-size:12px;color:#475569">${spot.category}</div>
+							<div style="margin-top:4px;font-size:12px;color:#64748b">${spot.address}</div>
+						</div>
+					</div>`,
+				})
+
+				marker.addListener('click', () => {
+					if (activeInfoWindow) {
+						activeInfoWindow.close()
+					}
+					infoWindow.open({ anchor: marker, map })
+					activeInfoWindow = infoWindow
+				})
+			})
+
+			touristCityMapMarkers.forEach(city => {
+				const marker = new win.google.maps.Marker({
+					position: city.position,
+					map,
+					title: city.name,
+					icon: touristCityIcon,
+				})
+
+				bounds.extend(city.position)
+
+				const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+					`${city.name}, ${city.address}`
+				)}`
+				const saveLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+					`${city.name}, ${city.address}`
+				)}`
+
+				const infoWindow = new win.google.maps.InfoWindow({
+					content: `<div style="width:296px;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 12px 22px rgba(15,23,42,.2);line-height:1.35">
+						<div style="position:relative;height:98px;overflow:hidden">
+							<img
+								src="${city.image}"
+								alt="${city.name}"
+								style="display:block;width:100%;height:100%;object-fit:cover"
+							/>
+							<div style="position:absolute;left:8px;top:8px;background:rgba(22,101,52,.95);padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:700;color:#fff">
+								Огляд
+							</div>
+						</div>
+						<div style="padding:10px 12px 12px">
+							<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+								<div style="font-size:16px;font-weight:700;color:#2d333d;line-height:1.2">${city.name}</div>
+								<div style="display:flex;gap:8px;flex-shrink:0">
+									<a
+										href="${routeLink}"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Маршрути"
+										style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#dcfce7;color:#166534;font-size:13px;text-decoration:none;cursor:pointer"
+									>
+										<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+											<path d="M12 2 22 12 12 22 2 12Z" fill="#166534" />
+											<path d="M9 12h6M12 9l3 3-3 3" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+										</svg>
+									</a>
+									<a
+										href="${saveLink}"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Зберегти"
+										style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#dcfce7;color:#166534;font-size:13px;text-decoration:none;cursor:pointer"
+									>
+										<svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+											<path d="M7 4h10a1 1 0 0 1 1 1v14l-6-2.8L6 19V5a1 1 0 0 1 1-1Z" stroke="#166534" stroke-width="1.8" stroke-linejoin="round" />
+										</svg>
+									</a>
+								</div>
+							</div>
+							<div style="margin-top:6px;font-size:12px;color:#475569">${city.category}</div>
+							<div style="margin-top:4px;font-size:12px;color:#64748b">${city.address}</div>
 						</div>
 					</div>`,
 				})
@@ -568,7 +1254,8 @@ export default function HomePage() {
 			win.google.maps.event.addListenerOnce(map, 'idle', () => {
 				const zoom = map.getZoom()
 				if (typeof zoom === 'number') {
-					map.setZoom(Math.max(12, zoom - 1))
+					/* Мін. ~9 — щоб після fitBounds були видні й віддалені обласні міста; «−1» дає легкий відступ від країв. */
+					map.setZoom(Math.max(9, zoom - 1))
 				}
 			})
 		}
@@ -926,28 +1613,9 @@ export default function HomePage() {
 			</section>
 
 			<section className='bg-white px-4 py-6 sm:px-16 lg:px-24'>
-				<div className='mb-4 grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center'>
-					<h2 className='text-2xl font-bold text-[#2D333D] sm:justify-self-start'>
-						Гірськолижний відпочинок
-					</h2>
-					<div className='hidden items-center gap-2 sm:flex sm:justify-self-center'>
-						{skiSeasons.map(season => (
-							<button
-								key={season}
-								type='button'
-								onClick={() => setActiveSkiSeason(season)}
-								aria-pressed={activeSkiSeason === season}
-								className={`cursor-pointer rounded-md px-4 py-1 text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 ${
-									activeSkiSeason === season
-										? 'bg-[#53C4DA] text-white'
-										: 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-								}`}
-							>
-								{season}
-							</button>
-						))}
-					</div>
-					<button className='justify-self-start cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:justify-self-end'>
+				<div className='mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+					<h2 className='text-2xl font-bold text-[#2D333D]'>Гірськолижний відпочинок</h2>
+					<button className='cursor-pointer self-start text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:self-auto'>
 						Всі активності →
 					</button>
 				</div>
@@ -1033,36 +1701,75 @@ export default function HomePage() {
 			<section className='bg-[#F5F6F7] px-4 pb-10 pt-4 sm:px-16 lg:px-24'>
 				<div className='mx-auto w-full max-w-7xl'>
 					<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Карта готелів та магазинів Поляни</h2>
-					<div className='relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm'>
-						{isMapFallbackMode ? (
-							<iframe
-								title='Fallback карта готелів Поляни'
-								src='https://maps.google.com/maps?hl=uk&q=%D0%93%D0%BE%D1%82%D0%B5%D0%BB%D1%8C+%D0%9A%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0+%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0&t=k&z=14&ie=UTF8&iwloc=B&output=embed'
-								className='h-[420px] w-full'
-								loading='lazy'
-								referrerPolicy='no-referrer-when-downgrade'
-							/>
-						) : (
-							<div ref={mapContainerRef} className='h-[420px] w-full' />
-						)}
-						<a
-							href='https://maps.google.com/?q=%D0%93%D0%BE%D1%82%D0%B5%D0%BB%D1%8C+%D0%9A%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0+%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0'
-							target='_blank'
-							rel='noreferrer'
-							className='absolute left-3 top-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-[#2563EB] shadow-sm ring-1 ring-slate-200 hover:bg-slate-50'
-						>
-							Відкрити на Картах ↗
-						</a>
-						{mapError ? (
-							<div className='pointer-events-none absolute bottom-14 left-1/2 -translate-x-1/2 rounded-md bg-white/90 px-3 py-1 text-xs font-medium text-slate-600 shadow-sm'>
-								{mapError}
+					<div className='relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm'>
+						<div className='relative h-[420px] w-full shrink-0'>
+							{isMapFallbackMode ? (
+								<iframe
+									title='Fallback карта готелів Поляни'
+									src='https://maps.google.com/maps?hl=uk&q=%D0%93%D0%BE%D1%82%D0%B5%D0%BB%D1%8C+%D0%9A%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0+%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0&t=k&z=14&ie=UTF8&iwloc=B&output=embed'
+									className='h-[420px] w-full'
+									loading='lazy'
+									referrerPolicy='no-referrer-when-downgrade'
+								/>
+							) : (
+								<div ref={mapContainerRef} className='polyana-google-map-root h-[420px] w-full' />
+							)}
+							{mapError ? (
+								<div className='pointer-events-none absolute bottom-10 left-1/2 z-[2] -translate-x-1/2 rounded-md bg-white/90 px-3 py-1 text-xs font-medium text-slate-600 shadow-sm sm:bottom-14'>
+									{mapError}
+								</div>
+							) : null}
+							{/* Легенда на карті — від sm; вкладка зліва, згортання вліво */}
+							<div
+								className='absolute left-2 top-1/2 z-[1] hidden -translate-y-1/2 sm:left-3 sm:flex sm:items-stretch'
+								role='presentation'
+							>
+								<button
+									type='button'
+									onClick={() => setIsMapLegendExpanded(prev => !prev)}
+									className={`pointer-events-auto flex w-9 shrink-0 flex-col items-center justify-center border border-slate-900/15 bg-white/22 text-slate-700 shadow-md ring-1 ring-slate-900/10 backdrop-blur-md transition-colors hover:bg-white/30 ${
+										isMapLegendExpanded
+											? 'rounded-l-lg rounded-r-none border-r-0'
+											: 'min-h-[104px] rounded-lg'
+									}`}
+									aria-expanded={isMapLegendExpanded}
+									aria-controls='polyana-map-legend-desktop-panel'
+									aria-label={
+										isMapLegendExpanded
+											? 'Згорнути умовні позначення вліво'
+											: 'Показати умовні позначення'
+									}
+								>
+									{isMapLegendExpanded ? (
+										<FaChevronLeft className='size-3.5 shrink-0' aria-hidden />
+									) : (
+										<FaChevronRight className='size-3.5 shrink-0' aria-hidden />
+									)}
+								</button>
+								<div
+									id='polyana-map-legend-desktop-panel'
+									role='region'
+									aria-label='Умовні позначення на карті'
+									aria-hidden={!isMapLegendExpanded}
+									className={`overflow-hidden transition-[max-width,opacity] duration-300 ease-out ${
+										isMapLegendExpanded ? 'max-w-56 opacity-100' : 'pointer-events-none max-w-0 opacity-0'
+									}`}
+								>
+									<div className='pointer-events-auto flex w-56 flex-col rounded-r-lg border border-l-0 border-slate-900/15 bg-white/22 px-2.5 py-2 shadow-md ring-1 ring-slate-900/10 backdrop-blur-md sm:px-3 sm:py-2.5'>
+										<MapLegendTitle />
+										<MapLegendList />
+									</div>
+								</div>
 							</div>
-						) : null}
-						<div className='border-t border-slate-200 px-4 py-3 text-xs text-slate-600 sm:px-5 sm:text-sm'>
-							<span className='font-semibold text-[#2D333D]'>Готелі</span> — стандартні мітки; зірка на готелі
-							«Катерина». <span className='font-semibold text-[#ea580c]'>Магазини</span> — помаранчеві піни з
-							іконкою сумки.
 						</div>
+						{/* Легенда під картою — до sm; завжди видима, без згортання */}
+						<section
+							className='z-0 border-t border-slate-900/10 bg-white/22 px-3 py-2.5 shadow-sm ring-1 ring-slate-900/10 backdrop-blur-md sm:hidden'
+							aria-labelledby='polyana-map-legend-title'
+						>
+							<MapLegendTitle id='polyana-map-legend-title' />
+							<MapLegendList />
+						</section>
 					</div>
 				</div>
 
