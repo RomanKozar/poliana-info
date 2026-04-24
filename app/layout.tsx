@@ -106,7 +106,10 @@ export default function RootLayout({
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
 				/>
 				<Header />
-				<main className='flex-1 w-full' style={{ paddingTop: 'var(--header-offset, 68px)' }}>
+				<main
+					className='flex min-h-0 w-full flex-col'
+					style={{ paddingTop: 'var(--header-offset, 68px)' }}
+				>
 					{children}
 				</main>
 				<Footer />

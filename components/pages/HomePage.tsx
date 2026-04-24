@@ -3,6 +3,13 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import Image from 'next/image'
 import type { IconType } from 'react-icons'
+import { hotelMapPinIconDataUrl } from '@/lib/google-map-hotel-pin'
+import {
+	ACCOMMODATION_MAP_COLLAPSE_ICON,
+	ACCOMMODATION_MAP_EXPAND_ICON,
+	attachPolyanaMapExpandAndZoomControls,
+} from '@/lib/google-map-stack-controls'
+import { polyanaHotels as hotelsMapMarkers } from '@/lib/polyana-hotels'
 import {
 	FaBiking,
 	FaCamera,
@@ -178,53 +185,6 @@ const popularNow = [
 		title: 'SPA для тіла та душі',
 		text: 'Релакс, масажі та процедури.',
 		image: '/images/gallery/sayna.png',
-	},
-]
-
-const hotelsMapMarkers = [
-	{
-		name: 'Готель Катерина',
-		address: 'Сонячна, 55 Б, Поляна',
-		description: 'Сімейний готель зі SPA, рестораном та затишною територією.',
-		image: '/images/accommodation/kateryna-v1.jpg',
-		price: 'від 1500 грн',
-		rating: '4.3 (1104)',
-		feature: 'Безкоштовний Wi-Fi',
-		phone: '+380502149266',
-		position: { lat: 48.62146474176638, lng: 22.97048064221818 },
-	},
-	{
-		name: 'Готель Континент',
-		address: 'Сонячна, 59, Поляна',
-		description: 'Комфортні номери, басейн та оздоровчі процедури.',
-		image: '/images/accommodation/kontinent.jpg',
-		price: 'від 1800 грн',
-		rating: '4.3 (1256)',
-		feature: 'Сніданок включено',
-		phone: '+380502149266',
-		position: { lat: 48.62080723777113, lng: 22.969461724127456 },
-	},
-	{
-		name: 'River Side Hotel',
-		address: 'вул. Духновича, 68, Поляна',
-		description: 'Тиха локація біля річки для спокійного відпочинку.',
-		image: '/images/accommodation/river-side.jpg',
-		price: 'від 1100 грн',
-		rating: '3.8 (61)',
-		feature: 'Поруч річка та тиша',
-		phone: '+380502149266',
-		position: { lat: 48.62244278745904, lng: 22.96724255849585 },
-	},
-	{
-		name: 'Arena Apart-Hotel',
-		address: 'Курортна, 23, Поляна',
-		description: 'Апарт-готель зі SPA-зоною та сучасними апартаментами.',
-		image: '/images/accommodation/arena.webp',
-		price: 'від 2500 грн',
-		rating: '4.7 (212)',
-		feature: 'Сучасні апартаменти',
-		phone: '+380502149266',
-		position: { lat: 48.6238240422547, lng: 22.948909722484508 },
 	},
 ]
 
@@ -409,24 +369,6 @@ const pharmacyMapPinIconDataUrl = (() => {
   </g>
   <g transform="translate(24 17) scale(0.72) translate(-12 -12)" fill="#ffffff">
     <path d="${pharmacyPath}"/>
-  </g>
-</svg>`
-	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
-})()
-
-/**
- * Червоний пін з іконкою Hotel (той самий path, що й `Hotel` з `@mui/icons-material`).
- */
-const hotelMapPinIconDataUrl = (() => {
-	const hotelPath =
-		'M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3m12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4'
-	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56">
-  <path fill="#ffffff" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
-  <g transform="translate(24 18) scale(0.82) translate(-24 -18)">
-    <path fill="#DC2626" d="M24 4C16.26 4 10 10.26 10 18c0 10.5 14 26 14 26s14-15.5 14-26c0-7.74-6.26-14-14-14z"/>
-  </g>
-  <g transform="translate(24 17) scale(0.72) translate(-12 -12)" fill="#ffffff">
-    <path d="${hotelPath}"/>
   </g>
 </svg>`
 	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
@@ -695,7 +637,9 @@ export default function HomePage() {
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
 	const [isMobileSearch, setIsMobileSearch] = useState(false)
 	const [isMapLegendExpanded, setIsMapLegendExpanded] = useState(true)
+	const [isHomeMapExpanded, setIsHomeMapExpanded] = useState(false)
 	const mapContainerRef = useRef<HTMLDivElement | null>(null)
+	const mapInstanceRef = useRef<unknown>(null)
 	const faqColumns = faqItems.reduce(
 		(columns, item, index) => {
 			columns[index % 2].push({ item, index })
@@ -741,6 +685,18 @@ export default function HomePage() {
 			initPolyanaHotelsMap?: () => void
 		}
 
+		let detachCustomControls: (() => void) | null = null
+		const clearCustomControls = () => {
+			detachCustomControls?.()
+			detachCustomControls = null
+		}
+
+		const teardownMap = () => {
+			clearCustomControls()
+			mapInstanceRef.current = null
+			delete win.initPolyanaHotelsMap
+		}
+
 		const initMap = () => {
 			if (!mapContainerRef.current || !win.google?.maps) {
 				return
@@ -750,10 +706,12 @@ export default function HomePage() {
 				center: hotelsMapMarkers[0].position,
 				zoom: 14,
 				mapTypeId: 'hybrid',
-				/* Усе зайве вимкнено; лишаємо лише тип карти та повноекран — стилізовані в globals.css (як легенда). */
+				gestureHandling: 'greedy',
+				/* Як на проживанні: без нативних кнопок Google; справа — div.accommodation-map-stack-controls (розгортання + зум). */
 				disableDefaultUI: true,
-				mapTypeControl: true,
-				fullscreenControl: true,
+				mapTypeControl: false,
+				fullscreenControl: false,
+				zoomControl: false,
 				keyboardShortcuts: false,
 				clickableIcons: false,
 				styles: [
@@ -763,6 +721,12 @@ export default function HomePage() {
 					{ featureType: 'administrative', elementType: 'labels', stylers: [{ visibility: 'off' }] },
 					{ elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 				],
+			})
+
+			mapInstanceRef.current = map
+			clearCustomControls()
+			detachCustomControls = attachPolyanaMapExpandAndZoomControls(map, win.google.maps, {
+				onToggleExpand: () => setIsHomeMapExpanded(v => !v),
 			})
 
 			let activeInfoWindow: any = null
@@ -1262,7 +1226,7 @@ export default function HomePage() {
 
 		if (win.google?.maps) {
 			initMap()
-			return
+			return teardownMap
 		}
 
 		win.initPolyanaHotelsMap = initMap
@@ -1279,20 +1243,79 @@ export default function HomePage() {
 				setIsMapFallbackMode(true)
 			}
 			document.head.appendChild(script)
-		} else {
-			const retryId = window.setInterval(() => {
-				if (win.google?.maps) {
-					window.clearInterval(retryId)
-					initMap()
-				}
-			}, 150)
-
-			return () => window.clearInterval(retryId)
+			return teardownMap
 		}
+
+		const retryId = window.setInterval(() => {
+			if (win.google?.maps) {
+				window.clearInterval(retryId)
+				initMap()
+			}
+		}, 150)
 
 		return () => {
-			delete win.initPolyanaHotelsMap
+			window.clearInterval(retryId)
+			teardownMap()
 		}
+	}, [])
+
+	useEffect(() => {
+		const main = document.querySelector('body > main')
+		if (isHomeMapExpanded) {
+			document.body.setAttribute('data-home-map-expanded', 'true')
+			main?.setAttribute('data-home-map-expanded', 'true')
+		} else {
+			document.body.removeAttribute('data-home-map-expanded')
+			main?.removeAttribute('data-home-map-expanded')
+		}
+		return () => {
+			document.body.removeAttribute('data-home-map-expanded')
+			document.querySelector('body > main')?.removeAttribute('data-home-map-expanded')
+		}
+	}, [isHomeMapExpanded])
+
+	useEffect(() => {
+		if (!isHomeMapExpanded) return
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') setIsHomeMapExpanded(false)
+		}
+		window.addEventListener('keydown', onKey)
+		return () => window.removeEventListener('keydown', onKey)
+	}, [isHomeMapExpanded])
+
+	useEffect(() => {
+		const btn = mapContainerRef.current?.querySelector<HTMLButtonElement>(
+			'.accommodation-map-stack-controls__fullscreen'
+		)
+		if (!btn) return
+		const expanded = isHomeMapExpanded
+		btn.setAttribute('aria-pressed', String(expanded))
+		btn.setAttribute('data-expanded', String(expanded))
+		const collapseLabel = 'Зменшити карту'
+		const expandLabel = 'Розгорнути карту'
+		btn.title = expanded ? collapseLabel : expandLabel
+		btn.setAttribute('aria-label', expanded ? collapseLabel : expandLabel)
+		btn.innerHTML = expanded ? ACCOMMODATION_MAP_COLLAPSE_ICON : ACCOMMODATION_MAP_EXPAND_ICON
+	}, [isHomeMapExpanded])
+
+	useEffect(() => {
+		const map = mapInstanceRef.current
+		const win = window as Window & { google?: any }
+		if (!map || !win.google?.maps?.event) return
+		const id = window.requestAnimationFrame(() => {
+			win.google.maps.event.trigger(map, 'resize')
+		})
+		return () => window.cancelAnimationFrame(id)
+	}, [isHomeMapExpanded])
+
+	useEffect(() => {
+		const onResize = () => {
+			const map = mapInstanceRef.current
+			const win = window as Window & { google?: any }
+			if (map && win.google?.maps?.event) win.google.maps.event.trigger(map, 'resize')
+		}
+		window.addEventListener('resize', onResize)
+		return () => window.removeEventListener('resize', onResize)
 	}, [])
 
 	useEffect(() => {
@@ -1698,21 +1721,59 @@ export default function HomePage() {
 				</div>
 			</section>
 
-			<section className='bg-[#F5F6F7] px-4 pb-10 pt-4 sm:px-16 lg:px-24'>
-				<div className='mx-auto w-full max-w-7xl'>
-					<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Карта готелів та магазинів Поляни</h2>
-					<div className='relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm'>
-						<div className='relative h-[420px] w-full shrink-0'>
+			<section
+				className={
+					isHomeMapExpanded
+						? 'fixed inset-x-0 bottom-0 z-40 flex flex-col overflow-hidden bg-[#F5F6F7]'
+						: 'bg-[#F5F6F7] px-4 pb-10 pt-4 sm:px-16 lg:px-24'
+				}
+				style={isHomeMapExpanded ? { top: 'var(--header-offset, 68px)' } : undefined}
+			>
+				<div
+					className={
+						isHomeMapExpanded
+							? 'accommodation-map-expanded-shell flex min-h-0 flex-1 flex-col'
+							: 'mx-auto w-full max-w-7xl'
+					}
+				>
+					<h2
+						className={
+							isHomeMapExpanded
+								? 'sr-only'
+								: 'mb-4 text-2xl font-bold text-[#2D333D]'
+						}
+					>
+						Карта готелів та магазинів Поляни
+					</h2>
+					<div
+						className={`relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-900/5${
+							isHomeMapExpanded ? ' flex min-h-0 flex-1 flex-col' : ''
+						}`}
+					>
+						<div
+							className={
+								isHomeMapExpanded
+									? 'accommodation-map-frame relative flex min-h-0 w-full flex-1 flex-col overflow-hidden bg-slate-100'
+									: 'relative h-[420px] w-full shrink-0'
+							}
+						>
 							{isMapFallbackMode ? (
 								<iframe
 									title='Fallback карта готелів Поляни'
 									src='https://maps.google.com/maps?hl=uk&q=%D0%93%D0%BE%D1%82%D0%B5%D0%BB%D1%8C+%D0%9A%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0+%D0%9F%D0%BE%D0%BB%D1%8F%D0%BD%D0%B0&t=k&z=14&ie=UTF8&iwloc=B&output=embed'
-									className='h-[420px] w-full'
+									className={`w-full min-w-0 ${
+										isHomeMapExpanded ? 'min-h-0 flex-1' : 'h-[420px]'
+									}`}
 									loading='lazy'
 									referrerPolicy='no-referrer-when-downgrade'
 								/>
 							) : (
-								<div ref={mapContainerRef} className='polyana-google-map-root h-[420px] w-full' />
+								<div
+									ref={mapContainerRef}
+									className={`polyana-google-map-root polyana-google-map-root--home-map w-full min-w-0 ${
+										isHomeMapExpanded ? 'min-h-0 flex-1' : 'h-[420px]'
+									}`}
+								/>
 							)}
 							{mapError ? (
 								<div className='pointer-events-none absolute bottom-10 left-1/2 z-[2] -translate-x-1/2 rounded-md bg-white/90 px-3 py-1 text-xs font-medium text-slate-600 shadow-sm sm:bottom-14'>
@@ -1762,9 +1823,11 @@ export default function HomePage() {
 								</div>
 							</div>
 						</div>
-						{/* Легенда під картою — до sm; завжди видима, без згортання */}
+						{/* Легенда під картою — до sm; у розгорнутому режимі ховаємо (лише хедер сайту + карта). */}
 						<section
-							className='z-0 border-t border-slate-900/10 bg-white/22 px-3 py-2.5 shadow-sm ring-1 ring-slate-900/10 backdrop-blur-md sm:hidden'
+							className={`z-0 border-t border-slate-900/10 bg-white/22 px-3 py-2.5 shadow-sm ring-1 ring-slate-900/10 backdrop-blur-md sm:hidden${
+								isHomeMapExpanded ? ' hidden' : ''
+							}`}
 							aria-labelledby='polyana-map-legend-title'
 						>
 							<MapLegendTitle id='polyana-map-legend-title' />
@@ -1772,7 +1835,9 @@ export default function HomePage() {
 						</section>
 					</div>
 				</div>
+			</section>
 
+			<section className='bg-[#F5F6F7] px-4 pb-10 pt-4 sm:px-16 lg:px-24'>
 				<div className='mx-auto mt-8 w-full max-w-7xl'>
 					<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Відповіді на поширені запитання</h2>
 					<div className='grid gap-3 md:grid-cols-2'>

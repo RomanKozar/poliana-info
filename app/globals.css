@@ -204,6 +204,11 @@ body {
  * (як панель «Умовні позначення»: напівпрозорий фон + blur).
  * Обмежено класом .polyana-google-map-root, щоб не чіпати інші карти.
  */
+.polyana-google-map-root .gmnoprint img {
+  max-width: none !important;
+  max-height: none !important;
+}
+
 .polyana-google-map-root .gm-style .gm-style-mtc-bbw {
   background: transparent !important;
   box-shadow: none !important;
@@ -230,6 +235,168 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 8px !important;
+}
+
+/* Головна: розгорнута карта — блок під фіксованим хедером, без прокрутки сторінки під низ. */
+body[data-home-map-expanded='true'] {
+  overflow: hidden;
+}
+
+/*
+ * Розгорнута карта: у потоці документа; main не flex-grow — одразу під картою йде <Footer /> у layout.
+ */
+body[data-accommodation-map-expanded='true'] .accommodation-page {
+  padding-top: 0;
+  padding-bottom: 0;
+  flex: 0 0 auto;
+}
+
+main[data-accommodation-map-expanded='true'] {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.accommodation-map-expanded-shell {
+  --accommodation-map-expanded-pad-y-sum: 2.25rem;
+  position: relative;
+  z-index: 0;
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  flex-direction: column;
+  /* Одна «екранна» висота під хедер (main уже зсунутий на --header-offset) */
+  min-height: calc(100svh - var(--header-offset, 68px));
+  /* Горизонтальні відступи як раніше; знизу — короткий зазор до футера */
+  padding: 1.25rem 1.75rem 1rem;
+  background: #fff;
+}
+
+@media (min-width: 640px) {
+  .accommodation-map-expanded-shell {
+    --accommodation-map-expanded-pad-y-sum: 2.25rem;
+    padding: 1.25rem 2.5rem 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .accommodation-map-expanded-shell {
+    --accommodation-map-expanded-pad-y-sum: 2.75rem;
+    padding: 1.5rem 3.5rem 1.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .accommodation-map-expanded-shell {
+    --accommodation-map-expanded-pad-y-sum: 2.75rem;
+    padding: 1.5rem 4rem 1.25rem;
+  }
+}
+
+/* Висота плитки карти = екран мінус хедер мінус сумарні вертикальні padding оболонки */
+.accommodation-map-expanded-shell .accommodation-map-frame {
+  min-height: calc(
+    100svh - var(--header-offset, 68px) - var(--accommodation-map-expanded-pad-y-sum)
+  );
+}
+
+/*
+ * Проживання та головна: div.accommodation-map-stack-controls (map.controls) —
+ * проживання — повноекран + зум; головна — лише зум; відступ справа однаковий.
+ */
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.75rem 22px 0 0;
+  pointer-events: auto;
+}
+
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls__fullscreen,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls__fullscreen {
+  box-sizing: border-box;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #3c4043;
+  box-shadow:
+    0 1px 2px rgba(60, 64, 67, 0.12),
+    0 2px 6px rgba(60, 64, 67, 0.08);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls__fullscreen:hover,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls__fullscreen:hover {
+  background: #f8f9fa;
+}
+
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls__fullscreen:focus-visible,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls__fullscreen:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
+
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls__zoom,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls__zoom {
+  display: flex;
+  width: 40px;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgba(60, 64, 67, 0.12),
+    0 2px 6px rgba(60, 64, 67, 0.08);
+}
+
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls__zoom-btn,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls__zoom-btn {
+  box-sizing: border-box;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  color: #3c4043;
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls__zoom-btn--in,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls__zoom-btn--in {
+  border-bottom: 1px solid #e8eaed;
+}
+
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls__zoom-btn:hover,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls__zoom-btn:hover {
+  background: #f8f9fa;
+}
+
+.polyana-google-map-root--accommodation .accommodation-map-stack-controls__zoom-btn:focus-visible,
+.polyana-google-map-root--home-map .accommodation-map-stack-controls__zoom-btn:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: -2px;
 }
 
 .polyana-google-map-root .gm-style .gm-fullscreen-control:hover {
