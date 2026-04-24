@@ -1725,7 +1725,7 @@ export default function HomePage() {
 				className={
 					isHomeMapExpanded
 						? 'fixed inset-x-0 bottom-0 z-40 flex flex-col overflow-hidden bg-[#F5F6F7]'
-						: 'bg-[#F5F6F7] px-4 pb-10 pt-4 sm:px-16 lg:px-24'
+						: 'bg-[#F5F6F7] px-4 pb-4 pt-4 sm:px-16 lg:px-24'
 				}
 				style={isHomeMapExpanded ? { top: 'var(--header-offset, 68px)' } : undefined}
 			>
@@ -1825,8 +1825,8 @@ export default function HomePage() {
 						</div>
 						{/* Легенда під картою — до sm; у розгорнутому режимі ховаємо (лише хедер сайту + карта). */}
 						<section
-							className={`z-0 border-t border-slate-900/10 bg-white/22 px-3 py-2.5 shadow-sm ring-1 ring-slate-900/10 backdrop-blur-md sm:hidden${
-								isHomeMapExpanded ? ' hidden' : ''
+							className={`z-0 border-t border-slate-900/10 bg-white/22 px-3 py-2.5 shadow-sm ring-1 ring-slate-900/10 backdrop-blur-md sm:hidden ${
+								isHomeMapExpanded ? 'hidden' : ''
 							}`}
 							aria-labelledby='polyana-map-legend-title'
 						>
@@ -1837,8 +1837,8 @@ export default function HomePage() {
 				</div>
 			</section>
 
-			<section className='bg-[#F5F6F7] px-4 pb-10 pt-4 sm:px-16 lg:px-24'>
-				<div className='mx-auto mt-8 w-full max-w-7xl'>
+			<section className='bg-[#F5F6F7] px-4 pb-10 pt-2 sm:px-16 lg:px-24'>
+				<div className='mx-auto mt-4 w-full max-w-7xl sm:mt-5'>
 					<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Відповіді на поширені запитання</h2>
 					<div className='grid gap-3 md:grid-cols-2'>
 						{faqColumns.map((column, columnIndex) => (
