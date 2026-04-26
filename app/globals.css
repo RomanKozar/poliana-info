@@ -3,6 +3,8 @@
 :root {
   --background: #f5f6f7;
   --foreground: #2d333d;
+  /* Як смуга хедера: components/layout/Header.tsx → bg-cyan-500 */
+  --header-bar: #06b6d4;
 }
 
 @theme inline {
@@ -114,6 +116,14 @@ body {
   transform: scale(0.95);
 }
 
+/* У нижній картці мапи (моб.): той самий вигляд, позиціює батько */
+.heart-container--map-sheet {
+  position: static;
+  top: auto;
+  right: auto;
+  flex-shrink: 0;
+}
+
 .heart-svg-container {
   position: relative;
   width: 100%;
@@ -197,6 +207,104 @@ body {
     transform: scale(1.45);
     opacity: 0;
   }
+}
+
+/* Умовні позначення (головна карта): мобільна — компактніший квадрат + чорна обводка; від sm — як на карті */
+.polyana-map-legend-checkBox {
+  display: block;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  line-height: 0;
+  border: 1.5px solid #171717;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
+  flex-shrink: 0;
+  background: rgb(255 255 255 / 0.55);
+  transition: transform 0.14s ease-out;
+  box-sizing: border-box;
+}
+
+.polyana-map-legend-checkBox:active {
+  transform: scale(0.94);
+}
+
+/* Внутрішній квадрат при вмиканні: мобільна — чорний, від sm — білий. Увімкнено — більший inset, щоб обводка не зливалася з заливкою */
+.polyana-map-legend-checkBox::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 2.5px;
+  background: #1a1a1a;
+  opacity: 0;
+  transform: scale(0.78);
+  transition:
+    opacity 0.2s ease,
+    transform 0.32s cubic-bezier(0.34, 1.25, 0.64, 1),
+    inset 0.22s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.polyana-map-legend-checkBox:has(.polyana-map-legend-checkBox-input:checked)::after {
+  opacity: 1;
+  transform: scale(1);
+  inset: 4px;
+}
+
+.polyana-map-legend-checkBox:has(.polyana-map-legend-checkBox-input:checked):active::after {
+  transform: scale(0.9);
+  transition-duration: 0.1s;
+}
+
+.polyana-map-legend-checkBox:has(.polyana-map-legend-checkBox-input:checked) {
+  border: 1.5px solid #171717;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.16);
+}
+
+@media (min-width: 640px) {
+  .polyana-map-legend-checkBox {
+    width: 17px;
+    height: 17px;
+    border: 1.5px solid #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.8);
+    background: transparent;
+    box-sizing: border-box;
+  }
+
+  .polyana-map-legend-checkBox::after {
+    inset: 2px;
+    border-radius: 2px;
+    background: #fff;
+  }
+
+  .polyana-map-legend-checkBox:has(.polyana-map-legend-checkBox-input:checked)::after {
+    inset: 4px;
+  }
+
+  .polyana-map-legend-checkBox:has(.polyana-map-legend-checkBox-input:checked) {
+    border: 1.5px solid #fff;
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.9);
+  }
+}
+
+.polyana-map-legend-checkBox:focus-within {
+  outline: 2px solid rgb(59 130 246);
+  outline-offset: 2px;
+}
+
+.polyana-map-legend-checkBox-input {
+  position: absolute;
+  left: 25px;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 /*
@@ -424,4 +532,432 @@ main[data-accommodation-map-expanded='true'] {
 
 .polyana-google-map-root .gm-style gmp-internal-camera-control button:hover {
   background: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Спливаюча картка на карті (проживання + головна): як rounded-2xl картка сайту */
+.polyana-google-map-root--accommodation .gm-style-iw,
+.polyana-google-map-root--accommodation .gm-style-iw .gm-style-iw-c,
+.polyana-google-map-root--accommodation .gm-style-iw .gm-style-iw-t,
+.polyana-google-map-root--home-map .gm-style-iw,
+.polyana-google-map-root--home-map .gm-style-iw .gm-style-iw-c,
+.polyana-google-map-root--home-map .gm-style-iw .gm-style-iw-t {
+  max-width: min(260px, calc(100vw - 1.5rem)) !important;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .polyana-google-map-root--accommodation .gm-style-iw,
+  .polyana-google-map-root--accommodation .gm-style-iw .gm-style-iw-c,
+  .polyana-google-map-root--accommodation .gm-style-iw .gm-style-iw-t,
+  .polyana-google-map-root--home-map .gm-style-iw,
+  .polyana-google-map-root--home-map .gm-style-iw .gm-style-iw-c,
+  .polyana-google-map-root--home-map .gm-style-iw .gm-style-iw-t {
+    max-width: 260px !important;
+  }
+}
+
+.polyana-google-map-root--accommodation .gm-style-iw-d,
+.polyana-google-map-root--accommodation .gm-style-iw-tc,
+.polyana-google-map-root--home-map .gm-style-iw-d,
+.polyana-google-map-root--home-map .gm-style-iw-tc {
+  padding: 0 !important;
+}
+
+/*
+ * Проживання + головна: без вертикального скрола в InfoWindow; обгортки Google без відступу/фону —
+ * видно лише .polyana-accommodation-iw-card (інлайн Google: padding-top, max-height тощо).
+ */
+.polyana-google-map-root--accommodation .gm-style-iw,
+.polyana-google-map-root--accommodation .gm-style-iw-c,
+.polyana-google-map-root--accommodation .gm-style-iw-t,
+.polyana-google-map-root--accommodation .gm-style-iw-tc,
+.polyana-google-map-root--accommodation .gm-style-iw-ch,
+.polyana-google-map-root--accommodation .gm-style-iw-d,
+.polyana-google-map-root--home-map .gm-style-iw,
+.polyana-google-map-root--home-map .gm-style-iw-c,
+.polyana-google-map-root--home-map .gm-style-iw-t,
+.polyana-google-map-root--home-map .gm-style-iw-tc,
+.polyana-google-map-root--home-map .gm-style-iw-ch,
+.polyana-google-map-root--home-map .gm-style-iw-d {
+  max-height: none !important;
+}
+
+.polyana-google-map-root--accommodation .gm-style-iw-c,
+.polyana-google-map-root--accommodation .gm-style-iw-tc,
+.polyana-google-map-root--accommodation .gm-style-iw-ch,
+.polyana-google-map-root--accommodation .gm-style-iw-d,
+.polyana-google-map-root--home-map .gm-style-iw-c,
+.polyana-google-map-root--home-map .gm-style-iw-tc,
+.polyana-google-map-root--home-map .gm-style-iw-ch,
+.polyana-google-map-root--home-map .gm-style-iw-d {
+  overflow: visible !important;
+}
+
+.polyana-google-map-root--accommodation .gm-style-iw-d,
+.polyana-google-map-root--home-map .gm-style-iw-d {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: transparent !important;
+}
+
+.polyana-google-map-root--accommodation .gm-style-iw-d::-webkit-scrollbar,
+.polyana-google-map-root--home-map .gm-style-iw-d::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.polyana-google-map-root--accommodation .gm-style-iw-a,
+.polyana-google-map-root--accommodation .gm-style-iw-t,
+.polyana-google-map-root--home-map .gm-style-iw-a,
+.polyana-google-map-root--home-map .gm-style-iw-t {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.polyana-google-map-root--accommodation .gm-style-iw.gm-style-iw-c,
+.polyana-google-map-root--accommodation .gm-style-iw-c,
+.polyana-google-map-root--home-map .gm-style-iw.gm-style-iw-c,
+.polyana-google-map-root--home-map .gm-style-iw-c {
+  padding: 0 !important;
+  padding-top: 0 !important;
+  padding-inline-end: 0 !important;
+  padding-bottom: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.polyana-accommodation-iw-card {
+  --polyana-iw-inset: 10px;
+  --polyana-iw-radius-outer: 16px;
+  /* Внутрішній радіус ≈ зовнішній мінус відступ (рівномірна «рамка» з усіх боків). */
+  --polyana-iw-radius-inner: max(4px, calc(var(--polyana-iw-radius-outer) - var(--polyana-iw-inset)));
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 260px;
+  padding: var(--polyana-iw-inset);
+  border-radius: var(--polyana-iw-radius-outer);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgb(226 232 240);
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.05),
+    0 1px 3px rgb(15 23 42 / 0.08);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  line-height: 1.3;
+  color: #222;
+}
+
+.polyana-accommodation-iw-media {
+  position: relative;
+  height: 30vw;
+  min-height: 96px;
+  max-height: 120px;
+  overflow: hidden;
+  border-radius: var(--polyana-iw-radius-inner) var(--polyana-iw-radius-inner) 0 0;
+  background: #e5e5e5;
+}
+
+.polyana-accommodation-iw-gallery {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 96px;
+}
+
+.polyana-accommodation-iw-gallery__viewport {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  min-height: 96px;
+}
+
+.polyana-accommodation-iw-gallery__track {
+  display: flex;
+  height: 100%;
+  min-height: 96px;
+  transition: transform 0.28s ease;
+  will-change: transform;
+}
+
+.polyana-accommodation-iw-gallery__slide {
+  height: 100%;
+  min-height: 96px;
+}
+
+.polyana-accommodation-iw-gallery-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: #222;
+  line-height: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.polyana-accommodation-iw-gallery-nav__svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.polyana-accommodation-iw-gallery-nav--hidden {
+  display: none !important;
+}
+
+.polyana-accommodation-iw-gallery-nav--prev {
+  left: 4px;
+}
+
+.polyana-accommodation-iw-gallery-nav--next {
+  right: 4px;
+}
+
+.polyana-accommodation-iw-gallery-nav:hover {
+  background: #fff;
+}
+
+/* «‹ ›»: на курсорі — тільки при наведенні на фото; на touch залишаються видимі */
+@media (hover: hover) and (pointer: fine) {
+  .polyana-accommodation-iw-media
+    .polyana-accommodation-iw-gallery
+    .polyana-accommodation-iw-gallery-nav:not(.polyana-accommodation-iw-gallery-nav--hidden) {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease;
+  }
+  .polyana-accommodation-iw-media:hover
+    .polyana-accommodation-iw-gallery
+    .polyana-accommodation-iw-gallery-nav:not(.polyana-accommodation-iw-gallery-nav--hidden) {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.polyana-accommodation-iw-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.polyana-accommodation-iw-media__gradient {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  pointer-events: none;
+}
+
+.polyana-accommodation-iw-media__toprow {
+  position: absolute;
+  z-index: 4;
+  top: 6px;
+  right: 6px;
+  left: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.polyana-accommodation-iw-media__toprow .polyana-accommodation-iw-icobtn {
+  pointer-events: auto;
+}
+
+.polyana-accommodation-iw-media__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.polyana-accommodation-iw-icobtn {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: #222;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.polyana-accommodation-iw-icobtn:hover {
+  background: #fff;
+}
+
+/* Кнопка «обране» в IW: вигляд як heart-container; анімація — лише після кліку (.is-active з JS) */
+.polyana-accommodation-iw-icobtn.polyana-accommodation-iw-heart {
+  --heart-color: rgb(255, 91, 137);
+  background-color: #c8d3e3;
+  color: #222;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.2);
+  transition: transform 0.15s ease;
+}
+
+.polyana-accommodation-iw-icobtn.polyana-accommodation-iw-heart:hover {
+  background-color: #c8d3e3;
+}
+
+.polyana-accommodation-iw-icobtn.polyana-accommodation-iw-heart:active {
+  transform: scale(0.95);
+}
+
+.polyana-accommodation-iw-dots {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.polyana-accommodation-iw-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.polyana-accommodation-iw-dot--on {
+  background: #fff;
+  transform: scale(1.15);
+}
+
+.polyana-accommodation-iw-body {
+  padding: var(--polyana-iw-inset) 0 0;
+  border-radius: 0 0 var(--polyana-iw-radius-inner) var(--polyana-iw-radius-inner);
+}
+
+.polyana-accommodation-iw-row1 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.polyana-accommodation-iw-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #222;
+  flex: 1;
+  min-width: 0;
+}
+
+.polyana-accommodation-iw-rating {
+  margin: 0;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #717171;
+  text-align: right;
+}
+
+.polyana-accommodation-iw-rating-star {
+  margin-right: 1px;
+  color: #f7c948;
+  font-size: 10px;
+}
+
+.polyana-accommodation-iw-desc {
+  margin: 6px 0 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #717171;
+}
+
+.polyana-accommodation-iw-address {
+  margin: 4px 0 0;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #717171;
+}
+
+.polyana-accommodation-iw-price {
+  margin: 8px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #222;
+}
+
+.polyana-accommodation-iw-pill {
+  display: inline-block;
+  margin-top: 8px;
+  max-width: 100%;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: #f0f0f0;
+  font-size: 10px;
+  line-height: 1.3;
+  color: #5e5e5e;
+}
+
+.polyana-accommodation-iw-cta {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 8px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #f68f5d;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.polyana-accommodation-iw-cta:hover {
+  background: #e57d4a;
+  color: #fff !important;
 }

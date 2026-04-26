@@ -1,78 +1,325 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
-import { FaMapMarkerAlt, FaStar } from 'react-icons/fa'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { FaMapMarkerAlt, FaStar, FaTimes } from 'react-icons/fa'
 import { createHotelPricePillMarker, formatHotelPriceForMapMarker } from '@/lib/google-map-price-marker'
-import { polyanaHotels, type PolyanaHotel } from '@/lib/polyana-hotels'
+import { getHotelMapGallery, polyanaHotels, type PolyanaHotel } from '@/lib/polyana-hotels'
 import AccommodationListPaginationStub from '@/components/accommodation/AccommodationListPaginationStub'
 import {
 	ACCOMMODATION_MAP_COLLAPSE_ICON,
 	ACCOMMODATION_MAP_EXPAND_ICON,
 	attachPolyanaMapExpandAndZoomControls,
 } from '@/lib/google-map-stack-controls'
+import { hotelInfoWindowHtml } from '@/lib/map-info-window-html'
+import { syncInfoWindowGalleryNav, toggleIwHeartActive } from '@/lib/map-info-window-ui'
 
-function hotelInfoWindowHtml(hotel: PolyanaHotel): string {
-	const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-		`${hotel.name}, ${hotel.address}`
-	)}`
-	const saveLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-		`${hotel.name}, ${hotel.address}`
-	)}`
-	return `<div style="width:296px;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 12px 22px rgba(15,23,42,.2);line-height:1.35">
-		<div style="position:relative;height:98px;overflow:hidden">
-			<img src="${hotel.image}" alt="${hotel.name}" style="display:block;width:100%;height:100%;object-fit:cover" />
-			<div style="position:absolute;right:8px;bottom:8px;background:rgba(255,255,255,.96);padding:6px 10px;border-radius:10px;font-size:16px;font-weight:700;color:#2d333d">${hotel.price}</div>
-		</div>
-		<div style="padding:10px 12px 12px">
-			<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-				<div style="font-size:16px;font-weight:700;color:#2d333d;line-height:1.2">${hotel.name}</div>
-				<div style="display:flex;gap:8px;flex-shrink:0">
-					<a href="${routeLink}" target="_blank" rel="noopener noreferrer" title="Маршрути" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#bde6f2;color:#0b5f74;font-size:13px;text-decoration:none;cursor:pointer">
-						<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 2 22 12 12 22 2 12Z" fill="#0b5f74" /><path d="M9 12h6M12 9l3 3-3 3" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
-					</a>
-					<a href="${saveLink}" target="_blank" rel="noopener noreferrer" title="Зберегти" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#bde6f2;color:#0b5f74;font-size:13px;text-decoration:none;cursor:pointer">
-						<svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true"><path d="M7 4h10a1 1 0 0 1 1 1v14l-6-2.8L6 19V5a1 1 0 0 1 1-1Z" stroke="#0b5f74" stroke-width="1.8" stroke-linejoin="round" /></svg>
-					</a>
+const MOBILE_MAP_SHEET_MQ = '(max-width: 1023px)'
+
+function AccommodationMapMobileBottomSheet({
+	hotel,
+	onClose,
+}: {
+	hotel: PolyanaHotel
+	onClose: () => void
+}) {
+	const gallery = getHotelMapGallery(hotel)
+	const n = Math.max(1, gallery.length)
+	const [idx, setIdx] = useState(0)
+	const [mapSheetHeartActive, setMapSheetHeartActive] = useState(false)
+	const touchStartX = useRef(0)
+
+	useEffect(() => {
+		setIdx(0)
+		setMapSheetHeartActive(false)
+	}, [hotel.id])
+
+	const go = useCallback(
+		(delta: number) => {
+			setIdx(i => {
+				const next = i + delta
+				if (next < 0 || next >= n) return i
+				return next
+			})
+		},
+		[n]
+	)
+
+	const onTouchStart = (e: React.TouchEvent) => {
+		touchStartX.current = e.touches[0].clientX
+	}
+	const onTouchEnd = (e: React.TouchEvent) => {
+		if (n <= 1) return
+		const dx = e.changedTouches[0].clientX - touchStartX.current
+		if (Math.abs(dx) < 45) return
+		if (dx < 0) go(1)
+		else go(-1)
+	}
+
+	return (
+		<div
+			className='lg:hidden fixed inset-0 z-[100] flex flex-col justify-end'
+			role='dialog'
+			aria-modal='true'
+			aria-labelledby='accommodation-map-sheet-title'
+		>
+			<button
+				type='button'
+				className='absolute inset-0 z-0 cursor-default bg-slate-900/35 backdrop-blur-[2px] transition-opacity'
+				aria-label='Закрити'
+				onClick={onClose}
+			/>
+			<div className='relative z-10 w-full max-w-7xl mx-auto px-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]'>
+				<div className='overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_-8px_40px_rgba(15,23,42,0.18)] pointer-events-auto'>
+					<div
+						className='relative aspect-[5/2] w-full min-h-[10rem] max-h-[40vh] overflow-hidden touch-none'
+						onTouchStart={onTouchStart}
+						onTouchEnd={onTouchEnd}
+					>
+						<div
+							className='flex h-full min-h-[10rem] transition-transform duration-300 ease-out will-change-transform'
+							style={{
+								width: `${n * 100}%`,
+								transform: `translateX(-${(idx * 100) / n}%)`,
+							}}
+						>
+							{gallery.map((src, i) => (
+								<div
+									key={`${hotel.id}-g-${i}`}
+									className='relative h-full'
+									style={{ width: `${100 / n}%` }}
+								>
+									<Image
+										src={src}
+										alt={i > 0 ? `${hotel.name} — ${i + 1}` : hotel.name}
+										fill
+										className='object-cover pointer-events-none select-none'
+										sizes='100vw'
+										priority={i === 0}
+										draggable={false}
+									/>
+								</div>
+							))}
+						</div>
+						{n > 1 ? (
+							<>
+								<button
+									type='button'
+									className='absolute left-2 top-1/2 z-[1] flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border-0 bg-white/94 text-base font-medium text-slate-800 shadow-sm disabled:opacity-0'
+									aria-label='Попереднє фото'
+									disabled={idx === 0}
+									onClick={e => {
+										e.stopPropagation()
+										go(-1)
+									}}
+								>
+									&#8249;
+								</button>
+								<button
+									type='button'
+									className='absolute right-2 top-1/2 z-[1] flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border-0 bg-white/94 text-base font-medium text-slate-800 shadow-sm disabled:opacity-0'
+									aria-label='Наступне фото'
+									disabled={idx >= n - 1}
+									onClick={e => {
+										e.stopPropagation()
+										go(1)
+									}}
+								>
+									&#8250;
+								</button>
+							</>
+						) : null}
+						<div
+							className='pointer-events-none absolute inset-x-0 bottom-0 z-[1] flex justify-center gap-1.5 py-2.5 pt-6 bg-gradient-to-t from-black/50 to-transparent'
+							aria-hidden
+						>
+							{gallery.map((_, i) => (
+								<span
+									key={i}
+									className={
+										i === idx
+											? 'h-1.5 w-1.5 rounded-full bg-white shadow'
+											: 'h-1.5 w-1.5 rounded-full bg-white/45'
+									}
+								/>
+							))}
+						</div>
+						<div className='absolute right-2 top-2 z-[2] flex items-center gap-2'>
+							<button
+								type='button'
+								className='heart-container heart-container--map-sheet'
+								aria-label={
+									mapSheetHeartActive
+										? `Прибрати ${hotel.name} з обраного`
+										: `Додати ${hotel.name} в обране`
+								}
+								aria-pressed={mapSheetHeartActive}
+								onClick={e => {
+									e.stopPropagation()
+									setMapSheetHeartActive(was => {
+										if (was) return false
+										return true
+									})
+								}}
+							>
+								<span
+									className={`heart-svg-container ${mapSheetHeartActive ? 'is-active' : ''}`}
+									aria-hidden
+								>
+									<svg viewBox='0 0 24 24' className='heart-svg-outline' aria-hidden>
+										<path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
+									</svg>
+									<svg viewBox='0 0 24 24' className='heart-svg-filled' aria-hidden>
+										<path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
+									</svg>
+									<svg viewBox='0 0 24 24' className='heart-svg-celebrate' aria-hidden>
+										<path d='M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1' />
+									</svg>
+								</span>
+							</button>
+							<button
+								type='button'
+								className='flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/90 bg-white/95 text-slate-800 shadow-sm transition hover:bg-white'
+								aria-label='Закрити'
+								onClick={onClose}
+							>
+								<FaTimes className='size-4' aria-hidden />
+							</button>
+						</div>
+					</div>
+					<div className='space-y-2 px-4 pb-4 pt-3'>
+						<p className='text-xs font-medium uppercase tracking-wide text-slate-500'>Поляна, Закарпаття</p>
+						<h2
+							id='accommodation-map-sheet-title'
+							className='text-lg font-bold leading-snug text-[#2D333D] sm:text-[1.125rem]'
+						>
+							{hotel.name}
+						</h2>
+						<p className='text-sm text-slate-500'>{hotel.address}</p>
+						<p className='text-lg font-bold text-[#2D333D]'>{hotel.price}</p>
+						{hotel.description ? (
+							<p className='line-clamp-2 text-sm leading-snug text-slate-600'>{hotel.description}</p>
+						) : null}
+						<div className='pt-0.5'>
+							<span className='inline-block rounded-md bg-slate-100 px-2.5 py-1 text-xs text-slate-600'>
+								{hotel.feature}
+							</span>
+						</div>
+						<div className='flex justify-end pt-1'>
+							<a
+								href={`tel:${hotel.phone}`}
+								className='inline-flex w-fit min-w-[9rem] items-center justify-center rounded-full bg-[#F68F5D] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e57d4a]'
+							>
+								Подзвонити
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div style="margin-top:6px;font-size:12px;color:#475569"><span style="color:#f59e0b">★★★★☆</span> ${hotel.rating}</div>
-			<div style="margin-top:4px;font-size:12px;color:#64748b">📶 ${hotel.feature}</div>
-			<a href="tel:${hotel.phone}" style="margin-top:10px;display:inline-flex;width:100%;align-items:center;justify-content:center;border-radius:9999px;background:#bde6f2;color:#0b5f74;text-decoration:none;font-size:13px;font-weight:700;padding:8px 10px">Подзвонити</a>
 		</div>
-	</div>`
+	)
 }
 
 export default function AccommodationPageContent() {
 	const mapContainerRef = useRef<HTMLDivElement | null>(null)
+	const mapColumnRef = useRef<HTMLElement | null>(null)
 	const mapInstanceRef = useRef<any>(null)
 	const activeInfoWindowRef = useRef<any>(null)
 	const markersByIdRef = useRef<Map<string, any>>(new Map())
 	const infoWindowsByIdRef = useRef<Map<string, any>>(new Map())
+	/** Клік по картці до готовності карти — відкриваємо InfoWindow після initMap. */
+	const pendingFocusHotelIdRef = useRef<string | null>(null)
 	const [mapError, setMapError] = useState<string | null>(null)
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
 	const [isMapExpanded, setIsMapExpanded] = useState(false)
-	const [selectedId, setSelectedId] = useState<string | null>(polyanaHotels[0]?.id ?? null)
+	const [selectedId, setSelectedId] = useState<string | null>(null)
+	const [mapBottomSheetHotel, setMapBottomSheetHotel] = useState<PolyanaHotel | null>(null)
+	/** < lg: нижня картка замість InfoWindow (читається в initMap, слухачах). */
+	const isNarrowMapUiRef = useRef(
+		typeof window !== 'undefined' && window.matchMedia(MOBILE_MAP_SHEET_MQ).matches
+	)
+	/** Після кліку по маркеру теж спрацьовує click по карті — тимчасово не закриваємо вікно. */
+	const mapClickLockUntilRef = useRef(0)
+	useLayoutEffect(() => {
+		isNarrowMapUiRef.current = window.matchMedia(MOBILE_MAP_SHEET_MQ).matches
+	}, [])
 
-	const focusHotel = (hotel: PolyanaHotel) => {
+	useEffect(() => {
+		const mq = window.matchMedia(MOBILE_MAP_SHEET_MQ)
+		const sync = () => {
+			isNarrowMapUiRef.current = mq.matches
+			if (!mq.matches) setMapBottomSheetHotel(null)
+		}
+		mq.addEventListener('change', sync)
+		return () => mq.removeEventListener('change', sync)
+	}, [])
+
+	useEffect(() => {
+		if (mapBottomSheetHotel) {
+			const prev = document.body.style.overflow
+			document.body.style.overflow = 'hidden'
+			return () => {
+				document.body.style.overflow = prev
+			}
+		}
+	}, [mapBottomSheetHotel])
+
+	useEffect(() => {
+		if (!mapBottomSheetHotel) return
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') setMapBottomSheetHotel(null)
+		}
+		window.addEventListener('keydown', onKey)
+		return () => window.removeEventListener('keydown', onKey)
+	}, [mapBottomSheetHotel])
+
+	const scrollMapIntoView = () => {
+		mapColumnRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+	}
+
+	const openHotelInfoOnMap = (hotel: PolyanaHotel) => {
 		setSelectedId(hotel.id)
+		scrollMapIntoView()
 		const map = mapInstanceRef.current
 		const marker = markersByIdRef.current.get(hotel.id)
 		const iw = infoWindowsByIdRef.current.get(hotel.id)
-		if (!map || !marker || !iw) return
+		if (!map || !marker || !iw) {
+			pendingFocusHotelIdRef.current = hotel.id
+			return
+		}
+		pendingFocusHotelIdRef.current = null
 		map.panTo(hotel.position)
 		const z = map.getZoom()
 		if (typeof z === 'number' && z < 15) map.setZoom(15)
+		const w = window as Window & { google?: any }
+		if (isNarrowMapUiRef.current) {
+			if (activeInfoWindowRef.current) activeInfoWindowRef.current.close()
+			activeInfoWindowRef.current = null
+			mapClickLockUntilRef.current = Date.now() + 400
+			setMapBottomSheetHotel(hotel)
+			requestAnimationFrame(() => {
+				if (map && w.google?.maps?.event) w.google.maps.event.trigger(map, 'resize')
+			})
+			return
+		}
+		setMapBottomSheetHotel(null)
 		if (activeInfoWindowRef.current) activeInfoWindowRef.current.close()
+		mapClickLockUntilRef.current = Date.now() + 400
 		iw.open({ anchor: marker, map })
 		activeInfoWindowRef.current = iw
+		requestAnimationFrame(() => {
+			if (map && w.google?.maps?.event) w.google.maps.event.trigger(map, 'resize')
+		})
 	}
 
 	useEffect(() => {
 		let detachMapControls: (() => void) | null = null
+		let detachInfoWindowCloseClick: (() => void) | null = null
 		const clearMapControls = () => {
 			detachMapControls?.()
 			detachMapControls = null
+			detachInfoWindowCloseClick?.()
+			detachInfoWindowCloseClick = null
 		}
 
 		const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -132,22 +379,135 @@ export default function AccommodationPageContent() {
 					},
 				})
 				bounds.extend(hotel.position)
-				const infoWindow = new win.google.maps.InfoWindow({ content: hotelInfoWindowHtml(hotel) })
+				const infoWindow = new win.google.maps.InfoWindow({
+					content: hotelInfoWindowHtml(hotel),
+					/** Сховати стандартний хрестик Google у шапці; закриття — кнопка на фото + клік по карті */
+					headerDisabled: true,
+				})
 				markersByIdRef.current.set(hotel.id, marker)
 				infoWindowsByIdRef.current.set(hotel.id, infoWindow)
 				marker.addListener('click', () => {
+					mapClickLockUntilRef.current = Date.now() + 400
 					setSelectedId(hotel.id)
+					if (isNarrowMapUiRef.current) {
+						if (activeInfoWindowRef.current) activeInfoWindowRef.current.close()
+						activeInfoWindowRef.current = null
+						setMapBottomSheetHotel(hotel)
+						map.panTo(hotel.position)
+						const zz = map.getZoom()
+						if (typeof zz === 'number' && zz < 15) map.setZoom(15)
+						return
+					}
 					if (activeInfoWindowRef.current) activeInfoWindowRef.current.close()
 					infoWindow.open({ anchor: marker, map })
 					activeInfoWindowRef.current = infoWindow
 				})
 			})
 
+			map.addListener('click', () => {
+				if (Date.now() < mapClickLockUntilRef.current) return
+				if (isNarrowMapUiRef.current) {
+					setMapBottomSheetHotel(null)
+					return
+				}
+				if (activeInfoWindowRef.current) {
+					activeInfoWindowRef.current.close()
+					activeInfoWindowRef.current = null
+				}
+			})
+
+			const mapRoot = mapContainerRef.current
+			if (mapRoot) {
+				const onInfoWindowUiClick = (e: MouseEvent) => {
+					const next =
+						e.target instanceof Element
+							? e.target.closest('.polyana-accommodation-iw-gallery-btn--next')
+							: null
+					const prev =
+						e.target instanceof Element
+							? e.target.closest('.polyana-accommodation-iw-gallery-btn--prev')
+							: null
+					if (next || prev) {
+						e.preventDefault()
+						e.stopPropagation()
+						e.stopImmediatePropagation()
+						const gal = (next || prev)!.closest('[data-iw-gallery]') as HTMLElement | null
+						if (!gal) return
+						const total = Math.max(1, parseInt(gal.dataset.total || '1', 10))
+						let idx = parseInt(gal.dataset.idx || '0', 10)
+						if (next) idx = (idx + 1) % total
+						else idx = (idx - 1 + total) % total
+						gal.dataset.idx = String(idx)
+						const track = gal.querySelector<HTMLElement>('[data-gallery-track]')
+						if (track) {
+							const step = 100 / total
+							track.style.transform = `translate3d(-${step * idx}%,0,0)`
+						}
+						gal.querySelectorAll<HTMLElement>('.polyana-accommodation-iw-dot').forEach((dot, i) => {
+							dot.classList.toggle('polyana-accommodation-iw-dot--on', i === idx)
+						})
+						syncInfoWindowGalleryNav(gal)
+						mapClickLockUntilRef.current = Date.now() + 400
+						return
+					}
+					const heart =
+						e.target instanceof Element
+							? e.target.closest('.polyana-accommodation-iw-heart')
+							: null
+					if (heart) {
+						e.preventDefault()
+						e.stopPropagation()
+						e.stopImmediatePropagation()
+						toggleIwHeartActive(heart)
+						mapClickLockUntilRef.current = Date.now() + 400
+						return
+					}
+					const t =
+						e.target instanceof Element ? e.target.closest('.polyana-accommodation-iw-close') : null
+					if (!t) return
+					e.preventDefault()
+					e.stopPropagation()
+					e.stopImmediatePropagation()
+					if (activeInfoWindowRef.current) {
+						activeInfoWindowRef.current.close()
+						activeInfoWindowRef.current = null
+					}
+					mapClickLockUntilRef.current = Date.now() + 400
+				}
+				mapRoot.addEventListener('click', onInfoWindowUiClick, true)
+				detachInfoWindowCloseClick = () => mapRoot.removeEventListener('click', onInfoWindowUiClick, true)
+			}
+
 			map.fitBounds(bounds)
 			win.google.maps.event.addListenerOnce(map, 'idle', () => {
 				const zoom = map.getZoom()
 				if (typeof zoom === 'number') map.setZoom(Math.max(13, zoom - 1))
 				win.google.maps.event.trigger(map, 'resize')
+				const pendingId = pendingFocusHotelIdRef.current
+				if (pendingId) {
+					const h = polyanaHotels.find(x => x.id === pendingId)
+					if (h) {
+						pendingFocusHotelIdRef.current = null
+						setSelectedId(h.id)
+						const m = markersByIdRef.current.get(h.id)
+						const openIw = infoWindowsByIdRef.current.get(h.id)
+						if (m && openIw) {
+							map.panTo(h.position)
+							const zz = map.getZoom()
+							if (typeof zz === 'number' && zz < 15) map.setZoom(15)
+							mapClickLockUntilRef.current = Date.now() + 400
+							if (isNarrowMapUiRef.current) {
+								if (activeInfoWindowRef.current) activeInfoWindowRef.current.close()
+								activeInfoWindowRef.current = null
+								setMapBottomSheetHotel(h)
+							} else {
+								if (activeInfoWindowRef.current) activeInfoWindowRef.current.close()
+								openIw.open({ anchor: m, map })
+								activeInfoWindowRef.current = openIw
+							}
+						}
+					}
+				}
 			})
 		}
 
@@ -190,7 +550,7 @@ export default function AccommodationPageContent() {
 			clearMapControls()
 			delete win.initPolyanaAccommodationMap
 		}
-	}, [])
+	}, [setMapBottomSheetHotel])
 
 	useEffect(() => {
 		const main = document.querySelector('body > main')
@@ -252,6 +612,7 @@ export default function AccommodationPageContent() {
 	}, [])
 
 	return (
+		<>
 		<div
 			className={
 				isMapExpanded
@@ -277,7 +638,7 @@ export default function AccommodationPageContent() {
 				>
 					<p className='shrink-0 text-sm font-medium text-slate-600'>
 						{polyanaHotels.length}{' '}
-						{polyanaHotels.length === 1 ? 'заклад' : 'заклади'} на карті Поляни — оберіть готель зліва або
+						{polyanaHotels.length === 1 ? 'заклад' : 'заклади'} на карті Поляни — оберіть готель у списку або
 						маркер на карті.
 					</p>
 
@@ -288,30 +649,30 @@ export default function AccommodationPageContent() {
 							<article
 								key={hotel.id}
 								id={`hotel-card-${hotel.id}`}
-								className={`scroll-mt-24 grid cursor-pointer grid-cols-[11rem_1fr] overflow-hidden rounded-2xl border bg-white shadow-sm outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 sm:grid-cols-[13rem_1fr] ${
+								className={`scroll-mt-24 flex cursor-pointer flex-col overflow-hidden rounded-2xl border bg-white shadow-sm outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 sm:grid sm:grid-cols-[13rem_1fr] ${
 									isSelected
 										? 'border-cyan-500/50 shadow-md ring-2 ring-cyan-400/30'
 										: 'border-slate-200 hover:border-slate-300 hover:shadow-md'
 								}`}
 								role='button'
 								tabIndex={0}
-								aria-pressed={isSelected}
+								aria-pressed={isSelected || undefined}
 								aria-labelledby={`hotel-title-${hotel.id}`}
-								onClick={() => focusHotel(hotel)}
+								onClick={() => openHotelInfoOnMap(hotel)}
 								onKeyDown={e => {
 									if (e.key === 'Enter' || e.key === ' ') {
 										e.preventDefault()
-										focusHotel(hotel)
+										openHotelInfoOnMap(hotel)
 									}
 								}}
 							>
-								<div className='relative h-full min-h-52 w-full min-w-0 overflow-hidden sm:min-h-60'>
+								<div className='relative aspect-[5/3] w-full min-w-0 overflow-hidden sm:aspect-auto sm:min-h-[15rem] sm:h-full'>
 									<Image
 										src={hotel.image}
 										alt={hotel.name}
 										fill
 										className='object-cover object-center'
-										sizes='(max-width:640px) 48vw, 240px'
+										sizes='(max-width: 640px) 100vw, 240px'
 									/>
 									<span className='pointer-events-none absolute bottom-2 right-2 rounded-lg bg-white/95 px-2 py-0.5 text-xs font-bold text-[#2D333D] shadow-sm'>
 										{hotel.price}
@@ -360,6 +721,7 @@ export default function AccommodationPageContent() {
 				</div>
 
 				<aside
+					ref={mapColumnRef}
 					className={`accommodation-map-column relative z-0 flex w-full min-w-0 flex-col lg:sticky lg:top-[calc(var(--header-offset,68px)+1rem)] lg:z-0 lg:min-h-0 lg:flex-1 lg:self-start${
 						isMapExpanded
 							? ' max-w-none min-h-0 h-full flex-1 self-stretch lg:static lg:max-w-none lg:self-stretch'
@@ -403,5 +765,12 @@ export default function AccommodationPageContent() {
 				</aside>
 			</div>
 		</div>
+		{mapBottomSheetHotel ? (
+			<AccommodationMapMobileBottomSheet
+				hotel={mapBottomSheetHotel}
+				onClose={() => setMapBottomSheetHotel(null)}
+			/>
+		) : null}
+		</>
 	)
 }

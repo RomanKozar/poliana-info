@@ -9,7 +9,18 @@ export type PolyanaHotel = {
 	feature: string
 	phone: string
 	website: string
+	/** 4+ фото для каруселі в InfoWindow на карті; якщо нема — дубль основного */
+	mapGallery?: string[]
 	position: { lat: number; lng: number }
+}
+
+/** Слайди для картки на мапі; тимчасово можна будь-які, потім замінити. */
+export function getHotelMapGallery(hotel: PolyanaHotel): string[] {
+	if (hotel.mapGallery?.length) {
+		const g = hotel.mapGallery.filter(x => x.trim().length > 0)
+		if (g.length > 0) return g
+	}
+	return [hotel.image, hotel.image, hotel.image, hotel.image]
 }
 
 /** Готелі та апарт-готелі Поляни (координати для карти й карток проживання). */
@@ -25,6 +36,12 @@ export const polyanaHotels: PolyanaHotel[] = [
 		feature: 'Безкоштовний Wi-Fi',
 		phone: '+380502149266',
 		website: 'https://hotel-kateryna.com/',
+		mapGallery: [
+			'/images/accommodation/kateryna-v1.jpg',
+			'/images/gallery/golovna-foto.jpeg',
+			'/images/gallery/golovna-foto-2.jpeg',
+			'/images/gallery/golovna-foto-3.jpg',
+		],
 		position: { lat: 48.62146474176638, lng: 22.97048064221818 },
 	},
 	{
@@ -38,6 +55,12 @@ export const polyanaHotels: PolyanaHotel[] = [
 		feature: 'Сніданок включено',
 		phone: '+380502149266',
 		website: 'https://www.hotel-continent.com/',
+		mapGallery: [
+			'/images/accommodation/kontinent.jpg',
+			'/images/gallery/chan_1.png',
+			'/images/gallery/sayna.png',
+			'/images/gallery/akziya.png',
+		],
 		position: { lat: 48.62080723777113, lng: 22.969461724127456 },
 	},
 	{
@@ -51,6 +74,12 @@ export const polyanaHotels: PolyanaHotel[] = [
 		feature: 'Поруч річка та тиша',
 		phone: '+380502149266',
 		website: 'https://www.instagram.com/hotel.riverside.ua',
+		mapGallery: [
+			'/images/accommodation/river-side.jpg',
+			'/images/entertainment/tybinh-v2-1.webp',
+			'/images/entertainment/tybinh-v2-2.webp',
+			'/images/entertainment/tybinh-v2-3.webp',
+		],
 		position: { lat: 48.62244278745904, lng: 22.96724255849585 },
 	},
 	{
@@ -64,6 +93,12 @@ export const polyanaHotels: PolyanaHotel[] = [
 		feature: 'Сучасні апартаменти',
 		phone: '+380502149266',
 		website: 'https://arena-hotel.com.ua/',
+		mapGallery: [
+			'/images/accommodation/arena.webp',
+			'/images/gallery/golovna-foto-2.jpeg',
+			'/images/kids-camps/camp-1.webp',
+			'/images/kids-camps/camp-2.webp',
+		],
 		position: { lat: 48.6238240422547, lng: 22.948909722484508 },
 	},
 ]
