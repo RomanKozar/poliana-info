@@ -27,6 +27,15 @@ export default function Header() {
 		return pathname === href || pathname.startsWith(`${href}/`)
 	}
 
+	/** Мобільне меню: «Популярне» має href `/`, але головна не має означати активний батьківський пункт — лише збіг з дочірніми посиланнями. */
+	const isMobileParentActive = (item: NavigationItem) => {
+		if (!item.children?.length) return false
+		if (item.submenuKey === 'popular') {
+			return item.children.some(child => isActivePath(child.href))
+		}
+		return isActivePath(item.href) || item.children.some(child => isActivePath(child.href))
+	}
+
 	const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
 		setIsMobileMenuOpen(false)
 		setMobileSubmenu(null)
@@ -292,7 +301,7 @@ export default function Header() {
 								<div key={item.label} className='flex w-full max-w-[320px] flex-col items-center gap-3'>
 									{(() => {
 										const sk = submenuKeyFor(item)
-										const isParentActive = isActivePath(item.href)
+										const isParentActive = isMobileParentActive(item)
 										const submenuOpen = mobileSubmenu === sk
 										return (
 											<>

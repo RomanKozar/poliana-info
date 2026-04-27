@@ -55,7 +55,7 @@ const BROCHURE_RULES = [
 	'Рух лише за маршрутом і за рекомендаціями гіда.',
 	'Керування в стані алкогольного чи наркотичного сп’яніння суворо заборонено.',
 	'Тримайте безпечну швидкість — максимум задоволення без зайвого ризику.',
-	'Шануйте природу Карпат: не смітіть і не псуйте довкілля.',
+	'Шануйте природу Поляни та околиць: не смітіть і не псуйте довкілля.',
 ] as const
 
 const BROCHURE_CONDITIONS = [
@@ -79,7 +79,7 @@ export default function QuadroRideDetailPage() {
 						<div className='max-w-xl lg:max-w-none'>
 							<p className='text-sm font-medium uppercase tracking-wide text-[#53C4DA]'>Квадроцикли</p>
 							<h1 className='mt-2 text-3xl font-bold text-[#2D333D] sm:text-4xl'>
-								Quadro Ride у Карпатах
+								Quadro Ride у Поляні
 							</h1>
 							<p className='mt-3 flex items-start gap-2 text-slate-600'>
 								<FaMapMarkerAlt className='mt-1 size-4 shrink-0 text-[#53C4DA]' aria-hidden />
@@ -97,7 +97,7 @@ export default function QuadroRideDetailPage() {
 							</h2>
 							<p className='mt-4 leading-relaxed text-slate-600'>
 								Ніякого асфальту — лише гірські маршрути, краєвиди й драйв. Обирайте складність, сідайте
-								за кермо — і вперед. Відкрийте свободу серед Карпат.
+								за кермо — і вперед. Відкрийте свободу в околицях Поляни.
 							</p>
 							<p className='mt-4 font-medium leading-relaxed text-[#2D333D]'>
 								Quadro Ride — це про свободу руху та емоції, які залишаються з вами назавжди.
@@ -116,7 +116,7 @@ export default function QuadroRideDetailPage() {
 
 						<QuadroRideHeroGalleryImage
 							src={quadroRideHeroImage}
-							alt='Квадроцикли Quadro Ride в Карпатах біля Поляни'
+							alt='Квадроцикли Quadro Ride у Поляні'
 							priority
 							sizes='(max-width: 1024px) 100vw, 50vw'
 						/>
