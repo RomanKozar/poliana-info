@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+	/** Менший бандл при імпорті з `react-icons/fa` (деревоподібне підвантаження іконок). */
+	experimental: {
+		optimizePackageImports: ['react-icons/fa'],
+	},
 	// Стабільна віддача sitemap для сканерів (Google Search Console).
 	async headers() {
 		return [

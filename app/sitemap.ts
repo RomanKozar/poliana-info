@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { categoryPlaceholderSlugs } from '@/data/category-placeholders'
 import { SITE_URL } from '@/lib/seo'
 
 /** Статична збірка маршруту /sitemap.xml — менше шансів на помилки при зверненні Googlebot. */
@@ -15,6 +16,13 @@ function pageUrl(pathname: string): string {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
+	const categoryUrls: MetadataRoute.Sitemap = categoryPlaceholderSlugs.map(slug => ({
+		url: pageUrl(`/cat/${slug}`),
+		lastModified,
+		changeFrequency: 'monthly' as const,
+		priority: 0.65,
+	}))
+
 	return [
 		{ url: pageUrl('/'), lastModified, changeFrequency: 'weekly', priority: 1 },
 		{ url: pageUrl('/about'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
@@ -27,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		{ url: pageUrl('/blog/poliana-in-winter'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/camps'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/contacts'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
+		{ url: pageUrl('/excursions'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/entertainment'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/gastronomy'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/kids-camps'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
@@ -36,5 +45,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		{ url: pageUrl('/spa'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/team'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/wellness'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
+		...categoryUrls,
 	]
 }

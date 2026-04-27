@@ -15,7 +15,7 @@ export default function PolyanaInWinterPage() {
 			<section className='relative overflow-hidden'>
 				<div className='absolute inset-0'>
 					<Image
-						src='/images/gallery/golovna-foto-2.jpeg'
+						src='/images/gallery/golovna-foto-2.webp'
 						alt='Поляна взимку'
 						fill
 						priority
@@ -124,7 +124,7 @@ export default function PolyanaInWinterPage() {
 						</div>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/accommodation/kateryna-v1.jpg'
+								src='/images/accommodation/kateryna-v1.webp'
 								alt='Зимовий відпочинок у готелі'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'

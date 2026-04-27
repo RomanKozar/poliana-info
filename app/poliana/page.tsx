@@ -14,7 +14,7 @@ export default function PolyanaPage() {
 			<section className='relative overflow-hidden'>
 				<div className='absolute inset-0'>
 					<Image
-						src='/images/gallery/golovna-foto.jpeg'
+						src='/images/gallery/golovna-foto.webp'
 						alt='Поляна'
 						fill
 						priority
@@ -64,7 +64,7 @@ export default function PolyanaPage() {
 					<div className='mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
 						<div className='relative h-44 overflow-hidden rounded-xl'>
 							<Image
-								src='/images/accommodation/kateryna-v1.jpg'
+								src='/images/accommodation/kateryna-v1.webp'
 								alt='Готель Катерина'
 								fill
 								sizes='(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw'
@@ -82,7 +82,7 @@ export default function PolyanaPage() {
 						</div>
 						<div className='relative h-44 overflow-hidden rounded-xl'>
 							<Image
-								src='/images/accommodation/kontinent.jpg'
+								src='/images/accommodation/kontinent.webp'
 								alt='Готель Континент'
 								fill
 								sizes='(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw'

@@ -15,7 +15,7 @@ export default function SummerVacationPage() {
 			<section className='relative overflow-hidden'>
 				<div className='absolute inset-0'>
 					<Image
-						src='/images/gallery/golovna-foto.jpeg'
+						src='/images/gallery/golovna-foto.webp'
 						alt='Літній відпочинок у Поляні'
 						fill
 						priority

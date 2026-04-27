@@ -5,12 +5,17 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { FaFacebookF, FaInstagram, FaPhoneAlt, FaTiktok } from 'react-icons/fa'
-import { siteNavigation } from './site-navigation'
+import { siteNavigation, type NavigationItem } from './site-navigation'
+
+function submenuKeyFor(item: NavigationItem): 'news' | 'popular' {
+	return item.submenuKey ?? 'news'
+}
 
 export default function Header() {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-	const [isMobileNewsOpen, setIsMobileNewsOpen] = useState(false)
+	const [mobileSubmenu, setMobileSubmenu] = useState<'news' | 'popular' | null>(null)
 	const [isDesktopNewsOpen, setIsDesktopNewsOpen] = useState(false)
+	const [isDesktopPopularOpen, setIsDesktopPopularOpen] = useState(false)
 	const headerRef = useRef<HTMLElement | null>(null)
 	const pathname = usePathname()
 
@@ -24,7 +29,7 @@ export default function Header() {
 
 	const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
 		setIsMobileMenuOpen(false)
-		setIsMobileNewsOpen(false)
+		setMobileSubmenu(null)
 
 		if (pathname === '/') {
 			event.preventDefault()
@@ -61,7 +66,7 @@ export default function Header() {
 				<button
 					type='button'
 					onClick={() => {
-						setIsMobileNewsOpen(false)
+						setMobileSubmenu(null)
 						setIsMobileMenuOpen(true)
 					}}
 					aria-label='Відкрити меню'
@@ -94,39 +99,65 @@ export default function Header() {
 							<div
 								key={item.label}
 								className='relative'
-								onMouseEnter={() => setIsDesktopNewsOpen(true)}
-								onMouseLeave={() => setIsDesktopNewsOpen(false)}
+								onMouseEnter={() => {
+									if (item.submenuKey === 'popular') {
+										setIsDesktopPopularOpen(true)
+										setIsDesktopNewsOpen(false)
+									} else {
+										setIsDesktopNewsOpen(true)
+										setIsDesktopPopularOpen(false)
+									}
+								}}
+								onMouseLeave={() => {
+									if (item.submenuKey === 'popular') setIsDesktopPopularOpen(false)
+									else setIsDesktopNewsOpen(false)
+								}}
 							>
-								<span
-									className={`inline-flex cursor-pointer items-center gap-1 whitespace-nowrap rounded-lg px-1 py-1.5 font-semibold text-white transition-colors hover:bg-cyan-600 hover:text-white xl:px-2 ${
-										isDesktopNewsOpen ? 'bg-cyan-600 text-white shadow-sm' : ''
-									}`}
-								>
-									{item.label}
-									<span className={`text-xs transition-transform ${isDesktopNewsOpen ? 'rotate-180' : ''}`}>
-										▾
-									</span>
-								</span>
-								<div
-									className={`absolute left-0 top-full z-[70] min-w-[230px] rounded-lg border border-slate-200 bg-white p-2 text-sm text-slate-700 shadow-lg transition-all duration-200 ${
-										isDesktopNewsOpen
-											? 'pointer-events-auto translate-y-0 opacity-100'
-											: 'pointer-events-none translate-y-1 opacity-0'
-									}`}
-								>
-									{item.children.map(child => (
-										<Link
-											key={child.href}
-											href={child.href}
-											onClick={() => setIsDesktopNewsOpen(false)}
-											className={`block rounded-md px-3 py-2 font-medium transition-colors hover:bg-slate-100 hover:text-slate-900 ${
-												isActivePath(child.href) ? 'bg-slate-100 text-slate-900' : ''
-											}`}
-										>
-											{child.label}
-										</Link>
-									))}
-								</div>
+								{(() => {
+									const open =
+										item.submenuKey === 'popular' ? isDesktopPopularOpen : isDesktopNewsOpen
+									return (
+										<>
+											<span
+												className={`inline-flex cursor-pointer items-center gap-1 whitespace-nowrap rounded-lg px-1 py-1.5 font-semibold text-white transition-colors hover:bg-cyan-600 hover:text-white xl:px-2 ${
+													open ? 'bg-cyan-600 text-white shadow-sm' : ''
+												}`}
+											>
+												{item.label}
+												<span className={`text-xs transition-transform ${open ? 'rotate-180' : ''}`}>
+													▾
+												</span>
+											</span>
+											<div
+												className={`absolute left-0 top-full z-[70] min-w-[230px] rounded-lg border border-slate-200 bg-white p-2 text-sm text-slate-700 shadow-lg transition-all duration-200 ${
+													item.submenuKey === 'popular'
+														? 'min-w-[280px] xl:min-w-[300px] overflow-visible'
+														: 'max-h-[min(70vh,28rem)] overflow-y-auto'
+												} ${
+													open
+														? 'pointer-events-auto translate-y-0 opacity-100'
+														: 'pointer-events-none translate-y-1 opacity-0'
+												}`}
+											>
+												{item.children.map(child => (
+													<Link
+														key={child.href + child.label}
+														href={child.href}
+														onClick={() => {
+															setIsDesktopNewsOpen(false)
+															setIsDesktopPopularOpen(false)
+														}}
+														className={`block rounded-md px-3 py-2 font-medium transition-colors hover:bg-slate-100 hover:text-slate-900 ${
+															isActivePath(child.href) ? 'bg-slate-100 text-slate-900' : ''
+														}`}
+													>
+														{child.label}
+													</Link>
+												))}
+											</div>
+										</>
+									)
+								})()}
 							</div>
 						) : (
 							<Link
@@ -185,7 +216,10 @@ export default function Header() {
 					isMobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
 				}`}
 				style={{ transitionDelay: isMobileMenuOpen ? '0ms' : '440ms' }}
-				onClick={() => setIsMobileMenuOpen(false)}
+				onClick={() => {
+					setIsMobileMenuOpen(false)
+					setMobileSubmenu(null)
+				}}
 			>
 				<div
 					className={`absolute inset-y-0 left-0 w-[86%] max-w-[400px] bg-black/30 blur-[2px] transition-opacity duration-300 ease-out ${
@@ -238,7 +272,7 @@ export default function Header() {
 							type='button'
 							onClick={() => {
 								setIsMobileMenuOpen(false)
-								setIsMobileNewsOpen(false)
+								setMobileSubmenu(null)
 							}}
 							aria-label='Закрити меню'
 							className='inline-flex h-10 w-10 items-center justify-center rounded-md border border-black/25 bg-cyan-600 text-3xl font-bold leading-none text-white'
@@ -257,46 +291,52 @@ export default function Header() {
 							item.children ? (
 								<div key={item.label} className='flex w-full max-w-[320px] flex-col items-center gap-3'>
 									{(() => {
+										const sk = submenuKeyFor(item)
 										const isParentActive = isActivePath(item.href)
+										const submenuOpen = mobileSubmenu === sk
 										return (
-									<button
-										type='button'
-										onClick={() => setIsMobileNewsOpen(prev => !prev)}
-										className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 transition-colors duration-200 hover:text-white/85 ${
-											isParentActive ? 'bg-cyan-600 text-white shadow-sm' : ''
-										}`}
-									>
-										{item.label}
-										<span className={`text-xl transition-transform ${isMobileNewsOpen ? 'rotate-180' : ''}`}>
-											▾
-										</span>
-									</button>
-										)
-									})()}
-									{isMobileNewsOpen ? (
-										<div className='flex w-full flex-col items-center gap-3 rounded-xl bg-cyan-600/70 p-4 text-xl sm:text-2xl'>
-											{item.children.map(child => (
-												(() => {
-													const isChildActive = isActivePath(child.href)
-													return (
-												<Link
-													key={child.href}
-													href={child.href}
-													onClick={() => {
-														setIsMobileMenuOpen(false)
-														setIsMobileNewsOpen(false)
-													}}
-													className={`rounded-lg px-3 py-1 transition-colors duration-200 hover:text-white/85 ${
-														isChildActive ? 'bg-cyan-700 text-white shadow-sm' : ''
+											<>
+												<button
+													type='button'
+													onClick={() =>
+														setMobileSubmenu(prev => (prev === sk ? null : sk))
+													}
+													className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 transition-colors duration-200 hover:text-white/85 ${
+														isParentActive ? 'bg-cyan-600 text-white shadow-sm' : ''
 													}`}
 												>
-													{child.label}
-												</Link>
-													)
-												})()
-											))}
-										</div>
-									) : null}
+													{item.label}
+													<span
+														className={`text-xl transition-transform ${submenuOpen ? 'rotate-180' : ''}`}
+													>
+														▾
+													</span>
+												</button>
+												{submenuOpen ? (
+													<div className='flex max-h-[50vh] w-full flex-col items-center gap-2 overflow-y-auto rounded-xl bg-cyan-600/70 p-3 text-base sm:gap-3 sm:p-4 sm:text-xl'>
+														{item.children.map(child => {
+															const isChildActive = isActivePath(child.href)
+															return (
+																<Link
+																	key={child.href + child.label}
+																	href={child.href}
+																	onClick={() => {
+																		setIsMobileMenuOpen(false)
+																		setMobileSubmenu(null)
+																	}}
+																	className={`w-full text-center leading-snug transition-colors duration-200 hover:text-white/85 ${
+																		isChildActive ? 'bg-cyan-700 text-white shadow-sm' : ''
+																	} rounded-lg px-2 py-1.5 sm:px-3 sm:py-1`}
+																>
+																	{child.label}
+																</Link>
+															)
+														})}
+													</div>
+												) : null}
+											</>
+										)
+									})()}
 								</div>
 							) : (
 								(() => {

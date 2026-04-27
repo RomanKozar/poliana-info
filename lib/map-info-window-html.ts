@@ -12,7 +12,7 @@ function normalizeMapCardGallery(images: string[]): string[] {
 	const g = images.map(x => x.trim()).filter(Boolean)
 	if (g.length >= 2) return g
 	if (g.length === 1) return [g[0], g[0], g[0], g[0]]
-	return ['/images/gallery/golovna-foto.jpeg']
+	return ['/images/gallery/golovna-foto.webp']
 }
 
 function splitCategoryMeta(category: string): { rating: string; body: string } {

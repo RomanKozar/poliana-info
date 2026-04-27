@@ -15,7 +15,7 @@ export default function PolyanaInSpringPage() {
 			<section className='relative overflow-hidden'>
 				<div className='absolute inset-0'>
 					<Image
-						src='/images/gallery/golovna-foto-2.jpeg'
+						src='/images/gallery/golovna-foto-2.webp'
 						alt='Весняна Поляна'
 						fill
 						priority
@@ -102,7 +102,7 @@ export default function PolyanaInSpringPage() {
 					<div className='space-y-6'>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/gallery/kateryna-pop.png'
+								src='/images/gallery/kateryna-pop.webp'
 								alt='Весняний відпочинок у готелі'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'

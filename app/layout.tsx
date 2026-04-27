@@ -35,7 +35,8 @@ const geometria = localFont({
 			style: 'normal',
 		},
 	],
-	variable: '--font-geometria', // Створюємо CSS-змінну
+	variable: '--font-geometria',
+	display: 'swap',
 })
 
 /** Верифікація Google Search Console (видно в HTML; можна перевизначити через NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION). */

@@ -1,6 +1,10 @@
+import { categoryItems } from '@/data/home-page'
+
 export type NavigationItem = {
 	href: string
 	label: string
+	/** Окремий стан випадаючого списку в мобільному меню (як у «Новин»). */
+	submenuKey?: 'news' | 'popular'
 	children?: {
 		href: string
 		label: string
@@ -12,6 +16,7 @@ export const siteNavigation: NavigationItem[] = [
 	{
 		href: '/blog',
 		label: 'Новини',
+		submenuKey: 'news',
 		children: [
 			{ href: '/blog/latest-news', label: 'Останні новини' },
 			{ href: '/blog/poliana-in-spring', label: 'Поляна весною' },
@@ -20,8 +25,13 @@ export const siteNavigation: NavigationItem[] = [
 			{ href: '/blog/poliana-in-winter', label: 'Поляна Взимку' },
 		],
 	},
+	{
+		href: '/',
+		label: 'Популярне',
+		submenuKey: 'popular',
+		children: categoryItems.map(({ label, href }) => ({ label, href })),
+	},
 	{ href: '/accommodation', label: 'Проживання' },
 	{ href: '/gastronomy', label: 'Форель' },
-	{ href: '/spa', label: 'SPA та відпочинок' },
 	{ href: '/camps', label: 'Табори відпочинку' },
 ]

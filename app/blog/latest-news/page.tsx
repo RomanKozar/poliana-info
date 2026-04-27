@@ -14,7 +14,7 @@ export default function LatestNewsPage() {
 			<section className='relative overflow-hidden'>
 				<div className='absolute inset-0'>
 					<Image
-						src='/images/gallery/golovna-foto-3.jpg'
+						src='/images/gallery/golovna-foto-3.webp'
 						alt='Панорама Поляни'
 						fill
 						priority
@@ -106,7 +106,7 @@ export default function LatestNewsPage() {
 					<div className='space-y-6'>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/gallery/chan_1.png'
+								src='/images/gallery/chan_1.webp'
 								alt='Туристичні активності в Поляні'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'
@@ -124,7 +124,7 @@ export default function LatestNewsPage() {
 						</div>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/gallery/sayna.png'
+								src='/images/gallery/sayna.webp'
 								alt='SPA та відпочинок у Поляні'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'

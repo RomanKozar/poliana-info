@@ -20,7 +20,7 @@ export const accommodations = [
 		description: 'Затишний готель у самому серці курорту.',
 		price: 'від 1500 грн',
 		rating: '4.3 (1104)',
-		image: '/images/accommodation/kateryna-v1.jpg',
+		image: '/images/accommodation/kateryna-v1.webp',
 		website: 'https://hotel-kateryna.com/',
 	},
 	{
@@ -29,7 +29,7 @@ export const accommodations = [
 		description: 'Комфортні номери, басейн, SPA зона.',
 		price: 'від 1800 грн',
 		rating: '4.3 (1256)',
-		image: '/images/accommodation/kontinent.jpg',
+		image: '/images/accommodation/kontinent.webp',
 		website: 'https://www.hotel-continent.com/',
 	},
 	{
@@ -38,7 +38,7 @@ export const accommodations = [
 		description: 'Сімейний відпочинок, тиша та свіже повітря Карпат.',
 		price: 'від 1100 грн',
 		rating: '3.8 (61)',
-		image: '/images/accommodation/river-side.jpg',
+		image: '/images/accommodation/river-side.webp',
 		website: 'https://www.instagram.com/hotel.riverside.ua?igsh=Y280d250MmF4Y2p5',
 	},
 	{
@@ -137,19 +137,20 @@ export const skiRecreation = [
 	},
 ] as const
 
-export const categoryItems: { label: string; icon: IconType }[] = [
-	{ label: 'Чани, бані, SPA центри', icon: FaSpa },
-	{ label: 'Мінеральна вода', icon: FaWater },
-	{ label: 'Сільський туризм', icon: FaHiking },
-	{ label: 'Санаторії Поляни', icon: FaHeart },
-	{ label: 'Конференц сервіс', icon: FaRegClock },
-	{ label: 'Їжа та напої', icon: FaUtensils },
-	{ label: 'Екскурсії Поляною', icon: FaCamera },
-	{ label: 'Дегустації', icon: FaFish },
-	{ label: 'Готелі Поляни', icon: FaStar },
-	{ label: 'Відпочинок з дітьми', icon: FaHeart },
-	{ label: 'Активний відпочинок', icon: FaBiking },
-	{ label: 'Сувенір з Поляни', icon: FaMapMarkerAlt },
+/** Категорії блоку «Популярні категорії» на головній та в меню «Популярне» в шапці. */
+export const categoryItems: { label: string; icon: IconType; href: string }[] = [
+	{ label: 'Чани, бані, SPA центри', icon: FaSpa, href: '/cat/spa-bani-chany' },
+	{ label: 'Мінеральна вода', icon: FaWater, href: '/cat/mineralna-voda' },
+	{ label: 'Сільський туризм', icon: FaHiking, href: '/cat/silskyi-turizm' },
+	{ label: 'Санаторії Поляни', icon: FaHeart, href: '/cat/sanatorii-polyany' },
+	{ label: 'Конференц сервіс', icon: FaRegClock, href: '/cat/konferenc-servis' },
+	{ label: 'Їжа та напої', icon: FaUtensils, href: '/cat/yizha-napoyi' },
+	{ label: 'Екскурсії Поляною', icon: FaCamera, href: '/excursions' },
+	{ label: 'Дегустації', icon: FaFish, href: '/cat/dehustacii' },
+	{ label: 'Готелі Поляни', icon: FaStar, href: '/cat/goteli-polyany' },
+	{ label: 'Відпочинок з дітьми', icon: FaHeart, href: '/cat/z-ditmy' },
+	{ label: 'Активний відпочинок', icon: FaBiking, href: '/cat/aktyvnyi-vidpochynok' },
+	{ label: 'Сувенір з Поляни', icon: FaMapMarkerAlt, href: '/cat/suveniry' },
 ]
 
 export const popularNow = [
@@ -157,19 +158,19 @@ export const popularNow = [
 		badge: 'ТОП ГОТЕЛІ',
 		title: 'Найкращі готелі Поляни',
 		text: 'Підбірка перевірених готелів.',
-		image: '/images/gallery/kateryna-pop.png',
+		image: '/images/gallery/kateryna-pop.webp',
 	},
 	{
 		badge: 'ТОП ЧАНИ',
 		title: 'Чани з видом на гори',
 		text: 'Відпочинок, який запам’ятається.',
-		image: '/images/gallery/chan_1.png',
+		image: '/images/gallery/chan_1.webp',
 	},
 	{
 		badge: 'ТОП SPA',
 		title: 'SPA для тіла та душі',
 		text: 'Релакс, масажі та процедури.',
-		image: '/images/gallery/sayna.png',
+		image: '/images/gallery/sayna.webp',
 	},
 ] as const
 
@@ -219,7 +220,7 @@ export const faqItems = [
 export const campYears = ['2026', '2025', '2024'] as const
 
 export const heroSlides = [
-	'/images/gallery/golovna-foto.jpeg',
-	'/images/gallery/golovna-foto-2.jpeg',
-	'/images/gallery/golovna-foto-3.jpg',
+	'/images/gallery/golovna-foto.webp',
+	'/images/gallery/golovna-foto-2.webp',
+	'/images/gallery/golovna-foto-3.webp',
 ] as const

@@ -15,7 +15,7 @@ export default function AutumnVacationPage() {
 			<section className='relative overflow-hidden'>
 				<div className='absolute inset-0'>
 					<Image
-						src='/images/gallery/golovna-foto-3.jpg'
+						src='/images/gallery/golovna-foto-3.webp'
 						alt='Осіння Поляна'
 						fill
 						priority
@@ -108,7 +108,7 @@ export default function AutumnVacationPage() {
 					<div className='space-y-6'>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/accommodation/kontinent.jpg'
+								src='/images/accommodation/kontinent.webp'
 								alt='Осінній відпочинок у горах'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'
@@ -126,7 +126,7 @@ export default function AutumnVacationPage() {
 						</div>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/accommodation/kateryna-v1.jpg'
+								src='/images/accommodation/kateryna-v1.webp'
 								alt='Затишні готелі Поляни'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'
