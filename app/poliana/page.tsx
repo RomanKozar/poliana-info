@@ -1,11 +1,13 @@
 import Image from 'next/image'
+import { polianaDestinationKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
 	title: 'Поляна — туризм, відпочинок і пригоди в Карпатах',
 	description:
-		'Дізнайтеся про Поляну як туристичну дестинацію: що подивитися, санаторії Поляни, ціни на послуги, активності та план подорожі на Закарпаття.',
+		'Поляна на Закарпатті: що подивитись на курорті, санаторії й мінеральні джерела, екскурсії, лижі та тюбінг, гастрономія та план подорожі в Карпати.',
 	pathname: '/poliana',
+	keywords: polianaDestinationKeywords,
 })
 
 export default function PolyanaPage() {

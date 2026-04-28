@@ -45,7 +45,7 @@ import {
 	popularFacilities,
 	propertyHighlights,
 	reviewCategoryScoresForHotel,
-	sampleReviewCards,
+	sampleReviewCardsForHotel,
 	type FacilityIconId,
 } from '@/lib/hotel-detail-data'
 
@@ -256,6 +256,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 	)
 	const guestCount =
 		hotel.detailReviewCount ?? parseGuestCount(hotel.rating) ?? undefined
+	const hasExternalReviewStats = guestCount != null && guestCount > 0
 	const paragraphs = longDescriptionParagraphs(hotel)
 
 	const onShare = useCallback(async () => {
@@ -420,7 +421,11 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 					<h2 className='text-2xl font-bold text-[#2D333D] sm:text-[1.6rem]'>{hotelListingSubtitle()}</h2>
 					<p className='mt-2 flex flex-wrap items-center gap-2 text-slate-600'>
 						<FaStar className='size-4 text-amber-500' aria-hidden />
-						<span>Ще немає відгуків на порталі</span>
+						{hasExternalReviewStats ? (
+							<span>Зведено з відкритих сервісів бронювання (Booking та ін.), не лише POLYANA.INFO</span>
+						) : (
+							<span>Ще немає відгуків на порталі</span>
+						)}
 						<span className='text-slate-400'>·</span>
 						<span className='font-medium text-slate-700'>{hotel.rating}</span>
 					</p>
@@ -550,7 +555,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 				<h3 className='mt-7 text-lg font-semibold text-[#2D333D]'>Враження гостей із високими оцінками</h3>
 				<div className='relative mt-3'>
 					<div className='flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden'>
-							{sampleReviewCards.map((r, i) => (
+							{sampleReviewCardsForHotel(hotel.id).map((r, i) => (
 								<div
 									key={i}
 									className='min-w-[min(100%,20rem)] snap-start shrink-0 rounded-xl border border-slate-200/90 bg-slate-50/80 p-4 lg:min-w-0'

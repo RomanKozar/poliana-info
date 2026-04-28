@@ -699,6 +699,15 @@ main[data-accommodation-map-expanded='true'] {
   min-height: 96px;
 }
 
+.polyana-accommodation-iw-slide-detail {
+  display: block;
+  height: 100%;
+  min-height: 96px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .polyana-accommodation-iw-gallery-nav {
   position: absolute;
   top: 50%;

@@ -1,11 +1,13 @@
 import QuadroRideDetailPage from '@/components/excursions/QuadroRideDetailPage'
+import { quadroRideKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Quadro Ride — квадроцикли біля Поляни',
+	title: 'Квадроцикли в Поляні — Quadro Ride: маршрути та карта',
 	description:
-		'Детальний опис турів Quadro Ride у Поляні: маршрути Легкий старт, Релакс, Виклик, Адреналін, правила, фото та карта для побудови шляху від курортної зони.',
+		'Квадроцикли в Поляні (Quadro Ride): тури Легкий старт, Релакс, Виклик, Адреналін. Правила безпеки, фото траси та карта — організувати поїздку від курортної зони Закарпаття.',
 	pathname: '/excursions/quadro-ride',
+	keywords: quadroRideKeywords,
 })
 
 export default function QuadroRidePage() {

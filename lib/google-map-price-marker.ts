@@ -16,12 +16,13 @@ export type HotelPricePillMarker = {
 	height: number
 }
 
-/** Біла таблетка (дефолт) або чорна як при наведенні на картку в списку. */
-export type HotelPricePillVariant = 'default' | 'active'
+/** Біла таблетка; `active` і `selected` — помаранчевий акцент (наведення / вибір). */
+export type HotelPricePillVariant = 'default' | 'active' | 'selected'
 
 /**
  * «Пігулка» ціни (PNG data URL для google.maps.Marker icon).
- * `active` — чорний фон, білий текст (як підсвічена мітка на референсі).
+ * `active` — помаранчевий (наведення на картку в списку або на маркер на карті).
+ * `selected` — той самий помаранчевий акцент (вибраний готель / відкрите вікно).
  */
 export function createHotelPricePillMarker(label: string, variant: HotelPricePillVariant = 'default'): HotelPricePillMarker {
 	const logicalH = 32
@@ -50,25 +51,28 @@ export function createHotelPricePillMarker(label: string, variant: HotelPricePil
 	ctx.font = font
 
 	const r = logicalH / 2
-	const active = variant === 'active'
+	const accent = variant === 'active' || variant === 'selected'
+
+	const selBg = '#F68F5D'
+	const selStroke = '#e57d4a'
 
 	ctx.save()
-	ctx.shadowColor = active ? 'rgba(0, 0, 0, 0.35)' : 'rgba(15, 23, 42, 0.14)'
-	ctx.shadowBlur = active ? 6 : 5
+	ctx.shadowColor = accent ? 'rgba(246, 143, 93, 0.45)' : 'rgba(15, 23, 42, 0.14)'
+	ctx.shadowBlur = accent ? 8 : 5
 	ctx.shadowOffsetY = 1
-	ctx.fillStyle = active ? '#111827' : '#ffffff'
+	ctx.fillStyle = accent ? selBg : '#ffffff'
 	ctx.beginPath()
 	ctx.roundRect(0, 0, logicalW, logicalH, r)
 	ctx.fill()
 	ctx.restore()
 
-	ctx.strokeStyle = active ? '#1f2937' : '#e5e7eb'
+	ctx.strokeStyle = accent ? selStroke : '#e5e7eb'
 	ctx.lineWidth = 1
 	ctx.beginPath()
 	ctx.roundRect(0, 0, logicalW, logicalH, r)
 	ctx.stroke()
 
-	ctx.fillStyle = active ? '#ffffff' : '#111827'
+	ctx.fillStyle = accent ? '#ffffff' : '#111827'
 	ctx.textBaseline = 'middle'
 	ctx.textAlign = 'left'
 	ctx.fillText(label, padX, logicalH / 2 + 0.5)

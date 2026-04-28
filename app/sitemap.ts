@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { categoryPlaceholderSlugs } from '@/data/category-placeholders'
+import { polyanaHotels } from '@/lib/polyana-hotels'
 import { SITE_URL } from '@/lib/seo'
 
 /** Статична збірка маршруту /sitemap.xml — менше шансів на помилки при зверненні Googlebot. */
@@ -23,6 +24,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		priority: 0.65,
 	}))
 
+	const accommodationDetailUrls: MetadataRoute.Sitemap = polyanaHotels.map(hotel => ({
+		url: pageUrl(`/accommodation/${hotel.id}`),
+		lastModified,
+		changeFrequency: 'weekly' as const,
+		priority: 0.75,
+	}))
+
 	return [
 		{ url: pageUrl('/'), lastModified, changeFrequency: 'weekly', priority: 1 },
 		{ url: pageUrl('/about'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
@@ -35,7 +43,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		{ url: pageUrl('/blog/poliana-in-winter'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/camps'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/contacts'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
-		{ url: pageUrl('/excursions'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
+		{ url: pageUrl('/excursions'), lastModified, changeFrequency: 'weekly', priority: 0.85 },
+		{
+			url: pageUrl('/excursions/quadro-ride'),
+			lastModified,
+			changeFrequency: 'weekly',
+			priority: 0.82,
+		},
 		{ url: pageUrl('/entertainment'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/gastronomy'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/kids-camps'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
@@ -45,6 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		{ url: pageUrl('/spa'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/team'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/wellness'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
+		...accommodationDetailUrls,
 		...categoryUrls,
 	]
 }

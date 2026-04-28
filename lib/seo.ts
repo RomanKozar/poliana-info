@@ -7,15 +7,23 @@ type PageMetaInput = {
 	title: string
 	description: string
 	pathname: string
+	/** Допоміжно для альтернативних пошуковиків; Google на ранжування майже не використовує. */
+	keywords?: string[]
 }
 
 /** Унікальні title/description + canonical для кожної сторінки (злиття з кореневим layout). */
-export function definePageMetadata({ title, description, pathname }: PageMetaInput): Metadata {
+export function definePageMetadata({
+	title,
+	description,
+	pathname,
+	keywords,
+}: PageMetaInput): Metadata {
 	const path = pathname === '/' ? '' : pathname
 	const url = `${SITE_URL}${path || ''}`
 	return {
 		title,
 		description,
+		...(keywords?.length ? { keywords } : {}),
 		alternates: {
 			canonical: pathname,
 		},

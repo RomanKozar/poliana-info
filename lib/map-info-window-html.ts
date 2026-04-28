@@ -53,6 +53,8 @@ export type UnifiedMapCardIw = {
 	routeLink: string
 	/** Якщо немає телефону — CTA веде сюди */
 	saveLink?: string
+	/** Внутрішнє посилання на сторінку готелю (клік по фото галереї на карті) */
+	detailHref?: string
 }
 
 /**
@@ -68,11 +70,18 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const gallery = normalizeMapCardGallery(p.galleryImages)
 	const total = gallery.length
 	const sw = 100 / total
+	const detailHref = (p.detailHref || '').trim()
+	const detailEsc = detailHref ? escHtml(detailHref) : ''
 	const slides = gallery
-		.map(
-			(src, i) =>
-				`<div class="polyana-accommodation-iw-gallery__slide" style="flex:0 0 ${sw}%" data-slide="${i}"><img class="polyana-accommodation-iw-img" src="${escHtml(src)}" alt="${name}${i > 0 ? ` — ${i + 1}` : ''}" /></div>`
-		)
+		.map((src, i) => {
+			const alt = `${name}${i > 0 ? ` — ${i + 1}` : ''}`
+			const imgInner = `<img class="polyana-accommodation-iw-img" src="${escHtml(src)}" alt="${alt}" />`
+			const inner =
+				detailEsc !== ''
+					? `<a class="polyana-accommodation-iw-slide-detail" href="${detailEsc}" aria-label="${name} — детальний опис">${imgInner}</a>`
+					: imgInner
+			return `<div class="polyana-accommodation-iw-gallery__slide" style="flex:0 0 ${sw}%" data-slide="${i}">${inner}</div>`
+		})
 		.join('')
 	const dots = gallery
 		.map(
@@ -151,6 +160,7 @@ export function hotelInfoWindowHtml(hotel: PolyanaHotel): string {
 		galleryImages: getHotelMapGallery(hotel),
 		routeLink,
 		saveLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name}, ${hotel.address}`)}`,
+		detailHref: `/accommodation/${hotel.id}`,
 	})
 }
 

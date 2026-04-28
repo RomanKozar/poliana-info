@@ -1,11 +1,13 @@
 import ExcursionsPageContent from '@/components/excursions/ExcursionsPageContent'
+import { excursionsPageKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Екскурсії Поляною та в Карпатах',
+	title: 'Екскурсії в Поляні та Карпатах — карта маршрутів',
 	description:
-		'Екскурсії на квадроциклах, маршрути в гори та прогулянки Поляною: описи, ціни та карта точок старту біля Поляни, Закарпаття.',
+		'Екскурсії в Поляні та околицях: квадроцикли Quadro Ride, маршрути в гори, прогулянки Поляною. Описи, орієнтовні ціни та карта старту біля курорту на Закарпатті.',
 	pathname: '/excursions',
+	keywords: excursionsPageKeywords,
 })
 
 export default function ExcursionsPage() {

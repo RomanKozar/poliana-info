@@ -90,15 +90,21 @@ function AccommodationMapMobileBottomSheet({
 									className='relative h-full'
 									style={{ width: `${100 / n}%` }}
 								>
-									<Image
-										src={src}
-										alt={i > 0 ? `${hotel.name} — ${i + 1}` : hotel.name}
-										fill
-										className='object-cover pointer-events-none select-none'
-										sizes='100vw'
-										priority={i === 0}
-										draggable={false}
-									/>
+									<Link
+										href={`/accommodation/${hotel.id}`}
+										className='relative block h-full w-full outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-cyan-500'
+										aria-label={`Відкрити опис готеля: ${hotel.name}`}
+									>
+										<Image
+											src={src}
+											alt={i > 0 ? `${hotel.name} — ${i + 1}` : hotel.name}
+											fill
+											className='object-cover pointer-events-none select-none'
+											sizes='100vw'
+											priority={i === 0}
+											draggable={false}
+										/>
+									</Link>
 								</div>
 							))}
 						</div>
@@ -235,6 +241,7 @@ export default function AccommodationPageContent() {
 	const [isMapExpanded, setIsMapExpanded] = useState(false)
 	const [selectedId, setSelectedId] = useState<string | null>(null)
 	const [hoveredListHotelId, setHoveredListHotelId] = useState<string | null>(null)
+	const [hoveredMapMarkerHotelId, setHoveredMapMarkerHotelId] = useState<string | null>(null)
 	const [markersVersion, setMarkersVersion] = useState(0)
 	const [mapBottomSheetHotel, setMapBottomSheetHotel] = useState<PolyanaHotel | null>(null)
 	/** < lg: нижня картка замість InfoWindow (читається в initMap, слухачах). */
@@ -270,7 +277,10 @@ export default function AccommodationPageContent() {
 	useEffect(() => {
 		if (!mapBottomSheetHotel) return
 		const onKey = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') setMapBottomSheetHotel(null)
+			if (e.key === 'Escape') {
+				setMapBottomSheetHotel(null)
+				setSelectedId(null)
+			}
 		}
 		window.addEventListener('keydown', onKey)
 		return () => window.removeEventListener('keydown', onKey)
@@ -280,28 +290,33 @@ export default function AccommodationPageContent() {
 		mapColumnRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 	}
 
-	const syncPriceMarkerHoverStyles = useCallback((hoverId: string | null) => {
-		const win = window as Window & { google?: { maps: any } }
-		const maps = win.google?.maps
-		if (!maps?.Size || markersByIdRef.current.size === 0) return
+	const syncPriceMarkerStyles = useCallback(
+		(hoverListId: string | null, hoverMapMarkerId: string | null, activeHotelId: string | null) => {
+			const win = window as Window & { google?: { maps: any } }
+			const maps = win.google?.maps
+			if (!maps?.Size || markersByIdRef.current.size === 0) return
 
-		for (const hotel of polyanaHotels) {
-			const marker = markersByIdRef.current.get(hotel.id)
-			if (!marker) continue
-			const priceLabel = formatHotelPriceForMapMarker(hotel.price)
-			const variant = hoverId === hotel.id ? 'active' : 'default'
-			const pill = createHotelPricePillMarker(priceLabel, variant)
-			marker.setIcon({
-				url: pill.dataUrl,
-				scaledSize: new maps.Size(pill.width, pill.height),
-				anchor: new maps.Point(Math.round(pill.width / 2), pill.height),
-			})
-		}
-	}, [])
+			for (const hotel of polyanaHotels) {
+				const marker = markersByIdRef.current.get(hotel.id)
+				if (!marker) continue
+				const priceLabel = formatHotelPriceForMapMarker(hotel.price)
+				const hovered = hoverListId === hotel.id || hoverMapMarkerId === hotel.id
+				const variant =
+					activeHotelId === hotel.id ? 'selected' : hovered ? 'active' : 'default'
+				const pill = createHotelPricePillMarker(priceLabel, variant)
+				marker.setIcon({
+					url: pill.dataUrl,
+					scaledSize: new maps.Size(pill.width, pill.height),
+					anchor: new maps.Point(Math.round(pill.width / 2), pill.height),
+				})
+			}
+		},
+		[]
+	)
 
 	useEffect(() => {
-		syncPriceMarkerHoverStyles(hoveredListHotelId)
-	}, [hoveredListHotelId, markersVersion, syncPriceMarkerHoverStyles])
+		syncPriceMarkerStyles(hoveredListHotelId, hoveredMapMarkerHotelId, selectedId)
+	}, [hoveredListHotelId, hoveredMapMarkerHotelId, selectedId, markersVersion, syncPriceMarkerStyles])
 
 	const openHotelInfoOnMap = (hotel: PolyanaHotel) => {
 		setSelectedId(hotel.id)
@@ -428,6 +443,11 @@ export default function AccommodationPageContent() {
 					infoWindow.open({ anchor: marker, map })
 					activeInfoWindowRef.current = infoWindow
 				})
+
+				marker.addListener('mouseover', () => setHoveredMapMarkerHotelId(hotel.id))
+				marker.addListener('mouseout', () =>
+					setHoveredMapMarkerHotelId(cur => (cur === hotel.id ? null : cur))
+				)
 			})
 
 			setMarkersVersion(v => v + 1)
@@ -436,12 +456,14 @@ export default function AccommodationPageContent() {
 				if (Date.now() < mapClickLockUntilRef.current) return
 				if (isNarrowMapUiRef.current) {
 					setMapBottomSheetHotel(null)
+					setSelectedId(null)
 					return
 				}
 				if (activeInfoWindowRef.current) {
 					activeInfoWindowRef.current.close()
 					activeInfoWindowRef.current = null
 				}
+				setSelectedId(null)
 			})
 
 			const mapRoot = mapContainerRef.current
@@ -500,6 +522,7 @@ export default function AccommodationPageContent() {
 						activeInfoWindowRef.current.close()
 						activeInfoWindowRef.current = null
 					}
+					setSelectedId(null)
 					mapClickLockUntilRef.current = Date.now() + 400
 				}
 				mapRoot.addEventListener('click', onInfoWindowUiClick, true)
@@ -688,16 +711,12 @@ export default function AccommodationPageContent() {
 							>
 								<Link
 									href={`/accommodation/${hotel.id}`}
-									target='_blank'
-									rel='noopener noreferrer'
-									onClick={() => openHotelInfoOnMap(hotel)}
-									className='absolute inset-0 z-[1] rounded-2xl'
-									aria-label={`Відкрити сторінку готеля: ${hotel.name} (нова вкладка)`}
-								/>
-								<div className='relative z-[2] pointer-events-none aspect-[5/3] w-full min-w-0 overflow-hidden sm:aspect-auto sm:min-h-[15rem] sm:h-full'>
+									className='relative isolate block aspect-[5/3] w-full min-w-0 shrink-0 overflow-hidden sm:aspect-auto sm:min-h-[15rem] sm:h-full'
+									aria-label={`Відкрити опис готеля: ${hotel.name}`}
+								>
 									<Image
 										src={hotel.image}
-										alt={hotel.name}
+										alt=''
 										fill
 										className='object-cover object-center'
 										sizes='(max-width: 640px) 100vw, 240px'
@@ -705,35 +724,40 @@ export default function AccommodationPageContent() {
 									<span className='pointer-events-none absolute bottom-2 right-2 rounded-lg bg-white/95 px-2 py-0.5 text-xs font-bold text-[#2D333D] shadow-sm'>
 										{hotel.price}
 									</span>
-								</div>
-								<div className='relative z-[2] flex min-h-0 min-w-0 flex-col justify-between gap-4 p-3 pointer-events-none sm:p-5'>
-									<div className='space-y-2.5 sm:space-y-3'>
-										<h2
-											id={`hotel-title-${hotel.id}`}
-											className='text-[1.05rem] font-bold leading-snug tracking-tight text-[#2D333D] sm:text-lg sm:leading-tight'
-										>
-											{hotel.name}
-										</h2>
-										<p className='flex items-start gap-1.5 text-[0.8125rem] leading-snug text-slate-500'>
-											<FaMapMarkerAlt
-												className='mt-0.5 size-3.5 shrink-0 text-[#53C4DA]'
-												aria-hidden
-											/>
-											<span className='min-w-0'>{hotel.address}</span>
-										</p>
-										<p className='flex items-center gap-1.5 text-sm font-medium leading-none text-amber-800'>
-											<FaStar className='size-3.5 shrink-0 text-amber-500' aria-hidden />
-											<span>{hotel.rating}</span>
-										</p>
-										<p className='line-clamp-2 text-sm leading-relaxed text-slate-600 sm:text-[0.9375rem]'>
-											{hotel.description}
-										</p>
-										<p className='text-[0.8125rem] leading-snug text-slate-500'>{hotel.feature}</p>
-									</div>
-									<div className='relative z-[3] flex w-full shrink-0 justify-end pt-1 pointer-events-auto'>
+								</Link>
+								<div className='relative flex min-h-0 min-w-0 flex-col justify-between gap-4 p-3 sm:p-5'>
+									<Link
+										href={`/accommodation/${hotel.id}`}
+										className='min-h-0 block outline-none ring-offset-2 transition-opacity hover:opacity-[0.98] focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-cyan-500'
+									>
+										<div className='space-y-2.5 sm:space-y-3'>
+											<h2
+												id={`hotel-title-${hotel.id}`}
+												className='text-[1.05rem] font-bold leading-snug tracking-tight text-[#2D333D] sm:text-lg sm:leading-tight'
+											>
+												{hotel.name}
+											</h2>
+											<p className='flex items-start gap-1.5 text-[0.8125rem] leading-snug text-slate-500'>
+												<FaMapMarkerAlt
+													className='mt-0.5 size-3.5 shrink-0 text-[#53C4DA]'
+													aria-hidden
+												/>
+												<span className='min-w-0'>{hotel.address}</span>
+											</p>
+											<p className='flex items-center gap-1.5 text-sm font-medium leading-none text-amber-800'>
+												<FaStar className='size-3.5 shrink-0 text-amber-500' aria-hidden />
+												<span>{hotel.rating}</span>
+											</p>
+											<p className='line-clamp-2 text-sm leading-relaxed text-slate-600 sm:text-[0.9375rem]'>
+												{hotel.description}
+											</p>
+											<p className='text-[0.8125rem] leading-snug text-slate-500'>{hotel.feature}</p>
+										</div>
+									</Link>
+									<div className='flex w-full shrink-0 justify-end pt-1'>
 										<a
 											href={`tel:${hotel.phone}`}
-											className='inline-flex w-fit cursor-pointer rounded-full bg-[#F68F5D] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#e57d4a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F68F5D]'
+											className='relative z-[1] inline-flex w-fit cursor-pointer rounded-full bg-[#F68F5D] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#e57d4a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F68F5D]'
 										>
 											Подзвонити
 										</a>
@@ -794,7 +818,10 @@ export default function AccommodationPageContent() {
 		{mapBottomSheetHotel ? (
 			<AccommodationMapMobileBottomSheet
 				hotel={mapBottomSheetHotel}
-				onClose={() => setMapBottomSheetHotel(null)}
+				onClose={() => {
+					setMapBottomSheetHotel(null)
+					setSelectedId(null)
+				}}
 			/>
 		) : null}
 		</>

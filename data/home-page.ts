@@ -1,20 +1,9 @@
 import type { IconType } from 'react-icons'
-import {
-	FaBiking,
-	FaCamera,
-	FaFish,
-	FaHeart,
-	FaHiking,
-	FaMapMarkerAlt,
-	FaRegClock,
-	FaSpa,
-	FaStar,
-	FaUtensils,
-	FaWater,
-} from 'react-icons/fa'
+import { FaRegClock, FaSpa, FaWater } from 'react-icons/fa'
 
 export const accommodations = [
 	{
+		id: 'kateryna',
 		title: 'Готель "Катерина"',
 		location: 'Сонячна, 55 Б, Поляна, Закарпатська область, 89313',
 		description: 'Затишний готель у самому серці курорту.',
@@ -24,29 +13,35 @@ export const accommodations = [
 		website: 'https://hotel-kateryna.com/',
 	},
 	{
+		id: 'kontinent',
 		title: 'Готель "Континент"',
 		location: 'вул. Сонячна, 59, Поляна, Закарпатська область, 89313',
-		description: 'Комфортні номери, басейн, SPA зона.',
+		description:
+			'Комплекс з басейнами (критим і відкритим), рестораном, SPA й конференц-зонами у центрі курорту.',
 		price: 'від 1800 грн',
 		rating: '4.3 (1256)',
 		image: '/images/accommodation/kontinent.webp',
 		website: 'https://www.hotel-continent.com/',
 	},
 	{
+		id: 'riverside',
 		title: 'River Side Hotel',
 		location: 'вул. Духновича, 68, Поляна, Закарпатська область, 89313',
-		description: 'Сімейний відпочинок, тиша та свіже повітря Карпат.',
+		description:
+			'Тихий готель біля річки з рестораном і номерами з балконом; зручно для авто й прогулянок до траси «Ведмежа».',
 		price: 'від 1100 грн',
-		rating: '3.8 (61)',
+		rating: '3.9 (399)',
 		image: '/images/accommodation/river-side.webp',
-		website: 'https://www.instagram.com/hotel.riverside.ua?igsh=Y280d250MmF4Y2p5',
+		website: 'https://www.riverside.in.ua/',
 	},
 	{
+		id: 'arena',
 		title: 'Arena Apart-Hotel',
-		location: 'Курортна вулиця, 23, Поляна, Закарпатська область, 89314',
-		description: 'Сучасний апарт-готель зі SPA, сауною та відкритим басейном.',
+		location: 'вул. Курортна, 23А, Поляна, Закарпатська область, 89314',
+		description:
+			'Відкритий басейн і SPA, апартаменти з кухнею, ресторан і дитяча зона на курорті «Сонячне Закарпаття».',
 		price: 'від 2500 грн',
-		rating: '4.7 (212)',
+		rating: '4.7 (299)',
 		image: '/images/accommodation/arena.webp',
 		website: 'https://arena-hotel.com.ua/',
 	},
@@ -137,28 +132,39 @@ export const skiRecreation = [
 	},
 ] as const
 
-/** Категорії блоку «Популярні категорії» на головній та в меню «Популярне» в шапці. */
-export const categoryItems: { label: string; icon: IconType; href: string }[] = [
-	{ label: 'Чани, бані, SPA центри', icon: FaSpa, href: '/cat/spa-bani-chany' },
-	{ label: 'Мінеральна вода', icon: FaWater, href: '/cat/mineralna-voda' },
-	{ label: 'Сільський туризм', icon: FaHiking, href: '/cat/silskyi-turizm' },
-	{ label: 'Санаторії Поляни', icon: FaHeart, href: '/cat/sanatorii-polyany' },
-	{ label: 'Конференц сервіс', icon: FaRegClock, href: '/cat/konferenc-servis' },
-	{ label: 'Їжа та напої', icon: FaUtensils, href: '/cat/yizha-napoyi' },
-	{ label: 'Екскурсії Поляною', icon: FaCamera, href: '/excursions' },
-	{ label: 'Дегустації', icon: FaFish, href: '/cat/dehustacii' },
-	{ label: 'Готелі Поляни', icon: FaStar, href: '/cat/goteli-polyany' },
-	{ label: 'Відпочинок з дітьми', icon: FaHeart, href: '/cat/z-ditmy' },
-	{ label: 'Активний відпочинок', icon: FaBiking, href: '/cat/aktyvnyi-vidpochynok' },
-	{ label: 'Сувенір з Поляни', icon: FaMapMarkerAlt, href: '/cat/suveniry' },
+const CATEGORY_ICON_BASE = '/images/branding/categories-icons'
+
+/** Категорії блоку «Популярні категорії» на головній та в меню «Популярне» в шапці — власні SVG з `public/images/branding/categories-icons/`. */
+export const categoryItems: { label: string; iconSrc: string; href: string }[] = [
+	{ label: 'Чани, бані, SPA центри', iconSrc: `${CATEGORY_ICON_BASE}/SPA.svg`, href: '/cat/spa-bani-chany' },
+	{ label: 'Мінеральна вода', iconSrc: `${CATEGORY_ICON_BASE}/water.svg`, href: '/cat/mineralna-voda' },
+	{ label: 'Сільський туризм', iconSrc: `${CATEGORY_ICON_BASE}/tourism.svg`, href: '/cat/silskyi-turizm' },
+	{ label: 'Санаторії Поляни', iconSrc: `${CATEGORY_ICON_BASE}/sanatoriums.svg`, href: '/cat/sanatorii-polyany' },
+	{ label: 'Конференц сервіс', iconSrc: `${CATEGORY_ICON_BASE}/conferences.svg`, href: '/cat/konferenc-servis' },
+	{ label: 'Їжа та напої', iconSrc: `${CATEGORY_ICON_BASE}/food_drinks.svg`, href: '/cat/yizha-napoyi' },
+	{ label: 'Екскурсії Поляною', iconSrc: `${CATEGORY_ICON_BASE}/excurs.svg`, href: '/excursions' },
+	{ label: 'Дегустації', iconSrc: `${CATEGORY_ICON_BASE}/tasting.svg`, href: '/cat/dehustacii' },
+	{ label: 'Готелі Поляни', iconSrc: `${CATEGORY_ICON_BASE}/hotels.svg`, href: '/cat/goteli-polyany' },
+	{ label: 'Відпочинок з дітьми', iconSrc: `${CATEGORY_ICON_BASE}/children.svg`, href: '/cat/z-ditmy' },
+	{ label: 'Активний відпочинок', iconSrc: `${CATEGORY_ICON_BASE}/activity.svg`, href: '/cat/aktyvnyi-vidpochynok' },
+	{ label: 'Сувенір з Поляни', iconSrc: `${CATEGORY_ICON_BASE}/souvenirs.svg`, href: '/cat/suveniry' },
 ]
 
-export const popularNow = [
+type PopularNowItem = {
+	badge: string
+	title: string
+	text: string
+	image: string
+	href?: string
+}
+
+export const popularNow: PopularNowItem[] = [
 	{
 		badge: 'ТОП ГОТЕЛІ',
 		title: 'Найкращі готелі Поляни',
 		text: 'Підбірка перевірених готелів.',
 		image: '/images/gallery/kateryna-pop.webp',
+		href: '/accommodation/kateryna',
 	},
 	{
 		badge: 'ТОП ЧАНИ',
@@ -172,7 +178,7 @@ export const popularNow = [
 		text: 'Релакс, масажі та процедури.',
 		image: '/images/gallery/sayna.webp',
 	},
-] as const
+]
 
 export const faqItems = [
 	{

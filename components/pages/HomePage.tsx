@@ -53,10 +53,10 @@ export default function HomePage() {
 		[[] as Array<{ item: (typeof faqItems)[number]; index: number }>, [] as Array<{ item: (typeof faqItems)[number]; index: number }>]
 	)
 
-	const toggleAccommodationFavorite = (title: string) => {
+	const toggleAccommodationFavorite = (id: string) => {
 		setFavoriteAccommodations(prev => ({
 			...prev,
-			[title]: !prev[title],
+			[id]: !prev[id],
 		}))
 	}
 
@@ -198,7 +198,7 @@ export default function HomePage() {
 							type='button'
 							onClick={goToPrevHeroSlide}
 							aria-label='Попереднє фото банера'
-							className='inline-flex size-8 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/35'
+							className='inline-flex size-8 cursor-pointer items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/35'
 						>
 							<FaChevronLeft className='size-3.5' />
 						</button>
@@ -218,7 +218,7 @@ export default function HomePage() {
 							type='button'
 							onClick={goToNextHeroSlide}
 							aria-label='Наступне фото банера'
-							className='inline-flex size-8 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/35'
+							className='inline-flex size-8 cursor-pointer items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/35'
 						>
 							<FaChevronRight className='size-3.5' />
 						</button>
@@ -235,14 +235,20 @@ export default function HomePage() {
 				</div>
 				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
 					{accommodations.map(item => {
-						const isFavorite = Boolean(favoriteAccommodations[item.title])
+						const isFavorite = Boolean(favoriteAccommodations[item.id])
 
 						return (
 							<article
-								key={item.title}
-								className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm'
+								key={item.id}
+								className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
 							>
-								<div className='relative h-28'>
+								<Link
+									href={`/accommodation/${item.id}`}
+									target='_blank'
+									rel='noopener noreferrer'
+									className='relative isolate block h-28 shrink-0'
+									aria-label={`Відкрити опис «${item.title}» у новій вкладці`}
+								>
 									<Image
 										src={item.image}
 										alt={item.title}
@@ -253,8 +259,9 @@ export default function HomePage() {
 									<button
 										type='button'
 										onClick={event => {
+											event.preventDefault()
 											event.stopPropagation()
-											toggleAccommodationFavorite(item.title)
+											toggleAccommodationFavorite(item.id)
 										}}
 										aria-label={
 											isFavorite
@@ -279,8 +286,13 @@ export default function HomePage() {
 											</svg>
 										</span>
 									</button>
-								</div>
-								<div className='flex flex-1 flex-col p-2.5'>
+								</Link>
+								<Link
+									href={`/accommodation/${item.id}`}
+									target='_blank'
+									rel='noopener noreferrer'
+									className='flex flex-1 flex-col p-2.5 outline-none ring-offset-2 transition-colors hover:bg-slate-50/90 focus-visible:ring-2 focus-visible:ring-cyan-500'
+								>
 									<div className='space-y-1.5'>
 										<h3 className='text-[13px] font-bold leading-tight text-[#2D333D]'>{item.title}</h3>
 										<p className='text-[10px] leading-snug text-[#53C4DA]'>
@@ -296,7 +308,8 @@ export default function HomePage() {
 										</span>
 										<span className='text-[13px] font-bold text-[#E06D3C]'>{item.price}</span>
 									</div>
-								</div>
+									<span className='sr-only'>Відкриється у новій вкладці</span>
+								</Link>
 							</article>
 						)
 					})}
@@ -431,9 +444,16 @@ export default function HomePage() {
 						<Link
 							key={item.label}
 							href={item.href}
-							className='flex min-h-22 cursor-pointer flex-col items-center justify-center rounded-xl bg-white px-2 py-2 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:min-h-24 sm:px-3'
+							className='flex min-h-24 cursor-pointer flex-col items-center justify-center rounded-xl bg-white px-2 py-2.5 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:min-h-28 sm:px-3 sm:py-3'
 						>
-							<item.icon className='size-6 text-[#7ABEC8] sm:size-7' aria-hidden />
+							<Image
+								src={item.iconSrc}
+								alt=''
+								width={56}
+								height={56}
+								className='h-11 w-11 object-contain sm:h-14 sm:w-14'
+								aria-hidden
+							/>
 							<p className='mt-1.5 text-[11px] font-semibold leading-tight text-slate-600 sm:mt-2 sm:text-sm'>
 								{item.label}
 							</p>
@@ -450,29 +470,51 @@ export default function HomePage() {
 					</button>
 				</div>
 				<div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8'>
-					{popularNow.map(item => (
-						<article
-							key={item.title}
-							className='cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
-						>
-							<div className='relative h-32 lg:h-36'>
-								<Image
-									src={item.image}
-									alt={item.title}
-									fill
-									sizes='(min-width: 1024px) 29vw, (min-width: 640px) 44vw, 88vw'
-									className='object-cover'
-								/>
-							</div>
-							<div className='space-y-2 p-3'>
-								<span className='inline-flex rounded-full bg-[#F3A169] px-2 py-0.5 text-[10px] font-bold text-white'>
-									{item.badge}
-								</span>
-								<h3 className='text-sm font-bold text-[#2D333D]'>{item.title}</h3>
-								<p className='text-xs text-slate-600'>{item.text}</p>
-							</div>
-						</article>
-					))}
+					{popularNow.map(item => {
+						const cardClassName =
+							'cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+						const inner = (
+							<>
+								<div className='relative h-32 lg:h-36'>
+									<Image
+										src={item.image}
+										alt={item.title}
+										fill
+										sizes='(min-width: 1024px) 29vw, (min-width: 640px) 44vw, 88vw'
+										className='object-cover'
+									/>
+								</div>
+								<div className='space-y-2 bg-white p-3'>
+									<span className='inline-flex rounded-full bg-[#F3A169] px-2 py-0.5 text-[10px] font-bold text-white'>
+										{item.badge}
+									</span>
+									<h3 className='text-sm font-bold text-[#2D333D]'>{item.title}</h3>
+									<p className='text-xs text-slate-600'>{item.text}</p>
+								</div>
+							</>
+						)
+
+						if (item.href) {
+							return (
+								<Link
+									key={item.title}
+									href={item.href}
+									target='_blank'
+									rel='noopener noreferrer'
+									className={`${cardClassName} block text-inherit no-underline outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-cyan-500`}
+								>
+									{inner}
+									<span className='sr-only'>Відкриється у новій вкладці</span>
+								</Link>
+							)
+						}
+
+						return (
+							<article key={item.title} className={cardClassName}>
+								{inner}
+							</article>
+						)
+					})}
 				</div>
 			</section>
 

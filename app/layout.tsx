@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 		template: '%s | POLYANA.INFO',
 	},
 	description:
-		'Туристичний портал Поляни на Закарпатті: житло, SPA, чани, табори, розваги, новини та корисні поради для відпочинку.',
+		'Туристичний портал Поляни: екскурсії й квадроцикли в Поляні, готелі та житло, чани й SPA в Карпатах, табори, лижі, тюбінг, санаторії. Закарпаття — карта курорту, новини та поради гостям.',
 	icons: {
 		icon: '/images/branding/info1-tab.svg',
 		shortcut: '/images/branding/info1-tab.svg',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: 'POLYANA.INFO — туристичний портал Поляни',
 		description:
-			'Туристичний портал Поляни на Закарпатті: житло, SPA, чани, табори та ідеї для відпочинку.',
+			'POLYANA.INFO: екскурсії й квадроцикли в Поляні, готелі та житло в Карпатах, SPA, табори й розваги на Закарпатті.',
 		url: SITE_URL,
 		siteName: 'POLYANA.INFO',
 		locale: 'uk_UA',
@@ -78,20 +78,48 @@ export const metadata: Metadata = {
 		card: 'summary_large_image',
 		title: 'POLYANA.INFO — туристичний портал Поляни',
 		description:
-			'Туристичний портал Поляни на Закарпатті: житло, SPA, чани, табори та ідеї для відпочинку.',
+			'POLYANA.INFO: екскурсії й квадроцикли в Поляні, готелі та житло в Карпатах, SPA, табори й розваги на Закарпатті.',
 		images: ['/preview-v2.png'],
 	},
 	verification: { google: googleSiteVerification },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-image-preview': 'large',
+			'max-snippet': -1,
+			'max-video-preview': -1,
+		},
+	},
 }
 
-const websiteJsonLd = {
+const siteBase = SITE_URL.replace(/\/$/, '')
+const rootJsonLdGraph = {
 	'@context': 'https://schema.org',
-	'@type': 'WebSite',
-	name: 'POLYANA.INFO',
-	alternateName: ['Поляна інфо', 'Polyana Info', 'туристичний портал Поляни'],
-	url: SITE_URL,
-	description: 'Туристичний портал села Поляна на Закарпатті: житло, SPA, чани, табори та відпочинок.',
-	inLanguage: 'uk-UA',
+	'@graph': [
+		{
+			'@type': 'Organization',
+			'@id': `${siteBase}/#organization`,
+			name: 'POLYANA.INFO',
+			url: SITE_URL,
+			logo: `${siteBase}/images/branding/info1.png`,
+		},
+		{
+			'@type': 'WebSite',
+			'@id': `${siteBase}/#website`,
+			name: 'POLYANA.INFO',
+			alternateName: ['Поляна інфо', 'Polyana Info', 'туристичний портал Поляни'],
+			url: SITE_URL,
+			publisher: { '@id': `${siteBase}/#organization` },
+			description:
+				'POLYANA.INFO — екскурсії в Поляні та на квадроциклах, карта готелів і закладів, житло, чани й SPA в Карпатах, табори й активний відпочинок на Закарпатті.',
+			keywords:
+				'Поляна Закарпаття, екскурсії Поляна, квадроцикли Поляна, готелі Поляна, житло Карпати, SPA чани, дитячі табори',
+			inLanguage: 'uk-UA',
+		},
+	],
 }
 
 export default function RootLayout({
@@ -104,7 +132,7 @@ export default function RootLayout({
 			<body className='min-h-full flex flex-col overflow-x-hidden font-sans'>
 				<script
 					type='application/ld+json'
-					dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLdGraph) }}
 				/>
 				<Header />
 				<main
