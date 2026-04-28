@@ -97,9 +97,7 @@ function ExcursionCard({
 						<span>{item.address}</span>
 					</p>
 					<p className='text-sm text-slate-600'>{item.description}</p>
-					{openPage ? (
-						<p className='mt-3 text-sm font-semibold text-[#53C4DA]'>Детальна сторінка (нова вкладка)</p>
-					) : openModal ? (
+					{openModal ? (
 						<p className='mt-3 text-sm font-semibold text-[#53C4DA]'>Детальніше про тур</p>
 					) : null}
 				</div>

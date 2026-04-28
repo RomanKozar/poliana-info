@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { FaMapMarkerAlt, FaStar, FaTimes } from 'react-icons/fa'
 import { createHotelPricePillMarker, formatHotelPriceForMapMarker } from '@/lib/google-map-price-marker'
@@ -233,6 +234,8 @@ export default function AccommodationPageContent() {
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
 	const [isMapExpanded, setIsMapExpanded] = useState(false)
 	const [selectedId, setSelectedId] = useState<string | null>(null)
+	const [hoveredListHotelId, setHoveredListHotelId] = useState<string | null>(null)
+	const [markersVersion, setMarkersVersion] = useState(0)
 	const [mapBottomSheetHotel, setMapBottomSheetHotel] = useState<PolyanaHotel | null>(null)
 	/** < lg: нижня картка замість InfoWindow (читається в initMap, слухачах). */
 	const isNarrowMapUiRef = useRef(
@@ -276,6 +279,29 @@ export default function AccommodationPageContent() {
 	const scrollMapIntoView = () => {
 		mapColumnRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 	}
+
+	const syncPriceMarkerHoverStyles = useCallback((hoverId: string | null) => {
+		const win = window as Window & { google?: { maps: any } }
+		const maps = win.google?.maps
+		if (!maps?.Size || markersByIdRef.current.size === 0) return
+
+		for (const hotel of polyanaHotels) {
+			const marker = markersByIdRef.current.get(hotel.id)
+			if (!marker) continue
+			const priceLabel = formatHotelPriceForMapMarker(hotel.price)
+			const variant = hoverId === hotel.id ? 'active' : 'default'
+			const pill = createHotelPricePillMarker(priceLabel, variant)
+			marker.setIcon({
+				url: pill.dataUrl,
+				scaledSize: new maps.Size(pill.width, pill.height),
+				anchor: new maps.Point(Math.round(pill.width / 2), pill.height),
+			})
+		}
+	}, [])
+
+	useEffect(() => {
+		syncPriceMarkerHoverStyles(hoveredListHotelId)
+	}, [hoveredListHotelId, markersVersion, syncPriceMarkerHoverStyles])
 
 	const openHotelInfoOnMap = (hotel: PolyanaHotel) => {
 		setSelectedId(hotel.id)
@@ -403,6 +429,8 @@ export default function AccommodationPageContent() {
 					activeInfoWindowRef.current = infoWindow
 				})
 			})
+
+			setMarkersVersion(v => v + 1)
 
 			map.addListener('click', () => {
 				if (Date.now() < mapClickLockUntilRef.current) return
@@ -649,24 +677,24 @@ export default function AccommodationPageContent() {
 							<article
 								key={hotel.id}
 								id={`hotel-card-${hotel.id}`}
-								className={`scroll-mt-24 flex cursor-pointer flex-col overflow-hidden rounded-2xl border bg-white shadow-sm outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 sm:grid sm:grid-cols-[13rem_1fr] ${
+								onMouseEnter={() => setHoveredListHotelId(hotel.id)}
+								onMouseLeave={() => setHoveredListHotelId(null)}
+								className={`scroll-mt-24 relative flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 sm:grid sm:grid-cols-[13rem_1fr] ${
 									isSelected
 										? 'border-cyan-500/50 shadow-md ring-2 ring-cyan-400/30'
 										: 'border-slate-200 hover:border-slate-300 hover:shadow-md'
 								}`}
-								role='button'
-								tabIndex={0}
-								aria-pressed={isSelected || undefined}
 								aria-labelledby={`hotel-title-${hotel.id}`}
-								onClick={() => openHotelInfoOnMap(hotel)}
-								onKeyDown={e => {
-									if (e.key === 'Enter' || e.key === ' ') {
-										e.preventDefault()
-										openHotelInfoOnMap(hotel)
-									}
-								}}
 							>
-								<div className='relative aspect-[5/3] w-full min-w-0 overflow-hidden sm:aspect-auto sm:min-h-[15rem] sm:h-full'>
+								<Link
+									href={`/accommodation/${hotel.id}`}
+									target='_blank'
+									rel='noopener noreferrer'
+									onClick={() => openHotelInfoOnMap(hotel)}
+									className='absolute inset-0 z-[1] rounded-2xl'
+									aria-label={`Відкрити сторінку готеля: ${hotel.name} (нова вкладка)`}
+								/>
+								<div className='relative z-[2] pointer-events-none aspect-[5/3] w-full min-w-0 overflow-hidden sm:aspect-auto sm:min-h-[15rem] sm:h-full'>
 									<Image
 										src={hotel.image}
 										alt={hotel.name}
@@ -678,7 +706,7 @@ export default function AccommodationPageContent() {
 										{hotel.price}
 									</span>
 								</div>
-								<div className='flex min-h-0 min-w-0 flex-col justify-between gap-4 p-3 sm:p-5'>
+								<div className='relative z-[2] flex min-h-0 min-w-0 flex-col justify-between gap-4 p-3 pointer-events-none sm:p-5'>
 									<div className='space-y-2.5 sm:space-y-3'>
 										<h2
 											id={`hotel-title-${hotel.id}`}
@@ -702,11 +730,9 @@ export default function AccommodationPageContent() {
 										</p>
 										<p className='text-[0.8125rem] leading-snug text-slate-500'>{hotel.feature}</p>
 									</div>
-									<div className='flex w-full shrink-0 justify-end pt-1'>
+									<div className='relative z-[3] flex w-full shrink-0 justify-end pt-1 pointer-events-auto'>
 										<a
 											href={`tel:${hotel.phone}`}
-											onClick={e => e.stopPropagation()}
-											onKeyDown={e => e.stopPropagation()}
 											className='inline-flex w-fit cursor-pointer rounded-full bg-[#F68F5D] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#e57d4a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F68F5D]'
 										>
 											Подзвонити

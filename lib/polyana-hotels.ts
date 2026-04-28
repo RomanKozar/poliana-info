@@ -9,6 +9,9 @@ export type PolyanaHotel = {
 	feature: string
 	phone: string
 	website: string
+	/** Агрегат на детальній сторінці (з 10 балів та кількість відгуків), якщо є — замість вирахування з поля rating. */
+	detailReviewScoreOutOf10?: number
+	detailReviewCount?: number
 	/** 4+ фото для каруселі в InfoWindow на карті; якщо нема — дубль основного */
 	mapGallery?: string[]
 	position: { lat: number; lng: number }
@@ -43,6 +46,8 @@ export const polyanaHotels: PolyanaHotel[] = [
 			'/images/gallery/golovna-foto-3.webp',
 		],
 		position: { lat: 48.62146474176638, lng: 22.97048064221818 },
+		detailReviewScoreOutOf10: 9.2,
+		detailReviewCount: 265,
 	},
 	{
 		id: 'kontinent',

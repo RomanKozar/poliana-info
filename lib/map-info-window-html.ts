@@ -42,20 +42,11 @@ function normalizeTelForHref(digits: string): string {
 	return digits ? `+${d}` : ''
 }
 
-function extractPriceHint(s: string): string {
-	const m = s.match(/орієнтовно\s*([\d\s–\-]+)\s*₴/i)
-	if (m) return `≈ ${m[1].replace(/\s/g, '').replace('-', '–')} ₴`
-	const m2 = s.match(/(\d[\d\s–\-]*\d|\d+)\s*₴/)
-	if (m2) return `${m2[1].replace(/\s/g, '')} ₴`
-	return ''
-}
-
 export type UnifiedMapCardIw = {
 	name: string
 	address: string
 	description: string
 	rating: string
-	price: string
 	feature: string
 	phone: string
 	galleryImages: string[]
@@ -65,14 +56,13 @@ export type UnifiedMapCardIw = {
 }
 
 /**
- * Єдина картка InfoWindow (як готельна на проживанні): галерея, серце, маршрут, закрити, рейтинг, ціна, пілюля, CTA.
+ * Єдина картка InfoWindow (як готельна на проживанні): галерея, серце, маршрут, закрити, рейтинг, пілюля, CTA (без рядка ціни в тілі картки).
  */
 export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const routeEsc = escHtml(p.routeLink)
 	const name = escHtml(p.name)
 	const desc = escHtml(p.description)
 	const address = escHtml(p.address)
-	const price = escHtml(p.price)
 	const feature = escHtml(p.feature)
 	const rating = escHtml((p.rating || '').trim() || '—')
 	const gallery = normalizeMapCardGallery(p.galleryImages)
@@ -96,9 +86,6 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const telHref = rawPhone ? normalizeTelForHref(rawPhone) : ''
 	const save = p.saveLink ? escHtml(p.saveLink) : ''
 
-	const priceBlock = p.price.trim()
-		? `<p class="polyana-accommodation-iw-price">${price}</p>`
-		: ''
 	const pillBlock = p.feature.trim()
 		? `<div class="polyana-accommodation-iw-pill">${feature}</div>`
 		: ''
@@ -144,7 +131,6 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 			</div>
 			<p class="polyana-accommodation-iw-desc">${desc}</p>
 			<p class="polyana-accommodation-iw-address">${address}</p>
-			${priceBlock}
 			${pillBlock}
 			${ctaBlock}
 		</div>
@@ -160,7 +146,6 @@ export function hotelInfoWindowHtml(hotel: PolyanaHotel): string {
 		address: hotel.address,
 		description: hotel.description,
 		rating: hotel.rating,
-		price: hotel.price,
 		feature: hotel.feature,
 		phone: hotel.phone,
 		galleryImages: getHotelMapGallery(hotel),
@@ -181,13 +166,11 @@ export function homeMapMarkerToUnifiedCard(p: {
 }): UnifiedMapCardIw {
 	const { rating, body } = splitCategoryMeta(p.category)
 	const phone = extractUaPhone(p.category)
-	const price = extractPriceHint(p.category)
 	return {
 		name: p.name,
 		address: p.address,
 		description: body || p.category,
 		rating: rating || '—',
-		price,
 		feature: p.featurePill,
 		phone,
 		galleryImages: [p.image],
