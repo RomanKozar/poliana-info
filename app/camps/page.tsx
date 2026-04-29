@@ -1,18 +1,17 @@
-import PagePlaceholder from '@/components/shared/PagePlaceholder'
+import CampsPageContent from '@/components/camps/CampsPageContent'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Табори відпочинку в Поляні',
+	title: 'Табори відпочинку в Поляні — літні та зимові зміни',
 	description:
-		'Дитячі та сімейні табори відпочинку в Поляні: програми, зміни, активності в Карпатах. Корисна інформація для батьків.',
+		'Табори на курорті Поляна: літні програми, зимові канікули — опис заїздів, діапазон віку, дати й орієнтовні ціни.',
 	pathname: '/camps',
 })
 
 export default function CampsPage() {
 	return (
-		<PagePlaceholder
-			title='Табори відпочинку'
-			description='Сторінка для дитячих і сімейних таборів відпочинку. Тут буде структура з програмами, датами, цінами та формою заявки.'
-		/>
+		<div className='flex min-h-0 flex-col'>
+			<CampsPageContent />
+		</div>
 	)
 }

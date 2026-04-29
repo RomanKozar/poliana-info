@@ -3,11 +3,12 @@
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
+import CampProgramCard from '@/components/camps/CampProgramCard'
 import { useEffect, useState } from 'react'
 import {
 	accommodations,
 	campYears,
-	camps,
+	campsHomeFeatured,
 	categoryItems,
 	faqItems,
 	heroSlides,
@@ -229,9 +230,12 @@ export default function HomePage() {
 			<section className='bg-white px-4 py-6 sm:px-16 lg:px-24'>
 				<div className='mb-4 flex items-center justify-between'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Проживання в Поляні</h2>
-					<button className='cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'>
+					<Link
+						href='/accommodation'
+						className='cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'
+					>
 						Показати ще →
-					</button>
+					</Link>
 				</div>
 				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
 					{accommodations.map(item => {
@@ -372,32 +376,16 @@ export default function HomePage() {
 							</button>
 						))}
 					</div>
-					<button className='justify-self-start cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:justify-self-end'>
+					<Link
+						href='/camps'
+						className='justify-self-start text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:justify-self-end'
+					>
 						Всі табори →
-					</button>
+					</Link>
 				</div>
 				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
-					{camps.map(item => (
-						<article
-							key={item.title}
-							className='cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
-						>
-							<div className='relative h-28'>
-								<Image
-									src={item.image}
-									alt={item.title}
-									fill
-									sizes='(min-width: 1024px) 17vw, (min-width: 640px) 42vw, 88vw'
-									className='object-cover'
-								/>
-							</div>
-							<div className='space-y-2 p-3'>
-								<h3 className='text-sm font-bold text-[#2D333D]'>{item.title}</h3>
-								<p className='text-xs text-[#53C4DA]'>{item.age}</p>
-								<p className='text-xs text-slate-600'>{item.description}</p>
-								<p className='text-right text-sm font-bold text-[#E06D3C]'>{item.price}</p>
-							</div>
-						</article>
+					{campsHomeFeatured.map(item => (
+						<CampProgramCard key={item.title + item.dates} camp={item} variant='home' />
 					))}
 				</div>
 			</section>

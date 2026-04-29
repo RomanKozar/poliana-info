@@ -42,6 +42,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		{ url: pageUrl('/blog/autumn-vacation'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/blog/poliana-in-winter'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/camps'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
+		{
+			url: pageUrl('/camps/polianski-camp'),
+			lastModified,
+			changeFrequency: 'monthly' as const,
+			priority: 0.76,
+		},
+		{
+			url: pageUrl('/camps/quest-camp'),
+			lastModified,
+			changeFrequency: 'monthly' as const,
+			priority: 0.76,
+		},
+		{
+			url: pageUrl('/camps/theater-camp'),
+			lastModified,
+			changeFrequency: 'monthly' as const,
+			priority: 0.76,
+		},
+		{
+			url: pageUrl('/camps/tourist-camp'),
+			lastModified,
+			changeFrequency: 'monthly' as const,
+			priority: 0.76,
+		},
 		{ url: pageUrl('/contacts'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/excursions'), lastModified, changeFrequency: 'weekly', priority: 0.85 },
 		{

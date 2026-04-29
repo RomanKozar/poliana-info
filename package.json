@@ -8,9 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "convert-atv": "node scripts/convert-atv-images.mjs",
-    "convert-gallery-accommodation": "node scripts/convert-gallery-accommodation.mjs"
+    "convert-gallery-accommodation": "node scripts/convert-gallery-accommodation.mjs",
+    "convert-trout-webp": "node scripts/convert-trout-webp.mjs"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
     "@supabase/supabase-js": "^2.103.0",
     "@vercel/analytics": "^2.0.1",
     "next": "16.2.2",

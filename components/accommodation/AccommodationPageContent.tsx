@@ -92,8 +92,10 @@ function AccommodationMapMobileBottomSheet({
 								>
 									<Link
 										href={`/accommodation/${hotel.id}`}
+										target='_blank'
+										rel='noopener noreferrer'
 										className='relative block h-full w-full outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-cyan-500'
-										aria-label={`Відкрити опис готеля: ${hotel.name}`}
+										aria-label={`Відкрити опис «${hotel.name}» у новій вкладці`}
 									>
 										<Image
 											src={src}
@@ -711,8 +713,10 @@ export default function AccommodationPageContent() {
 							>
 								<Link
 									href={`/accommodation/${hotel.id}`}
+									target='_blank'
+									rel='noopener noreferrer'
 									className='relative isolate block aspect-[5/3] w-full min-w-0 shrink-0 overflow-hidden sm:aspect-auto sm:min-h-[15rem] sm:h-full'
-									aria-label={`Відкрити опис готеля: ${hotel.name}`}
+									aria-label={`Відкрити опис «${hotel.name}» у новій вкладці`}
 								>
 									<Image
 										src={hotel.image}
@@ -728,7 +732,10 @@ export default function AccommodationPageContent() {
 								<div className='relative flex min-h-0 min-w-0 flex-col justify-between gap-4 p-3 sm:p-5'>
 									<Link
 										href={`/accommodation/${hotel.id}`}
+										target='_blank'
+										rel='noopener noreferrer'
 										className='min-h-0 block outline-none ring-offset-2 transition-opacity hover:opacity-[0.98] focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-cyan-500'
+										aria-label={`Відкрити опис «${hotel.name}» у новій вкладці`}
 									>
 										<div className='space-y-2.5 sm:space-y-3'>
 											<h2

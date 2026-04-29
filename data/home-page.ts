@@ -77,36 +77,90 @@ export const spaItems: Array<{
 	},
 ]
 
-export const camps = [
+export type CampSeason = 'summer' | 'winter'
+
+export type CampCardItem = {
+	/** Стійкий ключ для зв’язку з окремими сторінками програм */
+	id?: string
+	title: string
+	age: string
+	dates: string
+	description: string
+	price: string
+	image: string
+	season: CampSeason
+	/** Як задано — картка веде на детальну сторінку табору */
+	detailPath?: string
+}
+
+export const camps: CampCardItem[] = [
 	{
-		title: 'Табір "Гірський орел"',
-		age: '7-15 років',
-		description: 'Активний відпочинок у горах.',
-		price: 'від 9500 грн',
+		id: 'polianski-camp',
+		title: 'Літні зміни PolianskiCamp',
+		age: 'від 8 до 14 років',
+		dates: '21.06 — 29.06',
+		description: 'Літні програми в горах на базі PolianskiCamp.',
+		price: '21 500 грн',
 		image: '/images/kids-camps/camp-1.webp',
+		season: 'summer',
+		detailPath: '/camps/polianski-camp',
 	},
 	{
-		title: 'Табір "Карпатська пригода"',
-		age: '8-15 років',
-		description: 'Пригодницькі зміни для дітей.',
-		price: 'від 8900 грн',
+		id: 'quest-camp',
+		title: 'Квестовий табір',
+		age: 'від 9 до 15 років',
+		dates: '05.07 — 11.07',
+		description: 'Командні квести, загадки й активності в Карпатах.',
+		price: '18 500 грн',
 		image: '/images/kids-camps/camp-2.webp',
+		season: 'summer',
+		detailPath: '/camps/quest-camp',
 	},
 	{
-		title: 'Табір "Лісова школа"',
-		age: '6-13 років',
-		description: 'Природа, творчість та нові друзі.',
-		price: 'від 7900 грн',
+		id: 'theater-camp',
+		title: 'Театральний заїзд',
+		age: 'від 9 до 16 років',
+		dates: '18.07 — 26.07',
+		description: 'Театр, ролі та творчі майстерні в гірському таборі.',
+		price: '23 500 грн',
 		image: '/images/kids-camps/camp-3.webp',
+		season: 'summer',
+		detailPath: '/camps/theater-camp',
 	},
 	{
-		title: 'Табір "Young Camp"',
-		age: '10-17 років',
-		description: 'Англійська, спорт та креативні модулі.',
-		price: 'від 9900 грн',
+		id: 'tourist-camp',
+		title: 'Туристичний заїзд',
+		age: 'від 10 до 16 років',
+		dates: '29.07 — 06.08',
+		description: 'Маршрути, орієнтування та відкриття околиць Поляни.',
+		price: '23 500 грн',
 		image: '/images/kids-camps/camp-4.webp',
+		season: 'summer',
+		detailPath: '/camps/tourist-camp',
 	},
-] as const
+	{
+		title: 'Зимові канікули в горах',
+		age: 'від 7 до 15 років',
+		dates: 'січень — березень (зміни уточнюються)',
+		description:
+			'Лижі, тюбінг на курорті, ігри в снігу та анімація. Програму та дати оголосимо напередодні сезону.',
+		price: 'за запитом',
+		image: '/images/entertainment/tybinh-v2-1.webp',
+		season: 'winter',
+	},
+	{
+		title: 'Святковий зимовий табір',
+		age: 'від 8 до 16 років',
+		dates: '27.12 — 06.01',
+		description: 'Зимові розваги, святкова програма та прогулянки засніженою Поляною. Реєстрація — наближено до дат.',
+		price: 'уточнюйте пізніше',
+		image: '/images/kids-camps/camp-4.webp',
+		season: 'winter',
+	},
+]
+
+/** Чотири заїзди в блоці «Дитячі табори» на головній. */
+export const campsHomeFeatured = camps.filter(c => c.season === 'summer').slice(0, 4)
 
 export const skiRecreation = [
 	{

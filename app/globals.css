@@ -307,6 +307,95 @@ body {
   border: 0;
 }
 
+/* Trout hero: попльовка; translateY опущено на 14px (max «вниз» був 14px) — ліска не «відстає» від верху блоку при русі униз */
+@keyframes trout-hook-bob-1 {
+  0%,
+  100% {
+    transform: translateY(-14px) rotate(0deg);
+  }
+  22% {
+    transform: translateY(-2px) rotate(1.1deg);
+  }
+  48% {
+    transform: translateY(-22px) rotate(-0.75deg);
+  }
+  71% {
+    transform: translateY(-8px) rotate(0.45deg);
+  }
+}
+
+@keyframes trout-hook-bob-2 {
+  0%,
+  100% {
+    transform: translateY(-14px) rotate(0deg);
+  }
+  18% {
+    transform: translateY(-24px) rotate(-0.9deg);
+  }
+  44% {
+    transform: translateY(0) rotate(1deg);
+  }
+  68% {
+    transform: translateY(-19px) rotate(-0.35deg);
+  }
+}
+
+@keyframes trout-hook-bob-3 {
+  0%,
+  100% {
+    transform: translateY(-14px) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-5px) rotate(0.65deg);
+  }
+  55% {
+    transform: translateY(-26px) rotate(-0.85deg);
+  }
+  82% {
+    transform: translateY(-10px) rotate(0.2deg);
+  }
+}
+
+@keyframes trout-hook-bob-4 {
+  0%,
+  100% {
+    transform: translateY(-14px) rotate(0deg);
+  }
+  35% {
+    transform: translateY(-3px) rotate(-0.5deg);
+  }
+  60% {
+    transform: translateY(-21px) rotate(0.7deg);
+  }
+}
+
+.trout-hook-bob {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.trout-hook-bob--1 {
+  animation-name: trout-hook-bob-1;
+}
+
+.trout-hook-bob--2 {
+  animation-name: trout-hook-bob-2;
+}
+
+.trout-hook-bob--3 {
+  animation-name: trout-hook-bob-3;
+}
+
+.trout-hook-bob--4 {
+  animation-name: trout-hook-bob-4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trout-hook-bob {
+    animation: none !important;
+  }
+}
+
 /*
  * Головна карта Поляни: «скляні» елементи керування Google Maps
  * (як панель «Умовні позначення»: напівпрозорий фон + blur).
