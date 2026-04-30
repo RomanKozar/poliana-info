@@ -4,10 +4,12 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import CampProgramCard from '@/components/camps/CampProgramCard'
-import { useEffect, useState } from 'react'
+import BottomStatusToast, {
+	WIP_SECTION_TOAST_MESSAGE,
+} from '@/components/shared/BottomStatusToast'
+import { useCallback, useEffect, useId, useState } from 'react'
 import {
 	accommodations,
-	campYears,
 	campsHomeFeatured,
 	categoryItems,
 	faqItems,
@@ -41,10 +43,16 @@ const HomePageMapSection = dynamic(() => import('@/components/home/HomePageMapSe
 
 export default function HomePage() {
 	const [favoriteAccommodations, setFavoriteAccommodations] = useState<Record<string, boolean>>({})
-	const [activeCampYear, setActiveCampYear] = useState<(typeof campYears)[number]>('2026')
 	const [activeHeroSlide, setActiveHeroSlide] = useState(0)
 	const [openFaqIndexes, setOpenFaqIndexes] = useState<Set<number>>(new Set())
 	const [isMobileSearch, setIsMobileSearch] = useState(false)
+	const [bookingNoticeOpen, setBookingNoticeOpen] = useState(false)
+	const bookingNoticeId = useId()
+
+	const showBookingNotice = () => setBookingNoticeOpen(true)
+	const closeBookingNotice = useCallback(() => setBookingNoticeOpen(false), [])
+
+	const bookingNoticeDescribedBy = bookingNoticeOpen ? bookingNoticeId : undefined
 
 	const faqColumns = faqItems.reduce(
 		(columns, item, index) => {
@@ -148,12 +156,12 @@ export default function HomePage() {
 								житло, spa, чани, табори та розваги
 							</p>
 							<div className='mt-5 flex gap-2 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-5'>
-								<button
-									type='button'
-									className='w-1/2 cursor-pointer rounded-md bg-[#53C4DA] px-3 py-2.5 text-[11px] font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
+								<Link
+									href='/accommodation'
+									className='inline-flex w-1/2 cursor-pointer items-center justify-center rounded-md bg-[#53C4DA] px-3 py-2.5 text-[11px] font-bold text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
 								>
 									ЗНАЙТИ ЖИТЛО
-								</button>
+								</Link>
 								<button
 									type='button'
 									className='w-1/2 cursor-pointer rounded-md bg-[#F68F5D] px-3 py-2.5 text-[11px] font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
@@ -179,7 +187,7 @@ export default function HomePage() {
 									type='button'
 									className='mt-auto self-start cursor-pointer rounded-md bg-white px-2.5 py-1 text-[11px] font-bold text-[#E06D3C] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:px-4 sm:py-2 sm:text-[14px]'
 								>
-									ДЕТАЛЬНІШЕ
+									ЗАБРОНЮВАТИ
 								</button>
 							</div>
 							<div className='relative w-[48%] overflow-hidden rounded-l-[72px] sm:w-[47%] sm:rounded-l-[140px]'>
@@ -323,15 +331,23 @@ export default function HomePage() {
 			<section className='rounded-none bg-[#EEF4EA] px-4 py-6 sm:px-16 lg:px-24'>
 				<div className='mb-4 flex items-center justify-between'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>SPA та відпочинок</h2>
-					<button className='cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'>
+					<button
+						type='button'
+						className='cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'
+						onClick={showBookingNotice}
+						aria-describedby={bookingNoticeDescribedBy}
+					>
 						Дивитись все →
 					</button>
 				</div>
 				<div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
 					{spaItems.map(item => (
-						<div
+						<button
+							type='button'
 							key={item.title}
-							className='flex min-h-36 cursor-pointer overflow-hidden rounded-xl border border-[#DCE8D8] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+							className='flex min-h-36 w-full cursor-pointer overflow-hidden rounded-xl border border-[#DCE8D8] bg-white text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+							onClick={showBookingNotice}
+							aria-describedby={bookingNoticeDescribedBy}
 						>
 							<div className='flex flex-1 flex-col px-4 py-8'>
 								<item.icon className='size-13 text-[#53C4DA]' />
@@ -349,41 +365,22 @@ export default function HomePage() {
 									className='object-cover'
 								/>
 							</div>
-						</div>
+						</button>
 					))}
 				</div>
 			</section>
 
 			<section className='bg-white px-4 py-6 sm:px-16 lg:px-24'>
-				<div className='mb-4 grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center'>
-					<h2 className='text-2xl font-bold text-[#2D333D] sm:justify-self-start'>
-						Дитячі табори
-					</h2>
-					<div className='hidden items-center gap-2 sm:flex sm:justify-self-center'>
-						{campYears.map(year => (
-							<button
-								key={year}
-								type='button'
-								onClick={() => setActiveCampYear(year)}
-								aria-pressed={activeCampYear === year}
-								className={`cursor-pointer rounded-md px-4 py-1 text-xs font-bold transition-all duration-200 hover:-translate-y-0.5 ${
-									activeCampYear === year
-										? 'bg-[#53C4DA] text-white'
-										: 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-								}`}
-							>
-								{year}
-							</button>
-						))}
-					</div>
+				<div className='mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+					<h2 className='text-2xl font-bold text-[#2D333D]'>Дитячі табори</h2>
 					<Link
 						href='/camps'
-						className='justify-self-start text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:justify-self-end'
+						className='text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:shrink-0'
 					>
 						Всі табори →
 					</Link>
 				</div>
-				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-5'>
 					{campsHomeFeatured.map(item => (
 						<CampProgramCard key={item.title + item.dates} camp={item} variant='home' />
 					))}
@@ -393,15 +390,23 @@ export default function HomePage() {
 			<section className='bg-white px-4 py-6 sm:px-16 lg:px-24'>
 				<div className='mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Гірськолижний відпочинок</h2>
-					<button className='cursor-pointer self-start text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:self-auto'>
+					<button
+						type='button'
+						className='cursor-pointer self-start text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:self-auto'
+						onClick={showBookingNotice}
+						aria-describedby={bookingNoticeDescribedBy}
+					>
 						Всі активності →
 					</button>
 				</div>
 				<div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
 					{skiRecreation.map(item => (
-						<div
+						<button
+							type='button'
 							key={item.title}
-							className='flex min-h-36 cursor-pointer overflow-hidden rounded-xl border border-[#DCE8D8] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+							className='flex min-h-36 w-full cursor-pointer overflow-hidden rounded-xl border border-[#DCE8D8] bg-white text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+							onClick={showBookingNotice}
+							aria-describedby={bookingNoticeDescribedBy}
 						>
 							<div className='flex flex-1 flex-col px-4 py-8'>
 								<div className='space-y-1'>
@@ -420,14 +425,14 @@ export default function HomePage() {
 									className='object-cover'
 								/>
 							</div>
-						</div>
+						</button>
 					))}
 				</div>
 			</section>
 
 			<section className='bg-[#F5F6F7] px-4 py-6 sm:px-16 lg:px-24'>
 				<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Популярні категорії</h2>
-				<div className='grid grid-cols-3 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+				<div className='grid grid-cols-2 gap-3 lg:grid-cols-5'>
 					{categoryItems.map(item => (
 						<Link
 							key={item.label}
@@ -451,11 +456,8 @@ export default function HomePage() {
 			</section>
 
 			<section className='bg-white px-4 pb-6 pt-2 sm:px-16 lg:px-24'>
-				<div className='mb-4 flex items-center justify-between'>
+				<div className='mb-4'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Популярне зараз</h2>
-					<button className='cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'>
-						Дивитись все →
-					</button>
 				</div>
 				<div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8'>
 					{popularNow.map(item => {
@@ -556,6 +558,12 @@ export default function HomePage() {
 					</div>
 				</div>
 			</section>
+			<BottomStatusToast
+				open={bookingNoticeOpen}
+				onClose={closeBookingNotice}
+				id={bookingNoticeId}
+				message={WIP_SECTION_TOAST_MESSAGE}
+			/>
 		</div>
 	)
 }

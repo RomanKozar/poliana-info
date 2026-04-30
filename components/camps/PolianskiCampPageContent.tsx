@@ -4,7 +4,6 @@ import { camps } from '@/data/home-page'
 
 const polianskiCamp = camps.find(c => c.id === 'polianski-camp')
 
-/** Офіційний сайт програми PolianskiCamp */
 const POLIANSKI_CAMP_OFFICIAL_URL = 'https://polianski-camp.vercel.app/'
 
 type ProgramRow = { block: string; points: string[] }
@@ -74,7 +73,7 @@ export default function PolianskiCampPageContent() {
 	}
 
 	return (
-		<div className='bg-[#F5F6F7]'>
+		<div className='bg-[#F5F6F7] pb-5'>
 			<section className='border-b border-slate-200/80 bg-gradient-to-br from-[#E8F4F8] via-white to-[#F5F6F7] px-4 py-5 sm:px-16 sm:py-6 lg:px-24'>
 				<div className='mx-auto max-w-6xl'>
 					<div className='flex flex-col gap-4 lg:flex-row lg:items-stretch lg:justify-between lg:gap-8'>
@@ -95,25 +94,16 @@ export default function PolianskiCampPageContent() {
 							</div>
 							<p className='mt-2 max-w-3xl text-sm leading-snug text-slate-600 sm:text-[0.9375rem]'>{polianskiCamp.description}</p>
 						</div>
-						<div className='relative flex w-full shrink-0 flex-col items-end gap-3 self-stretch lg:flex-1 lg:justify-center lg:gap-0'>
-							<span className='inline-flex items-center rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:text-sm lg:relative lg:z-[1]'>
+						<div className='relative flex w-full shrink-0 flex-col items-end self-stretch lg:flex-1 lg:justify-center'>
+							<span className='inline-flex w-full items-center justify-center rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:w-auto sm:text-sm lg:absolute lg:right-0 lg:bottom-0 lg:z-[1] lg:w-auto'>
 								{polianskiCamp.price}
 							</span>
-							<a
-								href={POLIANSKI_CAMP_OFFICIAL_URL}
-								target='_blank'
-								rel='noopener noreferrer'
-								className='inline-flex w-full items-center justify-center rounded-full bg-[#53C4DA] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#2FAFC8] hover:shadow-md sm:w-auto lg:absolute lg:right-0 lg:bottom-0 lg:z-[1] lg:w-auto'
-							>
-								Дізнатися більше
-								<span className='sr-only'> (офіційний сайт PolianskiCamp, відкриється у новій вкладці)</span>
-							</a>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<div className='mx-auto max-w-6xl px-4 pt-3 pb-10 sm:px-6 sm:pt-4 lg:px-8 lg:pt-5'>
+			<div className='mx-auto max-w-6xl px-4 pt-3 pb-5 sm:px-6 sm:pt-4 lg:px-8 lg:pt-5'>
 				<PolianskiCampBannerAndGallery bannerSrc={polianskiCamp.image} bannerAlt={polianskiCamp.title} />
 
 				<section aria-labelledby='polianski-what-awaits-heading' className='mt-10 sm:mt-12'>
@@ -171,20 +161,27 @@ export default function PolianskiCampPageContent() {
 							</table>
 						</div>
 					</div>
-
-					<div className='mt-8 flex justify-center sm:mt-10'>
-						<a
-							href={POLIANSKI_CAMP_OFFICIAL_URL}
-							target='_blank'
-							rel='noopener noreferrer'
-							className='inline-flex w-full items-center justify-center rounded-full bg-[#53C4DA] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#2FAFC8] hover:shadow-md sm:w-auto'
-						>
-							Дізнатися більше
-							<span className='sr-only'> (офіційний сайт PolianskiCamp, відкриється у новій вкладці)</span>
-						</a>
-					</div>
 				</section>
+
+				<div className='mt-8 flex justify-center sm:mt-10'>
+					<a
+						href={POLIANSKI_CAMP_OFFICIAL_URL}
+						target='_blank'
+						rel='noopener noreferrer'
+						className='inline-flex w-full items-center justify-center rounded-full bg-[#53C4DA] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#2FAFC8] hover:shadow-md sm:w-auto'
+					>
+						Дізнатися більше
+						<span className='sr-only'> (офіційний сайт PolianskiCamp, відкриється у новій вкладці)</span>
+					</a>
+				</div>
 			</div>
+			<a
+				href='tel:0502149266'
+				className='animate-wiggle fixed bottom-5 right-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:px-6 sm:text-sm'
+				aria-label='Забронювати табір — зателефонувати'
+			>
+				Забронювати
+			</a>
 		</div>
 	)
 }

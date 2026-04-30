@@ -80,7 +80,7 @@ export default function Header() {
 					}}
 					aria-label='Відкрити меню'
 					aria-expanded={isMobileMenuOpen}
-					className='inline-flex h-8 w-8 flex-col items-center justify-center gap-0.5 rounded-[3px] bg-[#0E7992] text-white sm:h-10 sm:w-10 sm:gap-1 sm:rounded-sm lg:hidden'
+					className='inline-flex h-8 w-8 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-[3px] bg-[#0E7992] text-white sm:h-10 sm:w-10 sm:gap-1 sm:rounded-sm lg:hidden'
 				>
 					<span className='block h-px w-3 bg-white sm:h-0.5 sm:w-5' />
 					<span className='block h-px w-3 bg-white sm:h-0.5 sm:w-5' />
@@ -284,14 +284,14 @@ export default function Header() {
 								setMobileSubmenu(null)
 							}}
 							aria-label='Закрити меню'
-							className='inline-flex h-10 w-10 items-center justify-center rounded-md border border-black/25 bg-cyan-600 text-3xl font-bold leading-none text-white'
+							className='inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md border border-black/25 bg-cyan-600 text-3xl font-bold leading-none text-white'
 						>
 							x
 						</button>
 					</div>
 
 					<nav
-						className={`mt-10 flex flex-col items-center gap-7 text-center text-2xl font-extrabold text-white transition-all duration-[1120ms] ease-[cubic-bezier(0.16,1,0.3,1)] sm:text-3xl ${
+						className={`mt-10 flex flex-col items-center gap-7 text-center text-2xl font-extrabold text-white transition-all duration-[1120ms] ease-[cubic-bezier(0.16,1,0.3,1)] sm:text-3xl [&_a]:cursor-pointer [&_button]:cursor-pointer ${
 							isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
 						}`}
 						style={{ transitionDelay: isMobileMenuOpen ? '720ms' : '0ms' }}

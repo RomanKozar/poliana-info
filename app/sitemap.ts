@@ -81,7 +81,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		{ url: pageUrl('/polianski'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/privacy'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/spa'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
-		{ url: pageUrl('/team'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/wellness'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		...accommodationDetailUrls,
 		...categoryUrls,

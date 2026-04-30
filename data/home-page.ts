@@ -139,6 +139,17 @@ export const camps: CampCardItem[] = [
 		detailPath: '/camps/tourist-camp',
 	},
 	{
+		id: 'tourist-camp-2',
+		title: 'Туристичний заїзд',
+		age: 'від 10 до 16 років',
+		dates: '09.08 — 17.08',
+		description: 'Маршрути, орієнтування та відкриття околиць Поляни.',
+		price: '23 500 грн',
+		image: '/images/kids-camps/camp-4.webp',
+		season: 'summer',
+		detailPath: '/camps/tourist-camp',
+	},
+	{
 		title: 'Зимові канікули в горах',
 		age: 'від 7 до 15 років',
 		dates: 'січень — березень (зміни уточнюються)',
@@ -159,8 +170,8 @@ export const camps: CampCardItem[] = [
 	},
 ]
 
-/** Чотири заїзди в блоці «Дитячі табори» на головній. */
-export const campsHomeFeatured = camps.filter(c => c.season === 'summer').slice(0, 4)
+/** П’ять літніх заїздів у блоці «Дитячі табори» на головній. */
+export const campsHomeFeatured = camps.filter(c => c.season === 'summer').slice(0, 5)
 
 export const skiRecreation = [
 	{
@@ -191,15 +202,13 @@ const CATEGORY_ICON_BASE = '/images/branding/categories-icons'
 /** Категорії блоку «Популярні категорії» на головній та в меню «Популярне» в шапці — власні SVG з `public/images/branding/categories-icons/`. */
 export const categoryItems: { label: string; iconSrc: string; href: string }[] = [
 	{ label: 'Чани, бані, SPA центри', iconSrc: `${CATEGORY_ICON_BASE}/SPA.svg`, href: '/cat/spa-bani-chany' },
-	{ label: 'Мінеральна вода', iconSrc: `${CATEGORY_ICON_BASE}/water.svg`, href: '/cat/mineralna-voda' },
 	{ label: 'Сільський туризм', iconSrc: `${CATEGORY_ICON_BASE}/tourism.svg`, href: '/cat/silskyi-turizm' },
 	{ label: 'Санаторії Поляни', iconSrc: `${CATEGORY_ICON_BASE}/sanatoriums.svg`, href: '/cat/sanatorii-polyany' },
 	{ label: 'Конференц сервіс', iconSrc: `${CATEGORY_ICON_BASE}/conferences.svg`, href: '/cat/konferenc-servis' },
 	{ label: 'Їжа та напої', iconSrc: `${CATEGORY_ICON_BASE}/food_drinks.svg`, href: '/cat/yizha-napoyi' },
 	{ label: 'Екскурсії Поляною', iconSrc: `${CATEGORY_ICON_BASE}/excurs.svg`, href: '/excursions' },
-	{ label: 'Дегустації', iconSrc: `${CATEGORY_ICON_BASE}/tasting.svg`, href: '/cat/dehustacii' },
 	{ label: 'Готелі Поляни', iconSrc: `${CATEGORY_ICON_BASE}/hotels.svg`, href: '/cat/goteli-polyany' },
-	{ label: 'Відпочинок з дітьми', iconSrc: `${CATEGORY_ICON_BASE}/children.svg`, href: '/cat/z-ditmy' },
+	{ label: 'Табори відпочинку', iconSrc: `${CATEGORY_ICON_BASE}/children.svg`, href: '/cat/z-ditmy' },
 	{ label: 'Активний відпочинок', iconSrc: `${CATEGORY_ICON_BASE}/activity.svg`, href: '/cat/aktyvnyi-vidpochynok' },
 	{ label: 'Сувенір з Поляни', iconSrc: `${CATEGORY_ICON_BASE}/souvenirs.svg`, href: '/cat/suveniry' },
 ]
@@ -276,8 +285,6 @@ export const faqItems = [
 			'Частина готелів і закладів приймає гостей із тваринами. Рекомендуємо уточнювати умови розміщення під час бронювання.',
 	},
 ] as const
-
-export const campYears = ['2026', '2025', '2024'] as const
 
 export const heroSlides = [
 	'/images/gallery/golovna-foto.webp',

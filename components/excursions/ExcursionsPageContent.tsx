@@ -1,8 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
+import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { FaMapMarkerAlt } from 'react-icons/fa'
+import BottomStatusToast, {
+	WIP_SECTION_TOAST_MESSAGE,
+} from '@/components/shared/BottomStatusToast'
 import {
 	allExcursionListings,
 	mountainExcursionTabs,
@@ -47,17 +50,25 @@ function ExcursionCard({
 	item,
 	onOpenDetail,
 	detailPageNewTab,
+	onWipClick,
 }: {
 	item: ExcursionListing
 	onOpenDetail?: () => void
 	/** Повний URL або шлях на цьому ж сайті — відкриється в новій вкладці. */
 	detailPageNewTab?: string
+	/** Тимчасово: показ тосту «у розробці» замість переходу */
+	onWipClick?: () => void
 }) {
 	const openPage = Boolean(detailPageNewTab)
 	const openModal = Boolean(onOpenDetail)
-	const interactive = openPage || openModal
+	const wip = Boolean(onWipClick)
+	const interactive = openPage || openModal || wip
 
 	const activate = () => {
+		if (wip) {
+			onWipClick!()
+			return
+		}
 		if (openPage) {
 			window.open(detailPageNewTab!, '_blank', 'noopener,noreferrer')
 			return
@@ -73,9 +84,11 @@ function ExcursionCard({
 						role: 'button' as const,
 						tabIndex: 0,
 						...(openModal ? { 'aria-haspopup': 'dialog' as const } : {}),
-						'aria-label': openPage
-							? `${item.title}. Відкрити детальну сторінку в новій вкладці`
-							: `${item.title}. Натисніть для детального опису туру`,
+						'aria-label': wip
+							? `${item.title}. Розділ у розробці`
+							: openPage
+								? `${item.title}. Відкрити детальну сторінку в новій вкладці`
+								: `${item.title}. Натисніть для детального опису туру`,
 						onClick: activate,
 						onKeyDown: (e: ReactKeyboardEvent<HTMLElement>) => {
 							if (e.key === 'Enter' || e.key === ' ') {
@@ -115,7 +128,15 @@ function ExcursionCard({
 	)
 }
 
-function TabbedExcursionSection({ title, tabs }: { title: string; tabs: ExcursionTabGroup[] }) {
+function TabbedExcursionSection({
+	title,
+	tabs,
+	onExcursionCardWip,
+}: {
+	title: string
+	tabs: ExcursionTabGroup[]
+	onExcursionCardWip: () => void
+}) {
 	const [activeId, setActiveId] = useState(tabs[0]?.id ?? '')
 	const active = tabs.find(t => t.id === activeId) ?? tabs[0]
 
@@ -152,7 +173,7 @@ function TabbedExcursionSection({ title, tabs }: { title: string; tabs: Excursio
 			</div>
 			<div role='tabpanel' aria-labelledby={`exc-tab-${active.id}`} className='grid gap-4 md:grid-cols-2'>
 				{active.excursions.map(item => (
-					<ExcursionCard key={item.id} item={item} />
+					<ExcursionCard key={item.id} item={item} onWipClick={onExcursionCardWip} />
 				))}
 			</div>
 		</section>
@@ -163,13 +184,33 @@ function PolyanaExcursionHotelStyleCard({
 	item,
 	isFavorite,
 	onToggleFavorite,
+	onCardClick,
 }: {
 	item: ExcursionListing
 	isFavorite: boolean
 	onToggleFavorite: () => void
+	onCardClick?: () => void
 }) {
+	const interactive = Boolean(onCardClick)
+
 	return (
-		<article className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'>
+		<article
+			className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+			{...(interactive
+				? {
+						role: 'button' as const,
+						tabIndex: 0,
+						'aria-label': `${item.title}. Розділ у розробці`,
+						onClick: () => onCardClick!(),
+						onKeyDown: (e: ReactKeyboardEvent<HTMLElement>) => {
+							if (e.key === 'Enter' || e.key === ' ') {
+								e.preventDefault()
+								onCardClick!()
+							}
+						},
+					}
+				: {})}
+		>
 			<div className='relative h-36 sm:h-40'>
 				<Image
 					src={item.image}
@@ -224,8 +265,13 @@ export default function ExcursionsPageContent() {
 	const [favoritePolyana, setFavoritePolyana] = useState<Record<string, boolean>>({})
 	const [mapError, setMapError] = useState<string | null>(null)
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
+	const [wipToastOpen, setWipToastOpen] = useState(false)
+	const wipToastId = useId()
 	const mapContainerRef = useRef<HTMLDivElement | null>(null)
 	const mapInstanceRef = useRef<unknown>(null)
+
+	const closeWipToast = useCallback(() => setWipToastOpen(false), [])
+	const showWipToast = useCallback(() => setWipToastOpen(true), [])
 
 	useEffect(() => {
 		const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -471,7 +517,7 @@ export default function ExcursionsPageContent() {
 				</div>
 			</section>
 
-			<TabbedExcursionSection title='Екскурсії в гори' tabs={mountainExcursionTabs} />
+			<TabbedExcursionSection title='Екскурсії в гори' tabs={mountainExcursionTabs} onExcursionCardWip={showWipToast} />
 
 			<section className='border-t border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24'>
 				<h2 className='mb-5 text-2xl font-bold text-[#2D333D] sm:mb-6 sm:text-[26px]'>Екскурсії Поляною</h2>
@@ -484,6 +530,7 @@ export default function ExcursionsPageContent() {
 							onToggleFavorite={() =>
 								setFavoritePolyana(prev => ({ ...prev, [item.id]: !prev[item.id] }))
 							}
+							onCardClick={showWipToast}
 						/>
 					))}
 				</div>
@@ -521,6 +568,12 @@ export default function ExcursionsPageContent() {
 					) : null}
 				</div>
 			</section>
+			<BottomStatusToast
+				open={wipToastOpen}
+				onClose={closeWipToast}
+				id={wipToastId}
+				message={WIP_SECTION_TOAST_MESSAGE}
+			/>
 		</div>
 	)
 }

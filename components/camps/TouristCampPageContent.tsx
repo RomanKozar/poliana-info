@@ -6,52 +6,49 @@ const touristCamp = camps.find(c => c.id === 'tourist-camp')
 
 const POLIANSKI_CAMP_OFFICIAL_URL = 'https://polianski-camp.vercel.app/'
 
-const ctaLearnMoreClasses =
-	'inline-flex w-full items-center justify-center rounded-full bg-[#53C4DA] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#2FAFC8] hover:shadow-md sm:w-auto'
-
 type ProgramRow = { block: string; points: string[] }
 
 const TOURIST_WHAT_AWAITS_TABLE: ProgramRow[] = [
 	{
-		block: '🗺️ Маршрути й координати',
+		block: '🗺️ Маршрути та рух групи',
 		points: [
-			'Щодня — виходи різної довжини: від спокійних прогулянок уздовж стежки здоров’я до сходжень середньої складності поблизу Поляни; маршрут пояснюють інструктори 🗺️🚶‍♂️',
-			'Читання профілю висот і позначок на карті (де використовують): група йде узгодженим темпом із ведучим і замикаючим інструктором 👥📍',
+			'Щодня — виходи різної тривалості: від спокійних прогулянок уздовж стежки здоров’я до маршрутів середньої складності поблизу Поляни. Маршрут і темп пояснюють інструктори 🗺️🚶‍♂️',
+			'На карті розглядають рельєф і умовні позначки; група рухається узгоджено — з ведучим і замикаючим супроводом 👥📍',
 		],
 	},
 	{
-		block: '🧭 Просте орієнтування',
+		block: '🧭 Орієнтування просто неба',
 		points: [
-			'Базові прийоми без гаджетів: знаки на стежці, триангуляція «видно — не видно», орієнтир із компасом на короткій дистанції 🧭🌲',
-			'Між ходом — міні-пошуки орієнтирів за описом дорослого, без відриву від правил безпеки групи 🔍',
+			'Основи без зайвих гаджетів: дорожні знаки на стежці, орієнтири «на око» і короткі вправи з компасом 🧭🌲',
+			'Під час ходу — невеликі вправи на пошук орієнтирів за підказкою дорослих, без порушення правил безпеки групи 🔍',
 		],
 	},
 	{
-		block: '🌿 Еко-режим і стежка',
+		block: '🌿 Культура стежки',
 		points: [
-			'Етика гірської стежки: залишаємо мінімум сліду, сміття забираємо в рюкзак; рослини спостерігаємо без зриву й зайвого шуму для дикої природи 🌿🙏',
-			'Щоденний «еко-лік»: якщо уздовж трапляється сторонній предмет — повідомляємо інструктору для безпечного збору 🧃',
+			'Поважаємо середовище: мінімум сліду, сміття забираємо з собою; рослини та тварин спостерігаємо спокійно, без зриву й зайвого шуму 🌿🙏',
+			'Якщо на трасі попадається стороння річ — повідомляємо інструктора, щоб прибрати безпечно 🧃',
 		],
 	},
 	{
-		block: '🥾 Спорядження й безпека',
+		block: '🥾 Спорядження і безпека',
 		points: [
-			'Перевірка взуття, рюкзака й запасної води перед виходом; розминка суглобів і пояснюємо симптоми перегріву чи охолодження ⚙️💧',
-			'Погані умови: скорочення маршруту або перемикання на закритий тренинг із «класом орієнтування» в залі бази ☔🏠',
+			'Перед виходом — перевірка взуття, рюкзака й запасу води; легка розминка й нагадування про ознаки перегріву чи переохолодження ⚙️💧',
+			'У складну погоду маршрут скорочують або переносять частину активностей у приміщення бази — з «класом орієнтування» чи теорією ☔🏠',
 		],
 	},
 	{
-		block: '💧 База курорту Поляни',
+		block: '💧 База на курорті',
 		points: [
-			'Режими харчування та відпочинку погоджують при поселенні; вода «Поляна» з бювету — для пиття під час і після маршрутів 🚰😴',
-			'За попередньою домовленістю можливий вихід у басейн партнерів курорту — із дорослими інструкторами лише відповідно до графіку зміни 🏊‍♂️',
+			'Режим харчування й відпочинку узгоджують при заїзді; вода з бювету «Поляна» — для поповнення запасів після маршрутів 🚰😴',
+			'За домовленістю можливий вихід у басейн партнерів курорту — лише з інструкторами й у відведений час зміни 🏊‍♂️',
 		],
 	},
 	{
-		block: '🌄 Підсумки зміни',
+		block: '🌄 Фінал зміни',
 		points: [
-			'Колаж «маршрутів пам’яті»: кожна дитина додає наліпку/малюночок із улюбленим днем уздовж нашої дорожньої карти зміни 🖼️🛤️',
-			'Вечір із фотопрезентацією та побажаннями друзів табору; нагороди за відповідальність у загоні й турботу про спільну безпеку ✨📸',
+			'Спільний колаж «карта спогадів»: кожен додає наліпку чи малюнок про найкращий день маршруту 🖼️🛤️',
+			'Вечір з фото зміни та побажаннями друзям; відзначаємо відповідальність у групі й дбайливість до спільної безпеки ✨📸',
 		],
 	},
 ]
@@ -79,7 +76,7 @@ export default function TouristCampPageContent() {
 	}
 
 	return (
-		<div className='bg-[#F5F6F7]'>
+		<div className='bg-[#F5F6F7] pb-5'>
 			<section className='border-b border-slate-200/80 bg-gradient-to-br from-[#E8F4F8] via-white to-[#F5F6F7] px-4 py-5 sm:px-16 sm:py-6 lg:px-24'>
 				<div className='mx-auto max-w-6xl'>
 					<div className='flex flex-col gap-4 lg:flex-row lg:items-stretch lg:justify-between lg:gap-8'>
@@ -100,25 +97,16 @@ export default function TouristCampPageContent() {
 							</div>
 							<p className='mt-2 max-w-3xl text-sm leading-snug text-slate-600 sm:text-[0.9375rem]'>{touristCamp.description}</p>
 						</div>
-						<div className='relative flex w-full shrink-0 flex-col items-end gap-3 self-stretch lg:flex-1 lg:justify-center lg:gap-0'>
-							<span className='inline-flex items-center rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:text-sm lg:relative lg:z-[1]'>
+						<div className='relative flex w-full shrink-0 flex-col items-end self-stretch lg:flex-1 lg:justify-center'>
+							<span className='inline-flex w-full items-center justify-center rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:w-auto sm:text-sm lg:absolute lg:right-0 lg:bottom-0 lg:z-[1] lg:w-auto'>
 								{touristCamp.price}
 							</span>
-							<a
-								href={POLIANSKI_CAMP_OFFICIAL_URL}
-								target='_blank'
-								rel='noopener noreferrer'
-								className={`${ctaLearnMoreClasses} lg:absolute lg:right-0 lg:bottom-0 lg:z-[1] lg:w-auto`}
-							>
-								Дізнатися більше
-								<span className='sr-only'> (офіційний сайт PolianskiCamp, відкриється у новій вкладці)</span>
-							</a>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<div className='mx-auto max-w-6xl px-4 pt-3 pb-10 sm:px-6 sm:pt-4 lg:px-8 lg:pt-5'>
+			<div className='mx-auto max-w-6xl px-4 pt-3 pb-5 sm:px-6 sm:pt-4 lg:px-8 lg:pt-5'>
 				<TouristCampBannerAndGallery bannerSrc={touristCamp.image} bannerAlt={touristCamp.title} />
 
 				<section aria-labelledby='tourist-what-awaits-heading' className='mt-10 sm:mt-12'>
@@ -126,14 +114,14 @@ export default function TouristCampPageContent() {
 						id='tourist-what-awaits-heading'
 						className='text-center text-xl font-bold tracking-tight text-[#2D333D] sm:text-2xl'
 					>
-						✨ Як улаштована програма туристичного заїзду? ✨
+						✨ Програма заїзду: що роблять діти щодня ✨
 					</h2>
 
 					<div className='mt-6 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm'>
 						<div className='-mx-[1px] overflow-x-auto'>
 							<table className='w-full min-w-[20rem] border-collapse text-left md:min-w-0'>
 								<caption className='sr-only'>
-									Піший туризм біля Поляни: щоденні виходи в гори, навчання читати карту й орієнтуватися, правила поведінки на стежці, підготовка спорядження, відпочинок на базі курорту та підсумок зміни з командою.
+									Туристична зміна біля Поляни: щоденні маршрути, основи карти й орієнтування, повага до стежки та природи, підготовка спорядження, відпочинок на базі курорту та підсумок зміни разом із групою.
 								</caption>
 								<thead>
 									<tr className='border-b border-slate-200/90 bg-[#EBF8FC]'>
@@ -147,7 +135,7 @@ export default function TouristCampPageContent() {
 											scope='col'
 											className='px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#2D333D] sm:px-5 sm:text-sm'
 										>
-											Що чекає дитину
+											Що роблять і вчаться
 										</th>
 									</tr>
 								</thead>
@@ -176,20 +164,27 @@ export default function TouristCampPageContent() {
 							</table>
 						</div>
 					</div>
-
-					<div className='mt-8 flex justify-center sm:mt-10'>
-						<a
-							href={POLIANSKI_CAMP_OFFICIAL_URL}
-							target='_blank'
-							rel='noopener noreferrer'
-							className={`${ctaLearnMoreClasses} sm:w-auto`}
-						>
-							Дізнатися більше
-							<span className='sr-only'> (офіційний сайт PolianskiCamp, відкриється у новій вкладці)</span>
-						</a>
-					</div>
 				</section>
+
+				<div className='mt-8 flex justify-center sm:mt-10'>
+					<a
+						href={POLIANSKI_CAMP_OFFICIAL_URL}
+						target='_blank'
+						rel='noopener noreferrer'
+						className='inline-flex w-full items-center justify-center rounded-full bg-[#53C4DA] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#2FAFC8] hover:shadow-md sm:w-auto'
+					>
+						Дізнатися більше
+						<span className='sr-only'> (офіційний сайт PolianskiCamp, відкриється у новій вкладці)</span>
+					</a>
+				</div>
 			</div>
+			<a
+				href='tel:0502149266'
+				className='animate-wiggle fixed bottom-5 right-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:px-6 sm:text-sm'
+				aria-label='Забронювати табір — зателефонувати'
+			>
+				Забронювати
+			</a>
 		</div>
 	)
 }

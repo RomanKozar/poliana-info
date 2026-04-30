@@ -11,8 +11,10 @@ import {
 	FaPhoneAlt,
 	FaTiktok,
 } from 'react-icons/fa'
+import { IoQrCode } from 'react-icons/io5'
 
 const informationLinks = [
+	{ href: '/about', label: 'Про Polyana Info' },
 	{ href: '/accommodation', label: 'Проживання' },
 	{ href: '/spa', label: 'SPA та відпочинок' },
 	{ href: '/kids-camps', label: 'Дитячі табори' },
@@ -24,11 +26,6 @@ const supportLinks = [
 	{ href: '/contacts', label: "Зворотний зв'язок" },
 	{ href: '/#', label: 'Умови використання' },
 	{ href: '/privacy', label: 'Політика конфіденційності' },
-]
-
-const aboutLinks = [
-	{ href: '/about', label: 'Про Polyana Info' },
-	{ href: '/team', label: 'Наша команда' },
 ]
 
 export default function Footer() {
@@ -154,20 +151,7 @@ export default function Footer() {
 							</div>
 						</div>
 
-						<div className='grid min-w-0 flex-1 grid-cols-2 gap-x-6 gap-y-9 sm:gap-x-10 md:grid-cols-4 md:gap-y-8'>
-							<div className='min-w-0'>
-								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>Про нас</p>
-								<ul className='space-y-2.5 text-xs leading-snug text-white/70 sm:text-[13px]'>
-									{aboutLinks.map(item => (
-										<li key={item.label}>
-											<Link href={item.href} className='transition-colors hover:text-white'>
-												{item.label}
-											</Link>
-										</li>
-									))}
-								</ul>
-							</div>
-
+						<div className='grid min-w-0 flex-1 grid-cols-2 gap-x-6 gap-y-9 sm:gap-x-10 lg:grid-cols-4 lg:gap-y-8'>
 							<div className='min-w-0'>
 								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>Інформація</p>
 								<ul className='space-y-2.5 text-xs leading-snug text-white/70 sm:text-[13px]'>
@@ -224,6 +208,21 @@ export default function Footer() {
 										</a>
 									</li>
 								</ul>
+							</div>
+
+							<div className='min-w-0 text-center lg:text-left'>
+								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>
+									Підписатися на оновлення
+								</p>
+								<div
+									className='mx-auto inline-flex rounded-lg bg-white p-1.5 ring-1 ring-white/15 lg:mx-0'
+									role='img'
+									aria-label='QR-код для підписки на оновлення (скоро)'
+								>
+									<span className='flex size-[132px] items-center justify-center text-[#2D333D]'>
+										<IoQrCode className='size-[5.25rem] opacity-90' aria-hidden />
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>

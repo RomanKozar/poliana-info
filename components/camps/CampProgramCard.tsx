@@ -2,7 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useCallback, useEffect, useId, useState } from 'react'
+import { useCallback, useId, useState } from 'react'
+import BottomStatusToast from '@/components/shared/BottomStatusToast'
 import type { CampCardItem } from '@/data/home-page'
 
 type Props = {
@@ -23,12 +24,6 @@ export default function CampProgramCard({
 	const noticeId = useId()
 
 	const closeNotice = useCallback(() => setNoticeOpen(false), [])
-
-	useEffect(() => {
-		if (!noticeOpen) return
-		const t = window.setTimeout(closeNotice, 4200)
-		return () => window.clearTimeout(t)
-	}, [noticeOpen, closeNotice])
 
 	const cardBody = (
 		<>
@@ -67,15 +62,7 @@ export default function CampProgramCard({
 				>
 					{cardBody}
 				</button>
-				{noticeOpen ? (
-					<div
-						id={noticeId}
-						className='fixed bottom-6 left-1/2 z-[100] max-w-[min(90vw,24rem)] -translate-x-1/2 rounded-full bg-[#F3A169] px-4 py-2.5 text-center text-sm font-bold text-white shadow-lg'
-						role='status'
-					>
-						Очікуйте старт бронювання
-					</div>
-				) : null}
+				<BottomStatusToast open={noticeOpen} onClose={closeNotice} id={noticeId} />
 			</>
 		)
 	}
