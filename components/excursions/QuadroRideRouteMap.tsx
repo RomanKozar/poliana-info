@@ -17,7 +17,12 @@ function applyQuadroRouteToMap(
 	},
 	g: {
 		LatLng: new (lat: number, lng: number) => unknown
-		LatLngBounds: new () => { extend: (p: unknown) => void }
+		LatLngBounds: new () => {
+			extend: (p: unknown) => void
+			getCenter?: () => { lat: () => number; lng: () => number }
+			getNorthEast?: () => { lat: () => number; lng: () => number }
+			getSouthWest?: () => { lat: () => number; lng: () => number }
+		}
 		Polyline: new (opts: Record<string, unknown>) => { setMap: (m: unknown | null) => void }
 	},
 	option: QuadroRouteOption,
@@ -39,16 +44,28 @@ function applyQuadroRouteToMap(
 			geodesic: true,
 		})
 		polylineRef.current.setMap(map)
-		const bounds = new g.LatLngBounds()
-		for (const ll of path) bounds.extend(ll)
-		map.fitBounds(bounds, option.pathFitPadding ?? 40)
-		const extra = option.pathZoomOutAfterFit
-		if (extra && extra > 0 && map.getZoom) {
-			const z = map.getZoom()
-			if (typeof z === 'number') {
-				map.setZoom(Math.max(MAP_ZOOM_MIN, z - extra))
+		const tightBounds = new g.LatLngBounds()
+		for (const ll of path) tightBounds.extend(ll)
+
+		const factor = option.pathBoundsExpandFactor ?? 1
+		let boundsToFit: typeof tightBounds = tightBounds
+		if (factor > 1) {
+			const center = tightBounds.getCenter?.()
+			const ne = tightBounds.getNorthEast?.()
+			const sw = tightBounds.getSouthWest?.()
+			if (center && ne && sw) {
+				const clat = center.lat()
+				const clng = center.lng()
+				const scaled = new g.LatLngBounds()
+				const corner = (plat: number, plng: number) =>
+					new g.LatLng(clat + (plat - clat) * factor, clng + (plng - clng) * factor)
+				scaled.extend(corner(ne.lat(), ne.lng()))
+				scaled.extend(corner(sw.lat(), sw.lng()))
+				boundsToFit = scaled
 			}
 		}
+
+		map.fitBounds(boundsToFit, option.pathFitPadding ?? 40)
 	} else {
 		map.setCenter(option.end)
 		map.setZoom(option.zoom)

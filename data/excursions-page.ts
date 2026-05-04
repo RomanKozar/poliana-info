@@ -1,5 +1,8 @@
 /** Картки екскурсій для сторінки /excursions (квадроцикли, гори, прогулянки Поляною). */
 
+/** HTML id блоку «Екскурсії в гори» для посилань `/excursions#…`. */
+export const EXCURSIONS_MOUNTAINS_ANCHOR_ID = 'ekskursii-v-hory'
+
 export type ExcursionDetailSection = {
 	title: string
 	/** Короткий абзац під заголовком. */

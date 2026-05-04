@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	}))
 
 	const accommodationDetailUrls: MetadataRoute.Sitemap = polyanaHotels.map(hotel => ({
-		url: pageUrl(`/accommodation/${hotel.id}`),
+		url: pageUrl(`/cat/goteli-polyany/${hotel.id}`),
 		lastModified,
 		changeFrequency: 'weekly' as const,
 		priority: 0.75,
@@ -33,6 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 	return [
 		{ url: pageUrl('/'), lastModified, changeFrequency: 'weekly', priority: 1 },
+		{
+			url: pageUrl('/aktsii-ta-propozitsii'),
+			lastModified,
+			changeFrequency: 'weekly' as const,
+			priority: 0.82,
+		},
 		{ url: pageUrl('/about'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/accommodation'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/blog'), lastModified, changeFrequency: 'monthly', priority: 0.8 },

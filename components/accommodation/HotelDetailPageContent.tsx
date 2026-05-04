@@ -3,23 +3,19 @@
 import Image from 'next/image'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
-	FaBus,
 	FaChevronLeft,
 	FaChevronRight,
 	FaCommentDots,
 	FaHeart,
 	FaMapMarkerAlt,
-	FaMountain,
 	FaMugHot,
 	FaRegHeart,
 	FaShare,
 	FaStar,
 	FaSwimmer,
 	FaTimes,
-	FaTint,
 	FaUtensils,
 	FaUsers,
-	FaWalking,
 } from 'react-icons/fa'
 import {
 	MdAirportShuttle,
@@ -33,16 +29,12 @@ import { MdOutlineDownhillSkiing, MdSmokeFree } from 'react-icons/md'
 import HotelDetailMap from '@/components/accommodation/HotelDetailMap'
 import type { PolyanaHotel } from '@/lib/polyana-hotels'
 import {
-	areaTags,
-	aroundAirports,
-	aroundRestaurantItems,
-	aroundTransportItems,
 	galleryImagesForHotel,
 	hotelFaqEntries,
 	hotelListingSubtitle,
 	longDescriptionParagraphs,
 	parseGuestCount,
-	popularFacilities,
+	popularFacilitiesForHotel,
 	propertyHighlights,
 	reviewCategoryScoresForHotel,
 	sampleReviewCardsForHotel,
@@ -82,24 +74,6 @@ const facilityIcons: Record<FacilityIconId, React.ComponentType<{ className?: st
 	nosmoking: MdSmokeFree,
 	bar: MdLocalBar,
 	breakfast: FaMugHot,
-}
-
-function AreaTagIcon({ kind }: { kind: (typeof areaTags)[0]['icon'] }) {
-	const cls = 'size-4 shrink-0 text-sky-600'
-	switch (kind) {
-		case 'mountain':
-			return <FaMountain className={cls} aria-hidden />
-		case 'droplet':
-			return <FaTint className={cls} aria-hidden />
-		case 'hiker':
-			return <FaWalking className={cls} aria-hidden />
-		case 'star':
-			return <FaStar className={cls} aria-hidden />
-		case 'pin':
-			return <FaMapMarkerAlt className={cls} aria-hidden />
-		default:
-			return null
-	}
 }
 
 function HighlightIcon({ kind }: { kind: 'pin' | 'breakfast' | 'parking' | 'ski' }) {
@@ -245,6 +219,10 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 	const [descExpanded, setDescExpanded] = useState(false)
 	const [galleryOpen, setGalleryOpen] = useState(false)
 	const [galleryStart, setGalleryStart] = useState(0)
+	const [openFacilityId, setOpenFacilityId] = useState<string | null>(null)
+	const facilitiesWrapRef = useRef<HTMLUListElement | null>(null)
+	const reviewsSectionRef = useRef<HTMLElement | null>(null)
+	const [reviewsExpanded, setReviewsExpanded] = useState(false)
 	const gallery = useMemo(() => galleryImagesForHotel(hotel), [hotel])
 	const stars = useMemo(() => parseStarRating(hotel), [hotel])
 	const scoreLabel = useMemo(
@@ -282,6 +260,23 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 		const all = hotelFaqEntries
 		return { left: all.slice(0, 5), right: all.slice(5, 10) }
 	}, [])
+
+	const reviewCards = useMemo(() => sampleReviewCardsForHotel(hotel.id), [hotel.id])
+
+	const openAllReviews = useCallback(() => {
+		setReviewsExpanded(true)
+	}, [])
+
+	useEffect(() => {
+		if (!openFacilityId) return
+		const onPointerDown = (e: PointerEvent) => {
+			const el = facilitiesWrapRef.current
+			if (!el) return
+			if (!el.contains(e.target as Node)) setOpenFacilityId(null)
+		}
+		document.addEventListener('pointerdown', onPointerDown)
+		return () => document.removeEventListener('pointerdown', onPointerDown)
+	}, [openFacilityId])
 
 	return (
 		<div className='mx-auto w-full max-w-6xl px-4 pb-10 pt-3 sm:px-6 lg:px-8'>
@@ -422,7 +417,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 					<p className='mt-2 flex flex-wrap items-center gap-2 text-slate-600'>
 						<FaStar className='size-4 text-amber-500' aria-hidden />
 						{hasExternalReviewStats ? (
-							<span>Зведено з відкритих сервісів бронювання (Booking та ін.), не лише POLYANA.INFO</span>
+							<span>Зведено з відкритих сервісів бронювання (Booking та ін.)</span>
 						) : (
 							<span>Ще немає відгуків на порталі</span>
 						)}
@@ -432,9 +427,26 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 				</div>
 			</div>
 
-			{/* Опис + зручності + сайдбар */}
-			<div className='mt-8 grid gap-8 lg:grid-cols-[1fr,min(340px,100%)] lg:items-start'>
-				<div className='space-y-6'>
+			{/* Особливості помешкання (переміщено під заголовок) */}
+			<aside className='mt-6 rounded-2xl bg-sky-50/90 p-5 ring-1 ring-sky-100'>
+				<h3 className='text-lg font-bold text-[#2D333D]'>Особливості помешкання</h3>
+				<ul className='mt-4 space-y-4'>
+					{propertyHighlights(hotel)
+						.filter(h => h.title !== 'Паркінг' && h.title !== 'Активності')
+						.map((h, i) => (
+							<li key={i} className='flex gap-3'>
+								{h.icon ? <HighlightIcon kind={h.icon} /> : null}
+								<div>
+									<p className='font-semibold text-slate-900'>{h.title}</p>
+									<p className='mt-1 text-sm leading-relaxed text-slate-700'>{h.body}</p>
+								</div>
+							</li>
+						))}
+				</ul>
+			</aside>
+
+			{/* Опис + зручності */}
+			<div className='mt-8 space-y-6'>
 					<section className='space-y-3'>
 						<h3 className='text-lg font-semibold text-[#2D333D]'>Про помешкання</h3>
 						<p className='text-[0.9375rem] italic leading-relaxed text-sky-950/90'>
@@ -459,66 +471,44 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 
 					<section>
 						<h3 className='text-lg font-semibold text-[#2D333D]'>Найпопулярніші зручності</h3>
-						<ul className='mt-4 grid gap-x-10 gap-y-3 sm:grid-cols-2'>
-							{popularFacilities.map(f => {
+						<ul ref={facilitiesWrapRef} className='mt-4 flex flex-wrap items-center gap-2.5'>
+							{popularFacilitiesForHotel(hotel.id).map(f => {
 								const Ico = facilityIcons[f.icon]
+								const isOpen = openFacilityId === f.id
 								return (
-									<li key={f.id} className='flex items-center gap-3 text-[0.9375rem] text-slate-800'>
-										<span className='flex size-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-700'>
+									<li key={f.id} className='group relative'>
+										<button
+											type='button'
+											onClick={() => setOpenFacilityId(prev => (prev === f.id ? null : f.id))}
+											className='flex size-10 cursor-pointer items-center justify-center rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100 sm:cursor-default'
+											aria-label={f.label}
+											aria-expanded={isOpen}
+										>
 											<Ico className='size-5' aria-hidden />
+										</button>
+										<span
+											className={`pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-white shadow-lg transition-opacity ${
+												isOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+											}`}
+										>
+											{f.label}
 										</span>
-										<span>{f.label}</span>
 									</li>
 								)
 							})}
 						</ul>
 					</section>
-				</div>
-
-				<aside className='rounded-2xl bg-sky-50/90 p-5 ring-1 ring-sky-100'>
-					<h3 className='text-lg font-bold text-[#2D333D]'>Особливості помешкання</h3>
-					<ul className='mt-4 space-y-4'>
-						{propertyHighlights(hotel).map((h, i) => (
-							<li key={i} className='flex gap-3'>
-								{h.icon ? <HighlightIcon kind={h.icon} /> : null}
-								<div>
-									<p className='font-semibold text-slate-900'>{h.title}</p>
-									<p className='mt-1 text-sm leading-relaxed text-slate-700'>{h.body}</p>
-								</div>
-							</li>
-						))}
-					</ul>
-					<a
-						href={hotel.website}
-						target='_blank'
-						rel='noopener noreferrer'
-						className='mt-5 flex w-full items-center justify-center rounded-lg bg-sky-600 px-4 py-3 text-center text-sm font-bold text-white shadow-sm transition hover:bg-sky-700'
-					>
-						Забронювати зараз
-					</a>
-				</aside>
 			</div>
 
 			{/* Відгуки */}
-			<section className='mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6'>
+			<section ref={reviewsSectionRef} className='mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6'>
 				<div className='flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between'>
 					<h2 className='text-xl font-bold text-[#2D333D]'>Відгуки гостей</h2>
-					<a
-						href={hotel.website}
-						target='_blank'
-						rel='noopener noreferrer'
-						className='inline-flex w-fit shrink-0 items-center justify-center rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-sky-700'
-					>
-						Переглянути наявність місць
-					</a>
 				</div>
 
 				<div className='mt-4 flex flex-wrap items-center gap-3'>
 					<span className='rounded bg-sky-900 px-3 py-2 text-xl font-bold text-white'>{scoreLabel}</span>
-					<span className='font-medium text-slate-800'>Чудово · {guestCount ?? '—'} відгуків</span>
-					<button type='button' className='cursor-pointer text-sm font-semibold text-sky-700 hover:underline'>
-						Читати всі відгуки
-					</button>
+					<span className='min-w-0 font-medium text-slate-800'>Чудово · {guestCount ?? '—'} відгуків</span>
 				</div>
 
 				<p className='mt-5 font-semibold text-slate-900'>Категорії:</p>
@@ -553,53 +543,87 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 				</div>
 
 				<h3 className='mt-7 text-lg font-semibold text-[#2D333D]'>Враження гостей із високими оцінками</h3>
-				<div className='relative mt-3'>
-					<div className='flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden'>
-							{sampleReviewCardsForHotel(hotel.id).map((r, i) => (
-								<div
-									key={i}
-									className='min-w-[min(100%,20rem)] snap-start shrink-0 rounded-xl border border-slate-200/90 bg-slate-50/80 p-4 lg:min-w-0'
-								>
+				<div className='relative mt-3 min-w-0'>
+					{reviewsExpanded ? (
+						<div className='grid min-w-0 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+							{reviewCards.map((r, i) => (
+								<div key={i} className='min-w-0 rounded-xl border border-slate-200/90 bg-slate-50/80 p-4'>
 									<div className='flex gap-3'>
-										<span
-											className={`flex size-10 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white ${r.bg}`}
-										>
+										<span className={`flex size-10 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white ${r.bg}`}>
 											{r.initial}
 										</span>
-										<div>
+										<div className='min-w-0'>
 											<p className='font-semibold text-slate-900'>{r.name}</p>
 											<p className='text-xs text-slate-500'>{r.country}</p>
 										</div>
 									</div>
-									<p className='mt-2 text-sm italic leading-relaxed text-slate-700'>«{r.excerpt}»</p>
-									<button type='button' className='mt-3 cursor-pointer text-sm font-semibold text-sky-700 hover:underline'>
-										Докладніше
-									</button>
+									<p className='mt-2 break-words text-sm italic leading-relaxed text-slate-700'>«{r.excerpt}»</p>
 								</div>
 							))}
-					</div>
+						</div>
+					) : (
+						<>
+							{/* Мобільний: повна ширина карток + один CTA знизу (без дубля в кожній картці) */}
+							<div className='flex flex-col gap-3 lg:hidden'>
+								{reviewCards.slice(0, 1).map((r, i) => (
+									<div key={i} className='min-w-0 rounded-xl border border-slate-200/90 bg-slate-50/80 p-4'>
+										<div className='flex gap-3'>
+											<span className={`flex size-10 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white ${r.bg}`}>
+												{r.initial}
+											</span>
+											<div className='min-w-0'>
+												<p className='font-semibold text-slate-900'>{r.name}</p>
+												<p className='text-xs text-slate-500'>{r.country}</p>
+											</div>
+										</div>
+										<p className='mt-2 break-words text-sm italic leading-relaxed text-slate-700'>«{r.excerpt}»</p>
+									</div>
+								))}
+							</div>
+							{/* Десктоп: сітка превʼю */}
+							<div className='hidden gap-4 lg:grid lg:grid-cols-3'>
+								{reviewCards.slice(0, 6).map((r, i) => (
+									<div key={i} className='min-w-0 rounded-xl border border-slate-200/90 bg-slate-50/80 p-4'>
+										<div className='flex gap-3'>
+											<span className={`flex size-10 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white ${r.bg}`}>
+												{r.initial}
+											</span>
+											<div className='min-w-0'>
+												<p className='font-semibold text-slate-900'>{r.name}</p>
+												<p className='text-xs text-slate-500'>{r.country}</p>
+											</div>
+										</div>
+										<p className='mt-2 break-words text-sm italic leading-relaxed text-slate-700'>«{r.excerpt}»</p>
+									</div>
+								))}
+							</div>
+						</>
+					)}
 				</div>
 
-				<button
-					type='button'
-					className='mt-6 inline-flex cursor-pointer items-center rounded-lg border-2 border-sky-600 bg-white px-5 py-2.5 text-sm font-semibold text-sky-700 hover:bg-sky-50'
-				>
-					Читати всі відгуки
-				</button>
+				{reviewsExpanded ? (
+					<button
+						type='button'
+						onClick={() => setReviewsExpanded(false)}
+						className='mt-6 inline-flex w-full cursor-pointer items-center justify-center rounded-lg border-2 border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 sm:w-auto'
+					>
+						Згорнути відгуки
+					</button>
+				) : (
+					<button
+						type='button'
+						onClick={openAllReviews}
+						className='mt-6 inline-flex w-full cursor-pointer items-center justify-center rounded-lg border-2 border-sky-600 bg-white px-5 py-2.5 text-sm font-semibold text-sky-700 hover:bg-sky-50 sm:w-auto'
+					>
+						Читати всі відгуки
+					</button>
+				)}
 			</section>
 
 			{/* FAQ */}
 			<section className='mt-10'>
 				<div className='flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between'>
 					<h2 className='text-xl font-bold text-[#2D333D]'>Мандрівники запитують</h2>
-					<a
-						href={hotel.website}
-						target='_blank'
-						rel='noopener noreferrer'
-						className='inline-flex w-fit rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-sky-700'
-					>
-						Переглянути наявність місць
-					</a>
 				</div>
 				<div className='mt-5 grid gap-4 md:grid-cols-2 md:items-start md:gap-x-5'>
 					<div className='rounded-xl border border-slate-200 bg-white shadow-sm'>
@@ -687,96 +711,6 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 				</div>
 			</section>
 
-			{/* Навколо */}
-			<section className='mt-10'>
-				<div className='flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between'>
-					<h2 className='text-xl font-bold text-[#2D333D]'>Навколо готелю</h2>
-					<a
-						href={hotel.website}
-						target='_blank'
-						rel='noopener noreferrer'
-						className='inline-flex w-fit rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-sky-700'
-					>
-						Переглянути наявність місць
-					</a>
-				</div>
-				<p className='mt-3 text-sm text-slate-700'>Гостям подобався район через таке:</p>
-				<ul className='mt-2 flex flex-wrap gap-x-3 gap-y-1.5 text-sm'>
-					{areaTags.map(tag => (
-						<li key={tag.label} className='inline-flex items-center gap-1.5 text-slate-800'>
-							<AreaTagIcon kind={tag.icon} />
-							<span>{tag.label}</span>
-						</li>
-					))}
-					<li>
-						<a href='#hotel-location-map' className='inline-flex items-center gap-1 text-sm font-semibold text-sky-700 hover:underline'>
-							<FaMapMarkerAlt className='size-4' aria-hidden /> Відмінне розташування — на карті
-						</a>
-					</li>
-				</ul>
-
-				<div className='mt-6 grid gap-8 lg:grid-cols-3'>
-					<div>
-						<h3 className='mb-3 flex items-center gap-2 text-sm font-bold text-slate-900'>
-							<FaUtensils className='size-4 text-slate-600' aria-hidden />
-							Ресторани та кафе
-						</h3>
-						<ul className='space-y-2 text-sm text-slate-700'>
-							{aroundRestaurantItems.map((row, i) => (
-								<li key={i} className='flex justify-between gap-6 border-b border-slate-100 pb-2 last:border-0'>
-									<span className='min-w-0'>{row.label}</span>
-									<span className='shrink-0 font-medium tabular-nums text-slate-500'>{row.distance}</span>
-								</li>
-							))}
-						</ul>
-					</div>
-					<div>
-						<h3 className='mb-3 flex items-center gap-2 text-sm font-bold text-slate-900'>
-							<FaBus className='size-4 text-slate-600' aria-hidden />
-							Громадський транспорт
-						</h3>
-						<ul className='space-y-2 text-sm text-slate-700'>
-							{aroundTransportItems.map((row, i) => (
-								<li key={i} className='flex justify-between gap-6 border-b border-slate-100 pb-2'>
-									<span className='min-w-0'>{row.label}</span>
-									<span className='shrink-0 font-medium tabular-nums text-slate-500'>{row.distance}</span>
-								</li>
-							))}
-						</ul>
-					</div>
-					<div>
-						<h3 className='mb-3 flex items-center gap-2 text-sm font-bold text-slate-900'>
-							<MdAirportShuttle className='size-4 text-slate-600' aria-hidden />
-							Найближчі аеропорти
-						</h3>
-						<ul className='space-y-2 text-sm text-slate-700'>
-							{aroundAirports.map((row, i) => (
-								<li key={i} className='flex justify-between gap-6 border-b border-slate-100 pb-2'>
-									<span className='min-w-0'>{row.label}</span>
-									<span className='shrink-0 font-medium tabular-nums text-slate-500'>{row.distance}</span>
-								</li>
-							))}
-						</ul>
-					</div>
-				</div>
-
-				<div className='mt-6 flex flex-col gap-2 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between'>
-					<p className='max-w-xl'>
-						Показано найкоротші приблизні піші чи автомобільні маршрути. Фактична відстань може відрізнятися.
-					</p>
-					<p>
-						Не вистачає інформації?{' '}
-						<button type='button' className='font-medium text-sky-700 hover:underline'>
-							Так
-						</button>{' '}
-						/{' '}
-						<button type='button' className='font-medium text-slate-600 hover:underline'>
-							Ні
-						</button>
-					</p>
-				</div>
-			</section>
-
 			{/* Карта */}
 			<section id='hotel-location-map' className='mt-10 scroll-mt-28 border-t border-slate-200 pt-8'>
 				<h2 className='text-2xl font-bold text-[#2D333D]'>Де ви будете</h2>
@@ -800,6 +734,13 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 				images={gallery}
 				hotelName={hotel.name}
 			/>
+			<a
+				href={`tel:${hotel.phone.replace(/[^\d+]/g, '')}`}
+				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
+				aria-label={`Забронювати ${hotel.name} — зателефонувати`}
+			>
+				Забронювати
+			</a>
 		</div>
 	)
 }

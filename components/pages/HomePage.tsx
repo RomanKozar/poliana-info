@@ -8,6 +8,7 @@ import BottomStatusToast, {
 	WIP_SECTION_TOAST_MESSAGE,
 } from '@/components/shared/BottomStatusToast'
 import { useCallback, useEffect, useId, useState } from 'react'
+import { accommodationHotelPath } from '@/lib/accommodation-urls'
 import {
 	accommodations,
 	campsHomeFeatured,
@@ -18,6 +19,8 @@ import {
 	skiRecreation,
 	spaItems,
 } from '@/data/home-page'
+import { PROMOTIONS_PAGE_PATH } from '@/data/promotions-page'
+import { siteHeaderPhoneTel } from '@/data/trout-page'
 import {
 	FaChevronDown,
 	FaChevronLeft,
@@ -157,17 +160,17 @@ export default function HomePage() {
 							</p>
 							<div className='mt-5 flex gap-2 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-5'>
 								<Link
-									href='/accommodation'
+									href='/cat/goteli-polyany'
 									className='inline-flex w-1/2 cursor-pointer items-center justify-center rounded-md bg-[#53C4DA] px-3 py-2.5 text-[11px] font-bold text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
 								>
 									ЗНАЙТИ ЖИТЛО
 								</Link>
-								<button
-									type='button'
-									className='w-1/2 cursor-pointer rounded-md bg-[#F68F5D] px-3 py-2.5 text-[11px] font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
+								<Link
+									href={PROMOTIONS_PAGE_PATH}
+									className='inline-flex w-1/2 cursor-pointer items-center justify-center rounded-md bg-[#F68F5D] px-3 py-2.5 text-[11px] font-bold text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
 								>
 									АКЦІЇ ТА ПРОПОЗИЦІЇ
-								</button>
+								</Link>
 							</div>
 						</div>
 
@@ -183,12 +186,12 @@ export default function HomePage() {
 								<p className='mt-2.5 max-w-[205px] text-[12px] leading-[1.25] text-white/90 sm:mt-4 sm:text-[16px] sm:leading-[1.5]'>
 									Відпочивай зі смаком у Поляні
 								</p>
-								<button
-									type='button'
-									className='mt-auto self-start cursor-pointer rounded-md bg-white px-2.5 py-1 text-[11px] font-bold text-[#E06D3C] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:px-4 sm:py-2 sm:text-[14px]'
+								<a
+									href={`tel:${siteHeaderPhoneTel}`}
+									className='mt-auto self-start cursor-pointer rounded-md bg-white px-2.5 py-1 text-[11px] font-bold text-[#E06D3C] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:px-4 sm:py-2 sm:text-[14px]'
 								>
 									ЗАБРОНЮВАТИ
-								</button>
+								</a>
 							</div>
 							<div className='relative w-[48%] overflow-hidden rounded-l-[72px] sm:w-[47%] sm:rounded-l-[140px]'>
 								<Image
@@ -239,7 +242,7 @@ export default function HomePage() {
 				<div className='mb-4 flex items-center justify-between'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Проживання в Поляні</h2>
 					<Link
-						href='/accommodation'
+						href='/cat/goteli-polyany'
 						className='cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'
 					>
 						Показати ще →
@@ -255,7 +258,7 @@ export default function HomePage() {
 								className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
 							>
 								<Link
-									href={`/accommodation/${item.id}`}
+									href={accommodationHotelPath(item.id)}
 									target='_blank'
 									rel='noopener noreferrer'
 									className='relative isolate block h-28 shrink-0'
@@ -300,7 +303,7 @@ export default function HomePage() {
 									</button>
 								</Link>
 								<Link
-									href={`/accommodation/${item.id}`}
+									href={accommodationHotelPath(item.id)}
 									target='_blank'
 									rel='noopener noreferrer'
 									className='flex flex-1 flex-col p-2.5 outline-none ring-offset-2 transition-colors hover:bg-slate-50/90 focus-visible:ring-2 focus-visible:ring-cyan-500'
@@ -331,23 +334,19 @@ export default function HomePage() {
 			<section className='rounded-none bg-[#EEF4EA] px-4 py-6 sm:px-16 lg:px-24'>
 				<div className='mb-4 flex items-center justify-between'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>SPA та відпочинок</h2>
-					<button
-						type='button'
-						className='cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'
-						onClick={showBookingNotice}
-						aria-describedby={bookingNoticeDescribedBy}
+					<Link
+						href='/cat/spa-bani-chany'
+						className='cursor-pointer text-sm font-semibold text-[#53C4DA] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'
 					>
 						Дивитись все →
-					</button>
+					</Link>
 				</div>
 				<div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
 					{spaItems.map(item => (
-						<button
-							type='button'
+						<Link
 							key={item.title}
-							className='flex min-h-36 w-full cursor-pointer overflow-hidden rounded-xl border border-[#DCE8D8] bg-white text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
-							onClick={showBookingNotice}
-							aria-describedby={bookingNoticeDescribedBy}
+							href='/cat/spa-bani-chany'
+							className='flex min-h-36 w-full cursor-pointer overflow-hidden rounded-xl border border-[#DCE8D8] bg-white text-left shadow-sm no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
 						>
 							<div className='flex flex-1 flex-col px-4 py-8'>
 								<item.icon className='size-13 text-[#53C4DA]' />
@@ -365,7 +364,7 @@ export default function HomePage() {
 									className='object-cover'
 								/>
 							</div>
-						</button>
+						</Link>
 					))}
 				</div>
 			</section>
@@ -485,16 +484,20 @@ export default function HomePage() {
 						)
 
 						if (item.href) {
+							const openNewTab = Boolean(item.openInNewTab)
 							return (
 								<Link
 									key={item.title}
 									href={item.href}
-									target='_blank'
-									rel='noopener noreferrer'
+									{...(openNewTab
+										? ({ target: '_blank', rel: 'noopener noreferrer' } as const)
+										: {})}
 									className={`${cardClassName} block text-inherit no-underline outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-cyan-500`}
 								>
 									{inner}
-									<span className='sr-only'>Відкриється у новій вкладці</span>
+									{openNewTab ? (
+										<span className='sr-only'>Відкриється у новій вкладці</span>
+									) : null}
 								</Link>
 							)
 						}

@@ -15,7 +15,7 @@ import { IoQrCode } from 'react-icons/io5'
 
 const informationLinks = [
 	{ href: '/about', label: 'Про Polyana Info' },
-	{ href: '/accommodation', label: 'Проживання' },
+	{ href: '/cat/goteli-polyany', label: 'Проживання' },
 	{ href: '/spa', label: 'SPA та відпочинок' },
 	{ href: '/kids-camps', label: 'Дитячі табори' },
 	{ href: '/entertainment', label: 'Розваги' },

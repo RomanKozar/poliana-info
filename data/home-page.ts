@@ -1,5 +1,7 @@
 import type { IconType } from 'react-icons'
 import { FaRegClock, FaSpa, FaWater } from 'react-icons/fa'
+import { EXCURSIONS_MOUNTAINS_ANCHOR_ID } from '@/data/excursions-page'
+import { accommodationHotelPath } from '@/lib/accommodation-urls'
 
 export const accommodations = [
 	{
@@ -206,10 +208,14 @@ export const categoryItems: { label: string; iconSrc: string; href: string }[] =
 	{ label: 'Санаторії Поляни', iconSrc: `${CATEGORY_ICON_BASE}/sanatoriums.svg`, href: '/cat/sanatorii-polyany' },
 	{ label: 'Конференц сервіс', iconSrc: `${CATEGORY_ICON_BASE}/conferences.svg`, href: '/cat/konferenc-servis' },
 	{ label: 'Їжа та напої', iconSrc: `${CATEGORY_ICON_BASE}/food_drinks.svg`, href: '/cat/yizha-napoyi' },
-	{ label: 'Екскурсії Поляною', iconSrc: `${CATEGORY_ICON_BASE}/excurs.svg`, href: '/excursions' },
+	{ label: 'Екскурсії', iconSrc: `${CATEGORY_ICON_BASE}/excurs.svg`, href: '/excursions' },
 	{ label: 'Готелі Поляни', iconSrc: `${CATEGORY_ICON_BASE}/hotels.svg`, href: '/cat/goteli-polyany' },
 	{ label: 'Табори відпочинку', iconSrc: `${CATEGORY_ICON_BASE}/children.svg`, href: '/cat/z-ditmy' },
-	{ label: 'Активний відпочинок', iconSrc: `${CATEGORY_ICON_BASE}/activity.svg`, href: '/cat/aktyvnyi-vidpochynok' },
+	{
+		label: 'Активний відпочинок',
+		iconSrc: `${CATEGORY_ICON_BASE}/activity.svg`,
+		href: `/excursions#${EXCURSIONS_MOUNTAINS_ANCHOR_ID}`,
+	},
 	{ label: 'Сувенір з Поляни', iconSrc: `${CATEGORY_ICON_BASE}/souvenirs.svg`, href: '/cat/suveniry' },
 ]
 
@@ -219,6 +225,8 @@ type PopularNowItem = {
 	text: string
 	image: string
 	href?: string
+	/** Якщо true — посилання відкривається в новій вкладці (наприклад деталь готелю). */
+	openInNewTab?: boolean
 }
 
 export const popularNow: PopularNowItem[] = [
@@ -227,19 +235,22 @@ export const popularNow: PopularNowItem[] = [
 		title: 'Найкращі готелі Поляни',
 		text: 'Підбірка перевірених готелів.',
 		image: '/images/gallery/kateryna-pop.webp',
-		href: '/accommodation/kateryna',
+		href: accommodationHotelPath('kateryna'),
+		openInNewTab: true,
 	},
 	{
 		badge: 'ТОП ЧАНИ',
 		title: 'Чани з видом на гори',
 		text: 'Відпочинок, який запам’ятається.',
 		image: '/images/gallery/chan_1.webp',
+		href: '/cat/spa-bani-chany',
 	},
 	{
 		badge: 'ТОП SPA',
 		title: 'SPA для тіла та душі',
 		text: 'Релакс, масажі та процедури.',
 		image: '/images/gallery/sayna.webp',
+		href: '/cat/spa-bani-chany',
 	},
 ]
 

@@ -17,10 +17,13 @@ export type QuadroRouteOption = {
 	path?: readonly { lat: number; lng: number }[]
 	/** Колір Polyline у форматі `#rrggbb` (за замовчуванням — кислотно-зелений). */
 	pathStrokeColor?: string
-	/** Після fitBounds зменшити zoom на N (1 ≈ карта вдвічі «далі»). Лише JS API. */
-	pathZoomOutAfterFit?: number
 	/** Відступ fitBounds у px (більше — ширший кадр). За замовчуванням 40. */
 	pathFitPadding?: number
+	/**
+	 * Розширити межі треку відносно центру перед одним fitBounds (>1 — одразу «далі», без другого кроку zoom).
+	 * Лише JS API.
+	 */
+	pathBoundsExpandFactor?: number
 }
 
 export const quadroRideRouteOptions: QuadroRouteOption[] = [
@@ -31,9 +34,9 @@ export const quadroRideRouteOptions: QuadroRouteOption[] = [
 		description:
 			'Підготовлена траса на території — ідеальний варіант для першого катання. Підходить новачкам, жінкам і дітям.',
 		end: { lat: 48.597022, lng: 22.975218 },
-		zoom: 14,
-		pathFitPadding: 64,
-		pathZoomOutAfterFit: 2,
+		zoom: 13,
+		pathFitPadding: 72,
+		pathBoundsExpandFactor: 2.35,
 		pathStrokeColor: QUADRO_PATH_ACID_GREEN,
 		path: [
 			{ lat: 48.5972545, lng: 22.9745783 },

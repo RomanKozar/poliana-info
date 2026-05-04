@@ -1,6 +1,7 @@
 'use client'
 
 import PhishingIcon from '@mui/icons-material/Phishing'
+import { FaFish } from 'react-icons/fa'
 
 /**
  * П’ять «ліворуч → праворуч». У Phishing (24×24) кругле вушко зверху ≈ на x≈15–16 — ліску ведемо через `left` ~62% ширини іконки.
@@ -65,8 +66,10 @@ function SingleHookColumn({ config }: { config: (typeof HOOKS)[number] }) {
 					</div>
 					<div className={`invisible w-px ${lineClass}`} aria-hidden />
 				</div>
-				{/* Перекриття іконки й лиски через внутрішній padding SvgIcon */}
-				<div className={`-mt-1 ${ICON_BOX} flex shrink-0 justify-center sm:-mt-1.5`}>
+				{/* Перекриття іконки й лиски через внутрішній padding SvgIcon; риба — знизу, ніби на вістрі гачка */}
+				<div
+					className={`-mt-1 ${ICON_BOX} flex shrink-0 flex-col items-center justify-center sm:-mt-1.5`}
+				>
 					<PhishingIcon
 						sx={{
 							opacity: 0.88,
@@ -79,6 +82,19 @@ function SingleHookColumn({ config }: { config: (typeof HOOKS)[number] }) {
 						}}
 						className='text-slate-500/54'
 					/>
+					<div
+						className='trout-hook-fish-dangle -mt-1 flex justify-center sm:-mt-1.5'
+						style={{
+							transformOrigin: '50% 0',
+							animationDelay: delay,
+							animationDuration: duration,
+						}}
+						aria-hidden
+					>
+						<span className='inline-block -rotate-90' aria-hidden>
+							<FaFish className='size-[1.25rem] text-[#127985]/72 drop-shadow-[0_1px_1px_rgb(15_118_110_/_0.18)] sm:size-[1.5rem]' />
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -3,19 +3,78 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { FaMapMarkerAlt, FaStar, FaTimes } from 'react-icons/fa'
+import { FaMapMarkerAlt, FaMugHot, FaStar, FaTimes, FaUsers } from 'react-icons/fa'
+import {
+	MdAirportShuttle,
+	MdHotTub,
+	MdLocalBar,
+	MdPool,
+	MdRestaurant,
+	MdWifi,
+} from 'react-icons/md'
+import { MdSmokeFree } from 'react-icons/md'
 import { createHotelPricePillMarker, formatHotelPriceForMapMarker } from '@/lib/google-map-price-marker'
 import { getHotelMapGallery, polyanaHotels, type PolyanaHotel } from '@/lib/polyana-hotels'
-import AccommodationListPaginationStub from '@/components/accommodation/AccommodationListPaginationStub'
 import {
 	ACCOMMODATION_MAP_COLLAPSE_ICON,
 	ACCOMMODATION_MAP_EXPAND_ICON,
 	attachPolyanaMapExpandAndZoomControls,
 } from '@/lib/google-map-stack-controls'
+import { accommodationHotelPath } from '@/lib/accommodation-urls'
 import { hotelInfoWindowHtml } from '@/lib/map-info-window-html'
 import { syncInfoWindowGalleryNav, toggleIwHeartActive } from '@/lib/map-info-window-ui'
+import { popularFacilitiesForHotel, type FacilityIconId } from '@/lib/hotel-detail-data'
 
 const MOBILE_MAP_SHEET_MQ = '(max-width: 1023px)'
+
+/** «P» у колі — у наборах react-icons немає стійкого Md-паркінгу для вашої версії пакета */
+function IconParkingP(props: { className?: string }) {
+	return (
+		<span
+			className={`inline-flex size-4 items-center justify-center rounded-full border-[1.5px] border-current text-[0.6rem] font-bold leading-none ${props.className ?? ''}`}
+			aria-hidden
+		>
+			P
+		</span>
+	)
+}
+
+const facilityIcons: Record<FacilityIconId, React.ComponentType<{ className?: string }>> = {
+	pool: MdPool,
+	spa: MdHotTub,
+	parking: IconParkingP,
+	wifi: MdWifi,
+	family: FaUsers,
+	restaurant: MdRestaurant,
+	shuttle: MdAirportShuttle,
+	nosmoking: MdSmokeFree,
+	bar: MdLocalBar,
+	breakfast: FaMugHot,
+}
+
+function PopularFacilitiesIconRow({ hotelId, max = 6 }: { hotelId: string; max?: number }) {
+	return (
+		<ul className='flex flex-wrap items-center gap-1.5 text-emerald-700'>
+			{popularFacilitiesForHotel(hotelId).slice(0, max).map(f => {
+				const Ico = facilityIcons[f.icon]
+				return (
+					<li key={f.id} className='group relative'>
+						<span
+							className='flex size-7 items-center justify-center rounded-full bg-emerald-50 ring-1 ring-emerald-100'
+							aria-label={f.label}
+							title={f.label}
+						>
+							<Ico className='size-4' aria-hidden />
+						</span>
+						<span className='pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 px-2 py-1 text-[11px] font-semibold text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100'>
+							{f.label}
+						</span>
+					</li>
+				)
+			})}
+		</ul>
+	)
+}
 
 function AccommodationMapMobileBottomSheet({
 	hotel,
@@ -91,7 +150,7 @@ function AccommodationMapMobileBottomSheet({
 									style={{ width: `${100 / n}%` }}
 								>
 									<Link
-										href={`/accommodation/${hotel.id}`}
+										href={accommodationHotelPath(hotel.id)}
 										target='_blank'
 										rel='noopener noreferrer'
 										className='relative block h-full w-full outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-cyan-500'
@@ -214,12 +273,15 @@ function AccommodationMapMobileBottomSheet({
 								{hotel.feature}
 							</span>
 						</div>
-						<div className='flex justify-end pt-1'>
+						<div className='flex items-center justify-between gap-3 pt-1'>
+							<div className='min-w-0'>
+								<PopularFacilitiesIconRow hotelId={hotel.id} max={5} />
+							</div>
 							<a
 								href={`tel:${hotel.phone}`}
 								className='inline-flex w-fit min-w-[9rem] items-center justify-center rounded-full bg-[#F68F5D] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e57d4a]'
 							>
-								Подзвонити
+								Забронювати
 							</a>
 						</div>
 					</div>
@@ -712,7 +774,7 @@ export default function AccommodationPageContent() {
 								aria-labelledby={`hotel-title-${hotel.id}`}
 							>
 								<Link
-									href={`/accommodation/${hotel.id}`}
+									href={accommodationHotelPath(hotel.id)}
 									target='_blank'
 									rel='noopener noreferrer'
 									className='relative isolate block aspect-[5/3] w-full min-w-0 shrink-0 overflow-hidden sm:aspect-auto sm:min-h-[15rem] sm:h-full'
@@ -731,7 +793,7 @@ export default function AccommodationPageContent() {
 								</Link>
 								<div className='relative flex min-h-0 min-w-0 flex-col justify-between gap-4 p-3 sm:p-5'>
 									<Link
-										href={`/accommodation/${hotel.id}`}
+										href={accommodationHotelPath(hotel.id)}
 										target='_blank'
 										rel='noopener noreferrer'
 										className='min-h-0 block outline-none ring-offset-2 transition-opacity hover:opacity-[0.98] focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-cyan-500'
@@ -761,12 +823,15 @@ export default function AccommodationPageContent() {
 											<p className='text-[0.8125rem] leading-snug text-slate-500'>{hotel.feature}</p>
 										</div>
 									</Link>
-									<div className='flex w-full shrink-0 justify-end pt-1'>
+									<div className='flex w-full shrink-0 items-center justify-between gap-3 pt-1'>
+										<div className='min-w-0'>
+											<PopularFacilitiesIconRow hotelId={hotel.id} max={6} />
+										</div>
 										<a
 											href={`tel:${hotel.phone}`}
 											className='relative z-[1] inline-flex w-fit cursor-pointer rounded-full bg-[#F68F5D] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#e57d4a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F68F5D]'
 										>
-											Подзвонити
+											Забронювати
 										</a>
 									</div>
 								</div>
@@ -774,7 +839,6 @@ export default function AccommodationPageContent() {
 						)
 					})}
 					</div>
-					<AccommodationListPaginationStub />
 				</div>
 
 				<aside

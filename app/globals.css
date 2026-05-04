@@ -398,8 +398,29 @@ body {
   animation-name: trout-hook-bob-4;
 }
 
+/* Риба під гачком — легке колихання «на ліску», синхронізовано з тривалістю попльовки */
+@keyframes trout-hook-fish-dangle {
+  0%,
+  100% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(12deg);
+  }
+}
+
+.trout-hook-fish-dangle {
+  animation-name: trout-hook-fish-dangle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .trout-hook-bob {
+    animation: none !important;
+  }
+
+  .trout-hook-fish-dangle {
     animation: none !important;
   }
 }

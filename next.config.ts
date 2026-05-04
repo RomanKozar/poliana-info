@@ -32,6 +32,11 @@ const nextConfig: NextConfig = {
 	async redirects() {
 		return [
 			{
+				source: '/accommodation/:id',
+				destination: '/cat/goteli-polyany/:id',
+				permanent: true,
+			},
+			{
 				source: '/privacy-policy',
 				destination: '/privacy',
 				permanent: true,

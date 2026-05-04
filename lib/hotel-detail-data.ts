@@ -57,6 +57,41 @@ export const popularFacilities: FacilityItem[] = [
 	{ id: '10', label: 'Сніданок', icon: 'breakfast' },
 ]
 
+const FACILITY_BY_ID = new Map(popularFacilities.map(f => [f.id, f] as const))
+
+function facilitiesByOrder(order: readonly string[]): FacilityItem[] {
+	const seen = new Set<string>()
+	const out: FacilityItem[] = []
+	for (const id of order) {
+		const f = FACILITY_BY_ID.get(id)
+		if (!f || seen.has(id)) continue
+		seen.add(id)
+		out.push(f)
+	}
+	for (const f of popularFacilities) {
+		if (seen.has(f.id)) continue
+		out.push(f)
+	}
+	return out
+}
+
+/** Для різних готелів показуємо «топ-зручності» в різному порядку. */
+export function popularFacilitiesForHotel(hotelId: string): FacilityItem[] {
+	if (hotelId === 'kateryna') {
+		return facilitiesByOrder(['2', '1', '6', '10', '4', '3', '9', '5', '8', '7'])
+	}
+	if (hotelId === 'kontinent') {
+		return facilitiesByOrder(['1', '2', '6', '10', '3', '4', '9', '5', '8', '7'])
+	}
+	if (hotelId === 'arena') {
+		return facilitiesByOrder(['1', '2', '5', '6', '4', '3', '10', '9', '8', '7'])
+	}
+	if (hotelId === 'riverside') {
+		return facilitiesByOrder(['6', '9', '4', '3', '10', '5', '1', '2', '8', '7'])
+	}
+	return popularFacilities
+}
+
 export function longDescriptionParagraphs(hotel: PolyanaHotel): string[] {
 	if (hotel.id === 'kontinent') {
 		return [
@@ -95,6 +130,30 @@ export function longDescriptionParagraphs(hotel: PolyanaHotel): string[] {
 export type SidebarHighlight = { title: string; body: string; icon?: 'pin' | 'breakfast' | 'parking' | 'ski' }
 
 export function propertyHighlights(hotel: PolyanaHotel): SidebarHighlight[] {
+	if (hotel.id === 'kateryna') {
+		return [
+			{
+				icon: 'pin',
+				title: 'Розташування',
+				body: 'Село Поляна, вул. Сонячна, 55 Б — курорт у долині на мінеральних водах Закарпаття. На hotel-kateryna.com описують бювет із мінеральною водою і спокійну базу для прогулянок, екскурсій і походів у гори.',
+			},
+			{
+				icon: 'breakfast',
+				title: 'Ресторан і бар',
+				body: 'Власний ресторан із акцентом на домашню й закарпатську кухню; у відкритих довідниках також згадують континентальний сніданок і бар готелю — формат харчування та години роботи підтверджуйте при бронюванні.',
+			},
+			{
+				icon: 'parking',
+				title: 'Wi‑Fi та парковка',
+				body: 'У відкритих описах закладу фігурує безкоштовний Wi‑Fi для гостей. Парковку та кількість місць узгоджуйте на ресепшні або через hotel-kateryna.com перед заїздом.',
+			},
+			{
+				icon: 'ski',
+				title: 'SPA та дозвілля',
+				body: 'За описами офіційного сайту й туристичних оглядів пропонують SPA й активності на території (російська лазня, масаж, чан «офуро», басейн із підігрівом тощо), форельову риболовлю й сезонні розваги — точний перелік і розклад уточнюйте безпосередньо в готелі.',
+			},
+		]
+	}
 	if (hotel.id === 'kontinent') {
 		return [
 			{

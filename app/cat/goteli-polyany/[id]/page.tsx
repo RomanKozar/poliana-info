@@ -1,6 +1,7 @@
 import HotelDetailPageContent from '@/components/accommodation/HotelDetailPageContent'
-import { definePageMetadata } from '@/lib/seo'
+import { accommodationHotelPath } from '@/lib/accommodation-urls'
 import { polyanaHotels } from '@/lib/polyana-hotels'
+import { definePageMetadata } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 
 export const dynamic = 'force-static'
@@ -19,11 +20,11 @@ export async function generateMetadata({ params }: Props) {
 	return definePageMetadata({
 		title: hotel.name,
 		description: desc,
-		pathname: `/accommodation/${hotel.id}`,
+		pathname: accommodationHotelPath(hotel.id),
 	})
 }
 
-export default async function HotelDetailPage({ params }: Props) {
+export default async function HotelDetailUnderCategoryPage({ params }: Props) {
 	const { id } = await params
 	const hotel = polyanaHotels.find(h => h.id === id)
 	if (!hotel) notFound()

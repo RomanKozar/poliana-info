@@ -1,3 +1,4 @@
+import { accommodationHotelPath } from '@/lib/accommodation-urls'
 import { getHotelMapGallery, type PolyanaHotel } from '@/lib/polyana-hotels'
 
 export function escHtml(s: string): string {
@@ -160,7 +161,7 @@ export function hotelInfoWindowHtml(hotel: PolyanaHotel): string {
 		galleryImages: getHotelMapGallery(hotel),
 		routeLink,
 		saveLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name}, ${hotel.address}`)}`,
-		detailHref: `/accommodation/${hotel.id}`,
+		detailHref: accommodationHotelPath(hotel.id),
 	})
 }
 

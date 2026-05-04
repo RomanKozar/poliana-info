@@ -31,7 +31,7 @@ export const polyanaHotels: PolyanaHotel[] = [
 	{
 		id: 'kateryna',
 		name: 'Готель Катерина',
-		address: 'Сонячна, 55 Б, Поляна',
+		address: 'Сонячна, 55 Б, Поляна, Закарпатська область, 89313',
 		description: 'Сімейний готель зі SPA, рестораном та затишною територією.',
 		image: '/images/accommodation/kateryna-v1.webp',
 		price: 'від 1500 ₴',

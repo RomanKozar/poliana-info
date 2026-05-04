@@ -8,6 +8,7 @@ import BottomStatusToast, {
 } from '@/components/shared/BottomStatusToast'
 import {
 	allExcursionListings,
+	EXCURSIONS_MOUNTAINS_ANCHOR_ID,
 	mountainExcursionTabs,
 	polyanaExcursionListings,
 	quadExcursions,
@@ -132,10 +133,13 @@ function TabbedExcursionSection({
 	title,
 	tabs,
 	onExcursionCardWip,
+	sectionId,
 }: {
 	title: string
 	tabs: ExcursionTabGroup[]
 	onExcursionCardWip: () => void
+	/** Якір для переходів типу `/excursions#id`. */
+	sectionId?: string
 }) {
 	const [activeId, setActiveId] = useState(tabs[0]?.id ?? '')
 	const active = tabs.find(t => t.id === activeId) ?? tabs[0]
@@ -143,7 +147,12 @@ function TabbedExcursionSection({
 	if (!tabs.length || !active) return null
 
 	return (
-		<section className='border-t border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24'>
+		<section
+			id={sectionId}
+			className={`border-t border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24${
+				sectionId ? ' scroll-mt-[calc(var(--header-offset,68px)+12px)]' : ''
+			}`}
+		>
 			<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>{title}</h2>
 			<div
 				className='mb-5 flex flex-wrap gap-2'
@@ -272,6 +281,21 @@ export default function ExcursionsPageContent() {
 
 	const closeWipToast = useCallback(() => setWipToastOpen(false), [])
 	const showWipToast = useCallback(() => setWipToastOpen(true), [])
+
+	useEffect(() => {
+		const scrollToHashTarget = () => {
+			const id = window.location.hash.slice(1)
+			if (!id) return
+			const el = document.getElementById(id)
+			if (!el) return
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+			})
+		}
+		scrollToHashTarget()
+		window.addEventListener('hashchange', scrollToHashTarget)
+		return () => window.removeEventListener('hashchange', scrollToHashTarget)
+	}, [])
 
 	useEffect(() => {
 		const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -517,7 +541,12 @@ export default function ExcursionsPageContent() {
 				</div>
 			</section>
 
-			<TabbedExcursionSection title='Екскурсії в гори' tabs={mountainExcursionTabs} onExcursionCardWip={showWipToast} />
+			<TabbedExcursionSection
+				title='Екскурсії в гори'
+				tabs={mountainExcursionTabs}
+				onExcursionCardWip={showWipToast}
+				sectionId={EXCURSIONS_MOUNTAINS_ANCHOR_ID}
+			/>
 
 			<section className='border-t border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24'>
 				<h2 className='mb-5 text-2xl font-bold text-[#2D333D] sm:mb-6 sm:text-[26px]'>Екскурсії Поляною</h2>

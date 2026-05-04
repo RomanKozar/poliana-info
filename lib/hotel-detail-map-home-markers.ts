@@ -20,6 +20,7 @@ import {
 } from '@/lib/map-info-window-html'
 import { syncInfoWindowGalleryNav, toggleIwHeartActive } from '@/lib/map-info-window-ui'
 import type { PolyanaHotel } from '@/lib/polyana-hotels'
+import type { HomeMapLayerId } from '@/lib/home-map-layers'
 
 /**
  * Ті самі мітки, що на головній карті (їжа, магазини, аптеки, SPA, туристичні), плюс один маркер поточного готелю.
@@ -30,10 +31,18 @@ export function attachHotelDetailMapHomeMarkers(args: {
 	maps: any
 	hotel: PolyanaHotel
 	mapRootEl: HTMLElement
-}): () => void {
+}): { detach: () => void; layerMarkers: Partial<Record<HomeMapLayerId, any[]>> } {
 	const { map, maps, hotel, mapRootEl } = args
 
 	let activeInfoWindow: any = null
+	const layerMarkers: Partial<Record<HomeMapLayerId, any[]>> = {
+		hotels: [],
+		dining: [],
+		shops: [],
+		pharmacy: [],
+		spa: [],
+		tourist: [],
+	}
 
 	const onInfoWindowUiClick = (e: MouseEvent) => {
 		const next =
@@ -122,6 +131,7 @@ export function attachHotelDetailMapHomeMarkers(args: {
 		title: hotel.name,
 		icon: hotelIcon,
 	})
+	layerMarkers.hotels?.push(hotelMarker)
 
 	const hotelIw = new maps.InfoWindow({
 		content: hotelInfoWindowHtml(hotel),
@@ -148,6 +158,7 @@ export function attachHotelDetailMapHomeMarkers(args: {
 			title: place.name,
 			icon: diningIcon,
 		})
+		layerMarkers.dining?.push(marker)
 		const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
 			`${place.name}, ${place.address}`
 		)}`
@@ -176,6 +187,7 @@ export function attachHotelDetailMapHomeMarkers(args: {
 			title: store.name,
 			icon: shoppingIcon,
 		})
+		layerMarkers.shops?.push(marker)
 		const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
 			`${store.name}, ${store.address}`
 		)}`
@@ -204,6 +216,7 @@ export function attachHotelDetailMapHomeMarkers(args: {
 			title: ph.name,
 			icon: pharmacyIcon,
 		})
+		layerMarkers.pharmacy?.push(marker)
 		const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
 			`${ph.name}, ${ph.address}`
 		)}`
@@ -232,6 +245,7 @@ export function attachHotelDetailMapHomeMarkers(args: {
 			title: spot.name,
 			icon: spaIcon,
 		})
+		layerMarkers.spa?.push(marker)
 		const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
 			`${spot.name}, ${spot.address}`
 		)}`
@@ -260,6 +274,7 @@ export function attachHotelDetailMapHomeMarkers(args: {
 			title: city.name,
 			icon: touristCityIcon,
 		})
+		layerMarkers.tourist?.push(marker)
 		const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
 			`${city.name}, ${city.address}`
 		)}`
@@ -284,7 +299,14 @@ export function attachHotelDetailMapHomeMarkers(args: {
 	map.setCenter(hotel.position)
 	map.setZoom(18)
 
-	return () => {
-		mapRootEl.removeEventListener('click', onInfoWindowUiClick, true)
+	return {
+		layerMarkers,
+		detach: () => {
+			mapRootEl.removeEventListener('click', onInfoWindowUiClick, true)
+			// ensure markers are removed on detach
+			for (const key of Object.keys(layerMarkers) as HomeMapLayerId[]) {
+				for (const m of layerMarkers[key] ?? []) m.setMap?.(null)
+			}
+		},
 	}
 }
