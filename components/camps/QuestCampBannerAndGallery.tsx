@@ -33,29 +33,36 @@ function StripLightbox({
 }) {
 	const [idx, setIdx] = useState(startIndex)
 	const touchStartX = useRef<number | null>(null)
+	const [isSlideLoading, setIsSlideLoading] = useState(false)
 
 	useEffect(() => {
-		if (open) setIdx(startIndex)
+		if (open) {
+			setIdx(startIndex)
+			setIsSlideLoading(true)
+		}
 	}, [open, startIndex])
 
 	const n = Math.max(1, items.length)
 	const go = useCallback(
 		(delta: number) => {
+			if (isSlideLoading) return
+			setIsSlideLoading(true)
 			setIdx(i => (i + delta + n) % n)
 		},
-		[n]
+		[n, isSlideLoading]
 	)
 
 	useEffect(() => {
 		if (!open) return
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') onClose()
+			if (isSlideLoading) return
 			if (e.key === 'ArrowLeft') go(-1)
 			if (e.key === 'ArrowRight') go(1)
 		}
 		window.addEventListener('keydown', onKey)
 		return () => window.removeEventListener('keydown', onKey)
-	}, [open, go, onClose])
+	}, [open, go, onClose, isSlideLoading])
 
 	useEffect(() => {
 		if (!open) return
@@ -96,6 +103,7 @@ function StripLightbox({
 						touchStartX.current = e.touches[0].clientX
 					}}
 					onTouchEnd={e => {
+						if (isSlideLoading) return
 						const start = touchStartX.current
 						if (start == null || n <= 1) return
 						const dx = e.changedTouches[0].clientX - start
@@ -114,6 +122,7 @@ function StripLightbox({
 							sizes='(max-width: 1024px) 100vw, 896px'
 							draggable={false}
 							priority
+							onLoadingComplete={() => setIsSlideLoading(false)}
 						/>
 					</div>
 				</div>
@@ -125,7 +134,8 @@ function StripLightbox({
 								e.stopPropagation()
 								go(-1)
 							}}
-							className='pointer-events-auto absolute left-2 top-1/2 z-[3] flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/55 text-xl text-white transition hover:bg-white/15 sm:left-4'
+							disabled={isSlideLoading}
+							className='pointer-events-auto absolute left-2 top-1/2 z-[3] flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/55 text-xl text-white transition hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50 sm:left-4'
 							aria-label='Попереднє фото'
 						>
 							<FaChevronLeft aria-hidden />
@@ -136,7 +146,8 @@ function StripLightbox({
 								e.stopPropagation()
 								go(1)
 							}}
-							className='pointer-events-auto absolute right-2 top-1/2 z-[3] flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/55 text-xl text-white transition hover:bg-white/15 sm:right-4'
+							disabled={isSlideLoading}
+							className='pointer-events-auto absolute right-2 top-1/2 z-[3] flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/55 text-xl text-white transition hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50 sm:right-4'
 							aria-label='Наступне фото'
 						>
 							<FaChevronRight aria-hidden />

@@ -55,6 +55,9 @@ export function attachHotelDetailMapHomeMarkers(args: {
 			e.stopImmediatePropagation()
 			const gal = (next || prev)!.closest('[data-iw-gallery]') as HTMLElement | null
 			if (!gal) return
+			// If images aren't loaded yet, don't allow paging.
+			syncInfoWindowGalleryNav(gal)
+			if (gal.dataset.ready !== '1') return
 			const total = Math.max(1, parseInt(gal.dataset.total || '1', 10))
 			let idx = parseInt(gal.dataset.idx || '0', 10)
 			if (next) idx = (idx + 1) % total
@@ -93,6 +96,16 @@ export function attachHotelDetailMapHomeMarkers(args: {
 	}
 
 	mapRootEl.addEventListener('click', onInfoWindowUiClick, true)
+	// When InfoWindow HTML images load, re-sync nav visibility.
+	const onIwImageLoad = (e: Event) => {
+		const t = e.target
+		if (!(t instanceof HTMLImageElement)) return
+		if (!t.classList.contains('polyana-accommodation-iw-img')) return
+		const gal = t.closest('[data-iw-gallery]') as HTMLElement | null
+		if (!gal) return
+		syncInfoWindowGalleryNav(gal)
+	}
+	mapRootEl.addEventListener('load', onIwImageLoad, true)
 
 	const diningIcon = {
 		url: diningMapPinIconDataUrl,
@@ -303,6 +316,7 @@ export function attachHotelDetailMapHomeMarkers(args: {
 		layerMarkers,
 		detach: () => {
 			mapRootEl.removeEventListener('click', onInfoWindowUiClick, true)
+			mapRootEl.removeEventListener('load', onIwImageLoad, true)
 			// ensure markers are removed on detach
 			for (const key of Object.keys(layerMarkers) as HomeMapLayerId[]) {
 				for (const m of layerMarkers[key] ?? []) m.setMap?.(null)

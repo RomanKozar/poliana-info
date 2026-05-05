@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 		return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
 	}
 
-	const phone = asString((body as any)?.phone)
+	const phone = asString((body as { phone?: unknown } | null)?.phone)
 	if (!phone) return NextResponse.json({ error: 'Missing phone' }, { status: 400 })
 
 	const digits = phone.replace(/\D/g, '')

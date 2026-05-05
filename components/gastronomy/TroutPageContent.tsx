@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { FaChevronLeft, FaChevronRight, FaPhoneAlt } from 'react-icons/fa'
 import TroutHeroFishingDecoration from '@/components/gastronomy/TroutHeroFishingDecoration'
 import TroutMapSection from '@/components/gastronomy/TroutMapSection'
@@ -99,16 +99,39 @@ function SectionCarousel({
 }) {
 	const n = items.length
 	const [idx, setIdx] = useState(0)
+	const [isSlideLoading, setIsSlideLoading] = useState(false)
+	const active = items[idx] ?? items[0]
 	const go = useCallback(
 		(delta: number) => {
 			if (n <= 0) return
+			if (isSlideLoading) return
+			setIsSlideLoading(true)
 			setIdx(i => (i + delta + n) % n)
 		},
-		[n]
+		[n, isSlideLoading]
 	)
 
+	useEffect(() => {
+		if (n === 0) return
+		if (!active?.src) return
+		if (typeof window === 'undefined') return
+		setIsSlideLoading(true)
+		const img = new window.Image()
+		img.src = active.src
+		const done = () => setIsSlideLoading(false)
+		if (img.complete && img.naturalWidth > 0) {
+			const t = window.setTimeout(done, 0)
+			return () => window.clearTimeout(t)
+		}
+		img.onload = done
+		img.onerror = done
+		return () => {
+			img.onload = null
+			img.onerror = null
+		}
+	}, [active?.src])
+
 	if (n === 0) return null
-	const active = items[idx] ?? items[0]
 
 	return (
 		<div className='relative mx-auto w-full max-w-[min(24.5rem,100%)] sm:max-w-[min(25rem,100%)] lg:max-w-[min(24rem,100%)]'>
@@ -127,7 +150,8 @@ function SectionCarousel({
 						<button
 							type='button'
 							onClick={() => go(-1)}
-							className='absolute left-2 top-1/2 z-[1] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/50 bg-black/35 text-xl text-white shadow backdrop-blur-sm transition hover:bg-black/55'
+							disabled={isSlideLoading}
+							className='absolute left-2 top-1/2 z-[1] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/50 bg-black/35 text-xl text-white shadow backdrop-blur-sm transition hover:bg-black/55 disabled:cursor-not-allowed disabled:opacity-50'
 							aria-label='Попереднє фото'
 						>
 							<FaChevronLeft aria-hidden />
@@ -135,7 +159,8 @@ function SectionCarousel({
 						<button
 							type='button'
 							onClick={() => go(1)}
-							className='absolute right-2 top-1/2 z-[1] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/50 bg-black/35 text-xl text-white shadow backdrop-blur-sm transition hover:bg-black/55'
+							disabled={isSlideLoading}
+							className='absolute right-2 top-1/2 z-[1] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/50 bg-black/35 text-xl text-white shadow backdrop-blur-sm transition hover:bg-black/55 disabled:cursor-not-allowed disabled:opacity-50'
 							aria-label='Наступне фото'
 						>
 							<FaChevronRight aria-hidden />

@@ -32,11 +32,13 @@ function useQuadroRideGallery() {
 export function QuadroRideGalleryProvider({ children }: { children: ReactNode }) {
 	const [openIndex, setOpenIndex] = useState<number | null>(null)
 	const touchStartX = useRef<number | null>(null)
+	const [isSlideLoading, setIsSlideLoading] = useState(false)
 
 	const openAt = useCallback((index: number) => {
 		const n = quadroRideGalleryImages.length
 		if (n === 0) return
 		const i = ((index % n) + n) % n
+		setIsSlideLoading(true)
 		setOpenIndex(i)
 	}, [])
 
@@ -45,11 +47,13 @@ export function QuadroRideGalleryProvider({ children }: { children: ReactNode })
 	const go = useCallback((delta: number) => {
 		setOpenIndex(prev => {
 			if (prev === null) return prev
+			if (isSlideLoading) return prev
 			const n = quadroRideGalleryImages.length
 			const next = (prev + delta + n) % n
+			setIsSlideLoading(true)
 			return next
 		})
-	}, [])
+	}, [isSlideLoading])
 
 	useEffect(() => {
 		if (openIndex === null) return
@@ -72,6 +76,7 @@ export function QuadroRideGalleryProvider({ children }: { children: ReactNode })
 	}
 
 	const onOverlayTouchEnd = (e: React.TouchEvent) => {
+		if (isSlideLoading) return
 		const start = touchStartX.current
 		touchStartX.current = null
 		if (start === null) return
@@ -123,7 +128,8 @@ export function QuadroRideGalleryProvider({ children }: { children: ReactNode })
 							<button
 								type='button'
 								onClick={() => go(-1)}
-								className='absolute left-1 top-1/2 z-10 flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition hover:bg-white/25 focus-visible:outline focus-visible:ring-2 focus-visible:ring-[#53C4DA] sm:left-0 sm:size-12'
+								disabled={isSlideLoading}
+								className='absolute left-1 top-1/2 z-10 flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition hover:bg-white/25 focus-visible:outline focus-visible:ring-2 focus-visible:ring-[#53C4DA] disabled:cursor-not-allowed disabled:opacity-50 sm:left-0 sm:size-12'
 								aria-label='Попереднє фото'
 							>
 								<FaChevronLeft className='size-5 sm:size-6' aria-hidden />
@@ -131,7 +137,8 @@ export function QuadroRideGalleryProvider({ children }: { children: ReactNode })
 							<button
 								type='button'
 								onClick={() => go(1)}
-								className='absolute right-1 top-1/2 z-10 flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition hover:bg-white/25 focus-visible:outline focus-visible:ring-2 focus-visible:ring-[#53C4DA] sm:right-0 sm:size-12'
+								disabled={isSlideLoading}
+								className='absolute right-1 top-1/2 z-10 flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition hover:bg-white/25 focus-visible:outline focus-visible:ring-2 focus-visible:ring-[#53C4DA] disabled:cursor-not-allowed disabled:opacity-50 sm:right-0 sm:size-12'
 								aria-label='Наступне фото'
 							>
 								<FaChevronRight className='size-5 sm:size-6' aria-hidden />
@@ -144,6 +151,7 @@ export function QuadroRideGalleryProvider({ children }: { children: ReactNode })
 								className='object-contain'
 								sizes='100vw'
 								priority
+								onLoadingComplete={() => setIsSlideLoading(false)}
 							/>
 						</div>
 					</div>

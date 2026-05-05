@@ -32,7 +32,8 @@ export async function POST(req: Request) {
 	const message = asStringOrNull(payload.message)
 	const name = asStringOrNull(payload.name)
 	const phone = asStringOrNull(payload.phone)
-	const pageUrl = asStringOrNull(payload.pageUrl)
+	// We accept pageUrl for debugging/analytics, but don't store it in the current sheet range.
+	void asStringOrNull(payload.pageUrl)
 
 	if (!name || name.length < 2) {
 		return NextResponse.json({ error: 'Name is required' }, { status: 400 })

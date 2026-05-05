@@ -99,29 +99,37 @@ function HotelGalleryLightbox({
 }) {
 	const [idx, setIdx] = useState(startIndex)
 	const touchStartX = useRef<number | null>(null)
-
-	useEffect(() => {
-		if (open) setIdx(startIndex)
-	}, [open, startIndex])
+	const [isSlideLoading, setIsSlideLoading] = useState(false)
 
 	const n = Math.max(1, images.length)
+	const src = images[idx] ?? images[0]
+
+	useEffect(() => {
+		if (open) {
+			setIdx(startIndex)
+			setIsSlideLoading(true)
+		}
+	}, [open, startIndex])
+
 	const go = useCallback(
 		(delta: number) => {
+			if (isSlideLoading) return
 			setIdx(i => (i + delta + n) % n)
 		},
-		[n]
+		[n, isSlideLoading]
 	)
 
 	useEffect(() => {
 		if (!open) return
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') onClose()
+			if (isSlideLoading) return
 			if (e.key === 'ArrowLeft') go(-1)
 			if (e.key === 'ArrowRight') go(1)
 		}
 		window.addEventListener('keydown', onKey)
 		return () => window.removeEventListener('keydown', onKey)
-	}, [open, go, onClose])
+	}, [open, go, onClose, isSlideLoading])
 
 	useEffect(() => {
 		if (!open) return
@@ -132,9 +140,28 @@ function HotelGalleryLightbox({
 		}
 	}, [open])
 
-	if (!open) return null
+	// Robust "loading" state: Next/Image can serve from cache without firing events reliably.
+	useEffect(() => {
+		if (!open) return
+		if (!src) return
+		if (typeof window === 'undefined') return
+		setIsSlideLoading(true)
+		const img = new window.Image()
+		img.src = src
+		const done = () => setIsSlideLoading(false)
+		if (img.complete && img.naturalWidth > 0) {
+			const t = window.setTimeout(done, 0)
+			return () => window.clearTimeout(t)
+		}
+		img.onload = done
+		img.onerror = done
+		return () => {
+			img.onload = null
+			img.onerror = null
+		}
+	}, [open, src])
 
-	const src = images[idx] ?? images[0]
+	if (!open) return null
 
 	return (
 		<div className='fixed inset-0 z-[200]' role='dialog' aria-modal='true' aria-label={`Галерея фото: ${hotelName}`}>
@@ -162,6 +189,7 @@ function HotelGalleryLightbox({
 						touchStartX.current = e.touches[0].clientX
 					}}
 					onTouchEnd={e => {
+						if (isSlideLoading) return
 						const start = touchStartX.current
 						if (start == null || n <= 1) return
 						const dx = e.changedTouches[0].clientX - start
@@ -191,7 +219,8 @@ function HotelGalleryLightbox({
 								e.stopPropagation()
 								go(-1)
 							}}
-							className='pointer-events-auto absolute left-2 top-1/2 z-[3] flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/55 text-xl text-white transition hover:bg-white/15 sm:left-4'
+							disabled={isSlideLoading}
+							className='pointer-events-auto absolute left-2 top-1/2 z-[3] flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/55 text-xl text-white transition hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50 sm:left-4'
 							aria-label='Попереднє фото'
 						>
 							<FaChevronLeft aria-hidden />
@@ -202,7 +231,8 @@ function HotelGalleryLightbox({
 								e.stopPropagation()
 								go(1)
 							}}
-							className='pointer-events-auto absolute right-2 top-1/2 z-[3] flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/55 text-xl text-white transition hover:bg-white/15 sm:right-4'
+							disabled={isSlideLoading}
+							className='pointer-events-auto absolute right-2 top-1/2 z-[3] flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/55 text-xl text-white transition hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50 sm:right-4'
 							aria-label='Наступне фото'
 						>
 							<FaChevronRight aria-hidden />

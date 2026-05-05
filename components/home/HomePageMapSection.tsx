@@ -246,6 +246,9 @@ export default function HomePageMapSection() {
 						e.stopImmediatePropagation()
 						const gal = (next || prev)!.closest('[data-iw-gallery]') as HTMLElement | null
 						if (!gal) return
+						// If images aren't loaded yet, don't allow paging.
+						syncInfoWindowGalleryNav(gal)
+						if (gal.dataset.ready !== '1') return
 						const total = Math.max(1, parseInt(gal.dataset.total || '1', 10))
 						let idx = parseInt(gal.dataset.idx || '0', 10)
 						if (next) idx = (idx + 1) % total
@@ -295,9 +298,20 @@ export default function HomePageMapSection() {
 				}
 				mapRootEl.addEventListener('pointerdown', onInfoWindowUiAny, true)
 				mapRootEl.addEventListener('click', onInfoWindowUiAny, true)
+				// When InfoWindow HTML images load, re-sync nav visibility.
+				const onIwImageLoad = (e: Event) => {
+					const t = e.target
+					if (!(t instanceof HTMLImageElement)) return
+					if (!t.classList.contains('polyana-accommodation-iw-img')) return
+					const gal = t.closest('[data-iw-gallery]') as HTMLElement | null
+					if (!gal) return
+					syncInfoWindowGalleryNav(gal)
+				}
+				mapRootEl.addEventListener('load', onIwImageLoad, true)
 				detachIwUiCapture = () => {
 					mapRootEl.removeEventListener('pointerdown', onInfoWindowUiAny, true)
 					mapRootEl.removeEventListener('click', onInfoWindowUiAny, true)
+					mapRootEl.removeEventListener('load', onIwImageLoad, true)
 				}
 			}
 

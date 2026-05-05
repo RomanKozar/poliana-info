@@ -86,35 +86,60 @@ function AccommodationMapMobileBottomSheet({
 	const gallery = getHotelMapGallery(hotel)
 	const n = Math.max(1, gallery.length)
 	const [idx, setIdx] = useState(0)
+	const [isSlideLoading, setIsSlideLoading] = useState(false)
 	const [mapSheetHeartActive, setMapSheetHeartActive] = useState(false)
 	const touchStartX = useRef(0)
 
 	useEffect(() => {
 		setIdx(0)
 		setMapSheetHeartActive(false)
+		setIsSlideLoading(true)
 	}, [hotel.id])
 
 	const go = useCallback(
 		(delta: number) => {
+			if (isSlideLoading) return
 			setIdx(i => {
 				const next = i + delta
 				if (next < 0 || next >= n) return i
+				setIsSlideLoading(true)
 				return next
 			})
 		},
-		[n]
+		[n, isSlideLoading]
 	)
 
 	const onTouchStart = (e: React.TouchEvent) => {
 		touchStartX.current = e.touches[0].clientX
 	}
 	const onTouchEnd = (e: React.TouchEvent) => {
+		if (isSlideLoading) return
 		if (n <= 1) return
 		const dx = e.changedTouches[0].clientX - touchStartX.current
 		if (Math.abs(dx) < 45) return
 		if (dx < 0) go(1)
 		else go(-1)
 	}
+
+	const activeSrc = gallery[idx] ?? gallery[0]
+	useEffect(() => {
+		if (!activeSrc) return
+		if (typeof window === 'undefined') return
+		setIsSlideLoading(true)
+		const img = new window.Image()
+		img.src = activeSrc
+		const done = () => setIsSlideLoading(false)
+		if (img.complete && img.naturalWidth > 0) {
+			const t = window.setTimeout(done, 0)
+			return () => window.clearTimeout(t)
+		}
+		img.onload = done
+		img.onerror = done
+		return () => {
+			img.onload = null
+			img.onerror = null
+		}
+	}, [activeSrc, hotel.id])
 
 	return (
 		<div
@@ -175,7 +200,7 @@ function AccommodationMapMobileBottomSheet({
 									type='button'
 									className='absolute left-2 top-1/2 z-[1] flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border-0 bg-white/94 text-base font-medium text-slate-800 shadow-sm disabled:opacity-0'
 									aria-label='Попереднє фото'
-									disabled={idx === 0}
+									disabled={isSlideLoading || idx === 0}
 									onClick={e => {
 										e.stopPropagation()
 										go(-1)
@@ -187,7 +212,7 @@ function AccommodationMapMobileBottomSheet({
 									type='button'
 									className='absolute right-2 top-1/2 z-[1] flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border-0 bg-white/94 text-base font-medium text-slate-800 shadow-sm disabled:opacity-0'
 									aria-label='Наступне фото'
-									disabled={idx >= n - 1}
+									disabled={isSlideLoading || idx >= n - 1}
 									onClick={e => {
 										e.stopPropagation()
 										go(1)
