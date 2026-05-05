@@ -21,6 +21,15 @@ export default function Header() {
 	const pathname = usePathname()
 	const router = useRouter()
 
+	// On route change, close all menus to avoid "stuck" active/open state on mobile.
+	useEffect(() => {
+		setIsMobileMenuOpen(false)
+		setMobileSubmenu(null)
+		setIsDesktopNewsOpen(false)
+		setIsDesktopPopularOpen(false)
+		setIsDesktopAccommodationOpen(false)
+	}, [pathname])
+
 	const isActivePath = (href: string) => {
 		if (href === '/') {
 			return pathname === '/'
@@ -33,14 +42,19 @@ export default function Header() {
 	const isMobileParentActive = (item: NavigationItem) => {
 		if (!item.children?.length) return false
 		if (item.submenuKey === 'popular') {
-			return item.children.some(child => isActivePath(child.href))
+			// Some "Популярне" categories overlap with "Проживання" (e.g. hotels).
+			// In that case, highlight the more specific section ("Проживання") instead of both.
+			const isAnyPopularChildActive = item.children.some(child => isActivePath(child.href))
+			const accommodation = siteNavigation.find(x => x.submenuKey === 'accommodation')
+			const isAccommodationActive = Boolean(
+				accommodation?.children?.some(child => isActivePath(child.href)) ||
+					(accommodation ? isActivePath(accommodation.href) : false) ||
+					isActivePath('/accommodation')
+			)
+			return isAnyPopularChildActive && !isAccommodationActive
 		}
 		if (item.submenuKey === 'accommodation') {
-			return (
-				isActivePath(item.href) ||
-				item.children.some(child => isActivePath(child.href)) ||
-				isActivePath('/accommodation')
-			)
+			return isActivePath(item.href) || item.children.some(child => isActivePath(child.href)) || isActivePath('/accommodation')
 		}
 		return isActivePath(item.href) || item.children.some(child => isActivePath(child.href))
 	}
@@ -49,14 +63,16 @@ export default function Header() {
 		setIsMobileMenuOpen(false)
 		setMobileSubmenu(null)
 
+		// Reset home page UI state (search input + map layers) on logo click.
+		window.dispatchEvent(new Event('polyana:hero-search-reset'))
+		window.dispatchEvent(new Event('polyana:home-map-reset'))
+
 		if (pathname === '/') {
 			event.preventDefault()
 			const hasQueryOrHash = Boolean(window.location.search) || Boolean(window.location.hash)
 			if (hasQueryOrHash) {
 				router.replace('/')
-				window.dispatchEvent(new Event('polyana:hero-search-reset'))
 			} else {
-				window.dispatchEvent(new Event('polyana:hero-search-reset'))
 				window.scrollTo({ top: 0, behavior: 'smooth' })
 			}
 		}

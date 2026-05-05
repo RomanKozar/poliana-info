@@ -17,7 +17,8 @@ const MAP_ZOOM_MIN = 1
 const MAP_ZOOM_MAX = 21
 
 const MAP_FRAME =
-	'h-[clamp(260px,36vw,400px)] w-full sm:h-[clamp(300px,38vw,400px)] md:h-[380px] lg:h-[400px]'
+	// Mobile: taller map so it stays usable under the info card/legend.
+	'h-[clamp(380px,52vw,520px)] w-full sm:h-[clamp(340px,40vw,460px)] md:h-[440px] lg:h-[480px]'
 
 function HotelDetailMapMobileLegend({
 	mapLayerEnabled,
@@ -56,6 +57,14 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 		() => ({ ...initialHomeMapLayers })
 	)
 	const homeMarkersByLayerRef = useRef<Partial<Record<HomeMapLayerId, any[]>>>({})
+	const forceHotelMarkerVisible = useCallback(
+		(raw: Record<HomeMapLayerId, boolean>) => {
+			// On hotel detail page we always show the current hotel marker.
+			// The legend hides "hotels" toggle (hideHotels), so we keep hotels layer enabled in rendering.
+			return { ...effectiveHomeMapLayerVisibility(raw), hotels: true }
+		},
+		[]
+	)
 
 	const toggleLayer = useCallback((id: HomeMapLayerId) => {
 		setMapLayerEnabled(prev => ({ ...prev, [id]: !prev[id] }))
@@ -64,8 +73,8 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 	useEffect(() => {
 		const map = mapRef.current
 		if (!map) return
-		applyHomeMapMarkersForLayers(map, homeMarkersByLayerRef.current, effectiveHomeMapLayerVisibility(mapLayerEnabled))
-	}, [mapLayerEnabled])
+		applyHomeMapMarkersForLayers(map, homeMarkersByLayerRef.current, forceHotelMarkerVisible(mapLayerEnabled))
+	}, [mapLayerEnabled, forceHotelMarkerVisible])
 
 	const adjustZoom = useCallback((delta: number) => {
 		const map = mapRef.current
@@ -164,7 +173,7 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 			applyHomeMapMarkersForLayers(
 				map,
 				homeMarkersByLayerRef.current,
-				effectiveHomeMapLayerVisibility(mapLayerEnabled)
+				forceHotelMarkerVisible(mapLayerEnabled)
 			)
 
 			maps.event.addListenerOnce(map, 'idle', () => {

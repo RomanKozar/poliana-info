@@ -56,6 +56,20 @@ export default function HomePageMapSection() {
 	const markerIndexRef = useRef<Map<string, { marker: any; infoWindow: any; layerId: HomeMapLayerId }> | null>(null)
 	const activeInfoWindowRef = useRef<any>(null)
 
+	useEffect(() => {
+		const onReset = () => {
+			autoOpenPlaceRef.current = null
+			didAutoOpenPlaceRef.current = false
+			setMapLayerEnabled({ ...initialHomeMapLayers })
+			if (activeInfoWindowRef.current) {
+				activeInfoWindowRef.current.close()
+				activeInfoWindowRef.current = null
+			}
+		}
+		window.addEventListener('polyana:home-map-reset', onReset as EventListener)
+		return () => window.removeEventListener('polyana:home-map-reset', onReset as EventListener)
+	}, [])
+
 	const normalizeKey = (value: string) =>
 		value
 			.trim()
@@ -214,7 +228,10 @@ export default function HomePageMapSection() {
 			const mapRootEl = mapContainerRef.current
 			if (mapRootEl) {
 				detachIwUiCapture?.()
-				const onInfoWindowUiClick = (e: MouseEvent) => {
+				const onInfoWindowUiAny = (e: Event) => {
+					// We use pointerdown only for the close button (mobile reliability).
+					// For gallery/heart, pointerdown + click would double-trigger.
+					const isPointerDown = e.type === 'pointerdown'
 					const next =
 						e.target instanceof Element
 							? e.target.closest('.polyana-accommodation-iw-gallery-btn--next')
@@ -223,7 +240,7 @@ export default function HomePageMapSection() {
 						e.target instanceof Element
 							? e.target.closest('.polyana-accommodation-iw-gallery-btn--prev')
 							: null
-					if (next || prev) {
+					if ((next || prev) && !isPointerDown) {
 						e.preventDefault()
 						e.stopPropagation()
 						e.stopImmediatePropagation()
@@ -249,7 +266,7 @@ export default function HomePageMapSection() {
 						e.target instanceof Element
 							? e.target.closest('.polyana-accommodation-iw-heart')
 							: null
-					if (heart) {
+					if (heart && !isPointerDown) {
 						e.preventDefault()
 						e.stopPropagation()
 						e.stopImmediatePropagation()
@@ -261,14 +278,27 @@ export default function HomePageMapSection() {
 					if (!closer) return
 					e.preventDefault()
 					e.stopPropagation()
-					e.stopImmediatePropagation()
+					// Some Google Maps DOM layers can swallow `click` on mobile.
+					// Capturing pointerdown + click gives the close button a reliable path.
+					;(e as any).stopImmediatePropagation?.()
+					// InfoWindow can be opened either via marker click (local activeInfoWindow)
+					// or via URL/search auto-open (activeInfoWindowRef). Close whichever is active.
+					const refIw = activeInfoWindowRef.current
+					if (refIw) {
+						refIw.close()
+						activeInfoWindowRef.current = null
+					}
 					if (activeInfoWindow) {
 						activeInfoWindow.close()
 						activeInfoWindow = null
 					}
 				}
-				mapRootEl.addEventListener('click', onInfoWindowUiClick, true)
-				detachIwUiCapture = () => mapRootEl.removeEventListener('click', onInfoWindowUiClick, true)
+				mapRootEl.addEventListener('pointerdown', onInfoWindowUiAny, true)
+				mapRootEl.addEventListener('click', onInfoWindowUiAny, true)
+				detachIwUiCapture = () => {
+					mapRootEl.removeEventListener('pointerdown', onInfoWindowUiAny, true)
+					mapRootEl.removeEventListener('click', onInfoWindowUiAny, true)
+				}
 			}
 
 			const bounds = new win.google.maps.LatLngBounds()

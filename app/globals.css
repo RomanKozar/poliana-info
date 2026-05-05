@@ -778,6 +778,33 @@ main[data-accommodation-map-expanded='true'] {
   color: #222;
 }
 
+/* Mobile: make InfoWindow card smaller so the map stays visible. */
+@media (max-width: 420px) {
+  .polyana-accommodation-iw-card {
+    --polyana-iw-inset: 8px;
+    --polyana-iw-radius-outer: 14px;
+    max-width: 220px;
+  }
+  .polyana-accommodation-iw-media {
+    min-height: 84px;
+    max-height: 104px;
+  }
+  .polyana-accommodation-iw-title {
+    font-size: 12px;
+  }
+  .polyana-accommodation-iw-desc {
+    font-size: 11px;
+    -webkit-line-clamp: 2;
+  }
+  .polyana-accommodation-iw-address {
+    font-size: 10px;
+  }
+  .polyana-accommodation-iw-cta {
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+}
+
 .polyana-accommodation-iw-media {
   position: relative;
   height: 30vw;
