@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { FaFacebookF, FaInstagram, FaPhoneAlt, FaTiktok } from 'react-icons/fa'
 import { siteNavigation, type NavigationItem } from './site-navigation'
 
@@ -19,6 +19,7 @@ export default function Header() {
 	const [isDesktopAccommodationOpen, setIsDesktopAccommodationOpen] = useState(false)
 	const headerRef = useRef<HTMLElement | null>(null)
 	const pathname = usePathname()
+	const router = useRouter()
 
 	const isActivePath = (href: string) => {
 		if (href === '/') {
@@ -50,7 +51,14 @@ export default function Header() {
 
 		if (pathname === '/') {
 			event.preventDefault()
-			window.scrollTo({ top: 0, behavior: 'smooth' })
+			const hasQueryOrHash = Boolean(window.location.search) || Boolean(window.location.hash)
+			if (hasQueryOrHash) {
+				router.replace('/')
+				window.dispatchEvent(new Event('polyana:hero-search-reset'))
+			} else {
+				window.dispatchEvent(new Event('polyana:hero-search-reset'))
+				window.scrollTo({ top: 0, behavior: 'smooth' })
+			}
 		}
 	}
 

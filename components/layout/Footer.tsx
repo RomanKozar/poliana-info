@@ -16,21 +16,22 @@ import { IoQrCode } from 'react-icons/io5'
 const informationLinks = [
 	{ href: '/about', label: 'Про Polyana Info' },
 	{ href: '/cat/goteli-polyany', label: 'Проживання' },
-	{ href: '/spa', label: 'SPA та відпочинок' },
-	{ href: '/kids-camps', label: 'Дитячі табори' },
-	{ href: '/entertainment', label: 'Розваги' },
-	{ href: '/blog', label: 'Карта Поляни' },
+	{ href: '/cat/spa-bani-chany', label: 'SPA та відпочинок' },
+	{ href: '/camps', label: 'Дитячі табори' },
+	{ href: '/excursions#ekskursii-v-hory', label: 'Розваги' },
+	{ href: '/#polyana-map', label: 'Карта Поляни' },
 ]
 
 const supportLinks = [
 	{ href: '/contacts', label: "Зворотний зв'язок" },
-	{ href: '/#', label: 'Умови використання' },
+	{ href: '/terms', label: 'Умови використання' },
 	{ href: '/privacy', label: 'Політика конфіденційності' },
 ]
 
 export default function Footer() {
 	const [phone, setPhone] = useState('')
 	const [notice, setNotice] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+	const [isSubscribing, setIsSubscribing] = useState(false)
 	const noticeTimerRef = useRef<number | null>(null)
 
 	useEffect(() => {
@@ -54,20 +55,59 @@ export default function Footer() {
 	}
 
 	const handlePhoneChange = (value: string) => {
-		const digitsOnly = value.replace(/\D/g, '').slice(0, 12)
-		setPhone(digitsOnly)
+		const trimmed = value.trim()
+		const hasPlus = trimmed.startsWith('+')
+		const digitsOnly = trimmed.replace(/\D/g, '').slice(0, 12)
+		const normalized = hasPlus ? `+${digitsOnly}` : digitsOnly
+		// Keep +380 prefix once input is engaged.
+		if (!normalized || normalized === '+' || normalized === '+3' || normalized === '+38' || normalized === '+380') {
+			setPhone('+380')
+			return
+		}
+		if (normalized.startsWith('+380')) {
+			setPhone(normalized)
+			return
+		}
+		// If user typed without prefix, force it.
+		const digits = normalized.replace(/\D/g, '')
+		if (digits.startsWith('380')) {
+			setPhone(`+${digits}`)
+			return
+		}
+		if (digits.startsWith('0')) {
+			setPhone(`+38${digits}`)
+			return
+		}
+		setPhone(`+380${digits}`)
 	}
 
-	const handleSubscribe = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubscribe = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 
-		if (phone.length < 10 || phone.length > 12) {
+		const digitsOnly = phone.replace(/\D/g, '')
+		if (digitsOnly.length < 10 || digitsOnly.length > 12) {
 			showNotice('error', 'Введіть коректний номер: лише цифри, від 10 до 12 символів.')
 			return
 		}
 
-		showNotice('success', 'Готово! Ви у списку перших, хто отримує акції Поляни.')
-		setPhone('')
+		setIsSubscribing(true)
+		try {
+			const res = await fetch('/api/subscribe', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ phone }),
+			})
+			if (!res.ok) {
+				showNotice('error', 'Не вдалося підписати. Спробуйте ще раз трохи пізніше.')
+				return
+			}
+			showNotice('success', 'Готово! Ви підписались на оновлення POLYANA.INFO.')
+			setPhone('')
+		} catch {
+			showNotice('error', 'Немає зʼєднання або сервер недоступний. Спробуйте ще раз.')
+		} finally {
+			setIsSubscribing(false)
+		}
 	}
 
 	return (
@@ -91,20 +131,26 @@ export default function Footer() {
 					>
 						<input
 							type='tel'
-							inputMode='numeric'
-							pattern='[0-9]*'
-							maxLength={12}
+							inputMode='tel'
+							pattern='[+0-9]*'
+							maxLength={16}
 							value={phone}
 							onChange={event => handlePhoneChange(event.target.value)}
+							onFocus={() => {
+								if (!phone) {
+									setPhone('+380')
+								}
+							}}
 							placeholder='Введіть Ваш номер телефону'
 							aria-invalid={notice?.type === 'error'}
 							className='h-10 w-full rounded-md border border-transparent bg-white px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none'
 						/>
 						<button
 							type='submit'
+							disabled={isSubscribing}
 							className='h-10 cursor-pointer rounded-md bg-[#2F3640] px-6 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#222831] hover:shadow-md'
 						>
-							ПІДПИСАТИСЬ
+							{isSubscribing ? 'НАДСИЛАЄМО…' : 'ПІДПИСАТИСЬ'}
 						</button>
 						{notice ? (
 							<div
@@ -121,8 +167,8 @@ export default function Footer() {
 			</div>
 
 			<div className='bg-[#2D333D] text-white/90'>
-				<div className='mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:py-12'>
-					<div className='flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-14'>
+				<div className='mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:py-8'>
+					<div className='flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10'>
 						<div className='max-w-md space-y-4 lg:shrink-0'>
 							<Link href='/' className='inline-flex'>
 								<Image
@@ -151,7 +197,7 @@ export default function Footer() {
 							</div>
 						</div>
 
-						<div className='grid min-w-0 flex-1 grid-cols-2 gap-x-6 gap-y-9 sm:gap-x-10 lg:grid-cols-4 lg:gap-y-8'>
+						<div className='grid min-w-0 flex-1 grid-cols-2 gap-x-6 gap-y-6 sm:gap-x-10 lg:grid-cols-4 lg:gap-y-6'>
 							<div className='min-w-0'>
 								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>Інформація</p>
 								<ul className='space-y-2.5 text-xs leading-snug text-white/70 sm:text-[13px]'>
@@ -211,9 +257,6 @@ export default function Footer() {
 							</div>
 
 							<div className='min-w-0 text-center lg:text-left'>
-								<p className='mb-3 text-sm font-semibold tracking-wide text-white'>
-									Підписатися на оновлення
-								</p>
 								<div
 									className='mx-auto inline-flex rounded-lg bg-white p-1.5 ring-1 ring-white/15 lg:mx-0'
 									role='img'
@@ -223,6 +266,9 @@ export default function Footer() {
 										<IoQrCode className='size-[5.25rem] opacity-90' aria-hidden />
 									</span>
 								</div>
+								<p className='mt-3 text-sm font-semibold tracking-wide text-white'>
+									Підписатися на оновлення
+								</p>
 							</div>
 						</div>
 					</div>

@@ -41,6 +41,6 @@ export const siteNavigation: NavigationItem[] = [
 			{ href: '/cat/sanatorii-polyany', label: 'Санаторії Поляни' },
 		],
 	},
-	{ href: '/gastronomy', label: 'Форель' },
+	{ href: '/trout', label: 'Форель' },
 	{ href: '/camps', label: 'Табори відпочинку' },
 ]

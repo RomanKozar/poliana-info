@@ -1,5 +1,5 @@
-import PagePlaceholder from '@/components/shared/PagePlaceholder'
 import { definePageMetadata } from '@/lib/seo'
+import ContactsPageContent from '@/components/pages/ContactsPageContent'
 
 export const metadata = definePageMetadata({
 	title: 'Контакти Polyana.info',
@@ -9,10 +9,5 @@ export const metadata = definePageMetadata({
 })
 
 export default function ContactsPage() {
-	return (
-		<PagePlaceholder
-			title='Контакти'
-			description='Сторінка для контактної інформації, мапи, соціальних мереж і форми зворотного звʼязку.'
-		/>
-	)
+	return <ContactsPageContent />
 }

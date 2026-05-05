@@ -28,6 +28,7 @@ import {
 	FaMapMarkerAlt,
 	FaStar,
 } from 'react-icons/fa'
+import HeroSiteSearch from '@/components/search/HeroSiteSearch'
 
 const HomePageMapSection = dynamic(() => import('@/components/home/HomePageMapSection'), {
 	ssr: false,
@@ -127,18 +128,9 @@ export default function HomePage() {
 
 				<div className='relative z-10 px-4 py-5 sm:px-16 sm:py-6 lg:px-24'>
 					<div className='mx-auto mb-6 flex w-full max-w-4xl items-center gap-2 sm:mb-8 sm:justify-center'>
-						<div className='hero-input-container min-w-0 flex-1 sm:w-[460px] sm:flex-none'>
-							<input
-								id='hero-search-input'
-								type='text'
-								placeholder=' '
-								className='hero-input-field'
-							/>
-							<label htmlFor='hero-search-input' className='hero-input-label'>
-								{isMobileSearch ? 'Пошук' : 'Пошук: Готелі, Чани, SPA, Табори...'}
-							</label>
-							<span className='hero-input-underline' />
-						</div>
+						<HeroSiteSearch
+							placeholderLabel={isMobileSearch ? 'Пошук' : 'Пошук: Готелі, Чани, SPA, Табори...'}
+						/>
 						<button
 							type='button'
 							className='inline-flex h-10 shrink-0 cursor-pointer items-center justify-center gap-1.5 bg-transparent px-1 text-[12px] font-normal text-white/80 transition-colors hover:text-[#53C4DA] sm:h-11 sm:px-1.5 sm:text-[15px]'

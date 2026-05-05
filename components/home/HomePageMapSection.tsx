@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { MapLegendList, MapLegendTitle } from '@/components/home/HomeMapLegend'
 import { hotelMapPinIconDataUrl } from '@/lib/google-map-hotel-pin'
 import {
@@ -42,6 +43,7 @@ export default function HomePageMapSection() {
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
 	const [isMapLegendExpanded, setIsMapLegendExpanded] = useState(true)
 	const [isHomeMapExpanded, setIsHomeMapExpanded] = useState(false)
+	const searchParams = useSearchParams()
 	const [mapLayerEnabled, setMapLayerEnabled] = useState<Record<HomeMapLayerId, boolean>>(
 		() => ({ ...initialHomeMapLayers })
 	)
@@ -49,6 +51,84 @@ export default function HomePageMapSection() {
 	const homeMapMarkersByLayerRef = useRef<Partial<Record<HomeMapLayerId, any[]>>>({})
 	const mapContainerRef = useRef<HTMLDivElement | null>(null)
 	const mapInstanceRef = useRef<unknown>(null)
+	const autoOpenPlaceRef = useRef<string | null>(null)
+	const didAutoOpenPlaceRef = useRef(false)
+	const markerIndexRef = useRef<Map<string, { marker: any; infoWindow: any; layerId: HomeMapLayerId }> | null>(null)
+	const activeInfoWindowRef = useRef<any>(null)
+
+	const normalizeKey = (value: string) =>
+		value
+			.trim()
+			.toLowerCase()
+			.replace(/[«»"'’`ʼ]/g, '')
+			.replace(/[^a-zа-яіїєґ0-9\s-]/giu, ' ')
+			.replace(/\s+/g, ' ')
+			.trim()
+
+	const resolvePlaceHit = useCallback((raw: string) => {
+		const index = markerIndexRef.current
+		if (!index) return null
+		const q = normalizeKey(raw)
+		if (!q) return null
+		const direct = index.get(q)
+		if (direct) return direct
+
+		const entries = Array.from(index.entries())
+		let best: { hit: (typeof entries)[number][1]; score: number } | null = null
+		for (const [k, hit] of entries) {
+			let score = 0
+			if (k === q) score += 100
+			if (k.includes(q)) score += 20
+			if (q.includes(k)) score += 10
+			for (const w of q.split(' ')) {
+				if (w.length >= 3 && k.includes(w)) score += 2
+			}
+			if (!best || score > best.score) best = { hit, score }
+		}
+		return best && best.score > 0 ? best.hit : null
+	}, [])
+
+	const tryAutoOpenPlace = useCallback(() => {
+		const map = mapInstanceRef.current as any
+		const place = autoOpenPlaceRef.current
+		if (!map || !place || didAutoOpenPlaceRef.current) return
+		const hit = resolvePlaceHit(place)
+		if (!hit) return
+
+		didAutoOpenPlaceRef.current = true
+		setMapLayerEnabled(prev => ({ ...prev, [hit.layerId]: true }))
+
+		try {
+			hit.marker.setMap(map)
+			map.panTo(hit.marker.getPosition())
+			map.setZoom(15)
+		} catch {
+			// ignore
+		}
+
+		if (activeInfoWindowRef.current) {
+			activeInfoWindowRef.current.close()
+		}
+		hit.infoWindow.open({ anchor: hit.marker, map })
+		activeInfoWindowRef.current = hit.infoWindow
+	}, [resolvePlaceHit])
+
+	useEffect(() => {
+		autoOpenPlaceRef.current = searchParams.get('mapPlace')?.trim() || null
+		didAutoOpenPlaceRef.current = false
+		const requestedLayer = searchParams.get('mapLayer')
+		if (requestedLayer === 'dining') {
+			setMapLayerEnabled({
+				hotels: false,
+				dining: true,
+				shops: false,
+				pharmacy: false,
+				spa: false,
+				tourist: false,
+			})
+		}
+		window.setTimeout(() => tryAutoOpenPlace(), 0)
+	}, [searchParams, tryAutoOpenPlace])
 
 	useEffect(() => {
 		mapLayerEnabledRef.current = mapLayerEnabled
@@ -200,6 +280,39 @@ export default function HomePageMapSection() {
 				spa: [],
 				tourist: [],
 			}
+			const markerIndex = new Map<string, { marker: any; infoWindow: any; layerId: HomeMapLayerId }>()
+			markerIndexRef.current = markerIndex
+			const normalizeKey = (value: string) =>
+				value
+					.trim()
+					.toLowerCase()
+					.replace(/[«»"'’`ʼ]/g, '')
+					.replace(/[^a-zа-яіїєґ0-9\s-]/giu, ' ')
+					.replace(/\s+/g, ' ')
+					.trim()
+
+			const resolvePlaceHit = (raw: string) => {
+				const q = normalizeKey(raw)
+				if (!q) return null
+				const direct = markerIndex.get(q)
+				if (direct) return direct
+
+				// Fuzzy: try substring match (handles "катерини" vs "катерина", without quotes, etc.)
+				const entries = Array.from(markerIndex.entries())
+				let best: { hit: (typeof entries)[number][1]; score: number } | null = null
+				for (const [k, hit] of entries) {
+					let score = 0
+					if (k === q) score += 100
+					if (k.includes(q)) score += 20
+					if (q.includes(k)) score += 10
+					const qWords = q.split(' ')
+					for (const w of qWords) {
+						if (w.length >= 3 && k.includes(w)) score += 2
+					}
+					if (!best || score > best.score) best = { hit, score }
+				}
+				return best && best.score > 0 ? best.hit : null
+			}
 
 			const diningIcon = {
 				url: diningMapPinIconDataUrl,
@@ -301,7 +414,10 @@ export default function HomePageMapSection() {
 					}
 					infoWindow.open({ anchor: marker, map })
 					activeInfoWindow = infoWindow
+					activeInfoWindowRef.current = infoWindow
 				})
+
+				markerIndex.set(normalizeKey(place.name), { marker, infoWindow, layerId: 'dining' })
 			})
 
 			shopsMapMarkers.forEach(store => {
@@ -469,7 +585,10 @@ export default function HomePageMapSection() {
 					}
 					infoWindow.open({ anchor: marker, map })
 					activeInfoWindow = infoWindow
+					activeInfoWindowRef.current = infoWindow
 				})
+
+				markerIndex.set(normalizeKey(city.name), { marker, infoWindow, layerId: 'tourist' })
 			})
 
 			homeMapMarkersByLayerRef.current = layerMarkers
@@ -486,6 +605,29 @@ export default function HomePageMapSection() {
 					map.setZoom(Math.max(9, zoom - 1))
 				}
 			})
+
+			const placeToOpen = autoOpenPlaceRef.current
+			if (!didAutoOpenPlaceRef.current && placeToOpen) {
+				const hit = resolvePlaceHit(placeToOpen)
+				if (hit) {
+					didAutoOpenPlaceRef.current = true
+					setMapLayerEnabled(prev => ({ ...prev, [hit.layerId]: true }))
+					try {
+						// Ensure marker becomes visible immediately even before state effect runs.
+						hit.marker.setMap(map)
+						map.panTo(hit.marker.getPosition())
+						map.setZoom(15)
+					} catch {
+						// ignore
+					}
+					if (activeInfoWindow) {
+						activeInfoWindow.close()
+					}
+					hit.infoWindow.open({ anchor: hit.marker, map })
+					activeInfoWindow = hit.infoWindow
+					activeInfoWindowRef.current = hit.infoWindow
+				}
+			}
 		}
 
 		if (win.google?.maps) {
@@ -584,12 +726,17 @@ export default function HomePageMapSection() {
 
 	return (
 		<section
+			id='polyana-map'
 			className={
 				isHomeMapExpanded
 					? 'fixed inset-x-0 bottom-0 z-40 flex flex-col overflow-hidden bg-[#F5F6F7]'
 					: 'bg-[#F5F6F7] px-4 pb-4 pt-4 sm:px-16 lg:px-24'
 			}
-			style={isHomeMapExpanded ? { top: 'var(--header-offset, 68px)' } : undefined}
+			style={
+				isHomeMapExpanded
+					? { top: 'var(--header-offset, 68px)' }
+					: { scrollMarginTop: 'calc(var(--header-offset, 68px) + 12px)' }
+			}
 		>
 			<div
 				className={

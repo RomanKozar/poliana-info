@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
@@ -9,6 +10,41 @@ export const metadata = definePageMetadata({
 })
 
 export default function LatestNewsPage() {
+	const latestPublications = [
+		{
+			href: '/blog/autumn-vacation',
+			image: '/images/gallery/golovna-foto-3.webp',
+			date: 'Квітень 2026',
+			tag: 'Що побачити',
+			title: 'Осінній відпочинок у Поляні',
+			excerpt: 'Чани, гастрономія, затишні вікенди та нескладні маршрути з панорамами Карпат.',
+		},
+		{
+			href: '/blog/summer-vacation',
+			image: '/images/gallery/golovna-foto.webp',
+			date: 'Травень 2026',
+			tag: 'Поради',
+			title: 'Літній відпочинок у Поляні',
+			excerpt: 'Табори, SPA, тюбінг, веломаршрути та сімейний відпочинок — ідеї на весь сезон.',
+		},
+		{
+			href: '/blog/poliana-in-spring',
+			image: '/images/gallery/golovna-foto-2.webp',
+			date: 'Березень 2026',
+			tag: 'Що побачити',
+			title: 'Поляна весною',
+			excerpt: 'Спокійні прогулянки, SPA та поїздки без натовпів — найкращий час для короткої подорожі.',
+		},
+		{
+			href: '/blog/poliana-in-winter',
+			image: '/images/entertainment/tybinh-v2-1.webp',
+			date: 'Лютий 2026',
+			tag: 'Новини Закарпаття',
+			title: 'Поляна взимку — лижі, тюбінг і чани',
+			excerpt: 'Лижна школа, тюбінг, гірськолижний курорт і теплі чани для всієї родини.',
+		},
+	] as const
+
 	return (
 		<div className='w-full bg-[#F5F6F7]'>
 			<section className='relative overflow-hidden'>
@@ -132,6 +168,54 @@ export default function LatestNewsPage() {
 							/>
 						</div>
 					</div>
+				</div>
+			</section>
+
+			<section className='mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6 lg:px-8'>
+				<div className='mb-6 text-center'>
+					<h2 className='text-3xl font-black tracking-tight text-[#2D333D]'>Останні публікації</h2>
+					<p className='mt-2 text-sm text-slate-600 sm:text-base'>
+						Корисні поради, репортажі та статті — найцікавіше про відпочинок у Поляні та Закарпатті.
+					</p>
+				</div>
+
+				<div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4'>
+					{latestPublications.map(item => (
+						<Link
+							key={item.href}
+							href={item.href}
+							className='group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm ring-1 ring-slate-900/5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#53C4DA]/35 hover:shadow-md hover:ring-[#53C4DA]/20'
+						>
+							<div className='relative aspect-[16/10] w-full overflow-hidden bg-slate-100'>
+								<Image
+									src={item.image}
+									alt={item.title}
+									fill
+									sizes='(min-width: 1024px) 22vw, (min-width: 640px) 46vw, 92vw'
+									className='object-cover transition-transform duration-300 group-hover:scale-[1.03]'
+								/>
+							</div>
+							<div className='flex flex-1 flex-col p-4'>
+								<p className='text-[11px] font-medium text-slate-500'>{item.date}</p>
+								<p className='text-[11px] font-semibold uppercase tracking-wide text-[#E06D3C]'>
+									{item.tag}
+								</p>
+								<h3 className='mt-2 text-[15px] font-extrabold leading-snug text-[#2D333D]'>
+									{item.title}
+								</h3>
+								<p className='mt-3 line-clamp-4 text-sm leading-relaxed text-slate-600'>{item.excerpt}</p>
+							</div>
+						</Link>
+					))}
+				</div>
+
+				<div className='mt-8 flex justify-center'>
+					<button
+						type='button'
+						className='inline-flex h-11 cursor-pointer items-center justify-center rounded-xl bg-[#53C4DA] px-6 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-cyan-500 hover:shadow-md active:translate-y-0'
+					>
+						Переглянути усі публікації
+					</button>
 				</div>
 			</section>
 		</div>

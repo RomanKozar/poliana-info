@@ -34,8 +34,8 @@ export default function SpaBaniChanyPageContent() {
 							{SECTION_LABELS[key]}
 						</h2>
 						<div className='flex flex-col gap-5'>
-							{[0, 1, 2].map(row => (
-								<BannerSkeleton key={row} index={colIdx * 3 + row + 1} />
+							{[0, 1].map(row => (
+								<BannerSkeleton key={row} index={colIdx * 2 + row + 1} />
 							))}
 						</div>
 					</div>
