@@ -133,7 +133,7 @@ export default function ContactsPageContent() {
 										pattern="[A-Za-z\u0400-\u04FF\u0500-\u052F\u1E00-\u1EFF\s'’`ʼ-]+"
 										required
 										placeholder='Як до вас звертатись'
-										className='mt-2 h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 outline-none ring-0 transition-colors focus:border-[#53C4DA] focus:bg-white'
+										className='mt-2 h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-slate-900 outline-none ring-0 transition-colors focus:border-[#53C4DA] focus:bg-white'
 									/>
 								</label>
 
@@ -150,7 +150,7 @@ export default function ContactsPageContent() {
 										maxLength={16}
 										required
 										placeholder='+380…'
-										className='mt-2 h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 outline-none ring-0 transition-colors focus:border-[#53C4DA] focus:bg-white'
+										className='mt-2 h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-slate-900 outline-none ring-0 transition-colors focus:border-[#53C4DA] focus:bg-white'
 									/>
 								</label>
 							</div>
@@ -170,7 +170,7 @@ export default function ContactsPageContent() {
 									rows={6}
 									placeholder='Опишіть питання або пропозицію…'
 									aria-describedby='contact-message-limit-hint'
-									className='mt-2 w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-colors focus:border-[#53C4DA] focus:bg-white'
+									className='mt-2 w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-base text-slate-900 outline-none transition-colors focus:border-[#53C4DA] focus:bg-white'
 								/>
 								<p id='contact-message-limit-hint' className='mt-1.5 text-xs text-slate-500'>
 									Мінімум 10 символів, максимум {MESSAGE_MAX_LENGTH}.

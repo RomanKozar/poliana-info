@@ -6,6 +6,7 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import BottomStatusToast, {
 	WIP_SECTION_TOAST_MESSAGE,
 } from '@/components/shared/BottomStatusToast'
+import ExcursionRouteModal from '@/components/excursions/ExcursionRouteModal'
 import {
 	allExcursionListings,
 	EXCURSIONS_MOUNTAINS_ANCHOR_ID,
@@ -143,6 +144,13 @@ function TabbedExcursionSection({
 }) {
 	const [activeId, setActiveId] = useState(tabs[0]?.id ?? '')
 	const active = tabs.find(t => t.id === activeId) ?? tabs[0]
+	const [routeModalOpen, setRouteModalOpen] = useState(false)
+	const [routeModalPayload, setRouteModalPayload] = useState<{
+		title: string
+		start: { lat: number; lng: number }
+		end: { lat: number; lng: number }
+		path?: readonly { lat: number; lng: number }[]
+	} | null>(null)
 
 	if (!tabs.length || !active) return null
 
@@ -181,10 +189,40 @@ function TabbedExcursionSection({
 				})}
 			</div>
 			<div role='tabpanel' aria-labelledby={`exc-tab-${active.id}`} className='grid gap-4 md:grid-cols-2'>
-				{active.excursions.map(item => (
-					<ExcursionCard key={item.id} item={item} onWipClick={onExcursionCardWip} />
-				))}
+				{active.excursions.map(item => {
+					const hasRoute = Boolean(item.route?.start && item.route?.end)
+					return (
+						<ExcursionCard
+							key={item.id}
+							item={item}
+							onOpenDetail={
+								hasRoute
+									? () => {
+											setRouteModalPayload({
+												title: item.title,
+												start: item.route!.start,
+												end: item.route!.end,
+												path: item.route!.path,
+											})
+											setRouteModalOpen(true)
+										}
+									: undefined
+							}
+							onWipClick={hasRoute ? undefined : onExcursionCardWip}
+						/>
+					)
+				})}
 			</div>
+			{routeModalPayload ? (
+				<ExcursionRouteModal
+					open={routeModalOpen}
+					onClose={() => setRouteModalOpen(false)}
+					title={routeModalPayload.title}
+					start={routeModalPayload.start}
+					end={routeModalPayload.end}
+					path={routeModalPayload.path}
+				/>
+			) : null}
 		</section>
 	)
 }

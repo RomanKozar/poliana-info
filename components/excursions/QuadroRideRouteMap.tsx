@@ -7,6 +7,14 @@ import { quadroRideRouteOptions, type QuadroRouteOption } from '@/data/quadro-ri
 const MAP_ZOOM_MIN = 1
 const MAP_ZOOM_MAX = 21
 
+function buildFlagSvgDataUrl(color: string) {
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <path d="M14 6c-1.1 0-2 .9-2 2v34a2 2 0 1 0 4 0V29.2c5.7-3.4 11.7 3.6 18 0V10.8c-6.3 3.6-12.3-3.4-18 0V8c0-1.1-.9-2-2-2z" fill="${color}"/>
+  <path d="M14 6c-1.1 0-2 .9-2 2v34a2 2 0 1 0 4 0V8c0-1.1-.9-2-2-2z" fill="#111827" opacity=".55"/>
+</svg>`
+	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
+}
+
 /** Polyline + fitBounds для маршрутів із полем `path` (наприклад «Виклик» з KMZ). */
 function applyQuadroRouteToMap(
 	map: {
@@ -24,13 +32,26 @@ function applyQuadroRouteToMap(
 			getSouthWest?: () => { lat: () => number; lng: () => number }
 		}
 		Polyline: new (opts: Record<string, unknown>) => { setMap: (m: unknown | null) => void }
+		Marker: new (opts: Record<string, unknown>) => { setMap: (m: unknown | null) => void; setPosition?: (p: unknown) => void }
+		Size: new (w: number, h: number) => unknown
+		Point: new (x: number, y: number) => unknown
 	},
 	option: QuadroRouteOption,
 	polylineRef: MutableRefObject<{ setMap: (m: unknown | null) => void } | null>,
+	startMarkerRef: MutableRefObject<{ setMap: (m: unknown | null) => void; setPosition?: (p: unknown) => void } | null>,
+	endMarkerRef: MutableRefObject<{ setMap: (m: unknown | null) => void; setPosition?: (p: unknown) => void } | null>,
 ) {
 	if (polylineRef.current) {
 		polylineRef.current.setMap(null)
 		polylineRef.current = null
+	}
+	if (startMarkerRef.current) {
+		startMarkerRef.current.setMap(null)
+		startMarkerRef.current = null
+	}
+	if (endMarkerRef.current) {
+		endMarkerRef.current.setMap(null)
+		endMarkerRef.current = null
 	}
 	const pts = option.path
 	if (pts && pts.length > 0) {
@@ -44,6 +65,41 @@ function applyQuadroRouteToMap(
 			geodesic: true,
 		})
 		polylineRef.current.setMap(map)
+
+		const start = pts[0]
+		const end = pts[pts.length - 1]
+		const startPos = new g.LatLng(start.lat, start.lng)
+		const endPos = new g.LatLng(end.lat, end.lng)
+		const iconSize = new g.Size(34, 34)
+		// SVG pole is around x≈14 (of 48) and bottom y≈42 (of 48).
+		// Convert that into the scaled icon box so the pole base sits on the polyline.
+		const iconAnchor = new g.Point(10, 30)
+
+		startMarkerRef.current = new g.Marker({
+			map,
+			position: startPos,
+			title: 'Старт',
+			clickable: false,
+			optimized: true,
+			icon: {
+				url: buildFlagSvgDataUrl('#22c55e'),
+				scaledSize: iconSize,
+				anchor: iconAnchor,
+			},
+		})
+		endMarkerRef.current = new g.Marker({
+			map,
+			position: endPos,
+			title: 'Фініш',
+			clickable: false,
+			optimized: true,
+			icon: {
+				url: buildFlagSvgDataUrl('#ef4444'),
+				scaledSize: iconSize,
+				anchor: iconAnchor,
+			},
+		})
+
 		const tightBounds = new g.LatLngBounds()
 		for (const ll of path) tightBounds.extend(ll)
 
@@ -85,6 +141,8 @@ export function QuadroRideRouteMap() {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const mapRef = useRef<unknown>(null)
 	const polylineRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
+	const startMarkerRef = useRef<{ setMap: (m: unknown | null) => void; setPosition?: (p: unknown) => void } | null>(null)
+	const endMarkerRef = useRef<{ setMap: (m: unknown | null) => void; setPosition?: (p: unknown) => void } | null>(null)
 	const activeRef = useRef(active)
 	const [isMapFullscreen, setIsMapFullscreen] = useState(false)
 
@@ -116,7 +174,7 @@ export function QuadroRideRouteMap() {
 
 			if (mapRef.current) {
 				const map = mapRef.current as any
-				applyQuadroRouteToMap(map, g, activeRef.current, polylineRef)
+				applyQuadroRouteToMap(map, g, activeRef.current, polylineRef, startMarkerRef, endMarkerRef)
 				return true
 			}
 
@@ -143,7 +201,7 @@ export function QuadroRideRouteMap() {
 					{ elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 				],
 			})
-			applyQuadroRouteToMap(mapRef.current as any, g, activeRef.current, polylineRef)
+			applyQuadroRouteToMap(mapRef.current as any, g, activeRef.current, polylineRef, startMarkerRef, endMarkerRef)
 			return true
 		}
 
@@ -153,6 +211,14 @@ export function QuadroRideRouteMap() {
 				if (polylineRef.current) {
 					polylineRef.current.setMap(null)
 					polylineRef.current = null
+				}
+				if (startMarkerRef.current) {
+					startMarkerRef.current.setMap(null)
+					startMarkerRef.current = null
+				}
+				if (endMarkerRef.current) {
+					endMarkerRef.current.setMap(null)
+					endMarkerRef.current = null
 				}
 				mapRef.current = null
 			}
@@ -192,6 +258,14 @@ export function QuadroRideRouteMap() {
 				polylineRef.current.setMap(null)
 				polylineRef.current = null
 			}
+			if (startMarkerRef.current) {
+				startMarkerRef.current.setMap(null)
+				startMarkerRef.current = null
+			}
+			if (endMarkerRef.current) {
+				endMarkerRef.current.setMap(null)
+				endMarkerRef.current = null
+			}
 			mapRef.current = null
 			if (win.initQuadroRideRouteMapCb) delete win.initQuadroRideRouteMapCb
 		}
@@ -202,7 +276,7 @@ export function QuadroRideRouteMap() {
 		const g = win.google?.maps
 		const m = mapRef.current as Parameters<typeof applyQuadroRouteToMap>[0] | null
 		if (!g || !m?.fitBounds) return
-		applyQuadroRouteToMap(m, g, active, polylineRef)
+		applyQuadroRouteToMap(m, g, active, polylineRef, startMarkerRef, endMarkerRef)
 	}, [active])
 
 	useEffect(() => {

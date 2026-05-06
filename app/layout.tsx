@@ -130,7 +130,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='uk' className={`${geometria.variable} h-full antialiased`}>
-			<body className='min-h-full flex flex-col overflow-x-hidden font-sans'>
+			<body className='min-h-full flex flex-col overflow-x-hidden font-sans' suppressHydrationWarning>
 				<script
 					type='application/ld+json'
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLdGraph) }}

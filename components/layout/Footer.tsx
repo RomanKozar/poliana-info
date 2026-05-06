@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import {
 	FaEnvelope,
 	FaFacebookF,
@@ -33,6 +34,7 @@ export default function Footer() {
 	const [notice, setNotice] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 	const [isSubscribing, setIsSubscribing] = useState(false)
 	const noticeTimerRef = useRef<number | null>(null)
+	const pathname = usePathname()
 
 	useEffect(() => {
 		return () => {
@@ -41,6 +43,12 @@ export default function Footer() {
 			}
 		}
 	}, [])
+
+	useEffect(() => {
+		setPhone('')
+		setNotice(null)
+		setIsSubscribing(false)
+	}, [pathname])
 
 	const showNotice = (type: 'success' | 'error', text: string) => {
 		setNotice({ type, text })
@@ -143,7 +151,7 @@ export default function Footer() {
 							}}
 							placeholder='Введіть Ваш номер телефону'
 							aria-invalid={notice?.type === 'error'}
-							className='h-10 w-full rounded-md border border-transparent bg-white px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none'
+							className='h-10 w-full rounded-md border border-transparent bg-white px-4 text-base text-slate-800 placeholder:text-slate-400 focus:border-slate-300 focus:outline-none'
 						/>
 						<button
 							type='submit'
