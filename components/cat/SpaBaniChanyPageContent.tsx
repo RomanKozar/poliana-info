@@ -24,7 +24,7 @@ export default function SpaBaniChanyPageContent() {
 	const { title } = categoryPlaceholders['spa-bani-chany']
 
 	return (
-		<section className='w-full max-w-none px-3 py-8 sm:px-5 sm:py-10 lg:px-8 lg:py-12'>
+		<section className='w-full max-w-none px-3 py-2 sm:px-5 sm:py-3 lg:px-8 lg:py-4'>
 			<h1 className='sr-only'>{title}</h1>
 
 			<div className='grid gap-10 lg:grid-cols-3 lg:gap-8'>

@@ -191,12 +191,14 @@ function TabbedExcursionSection({
 			<div role='tabpanel' aria-labelledby={`exc-tab-${active.id}`} className='grid gap-4 md:grid-cols-2'>
 				{active.excursions.map(item => {
 					const hasRoute = Boolean(item.route?.start && item.route?.end)
+					const hasDetailPage = Boolean(item.detailPagePath)
 					return (
 						<ExcursionCard
 							key={item.id}
 							item={item}
+							detailPageNewTab={hasDetailPage ? item.detailPagePath : undefined}
 							onOpenDetail={
-								hasRoute
+								hasRoute && !hasDetailPage
 									? () => {
 											setRouteModalPayload({
 												title: item.title,
@@ -208,7 +210,7 @@ function TabbedExcursionSection({
 										}
 									: undefined
 							}
-							onWipClick={hasRoute ? undefined : onExcursionCardWip}
+							onWipClick={hasRoute || hasDetailPage ? undefined : onExcursionCardWip}
 						/>
 					)
 				})}

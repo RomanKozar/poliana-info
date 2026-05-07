@@ -75,6 +75,61 @@ export const quadroRideKeywords: string[] = [
 	'прокат квадроциклів Поляна',
 ]
 
+/** Сторінка /excursions/mountains/rozhok */
+export const rozhokExcursionKeywords: string[] = [
+	'гора Рожок',
+	'оглядовий майданчик Рожок',
+	'Голубине Закарпаття',
+	'екскурсія з Поляни',
+	'екскурсії Поляна гори',
+	'оглядові майданчики Закарпаття',
+]
+
+/** Сторінка /excursions/mountains/malyi-vyzhen */
+export const vyzhynSmallExcursionKeywords: string[] = [
+	'гора Малий Вижень',
+	'Малий Вижень Поляна',
+	'екскурсія Поляна гори',
+	'оглядові точки Закарпаття',
+	'маршрут Малий Вижень',
+]
+
+/** Сторінка /excursions/mountains/velykyi-vyzhen */
+export const vyzhynBigExcursionKeywords: string[] = [
+	'гора Великий Вижень',
+	'Великий Вижень Закарпаття',
+	'Верхня Грабівниця',
+	'екскурсії Поляна гори',
+	'маршрут Великий Вижень',
+]
+
+/** Сторінка /excursions/mountains/vedmezha */
+export const vedmezhaExcursionKeywords: string[] = [
+	'гора Ведмежа',
+	'Ведмежа Уклин',
+	'екскурсії Поляна гори',
+	'маршрут Ведмежа',
+	'Уклин Закарпаття',
+]
+
+/** Сторінка /excursions/mountains/lypcha */
+export const lypchaExcursionKeywords: string[] = [
+	'гора Липча',
+	'Липча Уклин',
+	'екскурсії Поляна гори',
+	'маршрут Липча',
+	'E471 Закарпаття',
+]
+
+/** Сторінка /excursions/mountains/velykyi-verkh */
+export const velykyiVerkhExcursionKeywords: string[] = [
+	'Великий Верх',
+	'Воловецький масив',
+	'Воловець Закарпаття',
+	'екскурсії Поляна гори',
+	'маршрут Великий Верх',
+]
+
 /** Сторінка /accommodation */
 export const accommodationPageKeywords: string[] = [
 	'готелі Поляна',
