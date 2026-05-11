@@ -1,3 +1,8 @@
+import {
+	spaVelikiChanyIwCopyByHotelId,
+	spaVelikiChanyIwCopyFallback,
+} from '@/data/spa-veliki-chany-iw-copy'
+import { siteHeaderPhoneTel } from '@/data/trout-page'
 import { accommodationHotelPath } from '@/lib/accommodation-urls'
 import { getHotelMapGallery, type PolyanaHotel } from '@/lib/polyana-hotels'
 
@@ -56,6 +61,14 @@ export type UnifiedMapCardIw = {
 	saveLink?: string
 	/** Внутрішнє посилання на сторінку готелю (клік по фото галереї на карті) */
 	detailHref?: string
+	/**
+	 * Якщо задано — клік по фото в галереї веде сюди (зазвичай Google Maps / маршрут).
+	 * Має пріоритет над `detailHref`.
+	 */
+	galleryExternalHref?: string
+	/** Якщо задано разом — основна кнопка замість «Подзвонити» за телефоном з поля `phone`. */
+	ctaLabel?: string
+	ctaHref?: string
 }
 
 /**
@@ -71,6 +84,8 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const gallery = normalizeMapCardGallery(p.galleryImages)
 	const total = gallery.length
 	const sw = 100 / total
+	const galleryExternal = (p.galleryExternalHref || '').trim()
+	const galleryExternalEsc = galleryExternal ? escHtml(galleryExternal) : ''
 	const detailHref = (p.detailHref || '').trim()
 	const detailEsc = detailHref ? escHtml(detailHref) : ''
 	const slides = gallery
@@ -78,9 +93,11 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 			const alt = `${name}${i > 0 ? ` — ${i + 1}` : ''}`
 			const imgInner = `<img class="polyana-accommodation-iw-img" src="${escHtml(src)}" alt="${alt}" />`
 			const inner =
-				detailEsc !== ''
-					? `<a class="polyana-accommodation-iw-slide-detail" href="${detailEsc}" aria-label="${name} — детальний опис">${imgInner}</a>`
-					: imgInner
+				galleryExternalEsc !== ''
+					? `<a class="polyana-accommodation-iw-slide-detail" href="${galleryExternalEsc}" target="_blank" rel="noopener noreferrer" aria-label="${name} — маршрут у Google Картах">${imgInner}</a>`
+					: detailEsc !== ''
+						? `<a class="polyana-accommodation-iw-slide-detail" href="${detailEsc}" aria-label="${name} — детальний опис">${imgInner}</a>`
+						: imgInner
 			return `<div class="polyana-accommodation-iw-gallery__slide" style="flex:0 0 ${sw}%" data-slide="${i}">${inner}</div>`
 		})
 		.join('')
@@ -99,11 +116,16 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const pillBlock = p.feature.trim()
 		? `<div class="polyana-accommodation-iw-pill">${feature}</div>`
 		: ''
-	const ctaBlock = telHref
-		? `<a class="polyana-accommodation-iw-cta" href="tel:${escHtml(telHref)}">Подзвонити</a>`
-		: save
-			? `<a class="polyana-accommodation-iw-cta" href="${save}" target="_blank" rel="noopener noreferrer">Подзвонити</a>`
-			: ''
+	const ctaLabelCustom = (p.ctaLabel || '').trim()
+	const ctaHrefCustom = (p.ctaHref || '').trim()
+	const ctaBlock =
+		ctaLabelCustom && ctaHrefCustom
+			? `<a class="polyana-accommodation-iw-cta" href="${escHtml(ctaHrefCustom)}">${escHtml(ctaLabelCustom)}</a>`
+			: telHref
+				? `<a class="polyana-accommodation-iw-cta" href="tel:${escHtml(telHref)}">Подзвонити</a>`
+				: save
+					? `<a class="polyana-accommodation-iw-cta" href="${save}" target="_blank" rel="noopener noreferrer">Подзвонити</a>`
+					: ''
 
 	return `<div class="polyana-accommodation-iw-card">
 		<div class="polyana-accommodation-iw-media">
@@ -162,6 +184,29 @@ export function hotelInfoWindowHtml(hotel: PolyanaHotel): string {
 		routeLink,
 		saveLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name}, ${hotel.address}`)}`,
 		detailHref: accommodationHotelPath(hotel.id),
+	})
+}
+
+/** Картка на карті «Великі чани»: тексти про чани, кнопка «Забронювати» = той самий `tel:`, що в таблиці сторінки. */
+export function spaVelikiChanyHotelInfoWindowHtml(hotel: PolyanaHotel): string {
+	const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+		`${hotel.name}, ${hotel.address}`
+	)}`
+	const iw = spaVelikiChanyIwCopyByHotelId[hotel.id] ?? spaVelikiChanyIwCopyFallback
+	const bookingTelHref = `tel:${siteHeaderPhoneTel}`
+	return unifiedMapCardInfoWindowHtml({
+		name: hotel.name,
+		address: hotel.address,
+		description: iw.description,
+		rating: hotel.rating,
+		feature: iw.feature,
+		phone: hotel.phone,
+		galleryImages: getHotelMapGallery(hotel),
+		routeLink,
+		saveLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name}, ${hotel.address}`)}`,
+		galleryExternalHref: routeLink,
+		ctaLabel: 'Забронювати',
+		ctaHref: bookingTelHref,
 	})
 }
 

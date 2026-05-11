@@ -44,19 +44,25 @@ export default function Header() {
 		if (item.submenuKey === 'popular') {
 			// Some "Популярне" categories overlap with "Проживання" (e.g. hotels).
 			// In that case, highlight the more specific section ("Проживання") instead of both.
-			const isAnyPopularChildActive = item.children.some(child => isActivePath(child.href))
+			const isAnyPopularChildActive = item.children.some(
+				child => child.href && isActivePath(child.href)
+			)
 			const accommodation = siteNavigation.find(x => x.submenuKey === 'accommodation')
 			const isAccommodationActive = Boolean(
-				accommodation?.children?.some(child => isActivePath(child.href)) ||
+				accommodation?.children?.some(child => child.href && isActivePath(child.href)) ||
 					(accommodation ? isActivePath(accommodation.href) : false) ||
 					isActivePath('/accommodation')
 			)
 			return isAnyPopularChildActive && !isAccommodationActive
 		}
 		if (item.submenuKey === 'accommodation') {
-			return isActivePath(item.href) || item.children.some(child => isActivePath(child.href)) || isActivePath('/accommodation')
+			return (
+				isActivePath(item.href) ||
+				item.children.some(child => child.href && isActivePath(child.href)) ||
+				isActivePath('/accommodation')
+			)
 		}
-		return isActivePath(item.href) || item.children.some(child => isActivePath(child.href))
+		return isActivePath(item.href) || item.children.some(child => child.href && isActivePath(child.href))
 	}
 
 	const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -193,22 +199,31 @@ export default function Header() {
 														: 'pointer-events-none translate-y-1 opacity-0'
 												}`}
 											>
-												{item.children.map(child => (
-													<Link
-														key={child.href + child.label}
-														href={child.href}
-														onClick={() => {
-															setIsDesktopNewsOpen(false)
-															setIsDesktopPopularOpen(false)
-															setIsDesktopAccommodationOpen(false)
-														}}
-														className={`block rounded-md px-3 py-2 font-medium transition-colors hover:bg-slate-100 hover:text-slate-900 ${
-															isActivePath(child.href) ? 'bg-slate-100 text-slate-900' : ''
-														}`}
-													>
-														{child.label}
-													</Link>
-												))}
+												{item.children.map(child =>
+													child.href ? (
+														<Link
+															key={child.href + child.label}
+															href={child.href}
+															onClick={() => {
+																setIsDesktopNewsOpen(false)
+																setIsDesktopPopularOpen(false)
+																setIsDesktopAccommodationOpen(false)
+															}}
+															className={`block rounded-md px-3 py-2 font-medium transition-colors hover:bg-slate-100 hover:text-slate-900 ${
+																isActivePath(child.href) ? 'bg-slate-100 text-slate-900' : ''
+															}`}
+														>
+															{child.label}
+														</Link>
+													) : (
+														<span
+															key={child.label}
+															className='block cursor-default rounded-md px-3 py-2 font-medium text-slate-400'
+														>
+															{child.label}
+														</span>
+													)
+												)}
 											</div>
 										</>
 									)
@@ -370,8 +385,8 @@ export default function Header() {
 												{submenuOpen ? (
 													<div className='flex max-h-[50vh] w-full flex-col items-center gap-2 overflow-y-auto rounded-xl bg-cyan-600/70 p-3 text-base sm:gap-3 sm:p-4 sm:text-xl'>
 														{item.children.map(child => {
-															const isChildActive = isActivePath(child.href)
-															return (
+															const isChildActive = Boolean(child.href && isActivePath(child.href))
+															return child.href ? (
 																<Link
 																	key={child.href + child.label}
 																	href={child.href}
@@ -385,6 +400,13 @@ export default function Header() {
 																>
 																	{child.label}
 																</Link>
+															) : (
+																<span
+																	key={child.label}
+																	className='w-full cursor-default rounded-lg px-2 py-1.5 text-center text-base leading-snug text-white/50 sm:px-3 sm:py-1 sm:text-xl'
+																>
+																	{child.label}
+																</span>
 															)
 														})}
 													</div>

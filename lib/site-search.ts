@@ -1,5 +1,5 @@
 import { siteNavigation } from '@/components/layout/site-navigation'
-import { accommodations, camps, categoryItems } from '@/data/home-page'
+import { accommodations, camps, categoryItems, type CategoryNavItem } from '@/data/home-page'
 import { allExcursionListings, EXCURSIONS_MOUNTAINS_ANCHOR_ID } from '@/data/excursions-page'
 import { diningMapMarkers, touristCityMapMarkers } from '@/lib/home-map-markers'
 
@@ -39,19 +39,29 @@ const BASE_ITEMS: SiteSearchItem[] = [
 		keywords: ['квадроцикли', 'квадро', 'atv', 'квадрики', 'quadro', 'ride', 'маршрут', 'ліс', 'панорама'],
 		section: 'Екскурсії',
 	},
+	{
+		title: 'Великі чани в Поляні — порівняння та карта',
+		href: '/cat/spa-bani-chany/veliki-chany',
+		keywords: ['чани', 'великий чан', 'SPA Поляна', 'купіль', 'бронювання чан', 'ціни чан'],
+		section: 'SPA та відпочинок',
+	},
 ]
 
 const SITE_SEARCH_INDEX_RAW: SiteSearchItem[] = [
 	...BASE_ITEMS,
-	...categoryItems.map(c => ({
-		title: c.label,
-		href: c.href,
-		keywords: [c.label],
-		section: 'Категорії',
-	})),
+	...categoryItems
+		.filter((c): c is CategoryNavItem & { href: string } => Boolean(c.href))
+		.map(c => ({
+			title: c.label,
+			href: c.href,
+			keywords: [c.label],
+			section: 'Категорії',
+		})),
 	...siteNavigation.flatMap(item => {
 		const self: SiteSearchItem[] = item.href === '/' ? [] : [{ title: item.label, href: item.href }]
-		const children: SiteSearchItem[] = (item.children ?? []).map(c => ({ title: c.label, href: c.href }))
+		const children: SiteSearchItem[] = (item.children ?? [])
+			.filter((c): c is { label: string; href: string } => Boolean(c.href))
+			.map(c => ({ title: c.label, href: c.href }))
 		return [...self, ...children]
 	}),
 	...diningMapMarkers.map(place => ({

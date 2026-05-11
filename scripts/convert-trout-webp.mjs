@@ -1,5 +1,5 @@
 /**
- * Конвертує PNG ресторану в WebP та видаляє trout-6.webp у public/igames/trout та public/images/trout.
+ * Конвертує PNG ресторану в WebP та видаляє trout-6.webp у public/images/trout.
  */
 import fs from 'fs'
 import path from 'path'
@@ -9,10 +9,7 @@ import sharp from 'sharp'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.join(__dirname, '..')
 
-const dirs = [
-	path.join(root, 'public', 'igames', 'trout'),
-	path.join(root, 'public', 'images', 'trout'),
-]
+const dirs = [path.join(root, 'public', 'images', 'trout')]
 
 async function main() {
 	for (const dir of dirs) {

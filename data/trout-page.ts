@@ -3,19 +3,19 @@ export const siteHeaderPhoneTel = '0502149266' as const
 
 export const siteHeaderPhoneDisplay = '0 (50) 214 92 66'
 
-/** Усі локальні зображення форелі й ресторану з `public/igames/trout/`. */
+/** Усі локальні зображення форелі й ресторану з `public/images/trout/`. */
 export const troutFishingImages = [
-	{ src: '/igames/trout/trout-1.webp', alt: 'Форелева риболовля в Карпатах' },
-	{ src: '/igames/trout/trout-2.webp', alt: 'Рибалка на форелевій фермі' },
-	{ src: '/igames/trout/trout-3.webp', alt: 'Риболовля й відпочинок біля водойми' },
-	{ src: '/igames/trout/trout-4.webp', alt: 'Улов форелі' },
-	{ src: '/igames/trout/trout-5.webp', alt: 'Рибне господарство — атмосфера' },
+	{ src: '/images/trout/trout-1.webp', alt: 'Форелева риболовля в Карпатах' },
+	{ src: '/images/trout/trout-2.webp', alt: 'Рибалка на форелевій фермі' },
+	{ src: '/images/trout/trout-3.webp', alt: 'Риболовля й відпочинок біля водойми' },
+	{ src: '/images/trout/trout-4.webp', alt: 'Улов форелі' },
+	{ src: '/images/trout/trout-5.webp', alt: 'Рибне господарство — атмосфера' },
 ] as const
 
 export const troutRestaurantImages = [
-	{ src: '/igames/trout/restoran-1.webp', alt: 'Смачно приготована форель у ресторані' },
-	{ src: '/igames/trout/restoran-2.webp', alt: 'Закуски та форель до столу' },
-	{ src: '/igames/trout/restoran-3.webp', alt: 'Ресторанна подача страв із форелі' },
+	{ src: '/images/trout/restoran-1.webp', alt: 'Смачно приготована форель у ресторані' },
+	{ src: '/images/trout/restoran-2.webp', alt: 'Закуски та форель до столу' },
+	{ src: '/images/trout/restoran-3.webp', alt: 'Ресторанна подача страв із форелі' },
 ] as const
 
 /** Одна точка форелі для Google Maps (JS API або fallback iframe `q=`). */

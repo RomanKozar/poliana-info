@@ -424,25 +424,37 @@ export default function HomePage() {
 			<section className='bg-[#F5F6F7] px-4 py-6 sm:px-16 lg:px-24'>
 				<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Популярні категорії</h2>
 				<div className='grid grid-cols-2 gap-3 lg:grid-cols-5'>
-					{categoryItems.map(item => (
-						<Link
-							key={item.label}
-							href={item.href}
-							className='flex min-h-24 cursor-pointer flex-col items-center justify-center rounded-xl bg-white px-2 py-2.5 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:min-h-28 sm:px-3 sm:py-3'
-						>
-							<Image
-								src={item.iconSrc}
-								alt=''
-								width={56}
-								height={56}
-								className='h-11 w-11 object-contain sm:h-14 sm:w-14'
-								aria-hidden
-							/>
-							<p className='mt-1.5 text-[11px] font-semibold leading-tight text-slate-600 sm:mt-2 sm:text-sm'>
-								{item.label}
-							</p>
-						</Link>
-					))}
+					{categoryItems.map(item => {
+						const cardClassName =
+							'flex w-full min-h-24 cursor-pointer flex-col items-center justify-center rounded-xl border-0 bg-white px-2 py-2.5 text-center font-inherit text-inherit shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:min-h-28 sm:px-3 sm:py-3'
+						const inner = (
+							<>
+								<Image
+									src={item.iconSrc}
+									alt=''
+									width={56}
+									height={56}
+									className='h-11 w-11 object-contain sm:h-14 sm:w-14'
+									aria-hidden
+								/>
+								<span className='mt-1.5 block text-[11px] font-semibold leading-tight text-slate-600 sm:mt-2 sm:text-sm'>
+									{item.label}
+								</span>
+							</>
+						)
+						if (!item.href) {
+							return (
+								<button key={item.label} type='button' className={cardClassName}>
+									{inner}
+								</button>
+							)
+						}
+						return (
+							<Link key={item.label} href={item.href} className={cardClassName}>
+								{inner}
+							</Link>
+						)
+					})}
 				</div>
 			</section>
 

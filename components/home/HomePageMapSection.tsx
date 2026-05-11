@@ -34,7 +34,7 @@ import {
 	homeMapMarkerToUnifiedCard,
 	unifiedMapCardInfoWindowHtml,
 } from '@/lib/map-info-window-html'
-import { syncInfoWindowGalleryNav, toggleIwHeartActive } from '@/lib/map-info-window-ui'
+import { attachPolyanaAccommodationIwDomHandlers } from '@/lib/map-info-window-ui'
 import { polyanaHotels as hotelsMapMarkers } from '@/lib/polyana-hotels'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
@@ -228,64 +228,7 @@ export default function HomePageMapSection() {
 			const mapRootEl = mapContainerRef.current
 			if (mapRootEl) {
 				detachIwUiCapture?.()
-				const onInfoWindowUiAny = (e: Event) => {
-					// We use pointerdown only for the close button (mobile reliability).
-					// For gallery/heart, pointerdown + click would double-trigger.
-					const isPointerDown = e.type === 'pointerdown'
-					const next =
-						e.target instanceof Element
-							? e.target.closest('.polyana-accommodation-iw-gallery-btn--next')
-							: null
-					const prev =
-						e.target instanceof Element
-							? e.target.closest('.polyana-accommodation-iw-gallery-btn--prev')
-							: null
-					if ((next || prev) && !isPointerDown) {
-						e.preventDefault()
-						e.stopPropagation()
-						e.stopImmediatePropagation()
-						const gal = (next || prev)!.closest('[data-iw-gallery]') as HTMLElement | null
-						if (!gal) return
-						// If images aren't loaded yet, don't allow paging.
-						syncInfoWindowGalleryNav(gal)
-						if (gal.dataset.ready !== '1') return
-						const total = Math.max(1, parseInt(gal.dataset.total || '1', 10))
-						let idx = parseInt(gal.dataset.idx || '0', 10)
-						if (next) idx = (idx + 1) % total
-						else idx = (idx - 1 + total) % total
-						gal.dataset.idx = String(idx)
-						const track = gal.querySelector<HTMLElement>('[data-gallery-track]')
-						if (track) {
-							const step = 100 / total
-							track.style.transform = `translate3d(-${step * idx}%,0,0)`
-						}
-						gal.querySelectorAll<HTMLElement>('.polyana-accommodation-iw-dot').forEach((dot, i) => {
-							dot.classList.toggle('polyana-accommodation-iw-dot--on', i === idx)
-						})
-						syncInfoWindowGalleryNav(gal)
-						return
-					}
-					const heart =
-						e.target instanceof Element
-							? e.target.closest('.polyana-accommodation-iw-heart')
-							: null
-					if (heart && !isPointerDown) {
-						e.preventDefault()
-						e.stopPropagation()
-						e.stopImmediatePropagation()
-						toggleIwHeartActive(heart)
-						return
-					}
-					const closer =
-						e.target instanceof Element ? e.target.closest('.polyana-accommodation-iw-close') : null
-					if (!closer) return
-					e.preventDefault()
-					e.stopPropagation()
-					// Some Google Maps DOM layers can swallow `click` on mobile.
-					// Capturing pointerdown + click gives the close button a reliable path.
-					;(e as any).stopImmediatePropagation?.()
-					// InfoWindow can be opened either via marker click (local activeInfoWindow)
-					// or via URL/search auto-open (activeInfoWindowRef). Close whichever is active.
+				detachIwUiCapture = attachPolyanaAccommodationIwDomHandlers(mapRootEl, () => {
 					const refIw = activeInfoWindowRef.current
 					if (refIw) {
 						refIw.close()
@@ -295,24 +238,7 @@ export default function HomePageMapSection() {
 						activeInfoWindow.close()
 						activeInfoWindow = null
 					}
-				}
-				mapRootEl.addEventListener('pointerdown', onInfoWindowUiAny, true)
-				mapRootEl.addEventListener('click', onInfoWindowUiAny, true)
-				// When InfoWindow HTML images load, re-sync nav visibility.
-				const onIwImageLoad = (e: Event) => {
-					const t = e.target
-					if (!(t instanceof HTMLImageElement)) return
-					if (!t.classList.contains('polyana-accommodation-iw-img')) return
-					const gal = t.closest('[data-iw-gallery]') as HTMLElement | null
-					if (!gal) return
-					syncInfoWindowGalleryNav(gal)
-				}
-				mapRootEl.addEventListener('load', onIwImageLoad, true)
-				detachIwUiCapture = () => {
-					mapRootEl.removeEventListener('pointerdown', onInfoWindowUiAny, true)
-					mapRootEl.removeEventListener('click', onInfoWindowUiAny, true)
-					mapRootEl.removeEventListener('load', onIwImageLoad, true)
-				}
+				})
 			}
 
 			const bounds = new win.google.maps.LatLngBounds()

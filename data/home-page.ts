@@ -202,9 +202,16 @@ export const skiRecreation = [
 const CATEGORY_ICON_BASE = '/images/branding/categories-icons'
 
 /** Категорії блоку «Популярні категорії» на головній та в меню «Популярне» в шапці — власні SVG з `public/images/branding/categories-icons/`. */
-export const categoryItems: { label: string; iconSrc: string; href: string }[] = [
+export type CategoryNavItem = {
+	label: string
+	iconSrc: string
+	/** Без посилання — картка лише для відображення (сторінка в доробці). */
+	href?: string
+}
+
+export const categoryItems: CategoryNavItem[] = [
 	{ label: 'Чани, бані, SPA центри', iconSrc: `${CATEGORY_ICON_BASE}/SPA.svg`, href: '/cat/spa-bani-chany' },
-	{ label: 'Сільський туризм', iconSrc: `${CATEGORY_ICON_BASE}/tourism.svg`, href: '/cat/silskyi-turizm' },
+	{ label: 'Сільський туризм', iconSrc: `${CATEGORY_ICON_BASE}/tourism.svg` },
 	{ label: 'Санаторії Поляни', iconSrc: `${CATEGORY_ICON_BASE}/sanatoriums.svg`, href: '/cat/sanatorii-polyany' },
 	{ label: 'Конференц сервіс', iconSrc: `${CATEGORY_ICON_BASE}/conferences.svg`, href: '/cat/konferenc-servis' },
 	{ label: 'Їжа та напої', iconSrc: `${CATEGORY_ICON_BASE}/food_drinks.svg`, href: '/cat/yizha-napoyi' },

@@ -87,6 +87,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		{ url: pageUrl('/polianski'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/privacy'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ url: pageUrl('/spa'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
+		{
+			url: pageUrl('/cat/spa-bani-chany/veliki-chany'),
+			lastModified,
+			changeFrequency: 'monthly' as const,
+			priority: 0.68,
+		},
 		{ url: pageUrl('/wellness'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		...accommodationDetailUrls,
 		...categoryUrls,

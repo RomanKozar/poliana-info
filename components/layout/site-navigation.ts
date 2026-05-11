@@ -6,7 +6,7 @@ export type NavigationItem = {
 	/** Окремий стан випадаючого списку в мобільному меню (як у «Новин»). */
 	submenuKey?: 'news' | 'popular' | 'accommodation'
 	children?: {
-		href: string
+		href?: string
 		label: string
 	}[]
 }
@@ -37,7 +37,8 @@ export const siteNavigation: NavigationItem[] = [
 		submenuKey: 'accommodation',
 		children: [
 			{ href: '/cat/goteli-polyany', label: 'Готелі Поляни' },
-			{ href: '/cat/silskyi-turizm', label: 'Сільський туризм' },
+			// Тимчасово приховано — дорозробка сторінки «Сільський туризм».
+			// { href: '/cat/silskyi-turizm', label: 'Сільський туризм' },
 			{ href: '/cat/sanatorii-polyany', label: 'Санаторії Поляни' },
 		],
 	},
