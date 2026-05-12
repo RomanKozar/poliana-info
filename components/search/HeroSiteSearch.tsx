@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
-import { searchSite } from '@/lib/site-search'
+import { getSearchDirectHref, searchSite } from '@/lib/site-search'
 
 const HERO_SEARCH_RESET_EVENT = 'polyana:hero-search-reset'
 
@@ -11,6 +12,7 @@ type HeroSiteSearchProps = {
 }
 
 export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps) {
+	const router = useRouter()
 	const inputId = useId()
 	const [query, setQuery] = useState('')
 	const [open, setOpen] = useState(false)
@@ -54,6 +56,26 @@ export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps
 					if (e.key === 'Escape') {
 						setOpen(false)
 						;(e.currentTarget as HTMLInputElement).blur()
+						return
+					}
+					if (e.key === 'Enter') {
+						const trimmed = query.trim()
+						if (!trimmed) return
+						e.preventDefault()
+						const direct = getSearchDirectHref(trimmed)
+						if (direct) {
+							setOpen(false)
+							router.push(direct)
+							return
+						}
+						const top = searchSite(trimmed, 1)
+						if (top.length > 0) {
+							setOpen(false)
+							router.push(top[0].href)
+							return
+						}
+						setOpen(false)
+						router.push(`/search?q=${encodeURIComponent(trimmed)}`)
 					}
 				}}
 				aria-autocomplete='list'
@@ -101,7 +123,8 @@ export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps
 					)}
 
 					<div className='border-t border-slate-200 bg-slate-50 px-4 py-2 text-xs text-slate-600'>
-						Порада: шукайте “готель”, “чани”, “табір”, “форель”, “контакти”.
+						Порада: натисніть Enter — для «чани», «екскурсії», «проживання» відкриється відповідний розділ.
+						Шукайте також «готель», «табір», «форель», «контакти».
 					</div>
 				</div>
 			) : null}

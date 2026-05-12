@@ -54,6 +54,20 @@ export const homePageKeywords: string[] = [
 	'гуцульська кухня Поляна',
 ]
 
+/** Сторінка /cat/spa-bani-chany (чани, SPA, бані) */
+export const spaBaniChanyPageKeywords: string[] = [
+	'чани Поляна',
+	'чани Закарпаття',
+	'чани Карпати',
+	'SPA Поляна',
+	'бані Поляна',
+	'купіль Поляна',
+	'великий чан Поляна',
+	'малий чан Поляна',
+	'готель з чаном Поляна',
+	'відпочинок SPA Поляна',
+]
+
 /** Сторінка /excursions */
 export const excursionsPageKeywords: string[] = [
 	'екскурсії Поляна',

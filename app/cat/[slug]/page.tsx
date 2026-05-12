@@ -4,7 +4,7 @@ import SpaBaniChanyPageContent from '@/components/cat/SpaBaniChanyPageContent'
 import PagePlaceholder from '@/components/shared/PagePlaceholder'
 import { categoryPlaceholders, categoryPlaceholderSlugs } from '@/data/category-placeholders'
 import { HOTELS_CATEGORY_SLUG } from '@/lib/accommodation-urls'
-import { accommodationPageKeywords } from '@/lib/site-keywords'
+import { accommodationPageKeywords, spaBaniChanyPageKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-static'
@@ -24,6 +24,15 @@ export async function generateMetadata({ params }: Props) {
 				'Зняти житло в Поляні, Закарпаття: готелі та апарт-готелі на інтерактивній карті. Ціни, рейтинги, адреси — проживання біля екскурсій, SPA та підйомників курорту.',
 			pathname: `/cat/${slug}`,
 			keywords: accommodationPageKeywords,
+		})
+	}
+	if (slug === 'spa-bani-chany') {
+		return definePageMetadata({
+			title: 'Чани, бані та SPA в Поляні — заклади й ціни',
+			description:
+				'Чани та SPA в Поляні, Закарпаття: великі й малі чани, бані, басейни, масажі та фітобочки. Порівняйте заклади на карті, перегляньте орієнтовні ціни та оберіть відпочинок у Карпатах на POLYANA.INFO.',
+			pathname: `/cat/${slug}`,
+			keywords: spaBaniChanyPageKeywords,
 		})
 	}
 	const p = categoryPlaceholders[slug]

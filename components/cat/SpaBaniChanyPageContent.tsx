@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { categoryPlaceholders } from '@/data/category-placeholders'
 
 const VELIKI_CHANY_PATH = '/cat/spa-bani-chany/veliki-chany' as const
+const MALI_CHANY_PATH = '/cat/spa-bani-chany/mali-chany' as const
 
 const SECTION_KEYS = ['chani', 'bani', 'spaPoslugy'] as const
 
@@ -119,7 +120,13 @@ export default function SpaBaniChanyPageContent() {
 										alt={`${SECTION_LABELS[key]} — зображення ${row + 1}`}
 										imageIndex={imageIndex}
 										caption={caption}
-										href={imageIndex === 1 ? VELIKI_CHANY_PATH : undefined}
+										href={
+											imageIndex === 1
+												? VELIKI_CHANY_PATH
+												: imageIndex === 2
+													? MALI_CHANY_PATH
+													: undefined
+										}
 									/>
 								)
 							})}

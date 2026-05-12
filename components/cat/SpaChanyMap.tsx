@@ -9,7 +9,7 @@ import { attachPolyanaAccommodationIwDomHandlers } from '@/lib/map-info-window-u
 import { polyanaHotels } from '@/lib/polyana-hotels'
 
 /** Як `spaIcon` на головній карті (`HomePageMapSection`): 44×52, anchor внизу по центру. */
-function spaVelikiChanyMapPinIcon(
+function spaChanyMapPinIcon(
 	maps: { Size: new (w: number, h: number) => any; Point: new (x: number, y: number) => any },
 	active: boolean
 ) {
@@ -35,20 +35,31 @@ const POLYANA_MAP_SILENT_UI = [
 ]
 
 type Win = Window & {
-	initPolyanaVelikiChanyMap?: () => void
 	google?: { maps: any }
+}
+
+function setWindowMapsInitCallback(name: string, fn: (() => void) | undefined) {
+	const w = window as unknown as Record<string, (() => void) | undefined>
+	w[name] = fn
 }
 
 type Props = {
 	venues: readonly SpaVelikyiChanVenue[]
 	selectedId: string | null
+	/** Унікальна глобальна назва для `callback=` у скрипті Google Maps (не має збігатися між різними сторінками з картами). */
+	windowInitCallbackName: string
+	mapAriaLabel: string
+	embedIframeTitle: string
 	className?: string
 	frameClassName?: string
 }
 
-export default function SpaVelikiChanyMap({
+export default function SpaChanyMap({
 	venues,
 	selectedId,
+	windowInitCallbackName,
+	mapAriaLabel,
+	embedIframeTitle,
 	className = '',
 	frameClassName = 'relative min-h-[280px] h-[min(52vh,26rem)] w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-lg sm:min-h-[320px] lg:min-h-0 lg:h-[min(70vh,32rem)]',
 }: Props) {
@@ -126,7 +137,7 @@ export default function SpaVelikiChanyMap({
 					position: { lat: v.lat, lng: v.lng },
 					map,
 					title: v.name,
-					icon: spaVelikiChanyMapPinIcon(maps, false),
+					icon: spaChanyMapPinIcon(maps, false),
 					zIndex: 1,
 					cursor: 'pointer',
 				})
@@ -152,7 +163,7 @@ export default function SpaVelikiChanyMap({
 			setMapEpoch(e => e + 1)
 		}
 
-		win.initPolyanaVelikiChanyMap = initMap
+		setWindowMapsInitCallback(windowInitCallbackName, initMap)
 
 		if (win.google?.maps) {
 			queueMicrotask(initMap)
@@ -161,11 +172,11 @@ export default function SpaVelikiChanyMap({
 			if (!mapsScriptAlready) {
 				const script = document.createElement('script')
 				script.id = 'google-maps-script'
-				script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&language=uk&region=UA&callback=initPolyanaVelikiChanyMap`
+				script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&language=uk&region=UA&callback=${encodeURIComponent(windowInitCallbackName)}`
 				script.async = true
 				script.defer = true
 				script.onerror = () => {
-					win.initPolyanaVelikiChanyMap = undefined
+					setWindowMapsInitCallback(windowInitCallbackName, undefined)
 				}
 				document.head.appendChild(script)
 			} else {
@@ -194,10 +205,10 @@ export default function SpaVelikiChanyMap({
 			detachControls = null
 			mapInstanceRef.current = null
 			markersRef.current.clear()
-			win.initPolyanaVelikiChanyMap = undefined
+			setWindowMapsInitCallback(windowInitCallbackName, undefined)
 			if (root) root.innerHTML = ''
 		}
-	}, [venues])
+	}, [venues, windowInitCallbackName])
 
 	useEffect(() => {
 		const win = window as Win
@@ -217,7 +228,7 @@ export default function SpaVelikiChanyMap({
 			const marker = markersRef.current.get(v.id)
 			const active = selectedId === v.id
 			if (marker?.setIcon) {
-				marker.setIcon(spaVelikiChanyMapPinIcon(maps, active))
+				marker.setIcon(spaChanyMapPinIcon(maps, active))
 			}
 			if (marker?.setZIndex) {
 				marker.setZIndex(active ? 1_000 : 1)
@@ -247,7 +258,7 @@ export default function SpaVelikiChanyMap({
 			<div className={className}>
 				<div className={`${frameClassName} relative`}>
 					<iframe
-						title='Великі чани — карта Google'
+						title={embedIframeTitle}
 						className='absolute inset-0 h-full min-h-[280px] w-full border-0'
 						src={`https://www.google.com/maps?q=${q}&z=15&output=embed&hl=uk`}
 						loading='lazy'
@@ -265,7 +276,7 @@ export default function SpaVelikiChanyMap({
 					ref={containerRef}
 					className='polyana-google-map-root polyana-google-map-root--home-map absolute inset-0 min-h-[260px] w-full bg-slate-100'
 					role='presentation'
-					aria-label='Карта закладів з великими чанами'
+					aria-label={mapAriaLabel}
 				/>
 			</div>
 		</div>

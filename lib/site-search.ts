@@ -45,6 +45,12 @@ const BASE_ITEMS: SiteSearchItem[] = [
 		keywords: ['чани', 'великий чан', 'SPA Поляна', 'купіль', 'бронювання чан', 'ціни чан'],
 		section: 'SPA та відпочинок',
 	},
+	{
+		title: 'Малі чани в Поляні — порівняння та карта',
+		href: '/cat/spa-bani-chany/mali-chany',
+		keywords: ['чани', 'малий чан', 'SPA Поляна', 'купіль', 'бронювання чан', 'ціни чан'],
+		section: 'SPA та відпочинок',
+	},
 ]
 
 const SITE_SEARCH_INDEX_RAW: SiteSearchItem[] = [
@@ -129,6 +135,162 @@ function normalize(text: string) {
 		.replace(/[^a-zа-яіїєґ0-9\s-]/giu, ' ')
 		.replace(/\s+/g, ' ')
 		.trim()
+}
+
+/** Слова, які часто додають до запиту («шукаю чани») — не вважаємо їх змістом для прямого переходу. */
+const SEARCH_FILLER_WORDS = new Set([
+	'шукай',
+	'шукаю',
+	'шукати',
+	'хочу',
+	'дай',
+	'покажи',
+	'скажи',
+	'де',
+	'як',
+	'про',
+	'мені',
+	'на',
+	'в',
+	'у',
+	'зі',
+	'з',
+	'до',
+	'цей',
+	'ця',
+	'ці',
+	'цю',
+	'для',
+	'трохи',
+	'відкрий',
+	'відкрити',
+	'сторінк',
+	'сайт',
+])
+
+function significantSearchTokens(q: string): string[] {
+	return q.split(/\s+/).filter(w => w.length > 0 && !SEARCH_FILLER_WORDS.has(w))
+}
+
+/**
+ * Якщо запит однозначно вказує на розділ сайту — одразу відкриваємо відповідну сторінку (Enter у пошуку, /search?q=…).
+ * Порядок правил важливий: спочатку вужчі збіги (квадро, великі/малі чани), потім загальні.
+ */
+export function getSearchDirectHref(rawQuery: string): string | null {
+	const q = normalize(rawQuery)
+	if (!q) return null
+
+	const excursionsMountainsHref = `/excursions#${EXCURSIONS_MOUNTAINS_ANCHOR_ID}`
+
+	const substringRules: { needle: string; href: string }[] = [
+		{ needle: 'квадроцикли', href: '/excursions/quadro-ride' },
+		{ needle: 'квадроцикл', href: '/excursions/quadro-ride' },
+		{ needle: 'quadro ride', href: '/excursions/quadro-ride' },
+		{ needle: 'великі чани', href: '/cat/spa-bani-chany/veliki-chany' },
+		{ needle: 'великий чан', href: '/cat/spa-bani-chany/veliki-chany' },
+		{ needle: 'малі чани', href: '/cat/spa-bani-chany/mali-chany' },
+		{ needle: 'малий чан', href: '/cat/spa-bani-chany/mali-chany' },
+		{ needle: 'екскурсії в гори', href: excursionsMountainsHref },
+		{ needle: 'екскурсія в гори', href: excursionsMountainsHref },
+		{ needle: 'піші маршрути', href: excursionsMountainsHref },
+		{ needle: 'активний відпочинок', href: excursionsMountainsHref },
+		{ needle: 'готелі поляни', href: '/cat/goteli-polyany' },
+		{ needle: 'готель поляна', href: '/cat/goteli-polyany' },
+		{ needle: 'джипінг', href: excursionsMountainsHref },
+		{ needle: 'дитячі табори', href: '/camps' },
+		{ needle: 'дитячий табір', href: '/camps' },
+		{ needle: 'мінеральна вода', href: '/cat/mineralna-voda' },
+		{ needle: 'сільський туризм', href: '/cat/silskyi-turizm' },
+		{ needle: 'акції та пропозиції', href: '/aktsii-ta-propozitsii' },
+		{ needle: 'про нас', href: '/about' },
+		{ needle: 'про проєкт', href: '/about' },
+	]
+
+	for (const { needle, href } of substringRules) {
+		if (q.includes(needle)) return href
+	}
+
+	const sig = significantSearchTokens(q)
+	if (sig.length === 0) return null
+
+	/** Один «значущий» токен після відсікання слів-паразитів — типові односкладові запити. */
+	if (sig.length === 1) {
+		const w = sig[0]
+		const one: Record<string, string> = {
+			чани: '/cat/spa-bani-chany',
+			чан: '/cat/spa-bani-chany',
+			бані: '/cat/spa-bani-chany',
+			баня: '/cat/spa-bani-chany',
+			купіль: '/cat/spa-bani-chany',
+			купелі: '/cat/spa-bani-chany',
+			spa: '/cat/spa-bani-chany',
+			сауна: '/cat/spa-bani-chany',
+			фітобочка: '/cat/spa-bani-chany',
+			фітобочки: '/cat/spa-bani-chany',
+			екскурсії: excursionsMountainsHref,
+			екскурсія: excursionsMountainsHref,
+			excursion: excursionsMountainsHref,
+			excursions: excursionsMountainsHref,
+			квадро: '/excursions/quadro-ride',
+			atv: '/excursions/quadro-ride',
+			quadro: '/excursions/quadro-ride',
+			гори: excursionsMountainsHref,
+			ліс: excursionsMountainsHref,
+			тюбінг: '/entertainment',
+			лижі: '/entertainment',
+			проживання: '/cat/goteli-polyany',
+			готелі: '/cat/goteli-polyany',
+			готель: '/cat/goteli-polyany',
+			житло: '/cat/goteli-polyany',
+			ночівля: '/cat/goteli-polyany',
+			апартаменти: '/cat/goteli-polyany',
+			табори: '/camps',
+			табір: '/camps',
+			форель: '/trout',
+			блог: '/blog',
+			новини: '/blog',
+			контакти: '/contacts',
+			карта: '/#polyana-map',
+			карту: '/#polyana-map',
+			головна: '/',
+			поляна: '/poliana',
+			полянське: '/polianski',
+			гастрономія: '/gastronomy',
+			розваги: '/entertainment',
+			wellness: '/wellness',
+			спа: '/cat/spa-bani-chany',
+			діти: '/kids-camps',
+			санаторії: '/cat/sanatorii-polyany',
+			санаторій: '/cat/sanatorii-polyany',
+			сувеніри: '/cat/suveniry',
+			конференц: '/cat/konferenc-servis',
+			їжа: '/cat/yizha-napoyi',
+			напої: '/cat/yizha-napoyi',
+			акції: '/aktsii-ta-propozitsii',
+			знижки: '/aktsii-ta-propozitsii',
+			пропозиції: '/aktsii-ta-propozitsii',
+		}
+		if (one[w]) return one[w]
+	}
+
+	/** Два значущі токени: «дитячі табори», «їжа напої» тощо. */
+	if (sig.length === 2) {
+		const [a, b] = sig
+		const pair = `${a} ${b}`
+		const pairRev = `${b} ${a}`
+		const pairRules: Record<string, string> = {
+			'дитячі табори': '/camps',
+			'табори дитячі': '/camps',
+			'їжа напої': '/cat/yizha-napoyi',
+			'напої їжа': '/cat/yizha-napoyi',
+			'екскурсії гори': excursionsMountainsHref,
+			'гори екскурсії': excursionsMountainsHref,
+		}
+		if (pairRules[pair]) return pairRules[pair]
+		if (pairRules[pairRev]) return pairRules[pairRev]
+	}
+
+	return null
 }
 
 export function searchSite(query: string, limit = 8): SiteSearchItem[] {

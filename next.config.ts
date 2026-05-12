@@ -31,6 +31,12 @@ const nextConfig: NextConfig = {
 	// Англомовна сторінка /privacy-policy (часто з боку хостингу) → наша українська політика
 	async redirects() {
 		return [
+			// Часта опечатка в Google Search Console: sitemax.xml → справжній sitemap Next.js
+			{
+				source: '/sitemax.xml',
+				destination: '/sitemap.xml',
+				permanent: true,
+			},
 			{
 				source: '/accommodation/:id',
 				destination: '/cat/goteli-polyany/:id',

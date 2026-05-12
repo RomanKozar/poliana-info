@@ -31,6 +31,9 @@ export function definePageMetadata({
 			title,
 			description,
 			url,
+			siteName: 'POLYANA.INFO',
+			locale: 'uk_UA',
+			type: 'website',
 		},
 		twitter: {
 			title,

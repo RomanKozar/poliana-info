@@ -119,6 +119,15 @@ const rootJsonLdGraph = {
 			keywords:
 				'Поляна Закарпаття, екскурсії Поляна, квадроцикли Поляна, готелі Поляна, житло Карпати, SPA чани, дитячі табори',
 			inLanguage: 'uk-UA',
+			/** Підказка Google для «рядка пошуку сайту» у видачі (Sitelinks searchbox). Має збігатися з публічним URL. */
+			potentialAction: {
+				'@type': 'SearchAction',
+				target: {
+					'@type': 'EntryPoint',
+					urlTemplate: `${siteBase}/search?q={search_term_string}`,
+				},
+				'query-input': 'required name=search_term_string',
+			},
 		},
 	],
 }
