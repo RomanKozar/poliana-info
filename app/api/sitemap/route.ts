@@ -1,6 +1,9 @@
 import { buildPolyanaSitemapXml } from '@/lib/sitemap-build'
 
-/** Статична відповідь на GET /sitemap.xml (уникаємо 500 на проді з metadata sitemap у деяких конфігураціях). */
+/**
+ * XML sitemap за `/api/sitemap`; публічний URL `/sitemap.xml` задається через `rewrites` у `next.config.ts`
+ * (на Vercel маршрут `app/sitemap.xml/` інколи віддавав 500).
+ */
 export const dynamic = 'force-static'
 
 export async function GET() {
