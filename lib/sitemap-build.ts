@@ -22,6 +22,11 @@ function escapeXmlLoc(url: string): string {
 	return url.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
 
+/** Формат W3C date-only (YYYY-MM-DD) — достатньо для sitemap і без зайвих мілісекунд у XML. */
+function lastmodDateOnly(d: Date): string {
+	return d.toISOString().slice(0, 10)
+}
+
 function collectSitemapEntries(): SitemapUrlEntry[] {
 	const lastModified = new Date()
 
@@ -82,7 +87,7 @@ export function buildPolyanaSitemapXml(): string {
 		.map(
 			e => `  <url>
     <loc>${escapeXmlLoc(e.loc)}</loc>
-    <lastmod>${e.lastModified.toISOString()}</lastmod>
+    <lastmod>${lastmodDateOnly(e.lastModified)}</lastmod>
     <changefreq>${e.changeFrequency}</changefreq>
     <priority>${e.priority}</priority>
   </url>`
