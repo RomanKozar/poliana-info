@@ -69,10 +69,12 @@ export type UnifiedMapCardIw = {
 	/** Якщо задано разом — основна кнопка замість «Подзвонити» за телефоном з поля `phone`. */
 	ctaLabel?: string
 	ctaHref?: string
+	/** Рядок ціни (наприклад «від 1100 ₴») — дублює таблицю на сторінках чанів. */
+	priceLabel?: string
 }
 
 /**
- * Єдина картка InfoWindow (як готельна на проживанні): галерея, серце, маршрут, закрити, рейтинг, пілюля, CTA (без рядка ціни в тілі картки).
+ * Єдина картка InfoWindow (як готельна на проживанні): галерея, серце, маршрут, закрити, рейтинг, опційно ціна, пілюля, CTA.
  */
 export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const routeEsc = escHtml(p.routeLink)
@@ -127,6 +129,11 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 					? `<a class="polyana-accommodation-iw-cta" href="${save}" target="_blank" rel="noopener noreferrer">Подзвонити</a>`
 					: ''
 
+	const priceRaw = (p.priceLabel || '').trim()
+	const priceBlock = priceRaw
+		? `<p class="polyana-accommodation-iw-price">${escHtml(priceRaw)}</p>`
+		: ''
+
 	return `<div class="polyana-accommodation-iw-card">
 		<div class="polyana-accommodation-iw-media">
 			<div class="polyana-accommodation-iw-gallery" data-iw-gallery data-idx="0" data-total="${total}">
@@ -161,6 +168,7 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 				<div class="polyana-accommodation-iw-title">${name}</div>
 				<div class="polyana-accommodation-iw-rating" title="Рейтинг"><span class="polyana-accommodation-iw-rating-star" aria-hidden="true">&#9733;</span> ${rating}</div>
 			</div>
+			${priceBlock}
 			<p class="polyana-accommodation-iw-desc">${desc}</p>
 			<p class="polyana-accommodation-iw-address">${address}</p>
 			${pillBlock}
@@ -173,6 +181,7 @@ export function hotelInfoWindowHtml(hotel: PolyanaHotel): string {
 	const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
 		`${hotel.name}, ${hotel.address}`
 	)}`
+	const priceLabel = hotel.price.trim()
 	return unifiedMapCardInfoWindowHtml({
 		name: hotel.name,
 		address: hotel.address,
@@ -184,6 +193,7 @@ export function hotelInfoWindowHtml(hotel: PolyanaHotel): string {
 		routeLink,
 		saveLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name}, ${hotel.address}`)}`,
 		detailHref: accommodationHotelPath(hotel.id),
+		...(priceLabel ? { priceLabel } : {}),
 	})
 }
 
@@ -194,6 +204,7 @@ export function spaVelikiChanyHotelInfoWindowHtml(hotel: PolyanaHotel): string {
 	)}`
 	const iw = spaVelikiChanyIwCopyByHotelId[hotel.id] ?? spaVelikiChanyIwCopyFallback
 	const bookingTelHref = `tel:${siteHeaderPhoneTel}`
+	const priceLabel = hotel.price.trim()
 	return unifiedMapCardInfoWindowHtml({
 		name: hotel.name,
 		address: hotel.address,
@@ -207,6 +218,7 @@ export function spaVelikiChanyHotelInfoWindowHtml(hotel: PolyanaHotel): string {
 		galleryExternalHref: routeLink,
 		ctaLabel: 'Забронювати',
 		ctaHref: bookingTelHref,
+		...(priceLabel ? { priceLabel } : {}),
 	})
 }
 

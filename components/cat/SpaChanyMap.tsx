@@ -154,6 +154,12 @@ export default function SpaChanyMap({
 				})
 			}
 
+			maps.event.addListener(map, 'click', () => {
+				if (cancelled) return
+				activeInfoWindowRef.current?.close()
+				activeInfoWindowRef.current = null
+			})
+
 			maps.event.addListenerOnce(map, 'idle', () => {
 				if (cancelled) return
 				maps.event.trigger(map, 'resize')
@@ -203,6 +209,11 @@ export default function SpaChanyMap({
 			activeInfoWindowRef.current = null
 			detachControls?.()
 			detachControls = null
+			const mapToClear = mapInstanceRef.current
+			const mapsApi = (window as Win).google?.maps
+			if (mapToClear && mapsApi?.event?.clearListeners) {
+				mapsApi.event.clearListeners(mapToClear, 'click')
+			}
 			mapInstanceRef.current = null
 			markersRef.current.clear()
 			setWindowMapsInitCallback(windowInitCallbackName, undefined)
@@ -232,6 +243,14 @@ export default function SpaChanyMap({
 			}
 			if (marker?.setZIndex) {
 				marker.setZIndex(active ? 1_000 : 1)
+			}
+		}
+
+		/* Кнопка «Переглянути» у таблиці: відкрити той самий InfoWindow, що й при кліку по мітці. */
+		if (selectedId) {
+			const marker = markersRef.current.get(selectedId)
+			if (marker && maps.event?.trigger) {
+				queueMicrotask(() => maps.event.trigger(marker, 'click'))
 			}
 		}
 	}, [selectedId, venues, mapEpoch])
