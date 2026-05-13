@@ -79,6 +79,16 @@ export const spaBaniPolyanaPageKeywords: string[] = [
 	'SPA баня Карпати',
 ]
 
+/** Сторінка /cat/spa-bani-chany/baseni — басейни */
+export const spaBaseniPolyanaPageKeywords: string[] = [
+	...spaBaniChanyPageKeywords,
+	'басейн Поляна',
+	'басейни Поляна порівняння',
+	'готель з басейном Поляна',
+	'купальня Поляна Закарпаття',
+	'SPA басейн Карпати',
+]
+
 /** Сторінка /excursions */
 export const excursionsPageKeywords: string[] = [
 	'екскурсії Поляна',

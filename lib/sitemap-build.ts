@@ -74,6 +74,7 @@ function collectSitemapEntries(): SitemapUrlEntry[] {
 		{ loc: pageUrl('/cat/spa-bani-chany/veliki-chany'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
 		{ loc: pageUrl('/cat/spa-bani-chany/mali-chany'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
 		{ loc: pageUrl('/cat/spa-bani-chany/bani'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
+		{ loc: pageUrl('/cat/spa-bani-chany/baseni'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
 		{ loc: pageUrl('/wellness'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		...accommodationDetailUrls,
 		...categoryUrls,

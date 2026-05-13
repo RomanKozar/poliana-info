@@ -5,6 +5,7 @@ import { categoryPlaceholders } from '@/data/category-placeholders'
 const VELIKI_CHANY_PATH = '/cat/spa-bani-chany/veliki-chany' as const
 const MALI_CHANY_PATH = '/cat/spa-bani-chany/mali-chany' as const
 const BANI_PATH = '/cat/spa-bani-chany/bani' as const
+const BASENI_PATH = '/cat/spa-bani-chany/baseni' as const
 
 const SECTION_KEYS = ['chani', 'bani', 'spaPoslugy'] as const
 
@@ -124,10 +125,13 @@ export default function SpaBaniChanyPageContent() {
 							{[0, 1].map(row => {
 								const imageIndex = colIdx * 2 + row + 1
 								const caption = SPA_BANNER_CAPTIONS[imageIndex]
+								const bannerAlt = caption
+									? `${caption.accent}${caption.plain} — Поляна`
+									: `${SECTION_LABELS[key]} — зображення ${row + 1}`
 								return (
 									<SpaTitleBanner
 										key={row}
-										alt={`${SECTION_LABELS[key]} — зображення ${row + 1}`}
+										alt={bannerAlt}
 										imageIndex={imageIndex}
 										caption={caption}
 										href={
@@ -137,7 +141,9 @@ export default function SpaBaniChanyPageContent() {
 													? MALI_CHANY_PATH
 													: imageIndex === 3
 														? BANI_PATH
-														: undefined
+														: imageIndex === 4
+															? BASENI_PATH
+															: undefined
 										}
 									/>
 								)

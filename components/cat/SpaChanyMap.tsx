@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { SpaVelikyiChanVenue } from '@/data/spa-veliki-chany-venues'
 import { attachPolyanaMapZoomControlsOnly } from '@/lib/google-map-stack-controls'
 import { spaMapPinIconDataUrl } from '@/lib/home-map-pin-icons'
-import { spaBaniHotelInfoWindowHtml, spaVelikiChanyHotelInfoWindowHtml } from '@/lib/map-info-window-html'
+import { spaBaniHotelInfoWindowHtml, spaBaseniHotelInfoWindowHtml, spaVelikiChanyHotelInfoWindowHtml } from '@/lib/map-info-window-html'
 import { attachPolyanaAccommodationIwDomHandlers } from '@/lib/map-info-window-ui'
 import { polyanaHotels } from '@/lib/polyana-hotels'
 
@@ -50,8 +50,8 @@ type Props = {
 	windowInitCallbackName: string
 	mapAriaLabel: string
 	embedIframeTitle: string
-	/** Тексти в InfoWindow: «великі чани» (за замовчуванням) або «бані». */
-	infoWindowVariant?: 'velikiChany' | 'bani'
+	/** Тексти в InfoWindow: чани, бані або басейни. */
+	infoWindowVariant?: 'velikiChany' | 'bani' | 'baseni'
 	className?: string
 	frameClassName?: string
 }
@@ -151,7 +151,9 @@ export default function SpaChanyMap({
 					const iwHtml =
 						infoWindowVariant === 'bani'
 							? spaBaniHotelInfoWindowHtml(hotel)
-							: spaVelikiChanyHotelInfoWindowHtml(hotel)
+							: infoWindowVariant === 'baseni'
+								? spaBaseniHotelInfoWindowHtml(hotel)
+								: spaVelikiChanyHotelInfoWindowHtml(hotel)
 					const iw = new maps.InfoWindow({
 						content: iwHtml,
 						headerDisabled: true,

@@ -57,6 +57,12 @@ const BASE_ITEMS: SiteSearchItem[] = [
 		keywords: ['бані', 'сауна', 'лазня', 'SPA Поляна', 'баня Поляна', 'Закарпаття'],
 		section: 'SPA та відпочинок',
 	},
+	{
+		title: 'Басейни в Поляні — порівняння та карта',
+		href: '/cat/spa-bani-chany/baseni',
+		keywords: ['басейн', 'басейни', 'купання', 'SPA Поляна', 'готель з басейном', 'Закарпаття'],
+		section: 'SPA та відпочинок',
+	},
 ]
 
 const SITE_SEARCH_INDEX_RAW: SiteSearchItem[] = [
@@ -199,6 +205,9 @@ export function getSearchDirectHref(rawQuery: string): string | null {
 		{ needle: 'бані в поляні', href: '/cat/spa-bani-chany/bani' },
 		{ needle: 'бані поляна', href: '/cat/spa-bani-chany/bani' },
 		{ needle: 'сауна поляна', href: '/cat/spa-bani-chany/bani' },
+		{ needle: 'басейн поляна', href: '/cat/spa-bani-chany/baseni' },
+		{ needle: 'басейни поляна', href: '/cat/spa-bani-chany/baseni' },
+		{ needle: 'басейни в поляні', href: '/cat/spa-bani-chany/baseni' },
 		{ needle: 'екскурсії в гори', href: excursionsMountainsHref },
 		{ needle: 'екскурсія в гори', href: excursionsMountainsHref },
 		{ needle: 'піші маршрути', href: excursionsMountainsHref },
@@ -236,6 +245,8 @@ export function getSearchDirectHref(rawQuery: string): string | null {
 			сауна: '/cat/spa-bani-chany/bani',
 			фітобочка: '/cat/spa-bani-chany',
 			фітобочки: '/cat/spa-bani-chany',
+			басейн: '/cat/spa-bani-chany/baseni',
+			басейни: '/cat/spa-bani-chany/baseni',
 			екскурсії: excursionsMountainsHref,
 			екскурсія: excursionsMountainsHref,
 			excursion: excursionsMountainsHref,

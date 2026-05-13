@@ -1,3 +1,4 @@
+import { spaBaseniIwCopyByHotelId, spaBaseniIwCopyFallback } from '@/data/spa-baseni-iw-copy'
 import { spaBaniIwCopyByHotelId, spaBaniIwCopyFallback } from '@/data/spa-bani-iw-copy'
 import {
 	spaVelikiChanyIwCopyByHotelId,
@@ -229,6 +230,31 @@ export function spaBaniHotelInfoWindowHtml(hotel: PolyanaHotel): string {
 		`${hotel.name}, ${hotel.address}`
 	)}`
 	const iw = spaBaniIwCopyByHotelId[hotel.id] ?? spaBaniIwCopyFallback
+	const bookingTelHref = `tel:${siteHeaderPhoneTel}`
+	const priceLabel = hotel.price.trim()
+	return unifiedMapCardInfoWindowHtml({
+		name: hotel.name,
+		address: hotel.address,
+		description: iw.description,
+		rating: hotel.rating,
+		feature: iw.feature,
+		phone: hotel.phone,
+		galleryImages: getHotelMapGallery(hotel),
+		routeLink,
+		saveLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name}, ${hotel.address}`)}`,
+		galleryExternalHref: routeLink,
+		ctaLabel: 'Забронювати',
+		ctaHref: bookingTelHref,
+		...(priceLabel ? { priceLabel } : {}),
+	})
+}
+
+/** Картка на карті «Басейни»: тексти про басейн, кнопка «Забронювати» як на інших SPA-сторінках. */
+export function spaBaseniHotelInfoWindowHtml(hotel: PolyanaHotel): string {
+	const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+		`${hotel.name}, ${hotel.address}`
+	)}`
+	const iw = spaBaseniIwCopyByHotelId[hotel.id] ?? spaBaseniIwCopyFallback
 	const bookingTelHref = `tel:${siteHeaderPhoneTel}`
 	const priceLabel = hotel.price.trim()
 	return unifiedMapCardInfoWindowHtml({
