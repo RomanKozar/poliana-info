@@ -68,6 +68,17 @@ export const spaBaniChanyPageKeywords: string[] = [
 	'відпочинок SPA Поляна',
 ]
 
+/** Сторінка /cat/spa-bani-chany/bani — порівняння бань і саун */
+export const spaBaniPolyanaPageKeywords: string[] = [
+	...spaBaniChanyPageKeywords,
+	'бані Поляна порівняння',
+	'сауна Поляна',
+	'руська баня Поляна',
+	'лазня Поляна Закарпаття',
+	'готель з банею Поляна',
+	'SPA баня Карпати',
+]
+
 /** Сторінка /excursions */
 export const excursionsPageKeywords: string[] = [
 	'екскурсії Поляна',

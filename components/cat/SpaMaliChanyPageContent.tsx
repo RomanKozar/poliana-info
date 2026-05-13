@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { FaChevronDown, FaChevronLeft, FaMapMarkedAlt } from 'react-icons/fa'
 import { SPA_MALI_CHANY_VENUES } from '@/data/spa-mali-chany-venues'
 import { siteHeaderPhoneDisplay } from '@/data/trout-page'
+import SpaBaniChanyComparisonTabs from '@/components/cat/SpaBaniChanyComparisonTabs'
 import SpaChanyMap from '@/components/cat/SpaChanyMap'
 
 type SortDir = 'asc' | 'desc'
@@ -89,6 +90,8 @@ export default function SpaMaliChanyPageContent() {
 					карпатським теплом.
 				</p>
 			</header>
+
+			<SpaBaniChanyComparisonTabs active='mali' />
 
 			<div className='flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(300px,440px)] lg:items-start lg:gap-10'>
 				<div className='min-w-0'>

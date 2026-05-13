@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { SpaVelikyiChanVenue } from '@/data/spa-veliki-chany-venues'
 import { attachPolyanaMapZoomControlsOnly } from '@/lib/google-map-stack-controls'
 import { spaMapPinIconDataUrl } from '@/lib/home-map-pin-icons'
-import { spaVelikiChanyHotelInfoWindowHtml } from '@/lib/map-info-window-html'
+import { spaBaniHotelInfoWindowHtml, spaVelikiChanyHotelInfoWindowHtml } from '@/lib/map-info-window-html'
 import { attachPolyanaAccommodationIwDomHandlers } from '@/lib/map-info-window-ui'
 import { polyanaHotels } from '@/lib/polyana-hotels'
 
@@ -50,6 +50,8 @@ type Props = {
 	windowInitCallbackName: string
 	mapAriaLabel: string
 	embedIframeTitle: string
+	/** Тексти в InfoWindow: «великі чани» (за замовчуванням) або «бані». */
+	infoWindowVariant?: 'velikiChany' | 'bani'
 	className?: string
 	frameClassName?: string
 }
@@ -60,6 +62,7 @@ export default function SpaChanyMap({
 	windowInitCallbackName,
 	mapAriaLabel,
 	embedIframeTitle,
+	infoWindowVariant = 'velikiChany',
 	className = '',
 	frameClassName = 'relative min-h-[280px] h-[min(52vh,26rem)] w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-lg sm:min-h-[320px] lg:min-h-0 lg:h-[min(70vh,32rem)]',
 }: Props) {
@@ -145,8 +148,12 @@ export default function SpaChanyMap({
 				maps.event.addListener(marker, 'click', () => {
 					if (cancelled || !hotel) return
 					activeInfoWindowRef.current?.close()
+					const iwHtml =
+						infoWindowVariant === 'bani'
+							? spaBaniHotelInfoWindowHtml(hotel)
+							: spaVelikiChanyHotelInfoWindowHtml(hotel)
 					const iw = new maps.InfoWindow({
-						content: spaVelikiChanyHotelInfoWindowHtml(hotel),
+						content: iwHtml,
 						headerDisabled: true,
 					})
 					activeInfoWindowRef.current = iw
@@ -219,7 +226,7 @@ export default function SpaChanyMap({
 			setWindowMapsInitCallback(windowInitCallbackName, undefined)
 			if (root) root.innerHTML = ''
 		}
-	}, [venues, windowInitCallbackName])
+	}, [venues, windowInitCallbackName, infoWindowVariant])
 
 	useEffect(() => {
 		const win = window as Win

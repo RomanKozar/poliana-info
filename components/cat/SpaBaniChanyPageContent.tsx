@@ -4,6 +4,7 @@ import { categoryPlaceholders } from '@/data/category-placeholders'
 
 const VELIKI_CHANY_PATH = '/cat/spa-bani-chany/veliki-chany' as const
 const MALI_CHANY_PATH = '/cat/spa-bani-chany/mali-chany' as const
+const BANI_PATH = '/cat/spa-bani-chany/bani' as const
 
 const SECTION_KEYS = ['chani', 'bani', 'spaPoslugy'] as const
 
@@ -108,7 +109,16 @@ export default function SpaBaniChanyPageContent() {
 				{SECTION_KEYS.map((key, colIdx) => (
 					<div key={key} className='flex min-h-0 flex-col gap-5'>
 						<h2 className='w-full cursor-pointer text-center text-2xl font-extrabold tracking-tight text-[#2D333D] sm:text-3xl'>
-							{SECTION_LABELS[key]}
+							{key === 'bani' ? (
+								<Link
+									href={BANI_PATH}
+									className='rounded-lg outline-none ring-[#53C4DA]/0 transition hover:text-[#53C4DA] focus-visible:ring-2 focus-visible:ring-[#53C4DA]/40'
+								>
+									{SECTION_LABELS[key]}
+								</Link>
+							) : (
+								SECTION_LABELS[key]
+							)}
 						</h2>
 						<div className='flex flex-col gap-5'>
 							{[0, 1].map(row => {
@@ -125,7 +135,9 @@ export default function SpaBaniChanyPageContent() {
 												? VELIKI_CHANY_PATH
 												: imageIndex === 2
 													? MALI_CHANY_PATH
-													: undefined
+													: imageIndex === 3
+														? BANI_PATH
+														: undefined
 										}
 									/>
 								)

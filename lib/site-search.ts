@@ -51,6 +51,12 @@ const BASE_ITEMS: SiteSearchItem[] = [
 		keywords: ['чани', 'малий чан', 'SPA Поляна', 'купіль', 'бронювання чан', 'ціни чан'],
 		section: 'SPA та відпочинок',
 	},
+	{
+		title: 'Бані та сауни в Поляні — порівняння та карта',
+		href: '/cat/spa-bani-chany/bani',
+		keywords: ['бані', 'сауна', 'лазня', 'SPA Поляна', 'баня Поляна', 'Закарпаття'],
+		section: 'SPA та відпочинок',
+	},
 ]
 
 const SITE_SEARCH_INDEX_RAW: SiteSearchItem[] = [
@@ -190,6 +196,9 @@ export function getSearchDirectHref(rawQuery: string): string | null {
 		{ needle: 'великий чан', href: '/cat/spa-bani-chany/veliki-chany' },
 		{ needle: 'малі чани', href: '/cat/spa-bani-chany/mali-chany' },
 		{ needle: 'малий чан', href: '/cat/spa-bani-chany/mali-chany' },
+		{ needle: 'бані в поляні', href: '/cat/spa-bani-chany/bani' },
+		{ needle: 'бані поляна', href: '/cat/spa-bani-chany/bani' },
+		{ needle: 'сауна поляна', href: '/cat/spa-bani-chany/bani' },
 		{ needle: 'екскурсії в гори', href: excursionsMountainsHref },
 		{ needle: 'екскурсія в гори', href: excursionsMountainsHref },
 		{ needle: 'піші маршрути', href: excursionsMountainsHref },
@@ -219,12 +228,12 @@ export function getSearchDirectHref(rawQuery: string): string | null {
 		const one: Record<string, string> = {
 			чани: '/cat/spa-bani-chany',
 			чан: '/cat/spa-bani-chany',
-			бані: '/cat/spa-bani-chany',
-			баня: '/cat/spa-bani-chany',
+			бані: '/cat/spa-bani-chany/bani',
+			баня: '/cat/spa-bani-chany/bani',
 			купіль: '/cat/spa-bani-chany',
 			купелі: '/cat/spa-bani-chany',
 			spa: '/cat/spa-bani-chany',
-			сауна: '/cat/spa-bani-chany',
+			сауна: '/cat/spa-bani-chany/bani',
 			фітобочка: '/cat/spa-bani-chany',
 			фітобочки: '/cat/spa-bani-chany',
 			екскурсії: excursionsMountainsHref,
@@ -285,6 +294,8 @@ export function getSearchDirectHref(rawQuery: string): string | null {
 			'напої їжа': '/cat/yizha-napoyi',
 			'екскурсії гори': excursionsMountainsHref,
 			'гори екскурсії': excursionsMountainsHref,
+			'чани бані': '/cat/spa-bani-chany',
+			'бані чани': '/cat/spa-bani-chany',
 		}
 		if (pairRules[pair]) return pairRules[pair]
 		if (pairRules[pairRev]) return pairRules[pairRev]
