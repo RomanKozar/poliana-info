@@ -55,6 +55,7 @@ export const spaItems: Array<{
 	icon: IconType
 	image: string
 	imageAlt: string
+	href: string
 }> = [
 	{
 		title: 'Чани в Карпатах',
@@ -62,6 +63,7 @@ export const spaItems: Array<{
 		icon: FaWater,
 		image: '/images/spa/maliy-chan.png',
 		imageAlt: 'Чани в Карпатах',
+		href: '/cat/spa-bani-chany/mali-chany',
 	},
 	{
 		title: 'Масаж',
@@ -69,6 +71,7 @@ export const spaItems: Array<{
 		icon: FaSpa,
 		image: '/images/spa/masasch.png',
 		imageAlt: 'Масаж',
+		href: '/cat/spa-bani-chany/masazhi',
 	},
 	{
 		title: 'Фітобочки',
@@ -76,6 +79,7 @@ export const spaItems: Array<{
 		icon: FaRegClock,
 		image: '/images/spa/fitobochka.png',
 		imageAlt: 'Фітобочки',
+		href: '/cat/spa-bani-chany/fitobochky',
 	},
 ]
 
@@ -250,14 +254,14 @@ export const popularNow: PopularNowItem[] = [
 		title: 'Чани з видом на гори',
 		text: 'Відпочинок, який запам’ятається.',
 		image: '/images/gallery/chan_1.webp',
-		href: '/cat/spa-bani-chany',
+		href: '/cat/spa-bani-chany/veliki-chany',
 	},
 	{
 		badge: 'ТОП SPA',
 		title: 'SPA для тіла та душі',
 		text: 'Релакс, масажі та процедури.',
 		image: '/images/gallery/sayna.webp',
-		href: '/cat/spa-bani-chany',
+		href: '/cat/spa-bani-chany/masazhi',
 	},
 ]
 

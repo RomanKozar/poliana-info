@@ -50,7 +50,7 @@ export default function SpaMasazhiPageContent() {
 
 			<header className='mb-6 max-w-3xl'>
 				<h1 className='text-2xl font-extrabold tracking-tight text-[#2D333D] sm:text-3xl lg:text-4xl'>
-					Масажі в Поляні — час, ціна, запис
+					Масажі в Поляні
 				</h1>
 				<p className='mt-2 text-sm leading-relaxed text-slate-600 sm:text-base'>
 					Зведений перелік типових SPA-послуг: тривалість сеансу, орієнтовна вартість і кнопка запису. Конкретний

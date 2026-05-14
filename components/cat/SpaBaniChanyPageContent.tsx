@@ -102,9 +102,9 @@ export default function SpaBaniChanyPageContent() {
 										imageIndex={imageIndex}
 										href={
 											imageIndex === 1
-												? VELIKI_CHANY_PATH
+												? MALI_CHANY_PATH
 												: imageIndex === 2
-													? MALI_CHANY_PATH
+													? VELIKI_CHANY_PATH
 													: imageIndex === 3
 														? BANI_PATH
 														: imageIndex === 4

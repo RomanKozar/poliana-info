@@ -337,7 +337,7 @@ export default function HomePage() {
 					{spaItems.map(item => (
 						<Link
 							key={item.title}
-							href='/cat/spa-bani-chany'
+							href={item.href}
 							className='flex min-h-36 w-full cursor-pointer overflow-hidden rounded-xl border border-[#DCE8D8] bg-white text-left shadow-sm no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
 						>
 							<div className='flex flex-1 flex-col px-4 py-8'>
