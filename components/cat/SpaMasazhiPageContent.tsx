@@ -66,7 +66,7 @@ export default function SpaMasazhiPageContent() {
 						<span className={accent.iconBox}>
 							<FaSpa className='size-4' aria-hidden />
 						</span>
-						<h2 className='text-lg font-extrabold text-[#2D333D] sm:text-xl'>SPA-послуги — перелік</h2>
+						<h2 className='text-lg font-extrabold text-[#2D333D] sm:text-xl'>SPA-послуги</h2>
 					</div>
 
 					<div className='w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm ring-1 ring-slate-900/5'>
