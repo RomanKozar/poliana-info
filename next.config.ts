@@ -32,6 +32,9 @@ const nextConfig: NextConfig = {
 	// Англомовна сторінка /privacy-policy (часто з боку хостингу) → наша українська політика
 	async redirects() {
 		return [
+			// Старі PHP-запити → головна (Next не віддає index.php; у GSC був 4XX)
+			{ source: '/index.php', destination: '/', permanent: true },
+			{ source: '/index.php/', destination: '/', permanent: true },
 			// Часта опечатка в Google Search Console: sitemax.xml → справжній sitemap Next.js
 			{
 				source: '/sitemax.xml',
