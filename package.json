@@ -10,7 +10,8 @@
     "convert-atv": "node scripts/convert-atv-images.mjs",
     "convert-mountains-webp": "node scripts/convert-mountains-images.mjs",
     "convert-gallery-accommodation": "node scripts/convert-gallery-accommodation.mjs",
-    "convert-trout-webp": "node scripts/convert-trout-webp.mjs"
+    "convert-trout-webp": "node scripts/convert-trout-webp.mjs",
+    "convert-spa-title-webp": "node scripts/convert-spa-title-webp.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -199,7 +199,7 @@ export default function SpaBaniPageContent() {
 									<thead>
 										<tr className='border-b border-slate-200 bg-slate-50/90 text-xs font-bold uppercase tracking-wide text-slate-500'>
 											<th className='px-4 py-3'>Заклад</th>
-											<th className='px-4 py-3'>Ціна*</th>
+											<th className='px-4 py-3'>Ціна</th>
 											<th className='px-4 py-3'>На карті</th>
 											<th className='px-4 py-3'>Дія</th>
 										</tr>
@@ -254,7 +254,7 @@ export default function SpaBaniPageContent() {
 										>
 											<div className='flex flex-col gap-2'>
 												<p className='text-base font-extrabold text-[#2D333D]'>{v.name}</p>
-												<p className='text-xs font-semibold uppercase tracking-wide text-slate-500'>Ціна*</p>
+												<p className='text-xs font-semibold uppercase tracking-wide text-slate-500'>Ціна</p>
 												<p className='text-sm font-bold text-[#E06D3C]'>{v.priceLabel}</p>
 												<div className='mt-2 flex flex-wrap justify-end gap-2'>
 													<button
@@ -280,10 +280,6 @@ export default function SpaBaniPageContent() {
 							</ul>
 						</>
 					)}
-					<p className='mt-3 text-xs leading-relaxed text-slate-500'>
-						*У колонці «Ціна» — орієнтир з картки проживання на порталі; вартість відвідування бані чи сауни
-						завжди підтверджуйте в обраному закладі.
-					</p>
 				</div>
 
 				<div ref={mapAnchorRef} className='min-w-0 lg:sticky lg:top-[calc(var(--header-offset,5rem)+1rem)]'>
@@ -302,10 +298,6 @@ export default function SpaBaniPageContent() {
 							Немає точок для відображення на карті.
 						</div>
 					)}
-					<p className='mt-2 text-xs text-slate-500'>
-						Мітки збігаються з готелями на головній карті; наявність вільних парних, правила та ціни на бані
-						уточнюйте перед візитом.
-					</p>
 				</div>
 			</div>
 		</section>

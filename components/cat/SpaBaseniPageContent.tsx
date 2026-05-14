@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { FaChevronDown, FaChevronLeft, FaMapMarkedAlt } from 'react-icons/fa'
+import { spaBaseniPoolTypesForVenue } from '@/data/spa-baseni-pool-types'
 import { SPA_BASENI_VENUES } from '@/data/spa-baseni-venues'
 import { siteHeaderPhoneDisplay } from '@/data/trout-page'
 import SpaBaniChanyComparisonTabs from '@/components/cat/SpaBaniChanyComparisonTabs'
@@ -19,24 +20,24 @@ function sortDirLabel(dir: SortDir): string {
 	return SORT_PRESETS.find(p => p.dir === dir)?.label ?? 'Спочатку дешевші'
 }
 
-/** Небесно-блакитний акцент для «води» / басейнів; таб у спільному блоці також виділено окремо. */
+/** Акцент #53C4DA як на сторінках чанів і бань. */
 const accent = {
-	iconBox: 'inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-sky-500/15 text-sky-600',
+	iconBox: 'inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#53C4DA]/15 text-[#53C4DA]',
 	filterBtn:
-		'inline-flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-2xl border border-slate-200/90 bg-white px-4 py-2.5 text-left shadow-sm ring-1 ring-slate-900/5 transition-all hover:border-sky-500/40 hover:ring-sky-500/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/35 sm:min-w-[8.5rem]',
-	filterLabel: 'text-sm font-extrabold tracking-tight text-sky-600',
-	sortSelected: 'bg-sky-500/12 text-[#2D333D]',
+		'inline-flex min-w-0 cursor-pointer items-center justify-between gap-3 rounded-2xl border border-slate-200/90 bg-white px-4 py-2.5 text-left shadow-sm ring-1 ring-slate-900/5 transition-all hover:border-[#53C4DA]/40 hover:ring-[#53C4DA]/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA]/35 sm:min-w-[8.5rem]',
+	filterLabel: 'text-sm font-extrabold tracking-tight text-[#53C4DA]',
+	sortSelected: 'bg-[#53C4DA]/12 text-[#2D333D]',
 	reset:
-		'cursor-pointer rounded-xl border border-transparent px-3 py-2 text-sm font-bold text-slate-500 underline decoration-slate-300 underline-offset-2 transition-colors hover:text-sky-600 disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-40 disabled:no-underline',
-	rowActive: 'bg-sky-500/8 ring-1 ring-inset ring-sky-500/25',
+		'cursor-pointer rounded-xl border border-transparent px-3 py-2 text-sm font-bold text-slate-500 underline decoration-slate-300 underline-offset-2 transition-colors hover:text-[#53C4DA] disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-40 disabled:no-underline',
+	rowActive: 'bg-[#53C4DA]/8 ring-1 ring-inset ring-[#53C4DA]/25',
 	rowInactive: 'hover:bg-slate-50/80',
 	mapBtn:
-		'cursor-pointer rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-sky-600 shadow-sm transition-all hover:border-sky-500/50 hover:bg-sky-500/10',
-	mobileCard: 'ring-2 ring-sky-500/40',
+		'cursor-pointer rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-[#53C4DA] shadow-sm transition-all hover:border-[#53C4DA]/50 hover:bg-[#53C4DA]/10',
+	mobileCard: 'ring-2 ring-[#53C4DA]/40',
 	mobileMapBtn:
-		'cursor-pointer rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-sky-600 transition-colors hover:bg-sky-500/10',
+		'cursor-pointer rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-[#53C4DA] transition-colors hover:bg-[#53C4DA]/10',
 	leftRail:
-		"relative min-w-0 pl-3 sm:pl-4 before:pointer-events-none before:absolute before:left-0 before:top-3 before:bottom-3 before:w-1 before:rounded-full before:bg-sky-500 before:content-['']",
+		"relative min-w-0 pl-3 sm:pl-4 before:pointer-events-none before:absolute before:left-0 before:top-3 before:bottom-3 before:w-1 before:rounded-full before:bg-[#53C4DA] before:content-['']",
 }
 
 export default function SpaBaseniPageContent() {
@@ -90,7 +91,7 @@ export default function SpaBaseniPageContent() {
 
 	return (
 		<section className='w-full max-w-none px-3 pb-12 pt-4 sm:px-5 sm:pb-14 sm:pt-5 lg:px-8 lg:pb-16 lg:pt-6'>
-			<nav className='mb-4 text-sm font-semibold text-sky-600'>
+			<nav className='mb-4 text-sm font-semibold text-[#53C4DA]'>
 				<Link
 					href='/cat/spa-bani-chany'
 					className='inline-flex items-center gap-1.5 rounded-lg px-1 py-0.5 transition-colors hover:text-[#2D333D]'
@@ -199,7 +200,8 @@ export default function SpaBaseniPageContent() {
 									<thead>
 										<tr className='border-b border-slate-200 bg-slate-50/90 text-xs font-bold uppercase tracking-wide text-slate-500'>
 											<th className='px-4 py-3'>Заклад</th>
-											<th className='px-4 py-3'>Ціна*</th>
+											<th className='min-w-0 px-3 py-3 sm:px-4'>Відкриті / криті</th>
+											<th className='px-4 py-3'>Ціна</th>
 											<th className='px-4 py-3'>На карті</th>
 											<th className='px-4 py-3'>Дія</th>
 										</tr>
@@ -207,6 +209,7 @@ export default function SpaBaseniPageContent() {
 									<tbody>
 										{filteredVenues.map(v => {
 											const active = selectedId === v.id
+											const pool = spaBaseniPoolTypesForVenue(v.id)
 											return (
 												<tr
 													key={v.id}
@@ -215,6 +218,16 @@ export default function SpaBaseniPageContent() {
 													}`}
 												>
 													<td className='px-4 py-3.5 font-bold text-[#2D333D]'>{v.name}</td>
+													<td className='min-w-0 px-3 py-3.5 text-left text-xs font-semibold leading-snug text-slate-700 sm:px-4'>
+														<span className='block'>
+															<span className='font-bold uppercase tracking-wide text-slate-500'>Відкриті:</span>{' '}
+															{pool.openAir}
+														</span>
+														<span className='mt-1 block'>
+															<span className='font-bold uppercase tracking-wide text-slate-500'>Криті:</span>{' '}
+															{pool.indoor}
+														</span>
+													</td>
 													<td className='px-4 py-3.5 font-semibold text-[#E06D3C]'>{v.priceLabel}</td>
 													<td className='px-4 py-3.5'>
 														<button
@@ -245,6 +258,7 @@ export default function SpaBaseniPageContent() {
 							<ul className='flex flex-col gap-3 lg:hidden'>
 								{filteredVenues.map(v => {
 									const active = selectedId === v.id
+									const pool = spaBaseniPoolTypesForVenue(v.id)
 									return (
 										<li
 											key={v.id}
@@ -254,7 +268,16 @@ export default function SpaBaseniPageContent() {
 										>
 											<div className='flex flex-col gap-2'>
 												<p className='text-base font-extrabold text-[#2D333D]'>{v.name}</p>
-												<p className='text-xs font-semibold uppercase tracking-wide text-slate-500'>Ціна*</p>
+												<div className='text-[11px] leading-snug text-slate-600'>
+													<p className='text-[10px] font-bold uppercase tracking-wide text-slate-500'>Відкриті / криті</p>
+													<p className='mt-1'>
+														<span className='font-semibold text-slate-500'>Відкриті:</span> {pool.openAir}
+													</p>
+													<p className='mt-0.5'>
+														<span className='font-semibold text-slate-500'>Криті:</span> {pool.indoor}
+													</p>
+												</div>
+												<p className='text-xs font-semibold uppercase tracking-wide text-slate-500'>Ціна</p>
 												<p className='text-sm font-bold text-[#E06D3C]'>{v.priceLabel}</p>
 												<div className='mt-2 flex flex-wrap justify-end gap-2'>
 													<button
@@ -280,10 +303,6 @@ export default function SpaBaseniPageContent() {
 							</ul>
 						</>
 					)}
-					<p className='mt-3 text-xs leading-relaxed text-slate-500'>
-						*У колонці «Ціна» — орієнтир з картки проживання на порталі; вартість відвідування басейну
-						завжди підтверджуйте в обраному закладі.
-					</p>
 				</div>
 
 				<div ref={mapAnchorRef} className='min-w-0 lg:sticky lg:top-[calc(var(--header-offset,5rem)+1rem)]'>
@@ -302,10 +321,6 @@ export default function SpaBaseniPageContent() {
 							Немає точок для відображення на карті.
 						</div>
 					)}
-					<p className='mt-2 text-xs text-slate-500'>
-						Мітки збігаються з готелями на головній карті; глибина, години роботи басейну та правила для дітей
-						уточнюйте перед візитом.
-					</p>
 				</div>
 			</div>
 		</section>

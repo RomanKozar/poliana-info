@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { SpaVelikyiChanVenue } from '@/data/spa-veliki-chany-venues'
 import { attachPolyanaMapZoomControlsOnly } from '@/lib/google-map-stack-controls'
 import { spaMapPinIconDataUrl } from '@/lib/home-map-pin-icons'
-import { spaBaniHotelInfoWindowHtml, spaBaseniHotelInfoWindowHtml, spaVelikiChanyHotelInfoWindowHtml } from '@/lib/map-info-window-html'
+import { spaBaniHotelInfoWindowHtml, spaBaseniHotelInfoWindowHtml, spaFitobochkyHotelInfoWindowHtml, spaMasazhiHotelInfoWindowHtml, spaVelikiChanyHotelInfoWindowHtml } from '@/lib/map-info-window-html'
 import { attachPolyanaAccommodationIwDomHandlers } from '@/lib/map-info-window-ui'
 import { polyanaHotels } from '@/lib/polyana-hotels'
 
@@ -50,10 +50,15 @@ type Props = {
 	windowInitCallbackName: string
 	mapAriaLabel: string
 	embedIframeTitle: string
-	/** Тексти в InfoWindow: чани, бані або басейни. */
-	infoWindowVariant?: 'velikiChany' | 'bani' | 'baseni'
+	/** Тексти в InfoWindow: чани, бані, басейни, масажі або фітобочки. */
+	infoWindowVariant?: 'velikiChany' | 'bani' | 'baseni' | 'masazhi' | 'fitobochky'
 	className?: string
 	frameClassName?: string
+	/**
+	 * Після `fitBounds` не наближати сильніше за цей рівень (більше число = ближче).
+	 * Для однієї мітки Google часто дає надмірний зум — обмеження «віддаляє» карту.
+	 */
+	fitBoundsMaxZoom?: number
 }
 
 export default function SpaChanyMap({
@@ -65,6 +70,7 @@ export default function SpaChanyMap({
 	infoWindowVariant = 'velikiChany',
 	className = '',
 	frameClassName = 'relative min-h-[280px] h-[min(52vh,26rem)] w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-lg sm:min-h-[320px] lg:min-h-0 lg:h-[min(70vh,32rem)]',
+	fitBoundsMaxZoom,
 }: Props) {
 	const containerRef = useRef<HTMLDivElement | null>(null)
 	const mapInstanceRef = useRef<any>(null)
@@ -132,7 +138,10 @@ export default function SpaChanyMap({
 				activeInfoWindowRef.current = null
 			})
 
-			map.fitBounds(bounds, { top: 24, right: 24, bottom: 24, left: 24 })
+			const fitPad =
+				venues.length === 1 && fitBoundsMaxZoom != null ? { top: 56, right: 56, bottom: 56, left: 56 } : { top: 24, right: 24, bottom: 24, left: 24 }
+
+			map.fitBounds(bounds, fitPad)
 
 			for (const v of venues) {
 				const hotel = polyanaHotels.find(h => h.id === v.id)
@@ -153,7 +162,11 @@ export default function SpaChanyMap({
 							? spaBaniHotelInfoWindowHtml(hotel)
 							: infoWindowVariant === 'baseni'
 								? spaBaseniHotelInfoWindowHtml(hotel)
-								: spaVelikiChanyHotelInfoWindowHtml(hotel)
+								: infoWindowVariant === 'masazhi'
+									? spaMasazhiHotelInfoWindowHtml(hotel)
+									: infoWindowVariant === 'fitobochky'
+										? spaFitobochkyHotelInfoWindowHtml(hotel)
+										: spaVelikiChanyHotelInfoWindowHtml(hotel)
 					const iw = new maps.InfoWindow({
 						content: iwHtml,
 						headerDisabled: true,
@@ -171,6 +184,12 @@ export default function SpaChanyMap({
 
 			maps.event.addListenerOnce(map, 'idle', () => {
 				if (cancelled) return
+				if (fitBoundsMaxZoom != null) {
+					const z = map.getZoom()
+					if (typeof z === 'number' && z > fitBoundsMaxZoom) {
+						map.setZoom(fitBoundsMaxZoom)
+					}
+				}
 				maps.event.trigger(map, 'resize')
 				requestAnimationFrame(() => maps.event.trigger(map, 'resize'))
 			})
@@ -228,7 +247,7 @@ export default function SpaChanyMap({
 			setWindowMapsInitCallback(windowInitCallbackName, undefined)
 			if (root) root.innerHTML = ''
 		}
-	}, [venues, windowInitCallbackName, infoWindowVariant])
+	}, [venues, windowInitCallbackName, infoWindowVariant, fitBoundsMaxZoom])
 
 	useEffect(() => {
 		const win = window as Win
@@ -282,13 +301,14 @@ export default function SpaChanyMap({
 		const midLat = venues.reduce((s, v) => s + v.lat, 0) / venues.length
 		const midLng = venues.reduce((s, v) => s + v.lng, 0) / venues.length
 		const q = encodeURIComponent(`${midLat},${midLng}`)
+		const embedZ = fitBoundsMaxZoom ?? 15
 		return (
 			<div className={className}>
 				<div className={`${frameClassName} relative`}>
 					<iframe
 						title={embedIframeTitle}
 						className='absolute inset-0 h-full min-h-[280px] w-full border-0'
-						src={`https://www.google.com/maps?q=${q}&z=15&output=embed&hl=uk`}
+						src={`https://www.google.com/maps?q=${q}&z=${embedZ}&output=embed&hl=uk`}
 						loading='lazy'
 						referrerPolicy='no-referrer-when-downgrade'
 					/>

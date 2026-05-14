@@ -1,5 +1,7 @@
 import { spaBaseniIwCopyByHotelId, spaBaseniIwCopyFallback } from '@/data/spa-baseni-iw-copy'
 import { spaBaniIwCopyByHotelId, spaBaniIwCopyFallback } from '@/data/spa-bani-iw-copy'
+import { spaFitobochkyIwCopyByHotelId, spaFitobochkyIwCopyFallback } from '@/data/spa-fitobochky-iw-copy'
+import { spaMasazhiIwCopyByHotelId, spaMasazhiIwCopyFallback } from '@/data/spa-masazhi-iw-copy'
 import {
 	spaVelikiChanyIwCopyByHotelId,
 	spaVelikiChanyIwCopyFallback,
@@ -52,6 +54,8 @@ function normalizeTelForHref(digits: string): string {
 
 export type UnifiedMapCardIw = {
 	name: string
+	/** Заголовок у картці; якщо не задано — показується `name` (наприклад для тематичних сторінок SPA). */
+	title?: string
 	address: string
 	description: string
 	rating: string
@@ -81,6 +85,7 @@ export type UnifiedMapCardIw = {
 export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const routeEsc = escHtml(p.routeLink)
 	const name = escHtml(p.name)
+	const cardTitle = escHtml((p.title?.trim() || p.name).trim())
 	const desc = escHtml(p.description)
 	const address = escHtml(p.address)
 	const feature = escHtml(p.feature)
@@ -167,7 +172,7 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 		</div>
 		<div class="polyana-accommodation-iw-body">
 			<div class="polyana-accommodation-iw-row1">
-				<div class="polyana-accommodation-iw-title">${name}</div>
+				<div class="polyana-accommodation-iw-title">${cardTitle}</div>
 				<div class="polyana-accommodation-iw-rating" title="Рейтинг"><span class="polyana-accommodation-iw-rating-star" aria-hidden="true">&#9733;</span> ${rating}</div>
 			</div>
 			${priceBlock}
@@ -255,6 +260,57 @@ export function spaBaseniHotelInfoWindowHtml(hotel: PolyanaHotel): string {
 		`${hotel.name}, ${hotel.address}`
 	)}`
 	const iw = spaBaseniIwCopyByHotelId[hotel.id] ?? spaBaseniIwCopyFallback
+	const bookingTelHref = `tel:${siteHeaderPhoneTel}`
+	const priceLabel = hotel.price.trim()
+	return unifiedMapCardInfoWindowHtml({
+		name: hotel.name,
+		address: hotel.address,
+		description: iw.description,
+		rating: hotel.rating,
+		feature: iw.feature,
+		phone: hotel.phone,
+		galleryImages: getHotelMapGallery(hotel),
+		routeLink,
+		saveLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name}, ${hotel.address}`)}`,
+		galleryExternalHref: routeLink,
+		ctaLabel: 'Забронювати',
+		ctaHref: bookingTelHref,
+		...(priceLabel ? { priceLabel } : {}),
+	})
+}
+
+/** Картка на карті «Масажі»: тексти про масаж / оздоровлення, кнопка «Забронювати» як на інших SPA-сторінках. */
+export function spaMasazhiHotelInfoWindowHtml(hotel: PolyanaHotel): string {
+	const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+		`${hotel.name}, ${hotel.address}`
+	)}`
+	const iw = spaMasazhiIwCopyByHotelId[hotel.id] ?? spaMasazhiIwCopyFallback
+	const bookingTelHref = `tel:${siteHeaderPhoneTel}`
+	const priceLabel = (iw.mapPriceLabel ?? hotel.price).trim()
+	return unifiedMapCardInfoWindowHtml({
+		name: hotel.name,
+		title: `Масаж і SPA — ${hotel.name}`,
+		address: hotel.address,
+		description: iw.description,
+		rating: hotel.rating,
+		feature: iw.feature,
+		phone: hotel.phone,
+		galleryImages: getHotelMapGallery(hotel),
+		routeLink,
+		saveLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hotel.name}, ${hotel.address}`)}`,
+		galleryExternalHref: routeLink,
+		ctaLabel: 'Забронювати',
+		ctaHref: bookingTelHref,
+		...(priceLabel ? { priceLabel } : {}),
+	})
+}
+
+/** Картка на карті «Фітобочки»: тексти про фіто-пару / бочку, кнопка «Забронювати» як на інших SPA-сторінках. */
+export function spaFitobochkyHotelInfoWindowHtml(hotel: PolyanaHotel): string {
+	const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+		`${hotel.name}, ${hotel.address}`
+	)}`
+	const iw = spaFitobochkyIwCopyByHotelId[hotel.id] ?? spaFitobochkyIwCopyFallback
 	const bookingTelHref = `tel:${siteHeaderPhoneTel}`
 	const priceLabel = hotel.price.trim()
 	return unifiedMapCardInfoWindowHtml({

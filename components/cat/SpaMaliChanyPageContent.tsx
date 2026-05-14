@@ -19,6 +19,10 @@ function sortDirLabel(dir: SortDir): string {
 	return SORT_PRESETS.find(p => p.dir === dir)?.label ?? 'Спочатку дешевші'
 }
 
+/** Вертикальна смуга зліва — той самий #53C4DA, що вкладки та іконка заголовка. */
+const leftRailClass =
+	"relative min-w-0 pl-3 sm:pl-4 before:pointer-events-none before:absolute before:left-0 before:top-3 before:bottom-3 before:w-1 before:rounded-full before:bg-[#53C4DA] before:content-['']"
+
 export default function SpaMaliChanyPageContent() {
 	const [selectedId, setSelectedId] = useState<string | null>(null)
 	const [sortDir, setSortDir] = useState<SortDir>('asc')
@@ -94,7 +98,7 @@ export default function SpaMaliChanyPageContent() {
 			<SpaBaniChanyComparisonTabs active='mali' />
 
 			<div className='flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(300px,440px)] lg:items-start lg:gap-10'>
-				<div className='min-w-0'>
+				<div className={leftRailClass}>
 					<div className='mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-center sm:justify-between'>
 						<h2 className='flex items-center gap-2 text-lg font-extrabold text-[#2D333D] sm:text-xl'>
 							<span className='inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#53C4DA]/15 text-[#53C4DA]'>
@@ -278,10 +282,6 @@ export default function SpaMaliChanyPageContent() {
 							Немає точок для відображення на карті.
 						</div>
 					)}
-					<p className='mt-2 text-xs text-slate-500'>
-						Мітки збігаються з готелями на головній карті; уточнюйте наявність малих чанів і умови на сайті
-						закладу перед візитом.
-					</p>
 				</div>
 			</div>
 		</section>
