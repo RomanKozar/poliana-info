@@ -217,7 +217,7 @@ export const categoryItems: CategoryNavItem[] = [
 	{ label: 'Їжа та напої', iconSrc: `${CATEGORY_ICON_BASE}/food_drinks.svg`, href: '/cat/yizha-napoyi' },
 	{ label: 'Екскурсії', iconSrc: `${CATEGORY_ICON_BASE}/excurs.svg`, href: '/excursions' },
 	{ label: 'Готелі Поляни', iconSrc: `${CATEGORY_ICON_BASE}/hotels.svg`, href: '/cat/goteli-polyany' },
-	{ label: 'Табори відпочинку', iconSrc: `${CATEGORY_ICON_BASE}/children.svg`, href: '/cat/z-ditmy' },
+	{ label: 'Табори відпочинку', iconSrc: `${CATEGORY_ICON_BASE}/children.svg`, href: '/camps' },
 	{
 		label: 'Активний відпочинок',
 		iconSrc: `${CATEGORY_ICON_BASE}/activity.svg`,
