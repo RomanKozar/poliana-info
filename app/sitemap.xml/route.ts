@@ -1,8 +1,9 @@
 import { buildPolyanaSitemapXml } from '@/lib/sitemap-build'
 
 /**
- * Дублікат відповіді з `app/sitemap.xml/route.ts` (той самий XML).
- * Залишено для сумісності, якщо десь є посилання на `/api/sitemap`.
+ * Прямий GET `/sitemap.xml` без rewrite на `/api/sitemap` — зручніше для Googlebot
+ * і для Search Console (інколи rewrite давав неоднозначну відповідь).
+ * `/api/sitemap` лишається для сумісності зі старими посиланнями.
  */
 export const dynamic = 'force-static'
 

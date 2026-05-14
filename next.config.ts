@@ -5,10 +5,6 @@ const nextConfig: NextConfig = {
 	experimental: {
 		optimizePackageImports: ['react-icons/fa'],
 	},
-	/** Google / robots очікують саме `/sitemap.xml`; внутрішньо віддаємо з Route Handler `/api/sitemap`. */
-	async rewrites() {
-		return [{ source: '/sitemap.xml', destination: '/api/sitemap' }]
-	},
 	// Стабільна віддача sitemap для сканерів (Google Search Console).
 	async headers() {
 		return [
