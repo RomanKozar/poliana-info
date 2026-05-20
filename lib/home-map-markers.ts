@@ -140,14 +140,14 @@ export const spaMapMarkers = [
 		name: 'Чан на території «Катерина»',
 		address: 'готель «Катерина», вул. Сонячна, 55-Б, Поляна, Закарпатська обл.',
 		category: 'Гарячий чан на території готельно-ресторанного комплексу «Катерина».',
-		image: '/images/spa/maliy-chan.png',
+		image: '/images/spa/maliy-chan.webp',
 		position: { lat: 48.621390668230035, lng: 22.970576982649888 },
 	},
 	{
 		name: 'Чан (SPA на гарячій плиті)',
 		address: 'вул. Курортна, 27, Поляна, Закарпатська обл.',
 		category: '★ 5,0 (4) · SPA-процедури на гарячій кам’яній плиті',
-		image: '/images/spa/fitobochka.png',
+		image: '/images/spa/fitobochka.webp',
 		position: { lat: 48.624395001303014, lng: 22.95056637197927 },
 	},
 	{

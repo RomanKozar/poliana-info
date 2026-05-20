@@ -35,7 +35,14 @@ export default function Header() {
 			return pathname === '/'
 		}
 
-		return pathname === href || pathname.startsWith(`${href}/`)
+		const pathOnly = href.split('#')[0]
+		return pathname === pathOnly || pathname.startsWith(`${pathOnly}/`)
+	}
+
+	/** Окремий пункт верхнього меню (напр. «Табори» → /camps) — не підсвічувати батьківське «Популярне». */
+	const isExclusiveTopLevelHref = (href: string) => {
+		const pathOnly = href.split('#')[0]
+		return siteNavigation.some(nav => !nav.children && nav.href === pathOnly)
 	}
 
 	/** Мобільне меню: «Популярне» має href `/`, але головна не має означати активний батьківський пункт — лише збіг з дочірніми посиланнями. */
@@ -45,7 +52,10 @@ export default function Header() {
 			// Some "Популярне" categories overlap with "Проживання" (e.g. hotels).
 			// In that case, highlight the more specific section ("Проживання") instead of both.
 			const isAnyPopularChildActive = item.children.some(
-				child => child.href && isActivePath(child.href)
+				child =>
+					child.href &&
+					isActivePath(child.href) &&
+					!isExclusiveTopLevelHref(child.href)
 			)
 			const accommodation = siteNavigation.find(x => x.submenuKey === 'accommodation')
 			const isAccommodationActive = Boolean(
@@ -245,7 +255,7 @@ export default function Header() {
 
 				<div className='ml-auto flex items-center gap-1 text-sm font-semibold text-white sm:gap-2 xl:gap-3'>
 					<Link
-						href='https://instagram.com'
+						href='https://www.instagram.com/polyanainfo?igsh=eGdkaDB1eGh5MTJh'
 						target='_blank'
 						rel='noreferrer'
 						aria-label='Instagram'
@@ -254,7 +264,7 @@ export default function Header() {
 						<FaInstagram className='size-4 text-white' />
 					</Link>
 					<Link
-						href='https://facebook.com'
+						href='https://www.facebook.com/share/1J3Zr2Ms6K/?mibextid=wwXIfr'
 						target='_blank'
 						rel='noreferrer'
 						aria-label='Facebook'
@@ -263,7 +273,7 @@ export default function Header() {
 						<FaFacebookF className='size-3.5 text-white' />
 					</Link>
 					<Link
-						href='https://tiktok.com'
+						href='https://www.tiktok.com/@denysman8?_r=1&_t=ZS-96Vqw4e4uv3'
 						target='_blank'
 						rel='noreferrer'
 						aria-label='TikTok'
@@ -311,7 +321,7 @@ export default function Header() {
 					>
 						<div className='flex items-center gap-4'>
 							<Link
-								href='https://instagram.com'
+								href='https://www.instagram.com/polyanainfo?igsh=eGdkaDB1eGh5MTJh'
 								target='_blank'
 								rel='noreferrer'
 								aria-label='Instagram'
@@ -320,7 +330,7 @@ export default function Header() {
 								<FaInstagram className='size-5 text-white' />
 							</Link>
 							<Link
-								href='https://facebook.com'
+								href='https://www.facebook.com/share/1J3Zr2Ms6K/?mibextid=wwXIfr'
 								target='_blank'
 								rel='noreferrer'
 								aria-label='Facebook'
@@ -329,7 +339,7 @@ export default function Header() {
 								<FaFacebookF className='size-[18px] text-white' />
 							</Link>
 							<Link
-								href='https://tiktok.com'
+								href='https://www.tiktok.com/@denysman8?_r=1&_t=ZS-96Vqw4e4uv3'
 								target='_blank'
 								rel='noreferrer'
 								aria-label='TikTok'
@@ -385,7 +395,11 @@ export default function Header() {
 												{submenuOpen ? (
 													<div className='flex max-h-[50vh] w-full flex-col items-center gap-2 overflow-y-auto rounded-xl bg-cyan-600/70 p-3 text-base sm:gap-3 sm:p-4 sm:text-xl'>
 														{item.children.map(child => {
-															const isChildActive = Boolean(child.href && isActivePath(child.href))
+															const isChildActive = Boolean(
+																child.href &&
+																	isActivePath(child.href) &&
+																	!(item.submenuKey === 'popular' && isExclusiveTopLevelHref(child.href))
+															)
 															return child.href ? (
 																<Link
 																	key={child.href + child.label}

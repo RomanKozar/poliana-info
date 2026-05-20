@@ -12,7 +12,11 @@ import {
 	FaPhoneAlt,
 	FaTiktok,
 } from 'react-icons/fa'
-import { IoQrCode } from 'react-icons/io5'
+/** Спільнота Polyana.info у Viber — клік або сканування QR відкриває запрошення. */
+const VIBER_COMMUNITY_URL =
+	'https://invite.viber.com/?g2=AQBZRJZyWkpsG1aRNv9OwpXzWvySL%2F%2BZCoq5T2lMDiTYA8c4mpKdfFI3b%2BMqMWVf'
+
+const VIBER_QR_SRC = `https://api.qrserver.com/v1/create-qr-code/?size=132x132&margin=4&data=${encodeURIComponent(VIBER_COMMUNITY_URL)}`
 
 const informationLinks = [
 	{ href: '/about', label: 'Про Polyana Info' },
@@ -265,17 +269,33 @@ export default function Footer() {
 							</div>
 
 							<div className='min-w-0 text-center lg:text-left'>
-								<div
-									className='mx-auto inline-flex rounded-lg bg-white p-1.5 ring-1 ring-white/15 lg:mx-0'
-									role='img'
-									aria-label='QR-код для підписки на оновлення (скоро)'
+								<a
+									href={VIBER_COMMUNITY_URL}
+									target='_blank'
+									rel='noreferrer noopener'
+									className='mx-auto inline-flex rounded-lg bg-white p-1.5 ring-1 ring-white/15 transition hover:ring-[#53C4DA]/60 lg:mx-0'
+									aria-label='Відкрити спільноту Polyana.info у Viber (QR-код)'
 								>
-									<span className='flex size-[132px] items-center justify-center text-[#2D333D]'>
-										<IoQrCode className='size-[5.25rem] opacity-90' aria-hidden />
-									</span>
-								</div>
+									{/* eslint-disable-next-line @next/next/no-img-element */}
+									<img
+										src={VIBER_QR_SRC}
+										alt=''
+										width={132}
+										height={132}
+										className='size-[132px] rounded-md'
+										loading='lazy'
+										decoding='async'
+									/>
+								</a>
 								<p className='mt-3 text-sm font-semibold tracking-wide text-white'>
-									Підписатися на оновлення
+									<a
+										href={VIBER_COMMUNITY_URL}
+										target='_blank'
+										rel='noreferrer noopener'
+										className='transition-colors hover:text-[#53C4DA]'
+									>
+										Слідкуй за нашими новинами
+									</a>
 								</p>
 							</div>
 						</div>

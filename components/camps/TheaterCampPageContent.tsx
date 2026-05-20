@@ -98,7 +98,7 @@ export default function TheaterCampPageContent() {
 							<p className='mt-2 max-w-3xl text-sm leading-snug text-slate-600 sm:text-[0.9375rem]'>{theaterCamp.description}</p>
 						</div>
 						<div className='relative flex w-full shrink-0 flex-col items-end self-stretch lg:flex-1 lg:justify-center'>
-							<span className='inline-flex w-full items-center justify-center rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:w-auto sm:text-sm lg:absolute lg:right-0 lg:bottom-0 lg:z-[1] lg:w-auto'>
+							<span className='inline-flex w-auto shrink-0 items-center justify-center self-end rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:text-sm lg:absolute lg:right-0 lg:bottom-0 lg:z-[1]'>
 								{theaterCamp.price}
 							</span>
 						</div>
@@ -107,7 +107,7 @@ export default function TheaterCampPageContent() {
 			</section>
 
 			<div className='mx-auto max-w-6xl px-4 pt-3 pb-5 sm:px-6 sm:pt-4 lg:px-8 lg:pt-5'>
-				<TheaterCampBannerAndGallery bannerSrc={theaterCamp.image} bannerAlt={theaterCamp.title} />
+				<TheaterCampBannerAndGallery bannerAlt={theaterCamp.title} />
 
 				<section aria-labelledby='theater-what-awaits-heading' className='mt-10 sm:mt-12'>
 					<h2

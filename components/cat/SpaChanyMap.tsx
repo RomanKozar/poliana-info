@@ -26,6 +26,9 @@ function spaChanyMapPinIcon(
 			}
 }
 
+/** Після fitBounds не наближати сильніше — готелі в Поляні часто поруч одне з одним. */
+const SPA_CHAN_MAP_FIT_MAX_ZOOM = 15
+
 const POLYANA_MAP_SILENT_UI = [
 	{ featureType: 'poi', stylers: [{ visibility: 'off' }] },
 	{ featureType: 'transit', stylers: [{ visibility: 'off' }] },
@@ -138,8 +141,13 @@ export default function SpaChanyMap({
 				activeInfoWindowRef.current = null
 			})
 
+			const effectiveMaxZoom = fitBoundsMaxZoom ?? SPA_CHAN_MAP_FIT_MAX_ZOOM
 			const fitPad =
-				venues.length === 1 && fitBoundsMaxZoom != null ? { top: 56, right: 56, bottom: 56, left: 56 } : { top: 24, right: 24, bottom: 24, left: 24 }
+				venues.length === 1
+					? { top: 56, right: 56, bottom: 56, left: 56 }
+					: venues.length <= 3
+						? { top: 52, right: 52, bottom: 52, left: 52 }
+						: { top: 32, right: 32, bottom: 32, left: 32 }
 
 			map.fitBounds(bounds, fitPad)
 
@@ -157,16 +165,19 @@ export default function SpaChanyMap({
 				maps.event.addListener(marker, 'click', () => {
 					if (cancelled || !hotel) return
 					activeInfoWindowRef.current?.close()
+					const venuePriceOpts = v.priceLines?.length
+						? { priceLines: v.priceLines }
+						: { priceLabel: v.priceLabel }
 					const iwHtml =
 						infoWindowVariant === 'bani'
-							? spaBaniHotelInfoWindowHtml(hotel)
+							? spaBaniHotelInfoWindowHtml(hotel, venuePriceOpts)
 							: infoWindowVariant === 'baseni'
-								? spaBaseniHotelInfoWindowHtml(hotel)
+								? spaBaseniHotelInfoWindowHtml(hotel, venuePriceOpts)
 								: infoWindowVariant === 'masazhi'
 									? spaMasazhiHotelInfoWindowHtml(hotel)
 									: infoWindowVariant === 'fitobochky'
-										? spaFitobochkyHotelInfoWindowHtml(hotel)
-										: spaVelikiChanyHotelInfoWindowHtml(hotel)
+										? spaFitobochkyHotelInfoWindowHtml(hotel, venuePriceOpts)
+										: spaVelikiChanyHotelInfoWindowHtml(hotel, venuePriceOpts)
 					const iw = new maps.InfoWindow({
 						content: iwHtml,
 						headerDisabled: true,
@@ -184,11 +195,10 @@ export default function SpaChanyMap({
 
 			maps.event.addListenerOnce(map, 'idle', () => {
 				if (cancelled) return
-				if (fitBoundsMaxZoom != null) {
-					const z = map.getZoom()
-					if (typeof z === 'number' && z > fitBoundsMaxZoom) {
-						map.setZoom(fitBoundsMaxZoom)
-					}
+				const z = map.getZoom()
+				if (typeof z === 'number') {
+					const next = z > effectiveMaxZoom ? effectiveMaxZoom : z
+					if (next !== z) map.setZoom(next)
 				}
 				maps.event.trigger(map, 'resize')
 				requestAnimationFrame(() => maps.event.trigger(map, 'resize'))
@@ -259,7 +269,7 @@ export default function SpaChanyMap({
 			const v = venues.find(x => x.id === selectedId)
 			if (v) {
 				map.panTo({ lat: v.lat, lng: v.lng })
-				map.setZoom(17)
+				map.setZoom(Math.min(15, fitBoundsMaxZoom ?? SPA_CHAN_MAP_FIT_MAX_ZOOM))
 			}
 		}
 
@@ -301,7 +311,7 @@ export default function SpaChanyMap({
 		const midLat = venues.reduce((s, v) => s + v.lat, 0) / venues.length
 		const midLng = venues.reduce((s, v) => s + v.lng, 0) / venues.length
 		const q = encodeURIComponent(`${midLat},${midLng}`)
-		const embedZ = fitBoundsMaxZoom ?? 15
+		const embedZ = fitBoundsMaxZoom ?? SPA_CHAN_MAP_FIT_MAX_ZOOM
 		return (
 			<div className={className}>
 				<div className={`${frameClassName} relative`}>

@@ -25,11 +25,6 @@ export const spaMasazhiIwCopyByHotelId: Record<string, SpaMasazhiIwCopy> = {
 			'Масаж після прогулянок чи лижні: поцікавтесь у готелі про масажний кабінет і пакети з проживанням; у вихідні краще домовлятися заздалегідь.',
 		feature: 'Масаж — уточнюйте в готелі',
 	},
-	arena: {
-		description:
-			'Масажі та відновлення в SPA-зоні після активного дня: які процедури доступні сьогодні й ціни — у адміністрації готелю.',
-		feature: 'SPA та масажі',
-	},
 }
 
 export const spaMasazhiIwCopyFallback: SpaMasazhiIwCopy = {

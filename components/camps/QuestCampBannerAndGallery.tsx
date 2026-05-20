@@ -1,24 +1,22 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa'
 
 type GalleryStripItem = { id: string; src: string; alt: string }
 
 const QUEST_GALLERY_STRIP: GalleryStripItem[] = [
-	{ id: 'q2', src: '/images/kids-camps/camp-2.webp', alt: 'Командний квест і спільне розвʼязування загадок' },
-	{ id: 'q3', src: '/images/kids-camps/camp-3.webp', alt: 'Творчі зони та імпровізація між етапами квесту' },
-	{ id: 'q4', src: '/images/kids-camps/camp-4.webp', alt: 'Природа Карпат у перепочинках між активностями' },
-	{ id: 'q1', src: '/images/kids-camps/camp-1.webp', alt: 'Разом у таборовій родині: радість перемоги команди' },
+	{ id: 'q1', src: '/images/kids-camps/camp2-2/camp2-1.webp', alt: 'Квестовий табір — старт зміни' },
+	{ id: 'q2', src: '/images/kids-camps/camp2-2/camp2-2.webp', alt: 'Командний квест і спільне розвʼязування загадок' },
+	{ id: 'q3', src: '/images/kids-camps/camp2-2/camp2-3.webp', alt: 'Творчі зони та імпровізація між етапами квесту' },
+	{ id: 'q4', src: '/images/kids-camps/camp2-2/camp2-4.webp', alt: 'Природа Карпат у перепочинках між активностями' },
 ]
 
 const LIGHTBOX_TITLE = 'Квестовий табір — фото зі зміни'
 
-function stripIndexForBannerSrc(bannerSrc: string): number {
-	const i = QUEST_GALLERY_STRIP.findIndex(({ src }) => src === bannerSrc)
-	return i >= 0 ? i : 0
-}
+/** Головне фото банера — завжди кореневий `camp-2.webp`. */
+const QUEST_BANNER_SRC = '/images/kids-camps/camp-2.webp'
 
 function StripLightbox({
 	open,
@@ -160,16 +158,20 @@ function StripLightbox({
 }
 
 type Props = {
-	bannerSrc: string
 	bannerAlt: string
 }
 
-export default function QuestCampBannerAndGallery({ bannerSrc, bannerAlt }: Props) {
+export default function QuestCampBannerAndGallery({ bannerAlt }: Props) {
 	const [open, setOpen] = useState(false)
 	const [start, setStart] = useState(0)
 
+	const lightboxItems = useMemo<GalleryStripItem[]>(
+		() => [{ id: 'banner', src: QUEST_BANNER_SRC, alt: bannerAlt }, ...QUEST_GALLERY_STRIP],
+		[bannerAlt]
+	)
+
 	const openFromBanner = () => {
-		setStart(stripIndexForBannerSrc(bannerSrc))
+		setStart(0)
 		setOpen(true)
 	}
 
@@ -182,7 +184,7 @@ export default function QuestCampBannerAndGallery({ bannerSrc, bannerAlt }: Prop
 				aria-label={`Відкрити фото збільшеним та гортати галерею: ${bannerAlt}`}
 			>
 				<Image
-					src={bannerSrc}
+					src={QUEST_BANNER_SRC}
 					alt={bannerAlt}
 					fill
 					className='object-cover object-center transition group-hover:scale-[1.01]'
@@ -202,7 +204,7 @@ export default function QuestCampBannerAndGallery({ bannerSrc, bannerAlt }: Prop
 							key={id}
 							type='button'
 							onClick={() => {
-								setStart(imageIndex)
+								setStart(imageIndex + 1)
 								setOpen(true)
 							}}
 							className='group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-xl border border-slate-200/90 bg-white p-0 text-left shadow-sm ring-offset-2 transition hover:brightness-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] sm:rounded-2xl'
@@ -220,7 +222,7 @@ export default function QuestCampBannerAndGallery({ bannerSrc, bannerAlt }: Prop
 				</div>
 			</div>
 
-			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={QUEST_GALLERY_STRIP} />
+			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={lightboxItems} />
 		</>
 	)
 }

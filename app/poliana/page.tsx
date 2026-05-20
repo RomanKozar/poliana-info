@@ -75,7 +75,7 @@ export default function PolyanaPage() {
 						</div>
 						<div className='relative h-44 overflow-hidden rounded-xl'>
 							<Image
-								src='/images/spa/maliy-chan.png'
+								src='/images/spa/maliy-chan.webp'
 								alt='Чани в Поляні'
 								fill
 								sizes='(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw'

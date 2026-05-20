@@ -115,7 +115,7 @@ export default function PolyanaInWinterPage() {
 						</div>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/spa/maliy-chan.png'
+								src='/images/spa/maliy-chan.webp'
 								alt='Карпатські чани взимку'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'

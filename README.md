@@ -2,7 +2,7 @@
 
 Туристичний портал громади Поляна (Закарпаття): проживання, SPA, табори, новини, карта готелів та FAQ.
 
-![Головна сторінка Polyana Info](public/preview-v2.png)
+![Головна сторінка Polyana Info](public/images/preview-v2/preview-v2.webp)
 
 ## Технології
 

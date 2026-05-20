@@ -11,8 +11,10 @@ export type SpaVelikyiChanVenue = {
 	address: string
 	/** Для сортування в таблиці (береться з рядка ціни готелю на головній). */
 	priceFromUah: number
-	/** Як у картці готелю на порталі. */
+	/** Короткий рядок ціни (сортування, fallback). */
 	priceLabel: string
+	/** Кілька тарифів сеансу — для колонки «Ціна» на сторінці великих чанів. */
+	priceLines?: readonly string[]
 	lat: number
 	lng: number
 	/** Посилання «Забронювати» (зараз — дзвінок на головний номер порталу). */
@@ -26,17 +28,59 @@ function priceFromUahFromHotelPrice(price: string): number {
 	return parseInt(m[1].replace(/\s/g, ''), 10) || 0
 }
 
+/** Не показуємо в порівняльних таблицях і SPA-картах (лишається в проживанні / головній карті). */
+const SPA_VENUE_EXCLUDED_HOTEL_IDS = new Set(['arena'])
+
+function mapPolyanaHotelsToSpaVenues(
+	hotels: typeof polyanaHotels,
+	excludeIds: ReadonlySet<string>
+): SpaVelikyiChanVenue[] {
+	return hotels
+		.filter(h => !excludeIds.has(h.id))
+		.map(h => ({
+			id: h.id,
+			name: h.name,
+			address: h.address,
+			priceFromUah: priceFromUahFromHotelPrice(h.price),
+			priceLabel: h.price.trim(),
+			lat: h.position.lat,
+			lng: h.position.lng,
+			bookingHref: SPA_CHAN_BOOKING_TEL_HREF,
+		}))
+}
+
 /**
- * Чотири готелі порталу з великими чанами: назви та координати збігаються з
- * `polyanaHotels` / головною картою (#polyana-map, шар готелів).
+ * Базовий перелік для SPA-порівнянь (малі чани, бані, басейни тощо): координати з
+ * `polyanaHotels` / головної карти, без Arena Apart-Hotel.
  */
-export const SPA_VELIKI_CHANY_VENUES: SpaVelikyiChanVenue[] = polyanaHotels.map(h => ({
-	id: h.id,
-	name: h.name,
-	address: h.address,
-	priceFromUah: priceFromUahFromHotelPrice(h.price),
-	priceLabel: h.price.trim(),
-	lat: h.position.lat,
-	lng: h.position.lng,
-	bookingHref: SPA_CHAN_BOOKING_TEL_HREF,
-}))
+export const SPA_CHAN_COMPARISON_VENUES: SpaVelikyiChanVenue[] = mapPolyanaHotelsToSpaVenues(
+	polyanaHotels,
+	SPA_VENUE_EXCLUDED_HOTEL_IDS
+)
+
+/** Великі чани: без Arena та River Side Hotel. */
+const SPA_VELIKI_CHANY_EXCLUDED_HOTEL_IDS = new Set([...SPA_VENUE_EXCLUDED_HOTEL_IDS, 'riverside'])
+
+/** Тарифи оренди великого чану (не ціни номерів з головної). */
+const SPA_VELIKI_CHANY_CHAN_PRICE_BY_ID: Partial<
+	Record<string, Pick<SpaVelikyiChanVenue, 'priceFromUah' | 'priceLabel' | 'priceLines'>>
+> = {
+	kateryna: {
+		priceFromUah: 1650,
+		priceLabel: '1 год - 1650 ₴',
+		priceLines: ['1 год - 1650 ₴', '2 год - 2500 ₴'],
+	},
+	kontinent: {
+		priceFromUah: 1800,
+		priceLabel: '1 год - 1800 ₴',
+		priceLines: ['1 год - 1800 ₴', '2 год - 2700 ₴'],
+	},
+}
+
+export const SPA_VELIKI_CHANY_VENUES: SpaVelikyiChanVenue[] = mapPolyanaHotelsToSpaVenues(
+	polyanaHotels,
+	SPA_VELIKI_CHANY_EXCLUDED_HOTEL_IDS
+).map(v => {
+	const chanPrice = SPA_VELIKI_CHANY_CHAN_PRICE_BY_ID[v.id]
+	return chanPrice ? { ...v, ...chanPrice } : v
+})

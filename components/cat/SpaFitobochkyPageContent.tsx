@@ -253,8 +253,20 @@ export default function SpaFitobochkyPageContent() {
 										>
 											<div className='flex flex-col gap-2'>
 												<p className='text-base font-extrabold text-[#2D333D]'>{v.name}</p>
-												<p className='text-xs font-semibold uppercase tracking-wide text-slate-500'>Ціна</p>
-												<p className='text-sm font-bold text-[#E06D3C]'>{v.priceLabel}</p>
+												<div className='w-full rounded-xl bg-[#FFF4EE] px-3 py-2.5 ring-1 ring-[#f68f5d]/20'>
+													<p className='mb-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500'>
+														Ціна
+													</p>
+													{v.priceLines?.length ? (
+														<ul className='flex flex-col gap-1 text-sm font-bold leading-snug text-[#E06D3C]'>
+															{v.priceLines.map(line => (
+																<li key={line}>{line}</li>
+															))}
+														</ul>
+													) : (
+														<p className='text-sm font-bold leading-snug text-[#E06D3C]'>{v.priceLabel}</p>
+													)}
+												</div>
 												<div className='mt-2 flex flex-wrap justify-end gap-2'>
 													<button
 														type='button'

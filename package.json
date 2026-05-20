@@ -9,9 +9,16 @@
     "lint": "eslint",
     "convert-atv": "node scripts/convert-atv-images.mjs",
     "convert-mountains-webp": "node scripts/convert-mountains-images.mjs",
+    "convert-excursions-images": "node scripts/convert-excursions-images.mjs",
     "convert-gallery-accommodation": "node scripts/convert-gallery-accommodation.mjs",
-    "convert-trout-webp": "node scripts/convert-trout-webp.mjs",
-    "convert-spa-title-webp": "node scripts/convert-spa-title-webp.mjs"
+    "convert-gallery-images": "node scripts/convert-gallery-images.mjs",
+    "convert-entertainment-images": "node scripts/convert-entertainment-images.mjs",
+    "convert-preview-v2-images": "node scripts/convert-preview-v2-images.mjs",
+    "convert-trout-webp": "node scripts/convert-trout-images.mjs",
+    "convert-trout-images": "node scripts/convert-trout-images.mjs",
+    "convert-spa-title-webp": "node scripts/convert-spa-title-webp.mjs",
+    "convert-spa-images": "node scripts/convert-spa-images.mjs",
+    "convert-kids-camps": "node scripts/convert-kids-camps-images.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

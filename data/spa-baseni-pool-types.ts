@@ -10,10 +10,9 @@ export type SpaBaseniPoolTypesRow = {
 }
 
 export const spaBaseniPoolTypesByHotelId: Record<string, SpaBaseniPoolTypesRow> = {
-	riverside: { openAir: 'літній (сезонно)', indoor: 'критий' },
-	kateryna: { openAir: '—', indoor: 'критий' },
-	kontinent: { openAir: 'літній (сезонно)', indoor: 'критий' },
-	arena: { openAir: 'літній (сезонно)', indoor: 'критий' },
+	kateryna: { openAir: 'відкритий', indoor: '—' },
+	riverside: { openAir: 'відкритий', indoor: '—' },
+	kontinent: { openAir: '—', indoor: 'критий' },
 }
 
 export const spaBaseniPoolTypesFallback: SpaBaseniPoolTypesRow = {

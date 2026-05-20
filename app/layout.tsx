@@ -68,7 +68,7 @@ export const metadata: Metadata = {
 		type: 'website',
 		images: [
 			{
-				url: '/preview-v2.png',
+				url: '/images/preview-v2/preview-v2.webp',
 				width: 1200,
 				height: 630,
 				alt: 'POLYANA.INFO - Туристична дестинація №1',
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
 		title: 'POLYANA.INFO — туристичний портал Поляни',
 		description:
 			'POLYANA.INFO: екскурсії й квадроцикли в Поляні, готелі та житло в Карпатах, SPA, табори й розваги на Закарпатті.',
-		images: ['/preview-v2.png'],
+		images: ['/images/preview-v2/preview-v2.webp'],
 	},
 	verification: { google: googleSiteVerification },
 	robots: {

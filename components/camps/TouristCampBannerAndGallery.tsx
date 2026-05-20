@@ -1,24 +1,21 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa'
 
 type GalleryStripItem = { id: string; src: string; alt: string }
 
 const TOURIST_GALLERY_STRIP: GalleryStripItem[] = [
-	{ id: 'r4', src: '/images/kids-camps/camp-4.webp', alt: 'Види гір поблизу Поляни на туристичних маршрутах' },
-	{ id: 'r1', src: '/images/kids-camps/camp-1.webp', alt: 'Група табору на природній локації' },
-	{ id: 'r2', src: '/images/kids-camps/camp-2.webp', alt: 'Командні активності між виходами у гори' },
-	{ id: 'r3', src: '/images/kids-camps/camp-3.webp', alt: 'Творча відправа після денної ходи' },
+	{ id: 'r1', src: '/images/kids-camps/camp5-5/camp5-1.webp', alt: 'Група табору на природній локації' },
+	{ id: 'r2', src: '/images/kids-camps/camp5-5/camp5-2.webp', alt: 'Командні активності між виходами у гори' },
+	{ id: 'r3', src: '/images/kids-camps/camp5-5/camp5-3.webp', alt: 'Маршрути та види Карпат' },
+	{ id: 'r4', src: '/images/kids-camps/camp5-5/camp5-4.webp', alt: 'Відпочинок після денної ходи' },
 ]
 
 const LIGHTBOX_TITLE = 'Туристичний заїзд — фото зі зміни'
 
-function stripIndexForBannerSrc(bannerSrc: string): number {
-	const i = TOURIST_GALLERY_STRIP.findIndex(({ src }) => src === bannerSrc)
-	return i >= 0 ? i : 0
-}
+const TOURIST_BANNER_SRC = '/images/kids-camps/camp-4.webp'
 
 function StripLightbox({
 	open,
@@ -160,16 +157,20 @@ function StripLightbox({
 }
 
 type Props = {
-	bannerSrc: string
 	bannerAlt: string
 }
 
-export default function TouristCampBannerAndGallery({ bannerSrc, bannerAlt }: Props) {
+export default function TouristCampBannerAndGallery({ bannerAlt }: Props) {
 	const [open, setOpen] = useState(false)
 	const [start, setStart] = useState(0)
 
+	const lightboxItems = useMemo<GalleryStripItem[]>(
+		() => [{ id: 'banner', src: TOURIST_BANNER_SRC, alt: bannerAlt }, ...TOURIST_GALLERY_STRIP],
+		[bannerAlt]
+	)
+
 	const openFromBanner = () => {
-		setStart(stripIndexForBannerSrc(bannerSrc))
+		setStart(0)
 		setOpen(true)
 	}
 
@@ -182,7 +183,7 @@ export default function TouristCampBannerAndGallery({ bannerSrc, bannerAlt }: Pr
 				aria-label={`Відкрити фото збільшеним та гортати галерею: ${bannerAlt}`}
 			>
 				<Image
-					src={bannerSrc}
+					src={TOURIST_BANNER_SRC}
 					alt={bannerAlt}
 					fill
 					className='object-cover object-center transition group-hover:scale-[1.01]'
@@ -202,7 +203,7 @@ export default function TouristCampBannerAndGallery({ bannerSrc, bannerAlt }: Pr
 							key={id}
 							type='button'
 							onClick={() => {
-								setStart(imageIndex)
+								setStart(imageIndex + 1)
 								setOpen(true)
 							}}
 							className='group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-xl border border-slate-200/90 bg-white p-0 text-left shadow-sm ring-offset-2 transition hover:brightness-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] sm:rounded-2xl'
@@ -220,7 +221,7 @@ export default function TouristCampBannerAndGallery({ bannerSrc, bannerAlt }: Pr
 				</div>
 			</div>
 
-			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={TOURIST_GALLERY_STRIP} />
+			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={lightboxItems} />
 		</>
 	)
 }

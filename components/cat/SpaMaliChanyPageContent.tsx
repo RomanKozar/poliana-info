@@ -19,6 +19,22 @@ function sortDirLabel(dir: SortDir): string {
 	return SORT_PRESETS.find(p => p.dir === dir)?.label ?? 'Спочатку дешевші'
 }
 
+function MaliChanyPrice({ priceLabel, priceLines }: { priceLabel: string; priceLines?: readonly string[] }) {
+	if (priceLines?.length) {
+		return (
+			<div className='inline-flex min-w-[8.5rem] flex-col items-center justify-center gap-0.5 text-xs font-semibold leading-snug text-[#E06D3C] sm:text-sm'>
+				{priceLines.map(line => (
+					<span key={line} className='whitespace-nowrap'>
+						{line}
+					</span>
+				))}
+			</div>
+		)
+	}
+
+	return <span className='font-semibold text-[#E06D3C]'>{priceLabel}</span>
+}
+
 /** Вертикальна смуга зліва — той самий #53C4DA, що вкладки та іконка заголовка. */
 const leftRailClass =
 	"relative min-w-0 pl-3 sm:pl-4 before:pointer-events-none before:absolute before:left-0 before:top-3 before:bottom-3 before:w-1 before:rounded-full before:bg-[#53C4DA] before:content-['']"
@@ -201,7 +217,9 @@ export default function SpaMaliChanyPageContent() {
 													}`}
 												>
 													<td className='px-4 py-3.5 font-bold text-[#2D333D]'>{v.name}</td>
-													<td className='px-4 py-3.5 font-semibold text-[#E06D3C]'>{v.priceLabel}</td>
+													<td className='px-3 py-3.5 align-middle sm:px-4'>
+														<MaliChanyPrice priceLabel={v.priceLabel} priceLines={v.priceLines} />
+													</td>
 													<td className='px-4 py-3.5'>
 														<button
 															type='button'
@@ -238,10 +256,23 @@ export default function SpaMaliChanyPageContent() {
 												active ? 'ring-2 ring-[#53C4DA]/40' : ''
 											}`}
 										>
-											<div className='flex flex-col gap-2'>
+											<div className='flex flex-col gap-3'>
 												<p className='text-base font-extrabold text-[#2D333D]'>{v.name}</p>
-												<p className='text-sm font-bold text-[#E06D3C]'>{v.priceLabel}</p>
-												<div className='mt-2 flex flex-wrap justify-end gap-2'>
+												<div className='w-full rounded-xl bg-[#FFF4EE] px-3 py-2.5 ring-1 ring-[#f68f5d]/20'>
+													<p className='mb-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500'>
+														Ціна
+													</p>
+													{v.priceLines?.length ? (
+														<ul className='flex flex-col gap-1 text-sm font-bold leading-snug text-[#E06D3C]'>
+															{v.priceLines.map(line => (
+																<li key={line}>{line}</li>
+															))}
+														</ul>
+													) : (
+														<p className='text-sm font-bold leading-snug text-[#E06D3C]'>{v.priceLabel}</p>
+													)}
+												</div>
+												<div className='flex flex-wrap justify-end gap-2'>
 													<button
 														type='button'
 														onClick={() => showOnMap(v.id)}

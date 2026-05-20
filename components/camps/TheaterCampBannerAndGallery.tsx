@@ -1,24 +1,21 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa'
 
 type GalleryStripItem = { id: string; src: string; alt: string }
 
 const THEATER_GALLERY_STRIP: GalleryStripItem[] = [
-	{ id: 't3', src: '/images/kids-camps/camp-3.webp', alt: 'Гурток сценічного мистецтва та репетиції в таборі' },
-	{ id: 't2', src: '/images/kids-camps/camp-2.webp', alt: 'Командна взаємодія та творчі анімації' },
-	{ id: 't4', src: '/images/kids-camps/camp-4.webp', alt: 'Карпатське повітря між репетиціями й прогулянками' },
-	{ id: 't1', src: '/images/kids-camps/camp-1.webp', alt: 'Атмосфера зміни театрального заїзду' },
+	{ id: 't1', src: '/images/kids-camps/camp3-3/camp3-1.webp', alt: 'Атмосфера зміни театрального заїзду' },
+	{ id: 't2', src: '/images/kids-camps/camp3-3/camp3-2.webp', alt: 'Гурток сценічного мистецтва та репетиції в таборі' },
+	{ id: 't3', src: '/images/kids-camps/camp3-3/camp3-3.webp', alt: 'Командна взаємодія та творчі анімації' },
+	{ id: 't4', src: '/images/kids-camps/camp3-3/camp3-4.webp', alt: 'Карпатське повітря між репетиціями й прогулянками' },
 ]
 
 const LIGHTBOX_TITLE = 'Театральний заїзд — фото зі зміни'
 
-function stripIndexForBannerSrc(bannerSrc: string): number {
-	const i = THEATER_GALLERY_STRIP.findIndex(({ src }) => src === bannerSrc)
-	return i >= 0 ? i : 0
-}
+const THEATER_BANNER_SRC = '/images/kids-camps/camp-3.webp'
 
 function StripLightbox({
 	open,
@@ -160,16 +157,20 @@ function StripLightbox({
 }
 
 type Props = {
-	bannerSrc: string
 	bannerAlt: string
 }
 
-export default function TheaterCampBannerAndGallery({ bannerSrc, bannerAlt }: Props) {
+export default function TheaterCampBannerAndGallery({ bannerAlt }: Props) {
 	const [open, setOpen] = useState(false)
 	const [start, setStart] = useState(0)
 
+	const lightboxItems = useMemo<GalleryStripItem[]>(
+		() => [{ id: 'banner', src: THEATER_BANNER_SRC, alt: bannerAlt }, ...THEATER_GALLERY_STRIP],
+		[bannerAlt]
+	)
+
 	const openFromBanner = () => {
-		setStart(stripIndexForBannerSrc(bannerSrc))
+		setStart(0)
 		setOpen(true)
 	}
 
@@ -182,7 +183,7 @@ export default function TheaterCampBannerAndGallery({ bannerSrc, bannerAlt }: Pr
 				aria-label={`Відкрити фото збільшеним та гортати галерею: ${bannerAlt}`}
 			>
 				<Image
-					src={bannerSrc}
+					src={THEATER_BANNER_SRC}
 					alt={bannerAlt}
 					fill
 					className='object-cover object-center transition group-hover:scale-[1.01]'
@@ -202,7 +203,7 @@ export default function TheaterCampBannerAndGallery({ bannerSrc, bannerAlt }: Pr
 							key={id}
 							type='button'
 							onClick={() => {
-								setStart(imageIndex)
+								setStart(imageIndex + 1)
 								setOpen(true)
 							}}
 							className='group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-xl border border-slate-200/90 bg-white p-0 text-left shadow-sm ring-offset-2 transition hover:brightness-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] sm:rounded-2xl'
@@ -220,7 +221,7 @@ export default function TheaterCampBannerAndGallery({ bannerSrc, bannerAlt }: Pr
 				</div>
 			</div>
 
-			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={THEATER_GALLERY_STRIP} />
+			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={lightboxItems} />
 		</>
 	)
 }

@@ -1066,6 +1066,21 @@ main[data-accommodation-map-expanded='true'] {
   color: #e06d3c;
 }
 
+.polyana-accommodation-iw-price--stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.polyana-accommodation-iw-price-line {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #e06d3c;
+}
+
 .polyana-accommodation-iw-desc {
   margin: 6px 0 0;
   display: -webkit-box;

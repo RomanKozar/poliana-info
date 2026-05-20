@@ -22,11 +22,6 @@ export const spaBaniIwCopyByHotelId: Record<string, SpaBaniIwCopy> = {
 			'River Side біля річки: поцікавтесь про лазню, парні та SPA-пакети. У вихідні краще бронювати заздалегідь.',
 		feature: 'Бані та SPA — уточнюйте в готелі',
 	},
-	arena: {
-		description:
-			'Arena — басейн і SPA-зона; бані, сауни та графік відвідування погоджуйте з адміністрацією. У високий сезон попит вищий.',
-		feature: 'SPA, басейн, бані та сауни',
-	},
 }
 
 export const spaBaniIwCopyFallback: SpaBaniIwCopy = {

@@ -22,11 +22,6 @@ export const spaFitobochkyIwCopyByHotelId: Record<string, SpaFitobochkyIwCopy> =
 			'River Side біля річки: поцікавтесь про фітобочку та пакети з проживанням. У вихідні краще домовлятися заздалегідь.',
 		feature: 'Фітобочка — уточнюйте в готелі',
 	},
-	arena: {
-		description:
-			'Arena — у SPA-зоні зазвичай є фітобочка чи парні процедури; наявність вільних слотів і ціну погоджуйте з адміністрацією.',
-		feature: 'SPA та фітобочка',
-	},
 }
 
 export const spaFitobochkyIwCopyFallback: SpaFitobochkyIwCopy = {

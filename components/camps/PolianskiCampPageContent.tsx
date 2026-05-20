@@ -95,7 +95,7 @@ export default function PolianskiCampPageContent() {
 							<p className='mt-2 max-w-3xl text-sm leading-snug text-slate-600 sm:text-[0.9375rem]'>{polianskiCamp.description}</p>
 						</div>
 						<div className='relative flex w-full shrink-0 flex-col items-end self-stretch lg:flex-1 lg:justify-center'>
-							<span className='inline-flex w-full items-center justify-center rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:w-auto sm:text-sm lg:absolute lg:right-0 lg:bottom-0 lg:z-[1] lg:w-auto'>
+							<span className='inline-flex w-auto shrink-0 items-center justify-center self-end rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:text-sm lg:absolute lg:right-0 lg:bottom-0 lg:z-[1]'>
 								{polianskiCamp.price}
 							</span>
 						</div>

@@ -112,7 +112,7 @@ export default function SummerVacationPage() {
 						</div>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/spa/masasch.png'
+								src='/images/spa/masasch.webp'
 								alt='SPA та відпочинок у Поляні'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'

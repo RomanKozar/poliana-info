@@ -1,24 +1,19 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa'
 
 type GalleryStripItem = { id: string; src: string; alt: string }
 
 const POLIANSKI_GALLERY_STRIP: GalleryStripItem[] = [
-	{ id: 'g2', src: '/images/kids-camps/camp-2.webp', alt: 'Активності та командні ігри в таборі' },
-	{ id: 'g3', src: '/images/kids-camps/camp-3.webp', alt: 'Творчі майстерки та театральна програма' },
-	{ id: 'g4', src: '/images/kids-camps/camp-4.webp', alt: 'Гори та відпочинок на природі' },
-	{ id: 'g1', src: '/images/kids-camps/camp-1.webp', alt: 'Атмосфера таборової зміни PolianskiCamp' },
+	{ id: 'g1', src: '/images/kids-camps/camp1-1/camp1-1.webp', alt: 'Атмосфера таборової зміни PolianskiCamp' },
+	{ id: 'g2', src: '/images/kids-camps/camp1-1/camp1-2.webp', alt: 'Активності та командні ігри в таборі' },
+	{ id: 'g3', src: '/images/kids-camps/camp1-1/camp1-3.webp', alt: 'Творчі майстерки та програма зміни' },
+	{ id: 'g4', src: '/images/kids-camps/camp1-1/camp1-4.webp', alt: 'Гори та відпочинок на природі' },
 ]
 
 const LIGHTBOX_TITLE = 'PolianskiCamp — фото зі зміни'
-
-function stripIndexForBannerSrc(bannerSrc: string): number {
-	const i = POLIANSKI_GALLERY_STRIP.findIndex(({ src }) => src === bannerSrc)
-	return i >= 0 ? i : 0
-}
 
 function StripLightbox({
 	open,
@@ -170,8 +165,14 @@ export default function PolianskiCampBannerAndGallery({ bannerSrc, bannerAlt }: 
 	const [open, setOpen] = useState(false)
 	const [start, setStart] = useState(0)
 
+	/** Банер + 4 мініатюри — одна галерея для перегляду та гортання. */
+	const lightboxItems = useMemo<GalleryStripItem[]>(
+		() => [{ id: 'banner', src: bannerSrc, alt: bannerAlt }, ...POLIANSKI_GALLERY_STRIP],
+		[bannerSrc, bannerAlt]
+	)
+
 	const openFromBanner = () => {
-		setStart(stripIndexForBannerSrc(bannerSrc))
+		setStart(0)
 		setOpen(true)
 	}
 
@@ -204,7 +205,7 @@ export default function PolianskiCampBannerAndGallery({ bannerSrc, bannerAlt }: 
 							key={id}
 							type='button'
 							onClick={() => {
-								setStart(imageIndex)
+								setStart(imageIndex + 1)
 								setOpen(true)
 							}}
 							className='group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-xl border border-slate-200/90 bg-white p-0 text-left shadow-sm ring-offset-2 transition hover:brightness-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] sm:rounded-2xl'
@@ -222,7 +223,7 @@ export default function PolianskiCampBannerAndGallery({ bannerSrc, bannerAlt }: 
 				</div>
 			</div>
 
-			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={POLIANSKI_GALLERY_STRIP} />
+			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={lightboxItems} />
 		</>
 	)
 }

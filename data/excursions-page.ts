@@ -503,7 +503,7 @@ export const mountainGuidedExcursions: ExcursionListing[] = [
 		title: 'Фототур на захід сонця',
 		description:
 			'Короткий виїзд на оглядову точку в вечірніх променях. Тривалість — близько 3–4 годин разом із дорогою.',
-		image: '/images/spa/maliy-chan.png',
+		image: '/images/spa/maliy-chan.webp',
 		address: 'Поляна — околиці, Закарпатська обл.',
 		position: { lat: 48.626204712025924, lng: 22.945207647879602 },
 		mapPill: 'Гори',
@@ -574,7 +574,7 @@ export const polyanaExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Дегустація мінеральної води',
 				description:
 					'Коротка екскурсія з поясненням відмінностей місцевих вод, де безпечно набирати та як поєднати з відпочинком.',
-				image: '/images/spa/fitobochka.png',
+				image: '/images/spa/fitobochka.webp',
 				address: 'Курортна зона Поляни, Закарпатська обл.',
 				position: { lat: 48.62526979873458, lng: 22.94656504413456 },
 				mapPill: 'Поляна',
@@ -585,7 +585,7 @@ export const polyanaExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Чан і вода після прогулянки',
 				description:
 					'Після пішої екскурсії — теплий чан на території комплексу. Бронювання та умови уточнюйте в закладі.',
-				image: '/images/spa/maliy-chan.png',
+				image: '/images/spa/maliy-chan.webp',
 				address: 'готель «Катерина», вул. Сонячна, 55-Б, Поляна',
 				position: { lat: 48.621390668230035, lng: 22.970576982649888 },
 				mapPill: 'Поляна',
