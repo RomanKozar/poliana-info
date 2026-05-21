@@ -33,6 +33,12 @@ const TARGET_DIRS = [
 		maxHeight: 720,
 		fit: 'cover',
 	},
+	{
+		dir: path.join(root, 'public', 'images', 'kids-camps', 'camp-6'),
+		maxWidth: 960,
+		maxHeight: 720,
+		fit: 'inside',
+	},
 ]
 
 async function inputToSharp(inPath) {

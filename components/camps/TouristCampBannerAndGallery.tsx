@@ -6,27 +6,32 @@ import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa'
 
 type GalleryStripItem = { id: string; src: string; alt: string }
 
-const TOURIST_GALLERY_STRIP: GalleryStripItem[] = [
-	{ id: 'r1', src: '/images/kids-camps/camp5-5/camp5-1.webp', alt: 'Група табору на природній локації' },
-	{ id: 'r2', src: '/images/kids-camps/camp5-5/camp5-2.webp', alt: 'Командні активності між виходами у гори' },
-	{ id: 'r3', src: '/images/kids-camps/camp5-5/camp5-3.webp', alt: 'Маршрути та види Карпат' },
-	{ id: 'r4', src: '/images/kids-camps/camp5-5/camp5-4.webp', alt: 'Відпочинок після денної ходи' },
+export const TOURIST_CAMP_1_GALLERY: GalleryStripItem[] = [
+	{ id: 'r1', src: '/images/kids-camps/camp4-4/camp4-1.webp', alt: 'Група табору на природній локації' },
+	{ id: 'r2', src: '/images/kids-camps/camp4-4/camp4-2.webp', alt: 'Командні активності між виходами у гори' },
+	{ id: 'r3', src: '/images/kids-camps/camp4-4/camp4-3.webp', alt: 'Маршрути та види Карпат' },
+	{ id: 'r4', src: '/images/kids-camps/camp4-4/camp4-4.webp', alt: 'Відпочинок після денної ходи' },
 ]
 
-const LIGHTBOX_TITLE = 'Туристичний заїзд — фото зі зміни'
-
-const TOURIST_BANNER_SRC = '/images/kids-camps/camp-4.webp'
+export const TOURIST_CAMP_2_GALLERY: GalleryStripItem[] = [
+	{ id: 'c5-1', src: '/images/kids-camps/camp5-5/camp5-1.webp', alt: 'Група табору на природній локації' },
+	{ id: 'c5-2', src: '/images/kids-camps/camp5-5/camp5-2.webp', alt: 'Командні активності між виходами у гори' },
+	{ id: 'c5-3', src: '/images/kids-camps/camp5-5/camp5-3.webp', alt: 'Маршрути та види Карпат' },
+	{ id: 'c5-4', src: '/images/kids-camps/camp5-5/camp5-4.webp', alt: 'Відпочинок після денної ходи' },
+]
 
 function StripLightbox({
 	open,
 	startIndex,
 	onClose,
 	items,
+	lightboxTitle,
 }: {
 	open: boolean
 	startIndex: number
 	onClose: () => void
 	items: GalleryStripItem[]
+	lightboxTitle: string
 }) {
 	const [idx, setIdx] = useState(startIndex)
 	const touchStartX = useRef<number | null>(null)
@@ -75,7 +80,7 @@ function StripLightbox({
 	const slide = items[idx] ?? items[0]
 
 	return (
-		<div className='fixed inset-0 z-[200]' role='dialog' aria-modal='true' aria-label={LIGHTBOX_TITLE}>
+		<div className='fixed inset-0 z-[200]' role='dialog' aria-modal='true' aria-label={lightboxTitle}>
 			<button
 				type='button'
 				aria-label='Закрити галерею'
@@ -156,17 +161,32 @@ function StripLightbox({
 	)
 }
 
+const DEFAULT_BANNER_IMAGE_CLASS =
+	'object-cover object-center transition group-hover:scale-[1.01]'
+
 type Props = {
+	bannerSrc: string
 	bannerAlt: string
+	galleryStrip: GalleryStripItem[]
+	lightboxTitle?: string
+	galleryAriaLabel?: string
+	bannerImageClassName?: string
 }
 
-export default function TouristCampBannerAndGallery({ bannerAlt }: Props) {
+export default function TouristCampBannerAndGallery({
+	bannerSrc,
+	bannerAlt,
+	galleryStrip,
+	lightboxTitle = 'Туристичний заїзд — фото зі зміни',
+	galleryAriaLabel = 'Фото зі зміни туристичного заїзду — натисніть, щоб відкрити й гортати',
+	bannerImageClassName = DEFAULT_BANNER_IMAGE_CLASS,
+}: Props) {
 	const [open, setOpen] = useState(false)
 	const [start, setStart] = useState(0)
 
 	const lightboxItems = useMemo<GalleryStripItem[]>(
-		() => [{ id: 'banner', src: TOURIST_BANNER_SRC, alt: bannerAlt }, ...TOURIST_GALLERY_STRIP],
-		[bannerAlt]
+		() => [{ id: 'banner', src: bannerSrc, alt: bannerAlt }, ...galleryStrip],
+		[bannerSrc, bannerAlt, galleryStrip]
 	)
 
 	const openFromBanner = () => {
@@ -183,10 +203,10 @@ export default function TouristCampBannerAndGallery({ bannerAlt }: Props) {
 				aria-label={`Відкрити фото збільшеним та гортати галерею: ${bannerAlt}`}
 			>
 				<Image
-					src={TOURIST_BANNER_SRC}
+					src={bannerSrc}
 					alt={bannerAlt}
 					fill
-					className='object-cover object-center transition group-hover:scale-[1.01]'
+					className={bannerImageClassName}
 					sizes='(min-width: 1024px) 72rem, 94vw'
 					priority
 				/>
@@ -196,9 +216,9 @@ export default function TouristCampBannerAndGallery({ bannerAlt }: Props) {
 				<div
 					className='grid grid-cols-4 grid-rows-1 gap-2 sm:gap-3 md:gap-4'
 					role='region'
-					aria-label='Фото зі зміни туристичного заїзду — натисніть, щоб відкрити й гортати'
+					aria-label={galleryAriaLabel}
 				>
-					{TOURIST_GALLERY_STRIP.map(({ id, src, alt }, imageIndex) => (
+					{galleryStrip.map(({ id, src, alt }, imageIndex) => (
 						<button
 							key={id}
 							type='button'
@@ -221,7 +241,13 @@ export default function TouristCampBannerAndGallery({ bannerAlt }: Props) {
 				</div>
 			</div>
 
-			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={lightboxItems} />
+			<StripLightbox
+				open={open}
+				startIndex={start}
+				onClose={() => setOpen(false)}
+				items={lightboxItems}
+				lightboxTitle={lightboxTitle}
+			/>
 		</>
 	)
 }

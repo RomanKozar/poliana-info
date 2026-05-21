@@ -1,12 +1,60 @@
 import type { PolyanaHotel } from '@/lib/polyana-hotels'
-import { getHotelMapGallery } from '@/lib/polyana-hotels'
+import { getHotelMapGallery, polyanaHotels } from '@/lib/polyana-hotels'
 
+const KATERYNA_MAIN_IMAGE = '/images/accommodation/kateryna-v1.webp'
+
+const KATERYNA_HOTEL_GALLERY_IMAGES = Array.from(
+	{ length: 13 },
+	(_, i) => `/images/accommodation/kateryna/kateryna-hotel/kateryna-hotel-${i + 1}.webp`
+)
+
+const KONTINENT_MAIN_IMAGE = '/images/accommodation/kontinent-v1.webp'
+
+const KONTINENT_HOTEL_GALLERY_IMAGES = Array.from(
+	{ length: 9 },
+	(_, i) => `/images/accommodation/kontinent/kontinent-hotel-${i + 1}.webp`
+)
+
+const RIVERSIDE_MAIN_IMAGE = '/images/accommodation/river-side-v1.webp'
+
+const RIVERSIDE_HOTEL_GALLERY_IMAGES = Array.from(
+	{ length: 13 },
+	(_, i) => `/images/accommodation/river-side/river-side-hotel-${i + 1}.webp`
+)
+
+/** Усі фото для lightbox; перше — головне зображення картки готелю. */
 export function galleryImagesForHotel(hotel: PolyanaHotel): string[] {
+	if (hotel.id === 'kateryna') {
+		return [KATERYNA_MAIN_IMAGE, ...KATERYNA_HOTEL_GALLERY_IMAGES]
+	}
+	if (hotel.id === 'kontinent') {
+		return [KONTINENT_MAIN_IMAGE, ...KONTINENT_HOTEL_GALLERY_IMAGES]
+	}
+	if (hotel.id === 'riverside') {
+		return [RIVERSIDE_MAIN_IMAGE, ...RIVERSIDE_HOTEL_GALLERY_IMAGES]
+	}
 	const g = getHotelMapGallery(hotel)
 	const out = [...g]
 	while (out.length < 5) {
 		out.push(hotel.image)
 	}
+	return out.slice(0, 5)
+}
+
+/** До 5 фото для каруселі на картці готелю на головній. */
+export function homeAccommodationCardGallery(accommodationId: string, max = 5): string[] {
+	const hotel = polyanaHotels.find(h => h.id === accommodationId)
+	if (!hotel) return []
+	const images = galleryImagesForHotel(hotel)
+	return images.length > 0 ? images.slice(0, max) : [hotel.image]
+}
+
+/** Перші 5 знімків для сітки на сторінці готелю. */
+export function galleryPreviewImagesForHotel(hotel: PolyanaHotel): string[] {
+	const all = galleryImagesForHotel(hotel)
+	if (all.length >= 5) return all.slice(0, 5)
+	const out = [...all]
+	while (out.length < 5) out.push(hotel.image)
 	return out.slice(0, 5)
 }
 
@@ -19,6 +67,33 @@ export function parseGuestCount(ratingLabel: string): number | undefined {
 /** Підзаголовок як на референсі (локація · тип помешкання). */
 export function hotelListingSubtitle(): string {
 	return 'Поляна, Україна: номер у готелі — курорт'
+}
+
+export type HotelPriceListImage = {
+	src: string
+	alt: string
+	width: number
+	height: number
+}
+
+const KATERYNA_PRICE_LIST_IMAGES: HotelPriceListImage[] = [
+	{
+		src: '/images/accommodation/kateryna/price-1.webp',
+		alt: 'Прайс на проживання в готелі Катерина — тарифи та номери',
+		width: 1400,
+		height: 1750,
+	},
+	{
+		src: '/images/accommodation/kateryna/price-2.webp',
+		alt: 'Прайс на проживання в готелі Катерина — додаткові послуги та умови',
+		width: 1400,
+		height: 1750,
+	},
+]
+
+export function priceListImagesForHotel(hotelId: string): readonly HotelPriceListImage[] {
+	if (hotelId === 'kateryna') return KATERYNA_PRICE_LIST_IMAGES
+	return []
 }
 
 /** Рядок з характеристиками (можна замінити з CMS). */

@@ -56,28 +56,6 @@ export const quadExcursions: ExcursionListing[] = [
 		priceHint: 'від 1200 грн / особа',
 		detailPagePath: '/excursions/quadro-ride',
 	},
-	{
-		id: 'quad-panorama',
-		title: 'Панорама на околицях Поляни',
-		description:
-			'Динамічніший маршрут із зупинками на фото: види на хребти, короткі підйоми. Тривалість — від 1,5 год.',
-		image: '/images/gallery/golovna-foto-2.webp',
-		address: 'Організатори зустрічають гостей у зазначеній точці в Поляні.',
-		position: { lat: 48.6158, lng: 22.955 },
-		mapPill: 'Квадроцикли',
-		priceHint: 'від 1800 грн / квадро',
-	},
-	{
-		id: 'quad-sunset',
-		title: 'Вечірній виїзд «золота година»',
-		description:
-			'Спокійніший формат на захід сонця: менше швидкості, більше атмосфери. Мінімальна група — домовленість заздалегідь.',
-		image: '/images/gallery/golovna-foto-3.webp',
-		address: 'Поляна та прилеглі лісові дороги, Закарпатська обл.',
-		position: { lat: 48.6235, lng: 22.973 },
-		mapPill: 'Квадроцикли',
-		priceHint: 'від 2000 грн',
-	},
 ]
 
 /** Екскурсії в гори — вкладки з окремими наборами карток. */
@@ -91,7 +69,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Гора Рожок — оглядовий майданчик',
 				description:
 					'Популярна точка поруч із Поляною: зручний під’їзд, майданчик для фото, маршрут можна поєднати з відпочинком у шале.',
-				image: '/images/excursions/mountains/mountains-1.webp',
+				image: '/images/excursions/mountains/peaks/peaks-1.webp',
 				address: 'с. Поляна, Закарпатська обл.',
 				position: { lat: 48.608805906666305, lng: 23.01986710639653 },
 				mapPill: 'Гори',
@@ -103,7 +81,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Гора Малий Вижень',
 				description:
 					'Компактний маршрут для тих, хто хоче відчути висоту без багатогодинного переходу. Чудові краєвиди на довколишні села.',
-				image: '/images/excursions/mountains/mountains-2.webp',
+				image: '/images/excursions/mountains/peaks/peaks-2.webp',
 				address: 'с. Поляна, Закарпатська обл.',
 				position: { lat: 48.673916128142324, lng: 22.947541351811637 },
 				mapPill: 'Гори',
@@ -114,7 +92,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Гора Великий Вижень',
 				description:
 					'Більш виразний підйом для підготовлених туристів. Рекомендуємо взяти воду, зручне взуття та перевірити прогноз.',
-				image: '/images/excursions/mountains/mountains-3.webp',
+				image: '/images/excursions/mountains/peaks/peaks-3.webp',
 				address: 'с. Поляна, Закарпатська обл.',
 				position: { lat: 48.70178118047461, lng: 22.957258642049577 },
 				mapPill: 'Гори',
@@ -125,7 +103,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Гора Ведмежа',
 				description:
 					'Маршрут через лісові ділянки з виходом на відкриті схили. Поруч із Поляною та Уклином — зручно спланувати як денний вихід.',
-				image: '/images/excursions/mountains/mountains-4.webp',
+				image: '/images/excursions/mountains/peaks/peaks-4.webp',
 				address: 'с. Поляна, Закарпатська обл.',
 				position: { lat: 48.65316352015213, lng: 22.965168433299574 },
 				mapPill: 'Гори',
@@ -136,7 +114,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Гора Липча',
 				description:
 					'Варіант для тих, хто шукає менш натоптані стежки. Частина шляху проходить поблизу дороги E471 — дотримуйтесь безпеки.',
-				image: '/images/excursions/mountains/mountains-5.webp',
+				image: '/images/excursions/mountains/peaks/peaks-5.webp',
 				address: 'с. Поляна, Закарпатська обл.',
 				position: { lat: 48.66332239338579, lng: 23.02946671577749 },
 				mapPill: 'Гори',
@@ -147,7 +125,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Гора Поляна Кохання',
 				description:
 					'Легка поїздка на оглядову точку біля Поляни: панорами, фото та короткий підйом без довгого походу.',
-				image: '/images/excursions/mountains/mountains-6.webp',
+				image: '/images/excursions/mountains/peaks/peaks-6.webp',
 				address: 'с. Поляна, Закарпатська обл.',
 				position: { lat: 48.6277, lng: 23.2892 },
 				mapPill: 'Гори',
@@ -164,7 +142,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Оглядова стежка 600 метрів',
 				description:
 					'Помірні маршрути в межах курорту: лавки, рівні ділянки та короткі підйоми. Усе досяжно пішки від готелів і санаторіїв, Свалявський район.',
-				image: '/images/entertainment/tybinh-v2-3.webp',
+				image: '/images/excursions/mountains/paths/paths-1.webp',
 				address: 'смт Поляна, Свалявський р-н, Закарпатська обл.',
 				position: { lat: 48.6242, lng: 22.951 },
 				route: {
@@ -209,7 +187,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Піший підйом на Ведмежу від Поляни',
 				description:
 					'Лісові стежки від села до відкритих схилів. Зручно поєднати з днем у Поляні; орієнтуйтеся на розмітку та погоду, ідіть лише пішки.',
-				image: '/images/entertainment/tybinh-v2-1.webp',
+				image: '/images/excursions/mountains/paths/paths-2.webp',
 				address: 'старт: с. Поляна, Свалявський р-н, Закарпатська обл.',
 				position: { lat: 48.6678, lng: 22.9385 },
 				route: {
@@ -277,7 +255,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Стежка на Липчу від Поляни',
 				description:
 					'Менш натоптана траса з виходом на схили; частина шляху поблизу траси — будьте обережні. Повний маршрут піший, без обов’язкового трансферу.',
-				image: '/images/entertainment/tybinh-v2-2.webp',
+				image: '/images/excursions/mountains/paths/paths-3.webp',
 				address: 'старт: с. Поляна, Свалявський р-н (далі стежками)',
 				position: { lat: 48.6582, lng: 23.012 },
 				route: {
@@ -377,7 +355,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Стежка до Виженя з Поляни',
 				description:
 					'Сільські дороги та лісові підйоми до масиву Вижень. Підходить для підготовлених пішоходів; візьміть воду й перевірте прогноз, Свалявський район.',
-				image: '/images/gallery/golovna-foto-3.webp',
+				image: '/images/excursions/mountains/paths/paths-4.webp',
 				address: 'старт: с. Поляна, Свалявський р-н, Закарпатська обл.',
 				position: { lat: 48.6975, lng: 22.948 },
 				route: {
@@ -558,7 +536,7 @@ export const polyanaExcursionTabs: ExcursionTabGroup[] = [
 				title: 'Зелені зони біля санаторіїв',
 				description:
 					'Тихі куточки для прогулянок між процедурами: поєднайте оздоровлення з легкою активністю на свіжому повітрі.',
-				image: '/images/accommodation/kontinent.webp',
+				image: '/images/accommodation/kontinent-v1.webp',
 				address: 'вул. Сонячна, Поляна, Закарпатська обл.',
 				position: { lat: 48.62058462616725, lng: 22.9702754849307 },
 				mapPill: 'Поляна',

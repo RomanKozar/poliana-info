@@ -108,7 +108,7 @@ export default function AutumnVacationPage() {
 					<div className='space-y-6'>
 						<div className='relative h-56 overflow-hidden rounded-2xl shadow-sm sm:h-64 lg:h-56'>
 							<Image
-								src='/images/accommodation/kontinent.webp'
+								src='/images/accommodation/kontinent-v1.webp'
 								alt='Осінній відпочинок у горах'
 								fill
 								sizes='(min-width: 1024px) 26vw, 92vw'

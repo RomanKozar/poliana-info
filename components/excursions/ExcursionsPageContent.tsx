@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import BottomStatusToast, {
@@ -27,41 +28,21 @@ import { touristCityMapPinIconDataUrl } from '@/lib/home-map-pin-icons'
 const EXCURSIONS_MARKERS = allExcursionListings()
 const POLYANA_EXCURSIONS = polyanaExcursionListings()
 
-const QUAD_CARD_SKELETON_IDS = new Set(['quad-panorama', 'quad-sunset'])
-
-function ExcursionCardSkeleton() {
-	return (
-		<article
-			className='flex min-h-0 flex-col overflow-hidden rounded-xl border border-[#DCE8D8] bg-white shadow-sm sm:min-h-36 sm:flex-row'
-			aria-hidden
-		>
-			<div className='h-40 w-full shrink-0 bg-slate-200/90 sm:hidden' />
-			<div className='flex flex-1 flex-col gap-3 px-4 py-5'>
-				<div className='h-6 w-4/5 max-w-xs rounded-md bg-slate-200/90' />
-				<div className='h-3 w-full rounded-md bg-slate-200/80' />
-				<div className='h-3 w-11/12 rounded-md bg-slate-200/80' />
-				<div className='h-3 w-full rounded-md bg-slate-200/70' />
-				<div className='h-3 w-[92%] rounded-md bg-slate-200/70' />
-			</div>
-			<div className='relative hidden min-h-[9rem] w-[42%] min-w-[130px] shrink-0 bg-slate-200/90 sm:block' />
-		</article>
-	)
-}
-
 function ExcursionCard({
 	item,
 	onOpenDetail,
-	detailPageNewTab,
+	detailPageHref,
 	onWipClick,
 }: {
 	item: ExcursionListing
 	onOpenDetail?: () => void
-	/** Повний URL або шлях на цьому ж сайті — відкриється в новій вкладці. */
-	detailPageNewTab?: string
+	/** Шлях детальної сторінки на цьому сайті — відкривається в тій самій вкладці. */
+	detailPageHref?: string
 	/** Тимчасово: показ тосту «у розробці» замість переходу */
 	onWipClick?: () => void
 }) {
-	const openPage = Boolean(detailPageNewTab)
+	const router = useRouter()
+	const openPage = Boolean(detailPageHref)
 	const openModal = Boolean(onOpenDetail)
 	const wip = Boolean(onWipClick)
 	const interactive = openPage || openModal || wip
@@ -72,7 +53,7 @@ function ExcursionCard({
 			return
 		}
 		if (openPage) {
-			window.open(detailPageNewTab!, '_blank', 'noopener,noreferrer')
+			router.push(detailPageHref!)
 			return
 		}
 		onOpenDetail?.()
@@ -89,7 +70,7 @@ function ExcursionCard({
 						'aria-label': wip
 							? `${item.title}. Розділ у розробці`
 							: openPage
-								? `${item.title}. Відкрити детальну сторінку в новій вкладці`
+								? `${item.title}. Відкрити детальну сторінку`
 								: `${item.title}. Натисніть для детального опису туру`,
 						onClick: activate,
 						onKeyDown: (e: ReactKeyboardEvent<HTMLElement>) => {
@@ -196,7 +177,7 @@ function TabbedExcursionSection({
 						<ExcursionCard
 							key={item.id}
 							item={item}
-							detailPageNewTab={hasDetailPage ? item.detailPagePath : undefined}
+							detailPageHref={hasDetailPage ? item.detailPagePath : undefined}
 							onOpenDetail={
 								hasRoute && !hasDetailPage
 									? () => {
@@ -567,17 +548,13 @@ export default function ExcursionsPageContent() {
 			<section className='border-t border-slate-200/80 bg-[#F5F6F7] px-4 py-8 sm:px-16 lg:px-24'>
 				<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Екскурсії на квадроциклах</h2>
 				<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
-					{quadExcursions.map(item =>
-						QUAD_CARD_SKELETON_IDS.has(item.id) ? (
-							<ExcursionCardSkeleton key={item.id} />
-						) : (
-							<ExcursionCard
-								key={item.id}
-								item={item}
-								detailPageNewTab={item.detailPagePath}
-							/>
-						),
-					)}
+					{quadExcursions.map(item => (
+						<ExcursionCard
+							key={item.id}
+							item={item}
+							detailPageHref={item.detailPagePath}
+						/>
+					))}
 				</div>
 			</section>
 

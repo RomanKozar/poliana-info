@@ -30,11 +30,13 @@ import HotelDetailMap from '@/components/accommodation/HotelDetailMap'
 import type { PolyanaHotel } from '@/lib/polyana-hotels'
 import {
 	galleryImagesForHotel,
+	galleryPreviewImagesForHotel,
 	hotelFaqEntries,
 	hotelListingSubtitle,
 	longDescriptionParagraphs,
 	parseGuestCount,
 	popularFacilitiesForHotel,
+	priceListImagesForHotel,
 	propertyHighlights,
 	reviewCategoryScoresForHotel,
 	sampleReviewCardsForHotel,
@@ -253,7 +255,8 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 	const facilitiesWrapRef = useRef<HTMLUListElement | null>(null)
 	const reviewsSectionRef = useRef<HTMLElement | null>(null)
 	const [reviewsExpanded, setReviewsExpanded] = useState(false)
-	const gallery = useMemo(() => galleryImagesForHotel(hotel), [hotel])
+	const galleryAll = useMemo(() => galleryImagesForHotel(hotel), [hotel])
+	const gallery = useMemo(() => galleryPreviewImagesForHotel(hotel), [hotel])
 	const stars = useMemo(() => parseStarRating(hotel), [hotel])
 	const scoreLabel = useMemo(
 		() =>
@@ -266,6 +269,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 		hotel.detailReviewCount ?? parseGuestCount(hotel.rating) ?? undefined
 	const hasExternalReviewStats = guestCount != null && guestCount > 0
 	const paragraphs = longDescriptionParagraphs(hotel)
+	const priceListImages = useMemo(() => priceListImagesForHotel(hotel.id), [hotel.id])
 
 	const onShare = useCallback(async () => {
 		const url = typeof window !== 'undefined' ? window.location.href : ''
@@ -528,6 +532,34 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 							})}
 						</ul>
 					</section>
+
+					{priceListImages.length > 0 ? (
+						<section aria-labelledby='hotel-price-list-heading' className='mt-8'>
+							<h3 id='hotel-price-list-heading' className='text-lg font-semibold text-[#2D333D]'>
+								Ціни на проживання
+							</h3>
+							<p className='mt-1 text-sm leading-relaxed text-slate-600'>
+								Актуальний прайс готелю «Катерина». Наявність номерів і точну вартість уточнюйте при бронюванні.
+							</p>
+							<div className='mt-4 grid gap-4 sm:grid-cols-2 sm:gap-5'>
+								{priceListImages.map(img => (
+									<figure
+										key={img.src}
+										className='overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm ring-1 ring-slate-100/80'
+									>
+										<Image
+											src={img.src}
+											alt={img.alt}
+											width={img.width}
+											height={img.height}
+											className='h-auto w-full bg-slate-50'
+											sizes='(min-width: 640px) 46vw, 94vw'
+										/>
+									</figure>
+								))}
+							</div>
+						</section>
+					) : null}
 			</div>
 
 			{/* Відгуки */}
@@ -761,7 +793,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 				open={galleryOpen}
 				startIndex={galleryStart}
 				onClose={() => setGalleryOpen(false)}
-				images={gallery}
+				images={galleryAll}
 				hotelName={hotel.name}
 			/>
 			<a

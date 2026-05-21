@@ -60,6 +60,7 @@ function collectSitemapEntries(): SitemapUrlEntry[] {
 		{ loc: pageUrl('/camps/quest-camp'), lastModified, changeFrequency: 'monthly', priority: 0.76 },
 		{ loc: pageUrl('/camps/theater-camp'), lastModified, changeFrequency: 'monthly', priority: 0.76 },
 		{ loc: pageUrl('/camps/tourist-camp'), lastModified, changeFrequency: 'monthly', priority: 0.76 },
+		{ loc: pageUrl('/camps/tourist-camp-2'), lastModified, changeFrequency: 'monthly', priority: 0.76 },
 		{ loc: pageUrl('/contacts'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/excursions'), lastModified, changeFrequency: 'weekly', priority: 0.85 },
 		{ loc: pageUrl('/excursions/quadro-ride'), lastModified, changeFrequency: 'weekly', priority: 0.82 },

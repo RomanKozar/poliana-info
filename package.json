@@ -9,6 +9,8 @@
     "lint": "eslint",
     "convert-atv": "node scripts/convert-atv-images.mjs",
     "convert-mountains-webp": "node scripts/convert-mountains-images.mjs",
+    "convert-mountains-peaks": "node scripts/convert-mountains-peaks-images.mjs",
+    "convert-mountains-paths": "node scripts/convert-mountains-paths-images.mjs",
     "convert-excursions-images": "node scripts/convert-excursions-images.mjs",
     "convert-gallery-accommodation": "node scripts/convert-gallery-accommodation.mjs",
     "convert-gallery-images": "node scripts/convert-gallery-images.mjs",

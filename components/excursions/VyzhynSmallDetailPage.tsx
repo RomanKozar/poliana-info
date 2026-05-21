@@ -7,13 +7,9 @@ import {
 	RozhokPhotoGalleryProvider as PhotoGalleryProvider,
 	RozhokPhotoGalleryStrip as PhotoGalleryStrip,
 } from '@/components/excursions/RozhokPhotoGallery'
+import { summitDetailGalleryImages } from '@/lib/mountain-excursion-gallery'
 
-const VYZHYN_PHOTOS = [
-	'/images/excursions/mountains/mountains-2.webp',
-	'/images/excursions/mountains/mountains-3.webp',
-	'/images/excursions/mountains/mountains-4.webp',
-	'/images/excursions/mountains/mountains-5.webp',
-] as const
+const VYZHYN_PHOTOS = summitDetailGalleryImages(2)
 
 export default function VyzhynSmallDetailPage() {
 	return (

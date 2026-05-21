@@ -155,7 +155,7 @@ export const spaMapMarkers = [
 		address: 'готель «Континент», вул. Сонячна, 59, Поляна, Закарпатська обл.',
 		category:
 			'Оздоровчий комплекс готелю «Континент»: критий басейн, сауна; у описах комплексу також згадують масажі та SPA-послуги для гостей.',
-		image: '/images/accommodation/kontinent.webp',
+		image: '/images/accommodation/kontinent-v1.webp',
 		position: { lat: 48.62058462616725, lng: 22.9702754849307 },
 	},
 ] as const

@@ -1,8 +1,31 @@
 import Link from 'next/link'
-import TouristCampBannerAndGallery from '@/components/camps/TouristCampBannerAndGallery'
+import TouristCampBannerAndGallery, {
+	TOURIST_CAMP_1_GALLERY,
+	TOURIST_CAMP_2_GALLERY,
+} from '@/components/camps/TouristCampBannerAndGallery'
 import { camps } from '@/data/home-page'
 
-const touristCamp = camps.find(c => c.id === 'tourist-camp')
+export type TouristCampId = 'tourist-camp' | 'tourist-camp-2'
+
+const TOURIST_CAMP_MEDIA: Record<
+	TouristCampId,
+	{
+		bannerSrc: string
+		galleryStrip: typeof TOURIST_CAMP_1_GALLERY
+		bannerImageClassName?: string
+	}
+> = {
+	'tourist-camp': {
+		bannerSrc: '/images/kids-camps/camp-4.webp',
+		galleryStrip: TOURIST_CAMP_1_GALLERY,
+	},
+	'tourist-camp-2': {
+		bannerSrc: '/images/kids-camps/camp-6/camp-6.webp',
+		galleryStrip: TOURIST_CAMP_2_GALLERY,
+		bannerImageClassName:
+			'object-cover object-center scale-[0.9] transition group-hover:scale-[0.94]',
+	},
+}
 
 const POLIANSKI_CAMP_OFFICIAL_URL = 'https://polianski-camp.vercel.app/'
 
@@ -10,45 +33,90 @@ type ProgramRow = { block: string; points: string[] }
 
 const TOURIST_WHAT_AWAITS_TABLE: ProgramRow[] = [
 	{
-		block: '🗺️ Маршрути та рух групи',
+		block: '🗺️ Маршрути та рух у групі',
 		points: [
-			'Щодня — виходи різної тривалості: від спокійних прогулянок уздовж стежки здоров’я до маршрутів середньої складності поблизу Поляни. Маршрут і темп пояснюють інструктори 🗺️🚶‍♂️',
-			'На карті розглядають рельєф і умовні позначки; група рухається узгоджено — з ведучим і замикаючим супроводом 👥📍',
+			'Щодня — вихід на стежки: від легкої прогулянки по «Стежці здоров’я» до маршрутів середньої складності в околицях Поляни. Маршрут і темп пояснюють інструктори.',
+			'На карті розбирають рельєф і позначки; група йде з ведучим і замикаючим — без випередження й самовільних відгалужень.',
 		],
 	},
 	{
-		block: '🧭 Орієнтування просто неба',
+		block: '🧭 Орієнтування на стежці',
 		points: [
-			'Основи без зайвих гаджетів: дорожні знаки на стежці, орієнтири «на око» і короткі вправи з компасом 🧭🌲',
-			'Під час ходу — невеликі вправи на пошук орієнтирів за підказкою дорослих, без порушення правил безпеки групи 🔍',
+			'Без зайвих гаджетів: дорожні знаки, орієнтири «на око» й короткі вправи з компасом під наглядом дорослих.',
+			'Під час ходу — невеликі завдання на пошук точок за підказкою інструктора, з дотриманням правил безпеки групи.',
 		],
 	},
 	{
 		block: '🌿 Культура стежки',
 		points: [
-			'Поважаємо середовище: мінімум сліду, сміття забираємо з собою; рослини та тварин спостерігаємо спокійно, без зриву й зайвого шуму 🌿🙏',
-			'Якщо на трасі попадається стороння річ — повідомляємо інструктора, щоб прибрати безпечно 🧃',
+			'Мінімум сліду на природі: сміття забираємо з собою; рослини й тварин спостерігаємо спокійно, без зриву гілок і зайвого шуму.',
+			'Знайдене на трасі — показуємо інструктору, щоб прибрати або обійти безпечно.',
 		],
 	},
 	{
-		block: '🥾 Спорядження і безпека',
+		block: '🥾 Спорядження й безпека',
 		points: [
-			'Перед виходом — перевірка взуття, рюкзака й запасу води; легка розминка й нагадування про ознаки перегріву чи переохолодження ⚙️💧',
-			'У складну погоду маршрут скорочують або переносять частину активностей у приміщення бази — з «класом орієнтування» чи теорією ☔🏠',
+			'Перед виходом — перевірка взуття, рюкзака й запасу води; легка розминка й нагадування про спеку, дощ і переохолодження.',
+			'У дощ чи грозу маршрут скорочують або частину занять переносять у приміщення бази — теорія карти й «клас орієнтування».',
 		],
 	},
 	{
 		block: '💧 База на курорті',
 		points: [
-			'Режим харчування й відпочинку узгоджують при заїзді; вода з бювету «Поляна» — для поповнення запасів після маршрутів 🚰😴',
-			'За домовленістю можливий вихід у басейн партнерів курорту — лише з інструкторами й у відведений час зміни 🏊‍♂️',
+			'Режим харчування й відпочинку пояснюють при заїзді; після маршрутів — вода з бювету «Поляна».',
+			'За домовленістю — басейн партнерів курорту лише з інструкторами й у відведений час зміни.',
 		],
 	},
 	{
 		block: '🌄 Фінал зміни',
 		points: [
-			'Спільний колаж «карта спогадів»: кожен додає наліпку чи малюнок про найкращий день маршруту 🖼️🛤️',
-			'Вечір з фото зміни та побажаннями друзям; відзначаємо відповідальність у групі й дбайливість до спільної безпеки ✨📸',
+			'Спільний колаж «карта спогадів»: кожен додає наліпку чи малюнок про найкращий день на маршруті.',
+			'Вечір із фото зміни та побажаннями; відзначають відповідальність у групі й дбайливість до спільної безпеки.',
+		],
+	},
+]
+
+const TOURIST_CAMP_2_WHAT_AWAITS_TABLE: ProgramRow[] = [
+	{
+		block: '🗺️ Літні маршрути (серпень)',
+		points: [
+			'Окремі траси для спекотної погоди: більше тіні в лісі, помірні підйоми й зручні паузи на оглядових точках.',
+			'Маршрут планують наперед; діти вчаться читати легенду стежки й домовлятися про темп усередині групи.',
+		],
+	},
+	{
+		block: '🧭 Карта й компас у поході',
+		points: [
+			'Практика з паперовою картою та компасом: азимут, рельєф і прості задачі «знайди точку» на знайомій ділянці.',
+			'Інструктор пояснює, коли зупинитися, як зв’язатися з групою й чому не йдуть у поодинці.',
+		],
+	},
+	{
+		block: '🌿 Дбайливість до природи',
+		points: [
+			'Правила «залишити стежку чистою»: сміття в рюкзак, не чіпати гнізда й не зривати рідкісні рослини.',
+			'Короткі бесіди про тварин і рослини Карпат, які можна побачити саме в серпні.',
+		],
+	},
+	{
+		block: '🥾 Готовність до походу',
+		points: [
+			'Чеклист перед виходом: взуття, кепка, вода, дощовик; нагадування про сонцезахист і питний режим у спеку.',
+			'Якщо погода псується — коротший маршрут або заняття в залі бази без втрати програми дня.',
+		],
+	},
+	{
+		block: '💧 Відпочинок на базі',
+		points: [
+			'Після маршруту — відновлення на території курорту; мінеральна вода «Поляна» для поповнення запасів.',
+			'За графіком зміни можливий басейн із супроводом інструкторів — лише у погоджені години.',
+		],
+	},
+	{
+		block: '🌄 Підсумок другої зміни',
+		points: [
+			'Командна «карта спогадів» з маршрутами тижня — кожен позначає улюблений день і знахідку на стежці.',
+			'Спільне підбиття підсумків: що вдалося в групі, чому важлива безпека й взаємодопомога в горах.',
 		],
 	},
 ]
@@ -63,7 +131,22 @@ function TableCellBullets({ items }: { items: string[] }) {
 	)
 }
 
-export default function TouristCampPageContent() {
+type Props = { campId: TouristCampId }
+
+export default function TouristCampPageContent({ campId }: Props) {
+	const touristCamp = camps.find(c => c.id === campId)
+	const media = TOURIST_CAMP_MEDIA[campId]
+	const programTable =
+		campId === 'tourist-camp-2' ? TOURIST_CAMP_2_WHAT_AWAITS_TABLE : TOURIST_WHAT_AWAITS_TABLE
+	const programHeading =
+		campId === 'tourist-camp-2'
+			? '✨ Програма другої зміни: що роблять діти щодня ✨'
+			: '✨ Програма заїзду: що роблять діти щодня ✨'
+	const programCaption =
+		campId === 'tourist-camp-2'
+			? 'Друга літня туристична зміна біля Поляни: маршрути в серпні, карта й компас, дбайливість до природи, підготовка до походу, відпочинок на базі та підсумок зміни.'
+			: 'Туристична зміна біля Поляни: щоденні маршрути, основи карти й орієнтування, повага до стежки та природи, підготовка спорядження, відпочинок на базі курорту та підсумок зміни.'
+
 	if (!touristCamp) {
 		return (
 			<div className='bg-[#F5F6F7] px-4 py-16 text-center text-slate-600'>
@@ -107,22 +190,31 @@ export default function TouristCampPageContent() {
 			</section>
 
 			<div className='mx-auto max-w-6xl px-4 pt-3 pb-5 sm:px-6 sm:pt-4 lg:px-8 lg:pt-5'>
-				<TouristCampBannerAndGallery bannerAlt={touristCamp.title} />
+				<TouristCampBannerAndGallery
+					key={campId}
+					bannerSrc={media.bannerSrc}
+					bannerAlt={touristCamp.title}
+					galleryStrip={media.galleryStrip}
+					bannerImageClassName={media.bannerImageClassName}
+					galleryAriaLabel={
+						campId === 'tourist-camp-2'
+							? 'Фото зі другої зміни туристичного заїзду — натисніть, щоб відкрити й гортати'
+							: 'Фото зі зміни туристичного заїзду — натисніть, щоб відкрити й гортати'
+					}
+				/>
 
 				<section aria-labelledby='tourist-what-awaits-heading' className='mt-10 sm:mt-12'>
 					<h2
 						id='tourist-what-awaits-heading'
 						className='text-center text-xl font-bold tracking-tight text-[#2D333D] sm:text-2xl'
 					>
-						✨ Програма заїзду: що роблять діти щодня ✨
+						{programHeading}
 					</h2>
 
 					<div className='mt-6 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm'>
 						<div className='-mx-[1px] overflow-x-auto'>
 							<table className='w-full min-w-[20rem] border-collapse text-left md:min-w-0'>
-								<caption className='sr-only'>
-									Туристична зміна біля Поляни: щоденні маршрути, основи карти й орієнтування, повага до стежки та природи, підготовка спорядження, відпочинок на базі курорту та підсумок зміни разом із групою.
-								</caption>
+								<caption className='sr-only'>{programCaption}</caption>
 								<thead>
 									<tr className='border-b border-slate-200/90 bg-[#EBF8FC]'>
 										<th
@@ -140,7 +232,7 @@ export default function TouristCampPageContent() {
 									</tr>
 								</thead>
 								<tbody>
-									{TOURIST_WHAT_AWAITS_TABLE.map(({ block, points }, idx) => (
+									{programTable.map(({ block, points }, idx) => (
 										<tr
 											key={block}
 											className={

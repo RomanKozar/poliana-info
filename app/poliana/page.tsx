@@ -84,17 +84,8 @@ export default function PolyanaPage() {
 						</div>
 						<div className='relative h-44 overflow-hidden rounded-xl'>
 							<Image
-								src='/images/accommodation/kontinent.webp'
+								src='/images/accommodation/kontinent-v1.webp'
 								alt='Готель Континент'
-								fill
-								sizes='(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw'
-								className='object-cover'
-							/>
-						</div>
-						<div className='relative h-44 overflow-hidden rounded-xl'>
-							<Image
-								src='/images/accommodation/arena.webp'
-								alt='Arena Apart-Hotel'
 								fill
 								sizes='(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw'
 								className='object-cover'

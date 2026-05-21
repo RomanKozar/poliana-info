@@ -28,8 +28,8 @@ function priceFromUahFromHotelPrice(price: string): number {
 	return parseInt(m[1].replace(/\s/g, ''), 10) || 0
 }
 
-/** Не показуємо в порівняльних таблицях і SPA-картах (лишається в проживанні / головній карті). */
-const SPA_VENUE_EXCLUDED_HOTEL_IDS = new Set(['arena'])
+/** Не показуємо в порівняльних таблицях і SPA-картах. */
+const SPA_VENUE_EXCLUDED_HOTEL_IDS = new Set<string>()
 
 function mapPolyanaHotelsToSpaVenues(
 	hotels: typeof polyanaHotels,
@@ -51,14 +51,14 @@ function mapPolyanaHotelsToSpaVenues(
 
 /**
  * Базовий перелік для SPA-порівнянь (малі чани, бані, басейни тощо): координати з
- * `polyanaHotels` / головної карти, без Arena Apart-Hotel.
+ * `polyanaHotels` / головної карти.
  */
 export const SPA_CHAN_COMPARISON_VENUES: SpaVelikyiChanVenue[] = mapPolyanaHotelsToSpaVenues(
 	polyanaHotels,
 	SPA_VENUE_EXCLUDED_HOTEL_IDS
 )
 
-/** Великі чани: без Arena та River Side Hotel. */
+/** Великі чани: без River Side Hotel. */
 const SPA_VELIKI_CHANY_EXCLUDED_HOTEL_IDS = new Set([...SPA_VENUE_EXCLUDED_HOTEL_IDS, 'riverside'])
 
 /** Тарифи оренди великого чану (не ціни номерів з головної). */

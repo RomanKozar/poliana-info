@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import CampProgramCard from '@/components/camps/CampProgramCard'
+import AccommodationCardImageCarousel from '@/components/home/AccommodationCardImageCarousel'
+import { homeAccommodationCardGallery } from '@/lib/hotel-detail-data'
 import BottomStatusToast, {
 	WIP_SECTION_TOAST_MESSAGE,
 } from '@/components/shared/BottomStatusToast'
@@ -46,7 +48,7 @@ const HomePageMapSection = dynamic(() => import('@/components/home/HomePageMapSe
 })
 
 export default function HomePage() {
-	const [favoriteAccommodations, setFavoriteAccommodations] = useState<Record<string, boolean>>({})
+	// const [favoriteAccommodations, setFavoriteAccommodations] = useState<Record<string, boolean>>({})
 	const [activeHeroSlide, setActiveHeroSlide] = useState(0)
 	const [openFaqIndexes, setOpenFaqIndexes] = useState<Set<number>>(new Set())
 	const [isMobileSearch, setIsMobileSearch] = useState(false)
@@ -66,12 +68,12 @@ export default function HomePage() {
 		[[] as Array<{ item: (typeof faqItems)[number]; index: number }>, [] as Array<{ item: (typeof faqItems)[number]; index: number }>]
 	)
 
-	const toggleAccommodationFavorite = (id: string) => {
-		setFavoriteAccommodations(prev => ({
-			...prev,
-			[id]: !prev[id],
-		}))
-	}
+	// const toggleAccommodationFavorite = (id: string) => {
+	// 	setFavoriteAccommodations(prev => ({
+	// 		...prev,
+	// 		[id]: !prev[id],
+	// 	}))
+	// }
 
 	const goToHeroSlide = (slideIndex: number) => {
 		setActiveHeroSlide(slideIndex)
@@ -240,60 +242,21 @@ export default function HomePage() {
 						Показати ще →
 					</Link>
 				</div>
-				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+				<div className='grid grid-cols-1 gap-5 md:grid-cols-3'>
 					{accommodations.map(item => {
-						const isFavorite = Boolean(favoriteAccommodations[item.id])
+						// const isFavorite = Boolean(favoriteAccommodations[item.id])
 
 						return (
 							<article
 								key={item.id}
 								className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
 							>
-								<Link
+								<AccommodationCardImageCarousel
+									images={homeAccommodationCardGallery(item.id)}
+									alt={item.title}
 									href={accommodationHotelPath(item.id)}
-									target='_blank'
-									rel='noopener noreferrer'
-									className='relative isolate block h-28 shrink-0'
-									aria-label={`Відкрити опис «${item.title}» у новій вкладці`}
-								>
-									<Image
-										src={item.image}
-										alt={item.title}
-										fill
-										sizes='(min-width: 1024px) 17vw, (min-width: 640px) 42vw, 88vw'
-										className='object-cover'
-									/>
-									<button
-										type='button'
-										onClick={event => {
-											event.preventDefault()
-											event.stopPropagation()
-											toggleAccommodationFavorite(item.id)
-										}}
-										aria-label={
-											isFavorite
-												? `Прибрати ${item.title} з обраного`
-												: `Додати ${item.title} в обране`
-										}
-										aria-pressed={isFavorite}
-										className='heart-container'
-									>
-										<span className='sr-only'>
-											{isFavorite ? 'Прибрати з обраного' : 'Додати в обране'}
-										</span>
-										<span className={`heart-svg-container ${isFavorite ? 'is-active' : ''}`} aria-hidden='true'>
-											<svg viewBox='0 0 24 24' className='heart-svg-outline'>
-												<path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
-											</svg>
-											<svg viewBox='0 0 24 24' className='heart-svg-filled'>
-												<path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
-											</svg>
-											<svg viewBox='0 0 24 24' className='heart-svg-celebrate'>
-												<path d='M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1' />
-											</svg>
-										</span>
-									</button>
-								</Link>
+								/>
+								{/* Сердечко «обране» на картці — поки вимкнено (див. git history / toggleAccommodationFavorite) */}
 								<Link
 									href={accommodationHotelPath(item.id)}
 									target='_blank'
@@ -373,7 +336,11 @@ export default function HomePage() {
 				</div>
 				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-5'>
 					{campsHomeFeatured.map(item => (
-						<CampProgramCard key={item.title + item.dates} camp={item} variant='home' />
+						<CampProgramCard
+							key={item.id ?? `${item.title}-${item.dates}`}
+							camp={item}
+							variant='home'
+						/>
 					))}
 				</div>
 			</section>

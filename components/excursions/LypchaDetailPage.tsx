@@ -7,13 +7,9 @@ import {
 	RozhokPhotoGalleryProvider as PhotoGalleryProvider,
 	RozhokPhotoGalleryStrip as PhotoGalleryStrip,
 } from '@/components/excursions/RozhokPhotoGallery'
+import { summitDetailGalleryImages } from '@/lib/mountain-excursion-gallery'
 
-const LYPCHA_PHOTOS = [
-	'/images/excursions/mountains/mountains-5.webp',
-	'/images/excursions/mountains/mountains-6.webp',
-	'/images/excursions/mountains/mountains-4.webp',
-	'/images/excursions/mountains/mountains-2.webp',
-] as const
+const LYPCHA_PHOTOS = summitDetailGalleryImages(5)
 
 export default function LypchaDetailPage() {
 	return (

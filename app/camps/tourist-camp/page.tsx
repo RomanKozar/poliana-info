@@ -17,7 +17,7 @@ export const metadata = definePageMetadata({
 export default function TouristCampPage() {
 	return (
 		<div className='flex min-h-0 flex-col'>
-			<TouristCampPageContent />
+			<TouristCampPageContent campId='tourist-camp' />
 		</div>
 	)
 }

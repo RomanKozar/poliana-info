@@ -8,13 +8,9 @@ import {
 	RozhokPhotoGalleryProvider,
 	RozhokPhotoGalleryStrip,
 } from '@/components/excursions/RozhokPhotoGallery'
+import { summitDetailGalleryImages } from '@/lib/mountain-excursion-gallery'
 
-const ROZHOK_PHOTOS = [
-	'/images/excursions/mountains/mountains-1.webp',
-	'/images/excursions/mountains/mountains-2.webp',
-	'/images/excursions/mountains/mountains-3.webp',
-	'/images/excursions/mountains/mountains-4.webp',
-] as const
+const ROZHOK_PHOTOS = summitDetailGalleryImages(1)
 
 const PRICE_PER_PERSON_UAH = 800
 const CAR_PRICE_HINT_UAH = 4000

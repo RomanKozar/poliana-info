@@ -7,13 +7,9 @@ import {
 	RozhokPhotoGalleryProvider as PhotoGalleryProvider,
 	RozhokPhotoGalleryStrip as PhotoGalleryStrip,
 } from '@/components/excursions/RozhokPhotoGallery'
+import { summitDetailGalleryImages } from '@/lib/mountain-excursion-gallery'
 
-const VEDMEZHA_PHOTOS = [
-	'/images/excursions/mountains/mountains-4.webp',
-	'/images/excursions/mountains/mountains-5.webp',
-	'/images/excursions/mountains/mountains-6.webp',
-	'/images/excursions/mountains/mountains-1.webp',
-] as const
+const VEDMEZHA_PHOTOS = summitDetailGalleryImages(4)
 
 export default function VedmezhaDetailPage() {
 	return (

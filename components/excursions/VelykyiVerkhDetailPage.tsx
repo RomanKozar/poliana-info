@@ -7,13 +7,9 @@ import {
 	RozhokPhotoGalleryProvider as PhotoGalleryProvider,
 	RozhokPhotoGalleryStrip as PhotoGalleryStrip,
 } from '@/components/excursions/RozhokPhotoGallery'
+import { summitDetailGalleryImages } from '@/lib/mountain-excursion-gallery'
 
-const VELYKYI_VERKH_PHOTOS = [
-	'/images/excursions/mountains/mountains-6.webp',
-	'/images/excursions/mountains/mountains-3.webp',
-	'/images/excursions/mountains/mountains-2.webp',
-	'/images/excursions/mountains/mountains-1.webp',
-] as const
+const VELYKYI_VERKH_PHOTOS = summitDetailGalleryImages(6)
 
 export default function VelykyiVerkhDetailPage() {
 	return (

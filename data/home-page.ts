@@ -1,6 +1,6 @@
 import type { IconType } from 'react-icons'
 import { FaRegClock, FaSpa, FaWater } from 'react-icons/fa'
-import { EXCURSIONS_MOUNTAINS_ANCHOR_ID } from '@/data/excursions-page'
+import { EXCURSIONS_MOUNTAINS_ANCHOR_ID, quadExcursions } from '@/data/excursions-page'
 import { accommodationHotelPath } from '@/lib/accommodation-urls'
 
 export const accommodations = [
@@ -9,7 +9,7 @@ export const accommodations = [
 		title: 'Готель "Катерина"',
 		location: 'Сонячна, 55 Б, Поляна, Закарпатська область, 89313',
 		description: 'Затишний готель у самому серці курорту.',
-		price: 'від 1500 грн',
+		price: 'від 1760 грн',
 		rating: '4.3 (1104)',
 		image: '/images/accommodation/kateryna-v1.webp',
 		website: 'https://hotel-kateryna.com/',
@@ -20,9 +20,9 @@ export const accommodations = [
 		location: 'вул. Сонячна, 59, Поляна, Закарпатська область, 89313',
 		description:
 			'Комплекс з басейнами (критим і відкритим), рестораном, SPA й конференц-зонами у центрі курорту.',
-		price: 'від 1800 грн',
+		price: 'від 1350 грн',
 		rating: '4.3 (1256)',
-		image: '/images/accommodation/kontinent.webp',
+		image: '/images/accommodation/kontinent-v1.webp',
 		website: 'https://www.hotel-continent.com/',
 	},
 	{
@@ -31,21 +31,10 @@ export const accommodations = [
 		location: 'вул. Духновича, 68, Поляна, Закарпатська область, 89313',
 		description:
 			'Тихий готель біля річки з рестораном і номерами з балконом; зручно для авто й прогулянок до траси «Ведмежа».',
-		price: 'від 1100 грн',
+		price: 'від 1030 грн',
 		rating: '3.9 (399)',
-		image: '/images/accommodation/river-side.webp',
+		image: '/images/accommodation/river-side-v1.webp',
 		website: 'https://www.riverside.in.ua/',
-	},
-	{
-		id: 'arena',
-		title: 'Arena Apart-Hotel',
-		location: 'вул. Курортна, 23А, Поляна, Закарпатська область, 89314',
-		description:
-			'Відкритий басейн і SPA, апартаменти з кухнею, ресторан і дитяча зона на курорті «Сонячне Закарпаття».',
-		price: 'від 2500 грн',
-		rating: '4.7 (299)',
-		image: '/images/accommodation/arena.webp',
-		website: 'https://arena-hotel.com.ua/',
 	},
 ] as const
 
@@ -102,7 +91,7 @@ export type CampCardItem = {
 export const camps: CampCardItem[] = [
 	{
 		id: 'polianski-camp',
-		title: 'Літні зміни PolianskiCamp',
+		title: 'Квестово-ігровий табір',
 		age: 'від 8 до 14 років',
 		dates: '21.06 — 29.06',
 		description: 'Літні програми в горах на базі PolianskiCamp.',
@@ -124,7 +113,7 @@ export const camps: CampCardItem[] = [
 	},
 	{
 		id: 'theater-camp',
-		title: 'Театральний заїзд',
+		title: 'Квестово-туристиний заїзд',
 		age: 'від 9 до 16 років',
 		dates: '18.07 — 26.07',
 		description: 'Театр, ролі та творчі майстерні в гірському таборі.',
@@ -147,13 +136,13 @@ export const camps: CampCardItem[] = [
 	{
 		id: 'tourist-camp-2',
 		title: 'Туристичний заїзд',
-		age: 'від 10 до 16 років',
+		age: 'від 8 до 16 років',
 		dates: '09.08 — 17.08',
 		description: 'Маршрути, орієнтування та відкриття околиць Поляни.',
 		price: '23 500 грн',
-		image: '/images/kids-camps/camp-5.webp',
+		image: '/images/kids-camps/camp-6/camp-6.webp',
 		season: 'summer',
-		detailPath: '/camps/tourist-camp',
+		detailPath: '/camps/tourist-camp-2',
 	},
 	{
 		title: 'Зимові канікули в горах',
@@ -257,11 +246,11 @@ export const popularNow: PopularNowItem[] = [
 		href: '/cat/spa-bani-chany/veliki-chany',
 	},
 	{
-		badge: 'ТОП SPA',
-		title: 'SPA для тіла та душі',
-		text: 'Релакс, масажі та процедури.',
-		image: '/images/gallery/sayna.webp',
-		href: '/cat/spa-bani-chany/masazhi',
+		badge: 'ТОП ЕКСКУРСІЇ',
+		title: quadExcursions[0].title,
+		text: 'Лісові стежки, гори та панорами біля Поляни.',
+		image: quadExcursions[0].image,
+		href: quadExcursions[0].detailPagePath,
 	},
 ]
 
