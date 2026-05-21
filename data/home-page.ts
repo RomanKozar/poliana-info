@@ -8,7 +8,8 @@ export const accommodations = [
 		id: 'kateryna',
 		title: 'Готель "Катерина"',
 		location: 'Сонячна, 55 Б, Поляна, Закарпатська область, 89313',
-		description: 'Затишний готель у самому серці курорту.',
+		description:
+			'Затишний готельний комплекс у центрі курорту з рестораном, SPA, підігрівним басейном і гарячим чаном на території.',
 		price: 'від 1760 грн',
 		rating: '4.3 (1104)',
 		image: '/images/accommodation/kateryna-v1.webp',
@@ -84,7 +85,7 @@ export type CampCardItem = {
 	price: string
 	image: string
 	season: CampSeason
-	/** Як задано — картка веде на детальну сторінку табору */
+	/** Як задано - картка веде на детальну сторінку табору */
 	detailPath?: string
 }
 
@@ -93,7 +94,7 @@ export const camps: CampCardItem[] = [
 		id: 'polianski-camp',
 		title: 'Квестово-ігровий табір',
 		age: 'від 8 до 14 років',
-		dates: '21.06 — 29.06',
+		dates: '21.06 - 29.06',
 		description: 'Літні програми в горах на базі PolianskiCamp.',
 		price: '21 500 грн',
 		image: '/images/kids-camps/camp-1.webp',
@@ -104,7 +105,7 @@ export const camps: CampCardItem[] = [
 		id: 'quest-camp',
 		title: 'Квестовий табір',
 		age: 'від 9 до 15 років',
-		dates: '05.07 — 11.07',
+		dates: '05.07 - 11.07',
 		description: 'Командні квести, загадки й активності в Карпатах.',
 		price: '18 500 грн',
 		image: '/images/kids-camps/camp-2.webp',
@@ -115,7 +116,7 @@ export const camps: CampCardItem[] = [
 		id: 'theater-camp',
 		title: 'Квестово-туристиний заїзд',
 		age: 'від 9 до 16 років',
-		dates: '18.07 — 26.07',
+		dates: '18.07 - 26.07',
 		description: 'Театр, ролі та творчі майстерні в гірському таборі.',
 		price: '23 500 грн',
 		image: '/images/kids-camps/camp-3.webp',
@@ -126,7 +127,7 @@ export const camps: CampCardItem[] = [
 		id: 'tourist-camp',
 		title: 'Туристичний заїзд',
 		age: 'від 10 до 16 років',
-		dates: '29.07 — 06.08',
+		dates: '29.07 - 06.08',
 		description: 'Маршрути, орієнтування та відкриття околиць Поляни.',
 		price: '23 500 грн',
 		image: '/images/kids-camps/camp-4.webp',
@@ -137,7 +138,7 @@ export const camps: CampCardItem[] = [
 		id: 'tourist-camp-2',
 		title: 'Туристичний заїзд',
 		age: 'від 8 до 16 років',
-		dates: '09.08 — 17.08',
+		dates: '09.08 - 17.08',
 		description: 'Маршрути, орієнтування та відкриття околиць Поляни.',
 		price: '23 500 грн',
 		image: '/images/kids-camps/camp-6/camp-6.webp',
@@ -147,7 +148,7 @@ export const camps: CampCardItem[] = [
 	{
 		title: 'Зимові канікули в горах',
 		age: 'від 7 до 15 років',
-		dates: 'січень — березень (зміни уточнюються)',
+		dates: 'січень - березень (зміни уточнюються)',
 		description:
 			'Лижі, тюбінг на курорті, ігри в снігу та анімація. Програму та дати оголосимо напередодні сезону.',
 		price: 'за запитом',
@@ -157,8 +158,8 @@ export const camps: CampCardItem[] = [
 	{
 		title: 'Святковий зимовий табір',
 		age: 'від 8 до 16 років',
-		dates: '27.12 — 06.01',
-		description: 'Зимові розваги, святкова програма та прогулянки засніженою Поляною. Реєстрація — наближено до дат.',
+		dates: '27.12 - 06.01',
+		description: 'Зимові розваги, святкова програма та прогулянки засніженою Поляною. Реєстрація - наближено до дат.',
 		price: 'уточнюйте пізніше',
 		image: '/images/kids-camps/camp-winter/camp-winter-2.webp',
 		season: 'winter',
@@ -194,11 +195,11 @@ export const skiRecreation = [
 
 const CATEGORY_ICON_BASE = '/images/branding/categories-icons'
 
-/** Категорії блоку «Популярні категорії» на головній та в меню «Популярне» в шапці — власні SVG з `public/images/branding/categories-icons/`. */
+/** Категорії блоку «Популярні категорії» на головній та в меню «Популярне» в шапці - власні SVG з `public/images/branding/categories-icons/`. */
 export type CategoryNavItem = {
 	label: string
 	iconSrc: string
-	/** Без посилання — картка лише для відображення (сторінка в доробці). */
+	/** Без посилання - картка лише для відображення (сторінка в доробці). */
 	href?: string
 }
 
@@ -225,7 +226,7 @@ type PopularNowItem = {
 	text: string
 	image: string
 	href?: string
-	/** Якщо true — посилання відкривається в новій вкладці (наприклад деталь готелю). */
+	/** Якщо true - посилання відкривається в новій вкладці (наприклад деталь готелю). */
 	openInNewTab?: boolean
 }
 

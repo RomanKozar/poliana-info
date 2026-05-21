@@ -123,7 +123,7 @@ export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps
 					)}
 
 					<div className='border-t border-slate-200 bg-slate-50 px-4 py-2 text-xs text-slate-600'>
-						Порада: натисніть Enter — для «чани», «екскурсії», «проживання» відкриється відповідний розділ.
+						Порада: натисніть Enter - для «чани», «екскурсії», «проживання» відкриється відповідний розділ.
 						Шукайте також «готель», «табір», «форель», «контакти».
 					</div>
 				</div>

@@ -12,7 +12,7 @@ import {
 	FaPhoneAlt,
 	FaTiktok,
 } from 'react-icons/fa'
-/** Спільнота Polyana.info у Viber — клік або сканування QR відкриває запрошення. */
+/** Спільнота Polyana.info у Viber - клік або сканування QR відкриває запрошення. */
 const VIBER_COMMUNITY_URL =
 	'https://invite.viber.com/?g2=AQBZRJZyWkpsG1aRNv9OwpXzWvySL%2F%2BZCoq5T2lMDiTYA8c4mpKdfFI3b%2BMqMWVf'
 

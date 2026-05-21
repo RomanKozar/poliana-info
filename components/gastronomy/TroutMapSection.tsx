@@ -12,7 +12,7 @@ import {
 
 /**
  * Як на головній картою готелів: `hybrid` + ці стилі приховують POI/навігацію.
- * НЕ комбінувати `satellite` + `styles` — тайли часто не рендеряться (суцільний фон).
+ * НЕ комбінувати `satellite` + `styles` - тайли часто не рендеряться (суцільний фон).
  */
 const POLYANA_MAP_SILENT_UI = [
 	{ featureType: 'poi', stylers: [{ visibility: 'off' }] },
@@ -24,7 +24,7 @@ const POLYANA_MAP_SILENT_UI = [
 
 type TroutMapSectionProps = {
 	className?: string
-	/** Обовʼязкова явна висота / min-height контейнера — інакше `h-full` у мапі дає 0 px. */
+	/** Обовʼязкова явна висота / min-height контейнера - інакше `h-full` у мапі дає 0 px. */
 	frameClassName?: string
 }
 
@@ -96,7 +96,7 @@ export default function TroutMapSection({
 			const marker = new maps.Marker({
 				position: center,
 				map,
-				title: `${troutMapSpot.title} — відкрити маршрут у Google Maps`,
+				title: `${troutMapSpot.title} - відкрити маршрут у Google Maps`,
 				icon: {
 					url: getTroutPhishingGoogleStylePinDataUrl(),
 					scaledSize: new maps.Size(TROUT_PIN_MARKER_SIZE.w, TROUT_PIN_MARKER_SIZE.h),
@@ -195,7 +195,7 @@ export default function TroutMapSection({
 						<PhishingIcon fontSize='inherit' />
 					</span>
 					<iframe
-						title='Форель — карта Google'
+						title='Форель - карта Google'
 						className='absolute inset-0 h-full min-h-[280px] w-full border-0'
 						src={`https://www.google.com/maps?q=${q}&z=${troutMapSpot.zoom}&output=embed&hl=uk`}
 						loading='lazy'

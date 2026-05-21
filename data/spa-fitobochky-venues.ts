@@ -12,7 +12,7 @@ const SPA_FITOBOCHKY_PRICE_BY_ID: Partial<
 	},
 }
 
-/** На сторінці фітобочок — лише «Готель Катерина». */
+/** На сторінці фітобочок - лише «Готель Катерина». */
 export const SPA_FITOBOCHKY_VENUES: SpaFitobochkyVenue[] = SPA_CHAN_COMPARISON_VENUES.filter(
 	v => v.id === 'kateryna'
 ).map(v => {

@@ -13,7 +13,7 @@ const THEATER_GALLERY_STRIP: GalleryStripItem[] = [
 	{ id: 't4', src: '/images/kids-camps/camp3-3/camp3-4.webp', alt: 'Карпатське повітря між репетиціями й прогулянками' },
 ]
 
-const LIGHTBOX_TITLE = 'Театральний заїзд — фото зі зміни'
+const LIGHTBOX_TITLE = 'Театральний заїзд - фото зі зміни'
 
 const THEATER_BANNER_SRC = '/images/kids-camps/camp-3.webp'
 
@@ -196,7 +196,7 @@ export default function TheaterCampBannerAndGallery({ bannerAlt }: Props) {
 				<div
 					className='grid grid-cols-4 grid-rows-1 gap-2 sm:gap-3 md:gap-4'
 					role='region'
-					aria-label='Фото зі зміни театрального заїзду — натисніть, щоб відкрити й гортати'
+					aria-label='Фото зі зміни театрального заїзду - натисніть, щоб відкрити й гортати'
 				>
 					{THEATER_GALLERY_STRIP.map(({ id, src, alt }, imageIndex) => (
 						<button

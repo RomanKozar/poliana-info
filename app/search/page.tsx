@@ -4,7 +4,7 @@ import { definePageMetadata } from '@/lib/seo'
 import SearchPageClient from './SearchPageClient'
 
 export const metadata: Metadata = definePageMetadata({
-	title: 'Пошук — готелі, чани, екскурсії Поляни',
+	title: 'Пошук - готелі, чани, екскурсії Поляни',
 	description:
 		'Пошук по POLYANA.INFO: готелі й житло в Поляні, чани та SPA, екскурсії в гори й квадроцикли Quadro Ride, дитячі табори та розваги. Туристичний портал Закарпаття.',
 	pathname: '/search',

@@ -53,7 +53,7 @@ function scoreOnTen(stars: number): string {
 	return (Math.min(10, stars * 2)).toFixed(1).replace('.', ',')
 }
 
-/** «P» у колі — у наборах react-icons немає стійкого Md-паркінгу для вашої версії пакета */
+/** «P» у колі - у наборах react-icons немає стійкого Md-паркінгу для вашої версії пакета */
 function IconParkingP(props: { className?: string }) {
 	return (
 		<span
@@ -204,7 +204,7 @@ function HotelGalleryLightbox({
 					<div className='relative aspect-[16/11] max-h-[min(75vh,calc(100svh-10rem))] min-h-[12rem] w-full sm:aspect-[16/10]'>
 						<Image
 							src={src}
-							alt={`${hotelName} — фото ${idx + 1}`}
+							alt={`${hotelName} - фото ${idx + 1}`}
 							fill
 							className='object-contain'
 							sizes='(max-width: 1024px) 100vw, 896px'
@@ -368,11 +368,11 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 						type='button'
 						onClick={() => openGallery(1)}
 						className='relative hidden aspect-video w-full cursor-pointer overflow-hidden lg:block lg:aspect-auto lg:min-h-0 lg:h-auto'
-						aria-label={`${hotel.name} — фото 2`}
+						aria-label={`${hotel.name} - фото 2`}
 					>
 						<Image
 							src={gallery[1]}
-							alt={`${hotel.name} — 2`}
+							alt={`${hotel.name} - 2`}
 							fill
 							className='object-cover transition hover:opacity-95'
 							sizes='25vw'
@@ -382,11 +382,11 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 						type='button'
 						onClick={() => openGallery(2)}
 						className='relative hidden aspect-video w-full cursor-pointer overflow-hidden lg:block lg:aspect-auto lg:min-h-0 lg:h-auto'
-						aria-label={`${hotel.name} — фото 3`}
+						aria-label={`${hotel.name} - фото 3`}
 					>
 						<Image
 							src={gallery[2]}
-							alt={`${hotel.name} — 3`}
+							alt={`${hotel.name} - 3`}
 							fill
 							className='object-cover transition hover:opacity-95'
 							sizes='25vw'
@@ -396,11 +396,11 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 						type='button'
 						onClick={() => openGallery(3)}
 						className='relative hidden aspect-video w-full cursor-pointer overflow-hidden lg:block lg:aspect-auto lg:min-h-0 lg:h-auto'
-						aria-label={`${hotel.name} — фото 4`}
+						aria-label={`${hotel.name} - фото 4`}
 					>
 						<Image
 							src={gallery[3]}
-							alt={`${hotel.name} — 4`}
+							alt={`${hotel.name} - 4`}
 							fill
 							className='object-cover transition hover:opacity-95'
 							sizes='25vw'
@@ -412,7 +412,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 						className='group/showall relative hidden aspect-video w-full cursor-pointer overflow-hidden lg:block lg:aspect-auto lg:min-h-0 lg:h-auto'
 						aria-label='Показати всі фотографії'
 					>
-						<Image src={gallery[4]} alt={`${hotel.name} — 5`} fill className='object-cover' sizes='25vw' />
+						<Image src={gallery[4]} alt={`${hotel.name} - 5`} fill className='object-cover' sizes='25vw' />
 						<div className='pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-black/25 to-transparent p-3'>
 							<span className='inline-flex items-center gap-2 rounded-lg border border-white/90 bg-white/95 px-3 py-2 text-sm font-semibold text-[#2D333D] shadow-sm transition-transform duration-300 ease-out will-change-transform group-hover/showall:scale-[1.04] group-hover/showall:-translate-y-0.5 group-hover/showall:shadow-md'>
 								<span className='grid grid-cols-3 gap-0.5' aria-hidden>
@@ -484,7 +484,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 					<section className='space-y-3'>
 						<h3 className='text-lg font-semibold text-[#2D333D]'>Про помешкання</h3>
 						<p className='text-[0.9375rem] italic leading-relaxed text-sky-950/90'>
-							Ця локація часто обирають пари — зручність і сервіс оцінюють на рівні {scoreLabel.replace(',', '.')} з 10 за умовним
+							Ця локація часто обирають пари - зручність і сервіс оцінюють на рівні {scoreLabel.replace(',', '.')} з 10 за умовним
 							балом порталу (на основі рейтингу {stars.toFixed(1).replace('.', ',')}/5).
 						</p>
 						<div
@@ -570,7 +570,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 
 				<div className='mt-4 flex flex-wrap items-center gap-3'>
 					<span className='rounded bg-sky-900 px-3 py-2 text-xl font-bold text-white'>{scoreLabel}</span>
-					<span className='min-w-0 font-medium text-slate-800'>Чудово · {guestCount ?? '—'} відгуків</span>
+					<span className='min-w-0 font-medium text-slate-800'>Чудово · {guestCount ?? '-'} відгуків</span>
 				</div>
 
 				<p className='mt-5 font-semibold text-slate-900'>Категорії:</p>
@@ -799,7 +799,7 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 			<a
 				href={`tel:${hotel.phone.replace(/[^\d+]/g, '')}`}
 				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
-				aria-label={`Забронювати ${hotel.name} — зателефонувати`}
+				aria-label={`Забронювати ${hotel.name} - зателефонувати`}
 			>
 				Забронювати
 			</a>

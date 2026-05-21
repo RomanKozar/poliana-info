@@ -17,17 +17,17 @@ const SECTION_LABELS: Record<(typeof SECTION_KEYS)[number], string> = {
 	spaPoslugy: 'SPA Послуги',
 }
 
-/** Файли `spa-title-*.webp` — 1651×1001; співвідношення сторін без обрізання по висоті/ширині. */
+/** Файли `spa-title-*.webp` - 1651×1001; співвідношення сторін без обрізання по висоті/ширині. */
 const SPA_TITLE_ASPECT_CLASS = 'aspect-[1651/1001]' as const
 
 /** Alt для екранних зчитувачів (текст на картці прибрано). */
 const SPA_TITLE_ALT_BY_SLOT: Record<number, string> = {
-	1: 'Великий чан до 8 людей — Поляна',
-	2: 'Малий чан до 4 людей — Поляна',
-	3: 'Бані — Поляна',
-	4: 'Басейни — Поляна',
-	5: 'Оздоровчі масажі — Поляна',
-	6: 'Фітобочки — Поляна',
+	1: 'Великий чан до 8 людей - Поляна',
+	2: 'Малий чан до 4 людей - Поляна',
+	3: 'Бані - Поляна',
+	4: 'Басейни - Поляна',
+	5: 'Оздоровчі масажі - Поляна',
+	6: 'Фітобочки - Поляна',
 }
 
 function SpaTitleBanner({
@@ -38,7 +38,7 @@ function SpaTitleBanner({
 	alt: string
 	/** 1–6: слот у сітці → `spa-title-{n}.webp`. */
 	imageIndex: number
-	/** Якщо задано — уся картка є посиланням. */
+	/** Якщо задано - уся картка є посиланням. */
 	href?: string
 }) {
 	const src = `/images/spa-title/spa-title-${imageIndex}.webp`
@@ -94,7 +94,7 @@ export default function SpaBaniChanyPageContent() {
 						<div className='flex flex-col gap-5'>
 							{[0, 1].map(row => {
 								const imageIndex = colIdx * 2 + row + 1
-								const bannerAlt = SPA_TITLE_ALT_BY_SLOT[imageIndex] ?? `${SECTION_LABELS[key]} — зображення ${row + 1}`
+								const bannerAlt = SPA_TITLE_ALT_BY_SLOT[imageIndex] ?? `${SECTION_LABELS[key]} - зображення ${row + 1}`
 								return (
 									<SpaTitleBanner
 										key={row}

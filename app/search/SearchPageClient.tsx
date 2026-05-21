@@ -21,7 +21,7 @@ export default function SearchPageClient() {
 	return (
 		<>
 			<p className='mt-2 text-sm text-slate-700 sm:text-base'>
-				Запит: <span className='font-semibold text-[#2D333D]'>{q || '—'}</span>
+				Запит: <span className='font-semibold text-[#2D333D]'>{q || '-'}</span>
 			</p>
 
 			<div className='mt-6 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-900/5 sm:p-8'>

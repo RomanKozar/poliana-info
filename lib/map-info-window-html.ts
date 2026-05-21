@@ -54,7 +54,7 @@ function normalizeTelForHref(digits: string): string {
 
 export type UnifiedMapCardIw = {
 	name: string
-	/** Заголовок у картці; якщо не задано — показується `name` (наприклад для тематичних сторінок SPA). */
+	/** Заголовок у картці; якщо не задано - показується `name` (наприклад для тематичних сторінок SPA). */
 	title?: string
 	address: string
 	description: string
@@ -63,21 +63,21 @@ export type UnifiedMapCardIw = {
 	phone: string
 	galleryImages: string[]
 	routeLink: string
-	/** Якщо немає телефону — CTA веде сюди */
+	/** Якщо немає телефону - CTA веде сюди */
 	saveLink?: string
 	/** Внутрішнє посилання на сторінку готелю (клік по фото галереї на карті) */
 	detailHref?: string
 	/**
-	 * Якщо задано — клік по фото в галереї веде сюди (зазвичай Google Maps / маршрут).
+	 * Якщо задано - клік по фото в галереї веде сюди (зазвичай Google Maps / маршрут).
 	 * Має пріоритет над `detailHref`.
 	 */
 	galleryExternalHref?: string
-	/** Якщо задано разом — основна кнопка замість «Подзвонити» за телефоном з поля `phone`. */
+	/** Якщо задано разом - основна кнопка замість «Подзвонити» за телефоном з поля `phone`. */
 	ctaLabel?: string
 	ctaHref?: string
-	/** Рядок ціни (наприклад «від 1100 ₴») — один рядок у картці. */
+	/** Рядок ціни (наприклад «від 1100 ₴») - один рядок у картці. */
 	priceLabel?: string
-	/** Кілька тарифів — у попапі стовпчиком (як у таблиці SPA). */
+	/** Кілька тарифів - у попапі стовпчиком (як у таблиці SPA). */
 	priceLines?: readonly string[]
 }
 
@@ -86,7 +86,7 @@ export type SpaMapIwPriceOpts = {
 	priceLines?: readonly string[]
 }
 
-/** Поля ціни для InfoWindow SPA-карт (пріоритет — `priceLines`). */
+/** Поля ціни для InfoWindow SPA-карт (пріоритет - `priceLines`). */
 export function spaMapIwPriceFields(opts?: SpaMapIwPriceOpts): Pick<UnifiedMapCardIw, 'priceLabel' | 'priceLines'> {
 	if (opts?.priceLines?.length) return { priceLines: opts.priceLines }
 	const label = opts?.priceLabel?.trim()
@@ -114,7 +114,7 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const desc = escHtml(p.description)
 	const address = escHtml(p.address)
 	const feature = escHtml(p.feature)
-	const rating = escHtml((p.rating || '').trim() || '—')
+	const rating = escHtml((p.rating || '').trim() || '-')
 	const gallery = normalizeMapCardGallery(p.galleryImages)
 	const total = gallery.length
 	const sw = 100 / total
@@ -124,13 +124,13 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const detailEsc = detailHref ? escHtml(detailHref) : ''
 	const slides = gallery
 		.map((src, i) => {
-			const alt = `${name}${i > 0 ? ` — ${i + 1}` : ''}`
+			const alt = `${name}${i > 0 ? ` - ${i + 1}` : ''}`
 			const imgInner = `<img class="polyana-accommodation-iw-img" src="${escHtml(src)}" alt="${alt}" />`
 			const inner =
 				galleryExternalEsc !== ''
-					? `<a class="polyana-accommodation-iw-slide-detail" href="${galleryExternalEsc}" target="_blank" rel="noopener noreferrer" aria-label="${name} — маршрут у Google Картах">${imgInner}</a>`
+					? `<a class="polyana-accommodation-iw-slide-detail" href="${galleryExternalEsc}" target="_blank" rel="noopener noreferrer" aria-label="${name} - маршрут у Google Картах">${imgInner}</a>`
 					: detailEsc !== ''
-						? `<a class="polyana-accommodation-iw-slide-detail" href="${detailEsc}" aria-label="${name} — детальний опис">${imgInner}</a>`
+						? `<a class="polyana-accommodation-iw-slide-detail" href="${detailEsc}" aria-label="${name} - детальний опис">${imgInner}</a>`
 						: imgInner
 			return `<div class="polyana-accommodation-iw-gallery__slide" style="flex:0 0 ${sw}%" data-slide="${i}">${inner}</div>`
 		})
@@ -319,7 +319,7 @@ export function spaMasazhiHotelInfoWindowHtml(hotel: PolyanaHotel): string {
 	const priceLabel = (iw.mapPriceLabel ?? hotel.price).trim()
 	return unifiedMapCardInfoWindowHtml({
 		name: hotel.name,
-		title: `Масаж і SPA — ${hotel.name}`,
+		title: `Масаж і SPA - ${hotel.name}`,
 		address: hotel.address,
 		description: iw.description,
 		rating: hotel.rating,
@@ -378,7 +378,7 @@ export function homeMapMarkerToUnifiedCard(p: {
 		name: p.name,
 		address: p.address,
 		description: body || p.category,
-		rating: rating || '—',
+		rating: rating || '-',
 		feature: p.featurePill,
 		phone,
 		galleryImages: [p.image],

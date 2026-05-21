@@ -2,9 +2,9 @@ import CampsPageContent from '@/components/camps/CampsPageContent'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Табори відпочинку в Поляні — літні та зимові зміни',
+	title: 'Табори відпочинку в Поляні - літні та зимові зміни',
 	description:
-		'Табори на курорті Поляна: літні програми, зимові канікули — опис заїздів, діапазон віку, дати й орієнтовні ціни.',
+		'Табори на курорті Поляна: літні програми, зимові канікули - опис заїздів, діапазон віку, дати й орієнтовні ціни.',
 	pathname: '/camps',
 })
 

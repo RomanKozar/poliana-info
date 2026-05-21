@@ -19,16 +19,16 @@ export async function generateMetadata({ params }: Props) {
 	const { slug } = await params
 	if (slug === HOTELS_CATEGORY_SLUG) {
 		return definePageMetadata({
-			title: 'Проживання та житло в Поляні — готелі на карті',
+			title: 'Проживання та житло в Поляні - готелі на карті',
 			description:
-				'Зняти житло в Поляні, Закарпаття: готелі та апарт-готелі на інтерактивній карті. Ціни, рейтинги, адреси — проживання біля екскурсій, SPA та підйомників курорту.',
+				'Зняти житло в Поляні, Закарпаття: готелі та апарт-готелі на інтерактивній карті. Ціни, рейтинги, адреси - проживання біля екскурсій, SPA та підйомників курорту.',
 			pathname: `/cat/${slug}`,
 			keywords: accommodationPageKeywords,
 		})
 	}
 	if (slug === 'spa-bani-chany') {
 		return definePageMetadata({
-			title: 'Чани, бані та SPA в Поляні — заклади й ціни',
+			title: 'Чани, бані та SPA в Поляні - заклади й ціни',
 			description:
 				'Чани та SPA в Поляні, Закарпаття: великі й малі чани, бані, басейни, масажі та фітобочки. Порівняйте заклади на карті, перегляньте орієнтовні ціни та оберіть відпочинок у Карпатах на POLYANA.INFO.',
 			pathname: `/cat/${slug}`,

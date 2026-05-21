@@ -3,7 +3,7 @@ import { lypchaExcursionKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Гора Липча — маршрут біля Поляни (екскурсія)',
+	title: 'Гора Липча - маршрут біля Поляни (екскурсія)',
 	description:
 		'Гора Липча (Уклин, Закарпаття): менш натоптані стежки та ділянки поблизу E471. Фото, опис і карта.',
 	pathname: '/excursions/mountains/lypcha',

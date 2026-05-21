@@ -24,7 +24,7 @@ export default function RozhokDetailPage() {
 						<div className='max-w-xl lg:max-w-none'>
 							<p className='text-sm font-medium uppercase tracking-wide text-[#53C4DA]'>Екскурсії в гори</p>
 							<h1 className='mt-2 text-3xl font-bold text-[#2D333D] sm:text-4xl'>
-								Гора Рожок — оглядовий майданчик
+								Гора Рожок - оглядовий майданчик
 							</h1>
 							<p className='mt-3 flex items-start gap-2 text-slate-600'>
 								<FaMapMarkerAlt className='mt-1 size-4 shrink-0 text-[#53C4DA]' aria-hidden />
@@ -86,7 +86,7 @@ export default function RozhokDetailPage() {
 						<div>
 							<RozhokHeroGalleryImage
 								src={ROZHOK_PHOTOS[0]}
-								alt='Гора Рожок — оглядовий майданчик'
+								alt='Гора Рожок - оглядовий майданчик'
 								priority
 								sizes='(max-width: 1024px) 100vw, 50vw'
 								className='relative aspect-[4/3] w-full cursor-pointer overflow-hidden rounded-3xl border border-slate-200 bg-white text-left shadow-sm ring-1 ring-slate-900/5 outline-none transition hover:brightness-[1.02] focus-visible:ring-2 focus-visible:ring-[#53C4DA]'
@@ -94,7 +94,7 @@ export default function RozhokDetailPage() {
 							<div className='px-4 py-4 sm:px-5'>
 								<p className='text-sm font-semibold text-[#2D333D]'>Панорами поруч із Поляною</p>
 								<p className='mt-1 text-sm text-slate-600'>
-									Зручний виїзд, гарні краєвиди та зупинки для фото — без складних переходів.
+									Зручний виїзд, гарні краєвиди та зупинки для фото - без складних переходів.
 								</p>
 							</div>
 						</div>
@@ -119,8 +119,8 @@ export default function RozhokDetailPage() {
 				<section className='border-t border-slate-200/80 bg-white px-4 py-10 sm:px-16 lg:px-24'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Карта</h2>
 					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
-						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> — початок,{' '}
-						<span className='font-semibold text-red-600'>червоний</span> — кінець.
+						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+						<span className='font-semibold text-red-600'>червоний</span> - кінець.
 					</p>
 					<RozhokRouteMap />
 				</section>

@@ -1,6 +1,6 @@
 /**
  * Конвертує HEIC/JPEG/PNG у WebP і стискає WebP у public/images/kids-camps (+ camp-winter).
- * Картки таборів ~170×160px — вихід до 960×720 (4:3), quality 82.
+ * Картки таборів ~170×160px - вихід до 960×720 (4:3), quality 82.
  */
 import fs from 'fs'
 import path from 'path'
@@ -19,7 +19,7 @@ const WEBP_QUALITY = 82
 const INPUT_EXTS = /\.(heic|heif|jpg|jpeg|png)$/i
 const WEBP_RE = /\.webp$/i
 
-/** Літні картки — fit inside; зимові — crop 4:3 як camp-1…5 (960×720). */
+/** Літні картки - fit inside; зимові - crop 4:3 як camp-1…5 (960×720). */
 const TARGET_DIRS = [
 	{
 		dir: path.join(root, 'public', 'images', 'kids-camps'),

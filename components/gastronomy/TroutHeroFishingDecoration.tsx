@@ -4,7 +4,7 @@ import PhishingIcon from '@mui/icons-material/Phishing'
 import { FaFish } from 'react-icons/fa'
 
 /**
- * П’ять «ліворуч → праворуч». У Phishing (24×24) кругле вушко зверху ≈ на x≈15–16 — ліску ведемо через `left` ~62% ширини іконки.
+ * П’ять «ліворуч → праворуч». У Phishing (24×24) кругле вушко зверху ≈ на x≈15–16 - ліску ведемо через `left` ~62% ширини іконки.
  */
 const HOOKS: ReadonlyArray<{
 	lineClass: string
@@ -35,7 +35,7 @@ const HOOKS: ReadonlyArray<{
 ]
 
 const ICON_BOX = 'w-[1.0625rem] sm:w-[1.1875rem]'
-/** У viewBox 24×24 вушко (круг) ближче до центру-праворуч — ось ліски */
+/** У viewBox 24×24 вушко (круг) ближче до центру-праворуч - ось ліски */
 const LINE_X = 'left-[62%] -translate-x-1/2'
 
 function StraightLine({ className }: { className: string }) {
@@ -66,7 +66,7 @@ function SingleHookColumn({ config }: { config: (typeof HOOKS)[number] }) {
 					</div>
 					<div className={`invisible w-px ${lineClass}`} aria-hidden />
 				</div>
-				{/* Перекриття іконки й лиски через внутрішній padding SvgIcon; риба — знизу, ніби на вістрі гачка */}
+				{/* Перекриття іконки й лиски через внутрішній padding SvgIcon; риба - знизу, ніби на вістрі гачка */}
 				<div
 					className={`-mt-1 ${ICON_BOX} flex shrink-0 flex-col items-center justify-center sm:-mt-1.5`}
 				>

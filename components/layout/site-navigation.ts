@@ -37,7 +37,7 @@ export const siteNavigation: NavigationItem[] = [
 		submenuKey: 'accommodation',
 		children: [
 			{ href: '/cat/goteli-polyany', label: 'Готелі Поляни' },
-			// Тимчасово приховано — дорозробка сторінки «Сільський туризм».
+			// Тимчасово приховано - дорозробка сторінки «Сільський туризм».
 			// { href: '/cat/silskyi-turizm', label: 'Сільський туризм' },
 			{ href: '/cat/sanatorii-polyany', label: 'Санаторії Поляни' },
 		],

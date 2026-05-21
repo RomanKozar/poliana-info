@@ -1,5 +1,5 @@
 /**
- * Мінімальний AASA без прив’язки до iOS-додатка — знімає 404 у GSC для сканерів Apple/Google.
+ * Мінімальний AASA без прив’язки до iOS-додатка - знімає 404 у GSC для сканерів Apple/Google.
  * @see https://developer.apple.com/documentation/xcode/supporting-associated-domains
  */
 export const APPLE_APP_SITE_ASSOCIATION_JSON = JSON.stringify({

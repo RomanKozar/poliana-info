@@ -22,7 +22,7 @@ function escapeXmlLoc(url: string): string {
 	return url.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
 
-/** Формат W3C date-only (YYYY-MM-DD) — достатньо для sitemap і без зайвих мілісекунд у XML. */
+/** Формат W3C date-only (YYYY-MM-DD) - достатньо для sitemap і без зайвих мілісекунд у XML. */
 function lastmodDateOnly(d: Date): string {
 	return d.toISOString().slice(0, 10)
 }

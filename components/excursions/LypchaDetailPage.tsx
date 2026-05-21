@@ -25,7 +25,7 @@ export default function LypchaDetailPage() {
 								<span>с. Поляна, Закарпатська обл.</span>
 							</p>
 							<p className='mt-4 leading-relaxed text-slate-600'>
-								Варіант для тих, хто шукає менш натоптані стежки. Частина шляху проходить поблизу дороги E471 —
+								Варіант для тих, хто шукає менш натоптані стежки. Частина шляху проходить поблизу дороги E471 -
 								дотримуйтесь безпеки та орієнтуйтеся на погоду.
 							</p>
 
@@ -103,8 +103,8 @@ export default function LypchaDetailPage() {
 				<section className='border-t border-slate-200/80 bg-white px-4 py-10 sm:px-16 lg:px-24'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Карта</h2>
 					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
-						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> — початок,{' '}
-						<span className='font-semibold text-red-600'>червоний</span> — кінець.
+						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+						<span className='font-semibold text-red-600'>червоний</span> - кінець.
 					</p>
 					<LypchaRouteMap />
 				</section>

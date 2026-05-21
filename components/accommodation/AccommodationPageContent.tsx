@@ -27,7 +27,7 @@ import { popularFacilitiesForHotel, type FacilityIconId } from '@/lib/hotel-deta
 
 const MOBILE_MAP_SHEET_MQ = '(max-width: 1023px)'
 
-/** «P» у колі — у наборах react-icons немає стійкого Md-паркінгу для вашої версії пакета */
+/** «P» у колі - у наборах react-icons немає стійкого Md-паркінгу для вашої версії пакета */
 function IconParkingP(props: { className?: string }) {
 	return (
 		<span
@@ -183,7 +183,7 @@ function AccommodationMapMobileBottomSheet({
 									>
 										<Image
 											src={src}
-											alt={i > 0 ? `${hotel.name} — ${i + 1}` : hotel.name}
+											alt={i > 0 ? `${hotel.name} - ${i + 1}` : hotel.name}
 											fill
 											className='object-cover pointer-events-none select-none'
 											sizes='100vw'
@@ -323,7 +323,7 @@ export default function AccommodationPageContent() {
 	const activeInfoWindowRef = useRef<any>(null)
 	const markersByIdRef = useRef<Map<string, any>>(new Map())
 	const infoWindowsByIdRef = useRef<Map<string, any>>(new Map())
-	/** Клік по картці до готовності карти — відкриваємо InfoWindow після initMap. */
+	/** Клік по картці до готовності карти - відкриваємо InfoWindow після initMap. */
 	const pendingFocusHotelIdRef = useRef<string | null>(null)
 	const [mapError, setMapError] = useState<string | null>(null)
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
@@ -337,7 +337,7 @@ export default function AccommodationPageContent() {
 	const isNarrowMapUiRef = useRef(
 		typeof window !== 'undefined' && window.matchMedia(MOBILE_MAP_SHEET_MQ).matches
 	)
-	/** Після кліку по маркеру теж спрацьовує click по карті — тимчасово не закриваємо вікно. */
+	/** Після кліку по маркеру теж спрацьовує click по карті - тимчасово не закриваємо вікно. */
 	const mapClickLockUntilRef = useRef(0)
 	useLayoutEffect(() => {
 		isNarrowMapUiRef.current = window.matchMedia(MOBILE_MAP_SHEET_MQ).matches
@@ -501,7 +501,7 @@ export default function AccommodationPageContent() {
 				const marker = new win.google.maps.Marker({
 					position: hotel.position,
 					map,
-					title: `${hotel.name} — ${priceLabel}`,
+					title: `${hotel.name} - ${priceLabel}`,
 					icon: {
 						url: pill.dataUrl,
 						scaledSize: new win.google.maps.Size(pill.width, pill.height),
@@ -511,7 +511,7 @@ export default function AccommodationPageContent() {
 				bounds.extend(hotel.position)
 				const infoWindow = new win.google.maps.InfoWindow({
 					content: hotelInfoWindowHtml(hotel),
-					/** Сховати стандартний хрестик Google у шапці; закриття — кнопка на фото + клік по карті */
+					/** Сховати стандартний хрестик Google у шапці; закриття - кнопка на фото + клік по карті */
 					headerDisabled: true,
 				})
 				markersByIdRef.current.set(hotel.id, marker)
@@ -778,7 +778,7 @@ export default function AccommodationPageContent() {
 				>
 					<p className='shrink-0 text-sm font-medium text-slate-600'>
 						{polyanaHotels.length}{' '}
-						{polyanaHotels.length === 1 ? 'заклад' : 'заклади'} на карті Поляни — оберіть готель у списку або
+						{polyanaHotels.length === 1 ? 'заклад' : 'заклади'} на карті Поляни - оберіть готель у списку або
 						маркер на карті.
 					</p>
 

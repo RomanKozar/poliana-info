@@ -19,7 +19,7 @@ const KATERYNA_HOTEL_ID = 'kateryna' as const
 const MASAZHI_MAP_FRAME_CLASS =
 	'relative min-h-[340px] h-[min(64vh,34rem)] w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-lg sm:min-h-[420px] lg:min-h-0 lg:h-[min(72vh,40rem)]'
 
-/** Зум після завантаження: як на прикладі — річка, квартал, без надмірного наближення. */
+/** Зум після завантаження: як на прикладі - річка, квартал, без надмірного наближення. */
 const MASAZHI_MAP_MAX_ZOOM = 14
 
 const accent = {
@@ -128,8 +128,8 @@ export default function SpaMasazhiPageContent() {
 							venues={masazhiMapVenues}
 							selectedId={null}
 							windowInitCallbackName='initPolyanaMasazhiMap'
-							mapAriaLabel='Карта: масаж і SPA — Готель Катерина, Поляна'
-							embedIframeTitle='Масаж і SPA — Готель Катерина, Поляна — Google Maps'
+							mapAriaLabel='Карта: масаж і SPA - Готель Катерина, Поляна'
+							embedIframeTitle='Масаж і SPA - Готель Катерина, Поляна - Google Maps'
 							infoWindowVariant='masazhi'
 							frameClassName={MASAZHI_MAP_FRAME_CLASS}
 							fitBoundsMaxZoom={MASAZHI_MAP_MAX_ZOOM}

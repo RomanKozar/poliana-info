@@ -2,7 +2,7 @@ import TouristCampPageContent from '@/components/camps/TouristCampPageContent'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Туристичний дитячий заїзд у Поляні — друга зміна, маршрути та програма',
+	title: 'Туристичний дитячий заїзд у Поляні - друга зміна, маршрути та програма',
 	description:
 		'Друга літня зміна туристичного табору біля Поляни: походи, карта й орієнтування, безпека в групі, побут на базі курорту. Дати 09.08–17.08. Деталі на офіційному сайті програми.',
 	pathname: '/camps/tourist-camp-2',

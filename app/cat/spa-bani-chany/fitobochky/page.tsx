@@ -5,9 +5,9 @@ import { definePageMetadata } from '@/lib/seo'
 export const dynamic = 'force-static'
 
 export const metadata = definePageMetadata({
-	title: 'Фітобочки в Поляні — заклади й карта',
+	title: 'Фітобочки в Поляні - заклади й карта',
 	description:
-		'Фітобочки та фіто-пари в Поляні, Закарпаття: порівняйте готелі, подивіться їх на карті та узгодьте сеанс. POLYANA.INFO — зручна таблиця для відпочинку в Карпатах.',
+		'Фітобочки та фіто-пари в Поляні, Закарпаття: порівняйте готелі, подивіться їх на карті та узгодьте сеанс. POLYANA.INFO - зручна таблиця для відпочинку в Карпатах.',
 	pathname: '/cat/spa-bani-chany/fitobochky',
 	keywords: spaFitobochkyPolyanaPageKeywords,
 })

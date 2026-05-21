@@ -2,7 +2,7 @@
  * Data URL пінів головної карти (SVG з іконками у стилі MUI).
  */
 
-/** Помаранчевий пін — їжа (FoodBank). */
+/** Помаранчевий пін - їжа (FoodBank). */
 export const diningMapPinIconDataUrl = (() => {
 	const foodBankPath =
 		'M12 3 4 9v12h16V9zm.5 9.5c0 .83-.67 1.5-1.5 1.5v4h-1v-4c-.83 0-1.5-.67-1.5-1.5v-3h1v3h.5v-3h1v3h.5v-3h1zM15 18h-1v-3.5h-1v-3c0-1.1.9-2 2-2z'
@@ -18,7 +18,7 @@ export const diningMapPinIconDataUrl = (() => {
 	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
 })()
 
-/** Фіолетовий пін (#6D28D9) — ShoppingCart. */
+/** Фіолетовий пін (#6D28D9) - ShoppingCart. */
 export const shoppingMapPinIconDataUrl = (() => {
 	const cartPath =
 		'M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2M1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2'
@@ -34,7 +34,7 @@ export const shoppingMapPinIconDataUrl = (() => {
 	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
 })()
 
-/** Смарагдовий пін (#047857) — LocalPharmacy. */
+/** Смарагдовий пін (#047857) - LocalPharmacy. */
 export const pharmacyMapPinIconDataUrl = (() => {
 	const pharmacyPath =
 		'M21 5h-2.64l1.14-3.14L17.15 1l-1.46 4H3v2l2 6-2 6v2h18v-2l-2-6 2-6zm-5 9h-3v3h-2v-3H8v-2h3V9h2v3h3z'
@@ -50,7 +50,7 @@ export const pharmacyMapPinIconDataUrl = (() => {
 	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
 })()
 
-/** Бірюзовий пін (#0E7490) — HotTub. */
+/** Бірюзовий пін (#0E7490) - HotTub. */
 export const spaMapPinIconDataUrl = (() => {
 	const hotTubCircle = '<circle cx="7" cy="6" r="2"/>'
 	const hotTubPath =
@@ -68,7 +68,7 @@ export const spaMapPinIconDataUrl = (() => {
 	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
 })()
 
-/** Темно-зелений пін (#166534) — FilterHdr. */
+/** Темно-зелений пін (#166534) - FilterHdr. */
 export const touristCityMapPinIconDataUrl = (() => {
 	const filterHdrPath = 'm14 6-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22z'
 	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56">

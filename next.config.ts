@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
 				headers: [
 					{
 						key: 'Cache-Control',
-						/** Коротший s-maxage — швидше підхоплюють оновлення robots у GSC / CDN. */
+						/** Коротший s-maxage - швидше підхоплюють оновлення robots у GSC / CDN. */
 						value: 'public, max-age=0, s-maxage=600, stale-while-revalidate=86400',
 					},
 				],

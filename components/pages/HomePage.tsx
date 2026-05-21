@@ -256,7 +256,7 @@ export default function HomePage() {
 									alt={item.title}
 									href={accommodationHotelPath(item.id)}
 								/>
-								{/* Сердечко «обране» на картці — поки вимкнено (див. git history / toggleAccommodationFavorite) */}
+								{/* Сердечко «обране» на картці - поки вимкнено (див. git history / toggleAccommodationFavorite) */}
 								<Link
 									href={accommodationHotelPath(item.id)}
 									target='_blank'

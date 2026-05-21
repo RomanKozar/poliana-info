@@ -128,7 +128,7 @@ function applyQuadroRouteToMap(
 	}
 }
 
-/** Без `q=` — без червоного піна; класичний embed лишає кнопки Google (fallback). */
+/** Без `q=` - без червоного піна; класичний embed лишає кнопки Google (fallback). */
 function buildIframeFallbackSrc(end: QuadroRouteOption['end'], zoom: number) {
 	return `https://maps.google.com/maps?hl=uk&ll=${end.lat},${end.lng}&z=${zoom}&t=k&output=embed`
 }
@@ -326,7 +326,7 @@ export function QuadroRideRouteMap() {
 		<div className='rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6'>
 			<h2 className='text-xl font-bold text-[#2D333D] sm:text-2xl'>Маршрут на карті</h2>
 			<p className='mt-2 max-w-3xl text-sm text-slate-600'>
-				Оберіть формат поїздки — карта покаже орієнтовну зону фінішу (супутниковий знімок).
+				Оберіть формат поїздки - карта покаже орієнтовну зону фінішу (супутниковий знімок).
 			</p>
 
 			<div

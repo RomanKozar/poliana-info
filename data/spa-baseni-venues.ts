@@ -24,7 +24,7 @@ const SPA_BASENI_PRICE_BY_ID: Partial<
 }
 
 /**
- * Заклади для порівняння «басейни в Поляні»; ціни сеансів — у таблиці, якщо задані.
+ * Заклади для порівняння «басейни в Поляні»; ціни сеансів - у таблиці, якщо задані.
  */
 export const SPA_BASENI_VENUES: SpaBaseniVenue[] = SPA_CHAN_COMPARISON_VENUES.map(v => {
 	const price = SPA_BASENI_PRICE_BY_ID[v.id]

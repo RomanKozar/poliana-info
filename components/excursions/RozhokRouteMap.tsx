@@ -182,7 +182,7 @@ function applyRouteToMap(
 	map.fitBounds(bounds, 40)
 }
 
-/** Без `q=` — без червоного піна; embed лишає кнопки Google (fallback). */
+/** Без `q=` - без червоного піна; embed лишає кнопки Google (fallback). */
 function buildIframeFallbackSrc(end: { lat: number; lng: number }, zoom: number) {
 	return `https://maps.google.com/maps?hl=uk&ll=${end.lat},${end.lng}&z=${zoom}&t=k&output=embed`
 }
@@ -337,7 +337,7 @@ export default function RozhokRouteMap() {
 		<div className='relative mt-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm ring-1 ring-slate-900/5'>
 			{useIframeFallback ? (
 				<iframe
-					title='Гора Рожок — мапа'
+					title='Гора Рожок - мапа'
 					src={iframeSrc}
 					className='h-[min(440px,70vh)] w-full min-h-[300px]'
 					loading='lazy'

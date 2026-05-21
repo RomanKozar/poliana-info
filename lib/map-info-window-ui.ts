@@ -17,7 +17,7 @@ export function syncInfoWindowGalleryNav(gal: HTMLElement) {
 	const isReady = imgs.length > 0 ? imgs.every(img => img.complete && img.naturalWidth > 0) : true
 	gal.dataset.ready = isReady ? '1' : '0'
 
-	// Пока фото не завантажені — ховаємо навігацію, щоб не було "порожніх" перегортань.
+	// Пока фото не завантажені - ховаємо навігацію, щоб не було "порожніх" перегортань.
 	if (!isReady) {
 		gal
 			.querySelector('.polyana-accommodation-iw-gallery-btn--prev')

@@ -3,7 +3,7 @@ import { rozhokExcursionKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Гора Рожок — оглядовий майданчик біля Поляни (екскурсія)',
+	title: 'Гора Рожок - оглядовий майданчик біля Поляни (екскурсія)',
 	description:
 		'Гора Рожок (Голубине, Закарпаття): оглядовий майданчик поруч із Поляною. Ціна 800 грн/особа (4–5 осіб у авто), фото, опис та карта.',
 	pathname: '/excursions/mountains/rozhok',

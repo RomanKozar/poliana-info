@@ -3,7 +3,7 @@ import { velykyiVerkhExcursionKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Гора Поляна Кохання — оглядова точка (екскурсія)',
+	title: 'Гора Поляна Кохання - оглядова точка (екскурсія)',
 	description:
 		'Гора Поляна Кохання біля Поляни (Закарпаття): панорами, фото та короткий підйом. Фото, опис і карта.',
 	pathname: '/excursions/mountains/velykyi-verkh',

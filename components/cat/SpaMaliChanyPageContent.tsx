@@ -35,7 +35,7 @@ function MaliChanyPrice({ priceLabel, priceLines }: { priceLabel: string; priceL
 	return <span className='font-semibold text-[#E06D3C]'>{priceLabel}</span>
 }
 
-/** Вертикальна смуга зліва — той самий #53C4DA, що вкладки та іконка заголовка. */
+/** Вертикальна смуга зліва - той самий #53C4DA, що вкладки та іконка заголовка. */
 const leftRailClass =
 	"relative min-w-0 pl-3 sm:pl-4 before:pointer-events-none before:absolute before:left-0 before:top-3 before:bottom-3 before:w-1 before:rounded-full before:bg-[#53C4DA] before:content-['']"
 
@@ -105,7 +105,7 @@ export default function SpaMaliChanyPageContent() {
 					Малі чани в Поляні
 				</h1>
 				<p className='mt-2 text-sm leading-relaxed text-slate-600 sm:text-base'>
-					Затишна купіль на чотирьох — ідеально для пари чи невеликої компанії. Порівняйте заклади за
+					Затишна купіль на чотирьох - ідеально для пари чи невеликої компанії. Порівняйте заклади за
 					ціною, подивіться їх на карті й забронюйте малий чан: лишиться лише приїхати й насолодитися
 					карпатським теплом.
 				</p>
@@ -306,7 +306,7 @@ export default function SpaMaliChanyPageContent() {
 							selectedId={selectedId}
 							windowInitCallbackName='initPolyanaMaliChanyMap'
 							mapAriaLabel='Карта закладів з малими чанами'
-							embedIframeTitle='Малі чани — карта Google'
+							embedIframeTitle='Малі чани - карта Google'
 						/>
 					) : (
 						<div className='flex min-h-[200px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-100/80 px-4 text-center text-sm text-slate-500'>

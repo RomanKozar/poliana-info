@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Поляна весною — відпочинок і маршрути',
+	title: 'Поляна весною - відпочинок і маршрути',
 	description:
 		'Весняний відпочинок у Поляні: погода, прогулянки, SPA та ідеї для короткої подорожі в Карпати без натовпів.',
 	pathname: '/blog/poliana-in-spring',

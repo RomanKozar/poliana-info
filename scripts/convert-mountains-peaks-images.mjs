@@ -99,7 +99,7 @@ async function main() {
 
 			writeWebp(buffer, outPath)
 			const after = buffer.length
-			const note = after > before ? ' (JPG був дуже стиснутий — WebP трохи більший)' : ''
+			const note = after > before ? ' (JPG був дуже стиснутий - WebP трохи більший)' : ''
 			console.log(
 				'OK',
 				f,

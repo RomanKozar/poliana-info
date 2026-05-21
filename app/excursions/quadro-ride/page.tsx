@@ -3,9 +3,9 @@ import { quadroRideKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Квадроцикли в Поляні — Quadro Ride: маршрути та карта',
+	title: 'Квадроцикли в Поляні - Quadro Ride: маршрути та карта',
 	description:
-		'Квадроцикли в Поляні (Quadro Ride): тури Легкий старт, Релакс, Виклик, Адреналін. Правила безпеки, фото траси та карта — організувати поїздку від курортної зони Закарпаття.',
+		'Квадроцикли в Поляні (Quadro Ride): тури Легкий старт, Релакс, Виклик, Адреналін. Правила безпеки, фото траси та карта - організувати поїздку від курортної зони Закарпаття.',
 	pathname: '/excursions/quadro-ride',
 	keywords: quadroRideKeywords,
 })

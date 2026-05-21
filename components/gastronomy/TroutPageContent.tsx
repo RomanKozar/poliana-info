@@ -13,7 +13,7 @@ import {
 	troutRestaurantImages,
 } from '@/data/trout-page'
 
-/** Два рядки візуально — один номер із хедера виділено як ключовий контакт для груп і ресторанів. */
+/** Два рядки візуально - один номер із хедера виділено як ключовий контакт для груп і ресторанів. */
 function PhoneCard() {
 	const href = `tel:${siteHeaderPhoneTel}`
 	return (
@@ -34,7 +34,7 @@ function PhoneCard() {
 	)
 }
 
-/** Помітний фона для блоку про риболовлю — насиченіший aqua/cyan узгоджений із шапкою сайту (без фото). */
+/** Помітний фона для блоку про риболовлю - насиченіший aqua/cyan узгоджений із шапкою сайту (без фото). */
 function LovlyaSectionBackdrop() {
 	return (
 		<>
@@ -230,12 +230,12 @@ export default function TroutPageContent() {
 								Клює у всіх!
 							</h2>
 						<p className='mt-5 leading-relaxed text-slate-600'>
-							Форелева риболовля — улюблена розвага дітей і дорослих у нас уже багато років. Радимо неспішно
+							Форелева риболовля - улюблена розвага дітей і дорослих у нас уже багато років. Радимо неспішно
 							насолодитися риболовлею, а потім смачно поласувати спійманою рибою. Гарантовані яскраві емоції й
 							гарячий обід або вечеря.
 						</p>
 						<p className='mt-4 leading-relaxed text-slate-600'>
-							У наявності є спорядження, щоб риболовля була успішною й комфортною — персонал підказує й ділиться
+							У наявності є спорядження, щоб риболовля була успішною й комфортною - персонал підказує й ділиться
 							порадами.
 						</p>
 					</div>
@@ -255,7 +255,7 @@ export default function TroutPageContent() {
 				<div className='relative mx-auto max-w-4xl'>
 					<div className='rounded-[1.65rem] border border-white/80 bg-white/70 p-8 shadow-xl shadow-slate-400/15 backdrop-blur-sm sm:p-10'>
 						<h2 className='text-center text-xl font-extrabold uppercase leading-snug tracking-wide text-[#2B3138] sm:text-2xl'>
-							Для ресторанів і туристичних груп — окремі умови й ціни
+							Для ресторанів і туристичних груп - окремі умови й ціни
 						</h2>
 						<p className='mt-3 text-center text-slate-600'>Уточнюйте деталі й бронювання за телефоном:</p>
 						<div className='mx-auto mt-8 flex max-w-xl justify-center'>
@@ -282,11 +282,11 @@ export default function TroutPageContent() {
 						</h2>
 						<p className='mt-5 leading-relaxed text-slate-600'>
 							Найсмачніше починається тут: приготуйте свій улов самі або замовте страву з форелі в нашому
-							закладі — готуємо на вогні з ароматними зеленню або овочами, і через кілька хвилин на столі —
+							закладі - готуємо на вогні з ароматними зеленню або овочами, і через кілька хвилин на столі -
 							свіжа та соковита риба.
 						</p>
 						<p className='mt-4 leading-relaxed text-slate-600'>
-							Питання щодо меню та замовлень зручніше вирішити голосом — тим самим номером, що й у верхній
+							Питання щодо меню та замовлень зручніше вирішити голосом - тим самим номером, що й у верхній
 							панелі сайту.
 						</p>
 						<Link
@@ -311,11 +311,11 @@ export default function TroutPageContent() {
 					</h2>
 					<p className='mx-auto mt-3 max-w-2xl text-center leading-relaxed text-slate-600'>
 						Споруди й водойми для форелевої риболовлі та туристична інфраструктура села знаходяться в{' '}
-						<strong className='font-semibold text-slate-800'>Поляні, Закарпатська область</strong> —
+						<strong className='font-semibold text-slate-800'>Поляні, Закарпатська область</strong> -
 						дорогою між гірськими курортами, затишним кліматом і зручним під&apos;їздом із обласного центру.
 					</p>
 					<p className='mx-auto mt-2 flex flex-wrap items-center justify-center gap-2 text-center text-slate-600'>
-						<span>Навігатор або питання —</span>
+						<span>Навігатор або питання -</span>
 						<a
 							className='inline-flex items-center gap-2 rounded-lg bg-[#53C4DA]/20 px-3 py-1.5 font-bold text-[#0c4a5e] hover:bg-[#53C4DA]/35'
 							href={`tel:${siteHeaderPhoneTel}`}

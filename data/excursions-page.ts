@@ -18,7 +18,7 @@ export type ExcursionListing = {
 	image: string
 	address: string
 	position: { lat: number; lng: number }
-	/** Маршрут для модалки. Якщо задано — картка відкриє карту з треком + прапорцями. */
+	/** Маршрут для модалки. Якщо задано - картка відкриє карту з треком + прапорцями. */
 	route?: {
 		start: { lat: number; lng: number }
 		end: { lat: number; lng: number }
@@ -42,13 +42,13 @@ export type ExcursionTabGroup = {
 	excursions: ExcursionListing[]
 }
 
-/** Екскурсії на квадроциклах — одна сітка карток під заголовком. */
+/** Екскурсії на квадроциклах - одна сітка карток під заголовком. */
 export const quadExcursions: ExcursionListing[] = [
 	{
 		id: 'quad-forest',
-		title: 'Quadro Ride — лісовий маршрут для початківців',
+		title: 'Quadro Ride - лісовий маршрут для початківців',
 		description:
-			'Без асфальту: гірські стежки, ліси та панорами біля Поляни. Інструктаж, шоломи й супровід гіда — обирайте рівень і вирушайте з курортної зони.',
+			'Без асфальту: гірські стежки, ліси та панорами біля Поляни. Інструктаж, шоломи й супровід гіда - обирайте рівень і вирушайте з курортної зони.',
 		image: '/images/excursions/ATV/atv-11.webp',
 		address: 'Старт біля курортної зони Поляни, Закарпатська обл.',
 		position: { lat: 48.6182, lng: 22.9625 },
@@ -58,7 +58,7 @@ export const quadExcursions: ExcursionListing[] = [
 	},
 ]
 
-/** Екскурсії в гори — вкладки з окремими наборами карток. */
+/** Екскурсії в гори - вкладки з окремими наборами карток. */
 export const mountainExcursionTabs: ExcursionTabGroup[] = [
 	{
 		id: 'summits',
@@ -66,7 +66,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 		excursions: [
 			{
 				id: 'mtn-rozhok',
-				title: 'Гора Рожок — оглядовий майданчик',
+				title: 'Гора Рожок - оглядовий майданчик',
 				description:
 					'Популярна точка поруч із Поляною: зручний під’їзд, майданчик для фото, маршрут можна поєднати з відпочинком у шале.',
 				image: '/images/excursions/mountains/peaks/peaks-1.webp',
@@ -102,7 +102,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				id: 'mtn-vedmezha',
 				title: 'Гора Ведмежа',
 				description:
-					'Маршрут через лісові ділянки з виходом на відкриті схили. Поруч із Поляною та Уклином — зручно спланувати як денний вихід.',
+					'Маршрут через лісові ділянки з виходом на відкриті схили. Поруч із Поляною та Уклином - зручно спланувати як денний вихід.',
 				image: '/images/excursions/mountains/peaks/peaks-4.webp',
 				address: 'с. Поляна, Закарпатська обл.',
 				position: { lat: 48.65316352015213, lng: 22.965168433299574 },
@@ -113,7 +113,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				id: 'mtn-lypcha',
 				title: 'Гора Липча',
 				description:
-					'Варіант для тих, хто шукає менш натоптані стежки. Частина шляху проходить поблизу дороги E471 — дотримуйтесь безпеки.',
+					'Варіант для тих, хто шукає менш натоптані стежки. Частина шляху проходить поблизу дороги E471 - дотримуйтесь безпеки.',
 				image: '/images/excursions/mountains/peaks/peaks-5.webp',
 				address: 'с. Поляна, Закарпатська обл.',
 				position: { lat: 48.66332239338579, lng: 23.02946671577749 },
@@ -254,7 +254,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 				id: 'sv-trail-uklin-lypcha',
 				title: 'Стежка на Липчу від Поляни',
 				description:
-					'Менш натоптана траса з виходом на схили; частина шляху поблизу траси — будьте обережні. Повний маршрут піший, без обов’язкового трансферу.',
+					'Менш натоптана траса з виходом на схили; частина шляху поблизу траси - будьте обережні. Повний маршрут піший, без обов’язкового трансферу.',
 				image: '/images/excursions/mountains/paths/paths-3.webp',
 				address: 'старт: с. Поляна, Свалявський р-н (далі стежками)',
 				position: { lat: 48.6582, lng: 23.012 },
@@ -463,7 +463,7 @@ export const mountainExcursionTabs: ExcursionTabGroup[] = [
 	},
 ]
 
-/** Екскурсії в гори з трансфером — тільки для карти (без окремої вкладки). */
+/** Екскурсії в гори з трансфером - тільки для карти (без окремої вкладки). */
 export const mountainGuidedExcursions: ExcursionListing[] = [
 	{
 		id: 'mtn-guided-day',
@@ -480,16 +480,16 @@ export const mountainGuidedExcursions: ExcursionListing[] = [
 		id: 'mtn-guided-photo',
 		title: 'Фототур на захід сонця',
 		description:
-			'Короткий виїзд на оглядову точку в вечірніх променях. Тривалість — близько 3–4 годин разом із дорогою.',
+			'Короткий виїзд на оглядову точку в вечірніх променях. Тривалість - близько 3–4 годин разом із дорогою.',
 		image: '/images/spa/maliy-chan.webp',
-		address: 'Поляна — околиці, Закарпатська обл.',
+		address: 'Поляна - околиці, Закарпатська обл.',
 		position: { lat: 48.626204712025924, lng: 22.945207647879602 },
 		mapPill: 'Гори',
 		priceHint: 'від 1900 грн',
 	},
 ]
 
-/** Екскурсії Поляною — вкладки (місцеві маршрути, стежки, вода). */
+/** Екскурсії Поляною - вкладки (місцеві маршрути, стежки, вода). */
 export const polyanaExcursionTabs: ExcursionTabGroup[] = [
 	{
 		id: 'center',
@@ -562,7 +562,7 @@ export const polyanaExcursionTabs: ExcursionTabGroup[] = [
 				id: 'pl-spa-chan',
 				title: 'Чан і вода після прогулянки',
 				description:
-					'Після пішої екскурсії — теплий чан на території комплексу. Бронювання та умови уточнюйте в закладі.',
+					'Після пішої екскурсії - теплий чан на території комплексу. Бронювання та умови уточнюйте в закладі.',
 				image: '/images/spa/maliy-chan.webp',
 				address: 'готель «Катерина», вул. Сонячна, 55-Б, Поляна',
 				position: { lat: 48.621390668230035, lng: 22.970576982649888 },

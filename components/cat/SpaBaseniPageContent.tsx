@@ -342,7 +342,7 @@ export default function SpaBaseniPageContent() {
 							selectedId={selectedId}
 							windowInitCallbackName='initPolyanaBaseniMap'
 							mapAriaLabel='Карта готелів із басейнами в Поляні'
-							embedIframeTitle='Басейни в Поляні — карта Google'
+							embedIframeTitle='Басейни в Поляні - карта Google'
 							infoWindowVariant='baseni'
 						/>
 					) : (

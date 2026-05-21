@@ -120,7 +120,7 @@ export default function SpaBaniPageContent() {
 					Бані та сауни в Поляні
 				</h1>
 				<p className='mt-2 text-sm leading-relaxed text-slate-600 sm:text-base'>
-					Парна, лазня чи сауна після лижні чи прогулянки — підберіть заклад, подивіться розташування на карті й
+					Парна, лазня чи сауна після лижні чи прогулянки - підберіть заклад, подивіться розташування на карті й
 					узгодьте час візиту. Орієнтовні суми в таблиці зазвичай стосуються проживання; тарифи на бані
 					уточнюйте безпосередньо в готелі.
 				</p>
@@ -319,7 +319,7 @@ export default function SpaBaniPageContent() {
 							selectedId={selectedId}
 							windowInitCallbackName='initPolyanaBaniMap'
 							mapAriaLabel='Карта готелів з банями та саунами в Поляні'
-							embedIframeTitle='Бані в Поляні — карта Google'
+							embedIframeTitle='Бані в Поляні - карта Google'
 							infoWindowVariant='bani'
 						/>
 					) : (

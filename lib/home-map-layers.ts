@@ -9,7 +9,7 @@ export const HOME_MAP_LAYER_ORDER: HomeMapLayerId[] = [
 	'tourist',
 ]
 
-/** Старт: нічого не вибрано — міток на карті немає, доки не позначать потрібні шари. */
+/** Старт: нічого не вибрано - міток на карті немає, доки не позначать потрібні шари. */
 export const initialHomeMapLayers: Record<HomeMapLayerId, boolean> = {
 	hotels: false,
 	dining: false,
@@ -42,7 +42,7 @@ export function applyHomeMapMarkersForLayers(
 	}
 }
 
-/** Якщо в легенді нічого не вибрано — на карті показуємо всі мітки (чекбокси залишаються незаповненими). */
+/** Якщо в легенді нічого не вибрано - на карті показуємо всі мітки (чекбокси залишаються незаповненими). */
 export function effectiveHomeMapLayerVisibility(
 	raw: Record<HomeMapLayerId, boolean>
 ): Record<HomeMapLayerId, boolean> {

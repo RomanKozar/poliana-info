@@ -16,7 +16,7 @@ const root = path.join(__dirname, '..')
 const dir = path.join(root, 'public', 'images', 'preview-v2')
 const legacyPng = path.join(root, 'public', 'preview-v2.png')
 
-/** Open Graph / Twitter — 1200×630 */
+/** Open Graph / Twitter - 1200×630 */
 const MAX_WIDTH = 1200
 const MAX_HEIGHT = 630
 const WEBP_QUALITY = 82

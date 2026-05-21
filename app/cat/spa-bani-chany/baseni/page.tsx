@@ -5,9 +5,9 @@ import { definePageMetadata } from '@/lib/seo'
 export const dynamic = 'force-static'
 
 export const metadata = definePageMetadata({
-	title: 'Басейни в Поляні — порівняння закладів і карта',
+	title: 'Басейни в Поляні - порівняння закладів і карта',
 	description:
-		'Басейни та купальні зони в Поляні, Закарпаття: порівняйте готелі, подивіться їх на карті та узгодьте візит. POLYANA.INFO — зручна таблиця SPA та відпочинку.',
+		'Басейни та купальні зони в Поляні, Закарпаття: порівняйте готелі, подивіться їх на карті та узгодьте візит. POLYANA.INFO - зручна таблиця SPA та відпочинку.',
 	pathname: '/cat/spa-bani-chany/baseni',
 	keywords: spaBaseniPolyanaPageKeywords,
 })

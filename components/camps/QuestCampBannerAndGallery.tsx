@@ -7,15 +7,15 @@ import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa'
 type GalleryStripItem = { id: string; src: string; alt: string }
 
 const QUEST_GALLERY_STRIP: GalleryStripItem[] = [
-	{ id: 'q1', src: '/images/kids-camps/camp2-2/camp2-1.webp', alt: 'Квестовий табір — старт зміни' },
+	{ id: 'q1', src: '/images/kids-camps/camp2-2/camp2-1.webp', alt: 'Квестовий табір - старт зміни' },
 	{ id: 'q2', src: '/images/kids-camps/camp2-2/camp2-2.webp', alt: 'Командний квест і спільне розвʼязування загадок' },
 	{ id: 'q3', src: '/images/kids-camps/camp2-2/camp2-3.webp', alt: 'Творчі зони та імпровізація між етапами квесту' },
 	{ id: 'q4', src: '/images/kids-camps/camp2-2/camp2-4.webp', alt: 'Природа Карпат у перепочинках між активностями' },
 ]
 
-const LIGHTBOX_TITLE = 'Квестовий табір — фото зі зміни'
+const LIGHTBOX_TITLE = 'Квестовий табір - фото зі зміни'
 
-/** Головне фото банера — завжди кореневий `camp-2.webp`. */
+/** Головне фото банера - завжди кореневий `camp-2.webp`. */
 const QUEST_BANNER_SRC = '/images/kids-camps/camp-2.webp'
 
 function StripLightbox({
@@ -197,7 +197,7 @@ export default function QuestCampBannerAndGallery({ bannerAlt }: Props) {
 				<div
 					className='grid grid-cols-4 grid-rows-1 gap-2 sm:gap-3 md:gap-4'
 					role='region'
-					aria-label='Фото зі зміни квестового табору — натисніть, щоб відкрити й гортати'
+					aria-label='Фото зі зміни квестового табору - натисніть, щоб відкрити й гортати'
 				>
 					{QUEST_GALLERY_STRIP.map(({ id, src, alt }, imageIndex) => (
 						<button

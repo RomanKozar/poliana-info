@@ -4,9 +4,9 @@ import { definePageMetadata } from '@/lib/seo'
 export const dynamic = 'force-static'
 
 export const metadata = definePageMetadata({
-	title: 'Малі чани в Поляні — порівняння цін і карта закладів',
+	title: 'Малі чани в Поляні - порівняння цін і карта закладів',
 	description:
-		'Порівняйте малі чани в Поляні: ціни, розташування на карті та швидке бронювання. POLYANA.INFO — зручна таблиця закладів SPA та відпочинку в Закарпатті.',
+		'Порівняйте малі чани в Поляні: ціни, розташування на карті та швидке бронювання. POLYANA.INFO - зручна таблиця закладів SPA та відпочинку в Закарпатті.',
 	pathname: '/cat/spa-bani-chany/mali-chany',
 	keywords: ['чани Поляна', 'малий чан', 'SPA Поляна', 'Закарпаття', 'ціна чан'],
 })

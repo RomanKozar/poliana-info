@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 /**
- * Колись проіндексовані «сміттєві» корені (SEO-спам) — 301 на головну, щоб GSC поступово прибрав їх зі звітів.
+ * Колись проіндексовані «сміттєві» корені (SEO-спам) - 301 на головну, щоб GSC поступово прибрав їх зі звітів.
  * Не зачіпає `/cat/...`, `/blog/...` тощо.
  */
 const LEGACY_SPAM_ROOT_SEGMENTS = new Set([

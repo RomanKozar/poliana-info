@@ -9,7 +9,7 @@ export type SpaBaniIwCopy = {
 export const spaBaniIwCopyByHotelId: Record<string, SpaBaniIwCopy> = {
 	kateryna: {
 		description:
-			'У «Катерині» — зона відпочинку з банями та SPA; формат сеансу, віники та додаткові послуги домовляйте на ресепшні. Зручно поєднати з номером і рестораном.',
+			'У «Катерині» - зона відпочинку з банями та SPA; формат сеансу, віники та додаткові послуги домовляйте на ресепшні. Зручно поєднати з номером і рестораном.',
 		feature: 'Бані та SPA на території готелю',
 	},
 	kontinent: {
@@ -20,7 +20,7 @@ export const spaBaniIwCopyByHotelId: Record<string, SpaBaniIwCopy> = {
 	riverside: {
 		description:
 			'River Side біля річки: поцікавтесь про лазню, парні та SPA-пакети. У вихідні краще бронювати заздалегідь.',
-		feature: 'Бані та SPA — уточнюйте в готелі',
+		feature: 'Бані та SPA - уточнюйте в готелі',
 	},
 }
 

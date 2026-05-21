@@ -5,9 +5,9 @@ import { definePageMetadata } from '@/lib/seo'
 export const dynamic = 'force-static'
 
 export const metadata = definePageMetadata({
-	title: 'Масажі в Поляні — час сеансу, ціна, запис',
+	title: 'Масажі в Поляні - час сеансу, ціна, запис',
 	description:
-		'Перелік SPA-масажів у Поляні: тривалість, орієнтовна вартість і запис телефоном. POLYANA.INFO — зручно спланувати відпочинок у Закарпатті.',
+		'Перелік SPA-масажів у Поляні: тривалість, орієнтовна вартість і запис телефоном. POLYANA.INFO - зручно спланувати відпочинок у Закарпатті.',
 	pathname: '/cat/spa-bani-chany/masazhi',
 	keywords: spaMasazhiPolyanaPageKeywords,
 })

@@ -1,6 +1,6 @@
 /**
  * Ключові фрази для meta keywords та schema (допоміжно для SEO).
- * Основний сигнал для Google — унікальні title/description і видимий контент сторінок.
+ * Основний сигнал для Google - унікальні title/description і видимий контент сторінок.
  */
 export const homePageKeywords: string[] = [
 	'Поляна',
@@ -68,7 +68,7 @@ export const spaBaniChanyPageKeywords: string[] = [
 	'відпочинок SPA Поляна',
 ]
 
-/** Сторінка /cat/spa-bani-chany/bani — порівняння бань і саун */
+/** Сторінка /cat/spa-bani-chany/bani - порівняння бань і саун */
 export const spaBaniPolyanaPageKeywords: string[] = [
 	...spaBaniChanyPageKeywords,
 	'бані Поляна порівняння',
@@ -79,7 +79,7 @@ export const spaBaniPolyanaPageKeywords: string[] = [
 	'SPA баня Карпати',
 ]
 
-/** Сторінка /cat/spa-bani-chany/baseni — басейни */
+/** Сторінка /cat/spa-bani-chany/baseni - басейни */
 export const spaBaseniPolyanaPageKeywords: string[] = [
 	...spaBaniChanyPageKeywords,
 	'басейн Поляна',
@@ -89,7 +89,7 @@ export const spaBaseniPolyanaPageKeywords: string[] = [
 	'SPA басейн Карпати',
 ]
 
-/** Сторінка /cat/spa-bani-chany/masazhi — оздоровчі масажі */
+/** Сторінка /cat/spa-bani-chany/masazhi - оздоровчі масажі */
 export const spaMasazhiPolyanaPageKeywords: string[] = [
 	...spaBaniChanyPageKeywords,
 	'масаж Поляна',
@@ -99,7 +99,7 @@ export const spaMasazhiPolyanaPageKeywords: string[] = [
 	'релакс Поляна',
 ]
 
-/** Сторінка /cat/spa-bani-chany/fitobochky — фітобочки */
+/** Сторінка /cat/spa-bani-chany/fitobochky - фітобочки */
 export const spaFitobochkyPolyanaPageKeywords: string[] = [
 	...spaBaniChanyPageKeywords,
 	'фітобочка Поляна',

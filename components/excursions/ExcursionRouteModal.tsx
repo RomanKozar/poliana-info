@@ -178,7 +178,7 @@ function RouteMap({
 			<div className='mt-3 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm'>
 				<div ref={containerRef} className='h-[min(520px,70vh)] w-full min-h-[320px]' role='presentation' />
 			</div>
-			<p className='mt-2 text-xs text-slate-500'>Зелений прапорець — старт, червоний — фініш.</p>
+			<p className='mt-2 text-xs text-slate-500'>Зелений прапорець - старт, червоний - фініш.</p>
 		</div>
 	)
 }

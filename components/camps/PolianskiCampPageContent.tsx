@@ -16,7 +16,7 @@ const WHAT_AWAITS_TABLE: ProgramRow[] = [
 	{
 		block: '⛰️ Справжні пригоди',
 		points: [
-			'Похід у ліс та на гору Ріжок з інструкторами. Родзинка дня — обід на вершині, який діти готуватимуть на вогнищі! 🍳🌲',
+			'Похід у ліс та на гору Ріжок з інструкторами. Родзинка дня - обід на вершині, який діти готуватимуть на вогнищі! 🍳🌲',
 			'Лісовий квест зі смугою перешкод від сертифікованих інструкторів 🗺️🧗‍♂️',
 			'Драйвові туристичні змагання та активні командні ігри на свіжому повітрі 🏆🤸‍♂️',
 		],
@@ -178,7 +178,7 @@ export default function PolianskiCampPageContent() {
 			<a
 				href='tel:0502149266'
 				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
-				aria-label='Забронювати табір — зателефонувати'
+				aria-label='Забронювати табір - зателефонувати'
 			>
 				Забронювати
 			</a>

@@ -3,7 +3,7 @@ import { vedmezhaExcursionKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Гора Ведмежа — маршрут біля Поляни (екскурсія)',
+	title: 'Гора Ведмежа - маршрут біля Поляни (екскурсія)',
 	description:
 		'Гора Ведмежа (Уклин, Закарпаття): маршрут через лісові ділянки з виходом на відкриті схили. Фото, опис і карта.',
 	pathname: '/excursions/mountains/vedmezha',

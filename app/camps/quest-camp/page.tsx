@@ -2,7 +2,7 @@ import QuestCampPageContent from '@/components/camps/QuestCampPageContent'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Квестовий дитячий табір у Поляні — командні квести, загадки, програма зміни',
+	title: 'Квестовий дитячий табір у Поляні - командні квести, загадки, програма зміни',
 	description:
 		'Сюжетний квест у командах, кодові станції з ребусами, прогулянки біля Поляни, творчі паузи та комфорт курорту. Дати зміни 05.07–11.07. Деталі на офіційному сайті програми.',
 	pathname: '/camps/quest-camp',

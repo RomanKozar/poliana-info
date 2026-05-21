@@ -217,7 +217,7 @@ body {
   }
 }
 
-/* Умовні позначення (головна карта): мобільна — компактніший квадрат + чорна обводка; від sm — як на карті */
+/* Умовні позначення (головна карта): мобільна - компактніший квадрат + чорна обводка; від sm - як на карті */
 .polyana-map-legend-checkBox {
   display: block;
   cursor: pointer;
@@ -239,7 +239,7 @@ body {
   transform: scale(0.94);
 }
 
-/* Внутрішній квадрат при вмиканні: мобільна — чорний, від sm — білий. Увімкнено — більший inset, щоб обводка не зливалася з заливкою */
+/* Внутрішній квадрат при вмиканні: мобільна - чорний, від sm - білий. Увімкнено - більший inset, щоб обводка не зливалася з заливкою */
 .polyana-map-legend-checkBox::after {
   content: '';
   position: absolute;
@@ -315,7 +315,7 @@ body {
   border: 0;
 }
 
-/* Trout hero: попльовка; translateY опущено на 14px (max «вниз» був 14px) — ліска не «відстає» від верху блоку при русі униз */
+/* Trout hero: попльовка; translateY опущено на 14px (max «вниз» був 14px) - ліска не «відстає» від верху блоку при русі униз */
 @keyframes trout-hook-bob-1 {
   0%,
   100% {
@@ -398,7 +398,7 @@ body {
   animation-name: trout-hook-bob-4;
 }
 
-/* Риба під гачком — легке колихання «на ліску», синхронізовано з тривалістю попльовки */
+/* Риба під гачком - легке колихання «на ліску», синхронізовано з тривалістю попльовки */
 @keyframes trout-hook-fish-dangle {
   0%,
   100% {
@@ -463,13 +463,13 @@ body {
   border-radius: 8px !important;
 }
 
-/* Головна: розгорнута карта — блок під фіксованим хедером, без прокрутки сторінки під низ. */
+/* Головна: розгорнута карта - блок під фіксованим хедером, без прокрутки сторінки під низ. */
 body[data-home-map-expanded='true'] {
   overflow: hidden;
 }
 
 /*
- * Розгорнута карта: у потоці документа; main не flex-grow — одразу під картою йде <Footer /> у layout.
+ * Розгорнута карта: у потоці документа; main не flex-grow - одразу під картою йде <Footer /> у layout.
  */
 body[data-accommodation-map-expanded='true'] .accommodation-page {
   padding-top: 0;
@@ -494,7 +494,7 @@ main[data-accommodation-map-expanded='true'] {
   flex-direction: column;
   /* Одна «екранна» висота під хедер (main уже зсунутий на --header-offset) */
   min-height: calc(100svh - var(--header-offset, 68px));
-  /* Горизонтальні відступи як раніше; знизу — короткий зазор до футера */
+  /* Горизонтальні відступи як раніше; знизу - короткий зазор до футера */
   padding: 1.25rem 1.75rem 1rem;
   background: #fff;
 }
@@ -528,8 +528,8 @@ main[data-accommodation-map-expanded='true'] {
 }
 
 /*
- * Проживання та головна: div.accommodation-map-stack-controls (map.controls) —
- * проживання — повноекран + зум; головна — лише зум; відступ справа однаковий.
+ * Проживання та головна: div.accommodation-map-stack-controls (map.controls) -
+ * проживання - повноекран + зум; головна - лише зум; відступ справа однаковий.
  */
 .polyana-google-map-root--accommodation .accommodation-map-stack-controls,
 .polyana-google-map-root--home-map .accommodation-map-stack-controls {
@@ -682,7 +682,7 @@ main[data-accommodation-map-expanded='true'] {
 }
 
 /*
- * Проживання + головна: без вертикального скрола в InfoWindow; обгортки Google без відступу/фону —
+ * Проживання + головна: без вертикального скрола в InfoWindow; обгортки Google без відступу/фону -
  * видно лише .polyana-accommodation-iw-card (інлайн Google: padding-top, max-height тощо).
  */
 .polyana-google-map-root--accommodation .gm-style-iw,
@@ -897,7 +897,7 @@ main[data-accommodation-map-expanded='true'] {
   background: #fff;
 }
 
-/* «‹ ›»: на курсорі — тільки при наведенні на фото; на touch залишаються видимі */
+/* «‹ ›»: на курсорі - тільки при наведенні на фото; на touch залишаються видимі */
 @media (hover: hover) and (pointer: fine) {
   .polyana-accommodation-iw-media
     .polyana-accommodation-iw-gallery
@@ -979,7 +979,7 @@ main[data-accommodation-map-expanded='true'] {
   background: #fff;
 }
 
-/* Кнопка «обране» в IW: вигляд як heart-container; анімація — лише після кліку (.is-active з JS) */
+/* Кнопка «обране» в IW: вигляд як heart-container; анімація - лише після кліку (.is-active з JS) */
 .polyana-accommodation-iw-icobtn.polyana-accommodation-iw-heart {
   --heart-color: rgb(255, 91, 137);
   background-color: #c8d3e3;

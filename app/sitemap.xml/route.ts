@@ -1,7 +1,7 @@
 import { buildPolyanaSitemapXml } from '@/lib/sitemap-build'
 
 /**
- * Прямий GET `/sitemap.xml` без rewrite на `/api/sitemap` — зручніше для Googlebot
+ * Прямий GET `/sitemap.xml` без rewrite на `/api/sitemap` - зручніше для Googlebot
  * і для Search Console (інколи rewrite давав неоднозначну відповідь).
  * `/api/sitemap` лишається для сумісності зі старими посиланнями.
  */

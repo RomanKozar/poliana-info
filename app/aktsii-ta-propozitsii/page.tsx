@@ -3,7 +3,7 @@ import { PROMOTIONS_PAGE_PATH } from '@/data/promotions-page'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Акції та пропозиції в Поляні — SPA, житло, екскурсії та комбо',
+	title: 'Акції та пропозиції в Поляні - SPA, житло, екскурсії та комбо',
 	description:
 		'Спецпропозиції курорту Поляна: форель і чани, SPA, готелі, квадроцикли та екскурсії в гори. Дізнайтесь про знижки та зателефонуйте для бронювання.',
 	pathname: PROMOTIONS_PAGE_PATH,

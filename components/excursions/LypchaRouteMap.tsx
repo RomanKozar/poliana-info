@@ -321,7 +321,7 @@ export default function LypchaRouteMap() {
 		<div className='relative mt-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm ring-1 ring-slate-900/5'>
 			{useIframeFallback ? (
 				<iframe
-					title='Гора Липча — мапа'
+					title='Гора Липча - мапа'
 					src={iframeSrc}
 					className='h-[min(440px,70vh)] w-full min-h-[300px]'
 					loading='lazy'

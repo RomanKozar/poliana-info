@@ -1,0 +1,1677 @@
+# Query: —
+# ContextLines: 1
+
+449 results - 128 files
+
+AGENTS.md:
+  3  
+  4: This version has breaking changes - APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+  5  <!-- END:nextjs-agent-rules -->
+
+env.example:
+  1  # Скопіюй у .env.local при потребі. Код уже має резервний токен у app/layout.tsx.
+  2: # Якщо Google Search Console покаже новий код верифікації після «Додати ресурс» -
+  3  # встав сюди значення content з meta name="google-site-verification".
+
+middleware.ts:
+  4  /**
+  5:  * Колись проіндексовані «сміттєві» корені (SEO-спам) - 301 на головну, щоб GSC поступово прибрав їх зі звітів.
+  6   * Не зачіпає `/cat/...`, `/blog/...` тощо.
+
+next.config.ts:
+  15  						key: 'Cache-Control',
+  16: 						/** Коротший s-maxage - швидше підхоплюють оновлення robots у GSC / CDN. */
+  17  						value: 'public, max-age=0, s-maxage=600, stale-while-revalidate=86400',
+
+app\globals.css:
+  219  
+  220: /* Умовні позначення (головна карта): мобільна - компактніший квадрат + чорна обводка; від sm - як на карті */
+  221  .polyana-map-legend-checkBox {
+
+  241  
+  242: /* Внутрішній квадрат при вмиканні: мобільна - чорний, від sm - білий. Увімкнено - більший inset, щоб обводка не зливалася з заливкою */
+  243  .polyana-map-legend-checkBox::after {
+
+  317  
+  318: /* Trout hero: попльовка; translateY опущено на 14px (max «вниз» був 14px) - ліска не «відстає» від верху блоку при русі униз */
+  319  @keyframes trout-hook-bob-1 {
+
+  400  
+  401: /* Риба під гачком - легке колихання «на ліску», синхронізовано з тривалістю попльовки */
+  402  @keyframes trout-hook-fish-dangle {
+
+  465  
+  466: /* Головна: розгорнута карта - блок під фіксованим хедером, без прокрутки сторінки під низ. */
+  467  body[data-home-map-expanded='true'] {
+
+  471  /*
+  472:  * Розгорнута карта: у потоці документа; main не flex-grow - одразу під картою йде <Footer /> у layout.
+  473   */
+
+  496    min-height: calc(100svh - var(--header-offset, 68px));
+  497:   /* Горизонтальні відступи як раніше; знизу - короткий зазор до футера */
+  498    padding: 1.25rem 1.75rem 1rem;
+
+  530  /*
+  531:  * Проживання та головна: div.accommodation-map-stack-controls (map.controls) -
+  532:  * проживання - повноекран + зум; головна - лише зум; відступ справа однаковий.
+  533   */
+
+  684  /*
+  685:  * Проживання + головна: без вертикального скрола в InfoWindow; обгортки Google без відступу/фону -
+  686   * видно лише .polyana-accommodation-iw-card (інлайн Google: padding-top, max-height тощо).
+
+  899  
+  900: /* «‹ ›»: на курсорі - тільки при наведенні на фото; на touch залишаються видимі */
+  901  @media (hover: hover) and (pointer: fine) {
+
+  981  
+  982: /* Кнопка «обране» в IW: вигляд як heart-container; анімація - лише після кліку (.is-active з JS) */
+  983  .polyana-accommodation-iw-icobtn.polyana-accommodation-iw-heart {
+
+app\layout.tsx:
+   50  	title: {
+   51: 		default: 'POLYANA.INFO - туристичний портал Поляни',
+   52  		template: '%s | POLYANA.INFO',
+
+   54  	description:
+   55: 		'Туристичний портал Поляни: екскурсії й квадроцикли в Поляні, готелі та житло, чани й SPA в Карпатах, табори, лижі, тюбінг, санаторії. Закарпаття - карта курорту, новини та поради гостям.',
+   56  	icons: {
+
+   61  	openGraph: {
+   62: 		title: 'POLYANA.INFO - туристичний портал Поляни',
+   63  		description:
+
+   79  		card: 'summary_large_image',
+   80: 		title: 'POLYANA.INFO - туристичний портал Поляни',
+   81  		description:
+
+  117  			description:
+  118: 				'POLYANA.INFO - екскурсії в Поляні та на квадроциклах, карта готелів і закладів, житло, чани й SPA в Карпатах, табори й активний відпочинок на Закарпатті.',
+  119  			keywords:
+
+app\page.tsx:
+  6  export const metadata: Metadata = definePageMetadata({
+  7: 	title: 'Поляна - туристична дестинація №1 на Закарпатті',
+  8  	description:
+  9: 		'POLYANA.INFO - екскурсії в Поляні та на квадроциклах (Quadro Ride), житло й готелі на карті, чани й SPA, дитячі табори, лижі та тюбінг. Туристичний портал села Поляна, Закарпаття: новини й ідеї відпочинку в Карпатах.',
+  10  	pathname: '/',
+
+app\robots.ts:
+  4  /**
+  5:  * Публічний `/robots.txt` (статично збирається). Має містити `Sitemap:` - інакше GSC інколи
+  6   * довго тримає стару кешовану копію без неї. Після деплою: у GSC «Перевірка реальної URL» для robots.txt.
+
+app\about\page.tsx:
+  6  	description:
+  7: 		'Хто ми: туристично-інформаційний центр Поляни. Мета порталу - популяризувати курорт, допомогти з плануванням відпочинку та підтримати локальний туризм.',
+  8  	pathname: '/about',
+
+app\accommodation\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Проживання та житло в Поляні - готелі на карті',
+  7  	description:
+  8: 		'Зняти житло в Поляні, Закарпаття: готелі та апарт-готелі на інтерактивній карті. Ціни, рейтинги, адреси - проживання біля екскурсій, SPA та підйомників курорту.',
+  9  	pathname: '/accommodation',
+
+app\aktsii-ta-propozitsii\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Акції та пропозиції в Поляні - SPA, житло, екскурсії та комбо',
+  7  	description:
+
+app\blog\latest-news\page.tsx:
+   27  			title: 'Літній відпочинок у Поляні',
+   28: 			excerpt: 'Табори, SPA, тюбінг, веломаршрути та сімейний відпочинок - ідеї на весь сезон.',
+   29  		},
+
+   35  			title: 'Поляна весною',
+   36: 			excerpt: 'Спокійні прогулянки, SPA та поїздки без натовпів - найкращий час для короткої подорожі.',
+   37  		},
+
+   42  			tag: 'Новини Закарпаття',
+   43: 			title: 'Поляна взимку - лижі, тюбінг і чани',
+   44  			excerpt: 'Лижна школа, тюбінг, гірськолижний курорт і теплі чани для всієї родини.',
+
+  177  					<p className='mt-2 text-sm text-slate-600 sm:text-base'>
+  178: 						Корисні поради, репортажі та статті - найцікавіше про відпочинок у Поляні та Закарпатті.
+  179  					</p>
+
+app\blog\poliana-in-spring\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Поляна весною - відпочинок і маршрути',
+  7  	description:
+
+app\blog\poliana-in-winter\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Поляна взимку - лижі, тюбінг і чани',
+  7  	description:
+
+app\camps\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'Табори відпочинку в Поляні - літні та зимові зміни',
+  6  	description:
+  7: 		'Табори на курорті Поляна: літні програми, зимові канікули - опис заїздів, діапазон віку, дати й орієнтовні ціни.',
+  8  	pathname: '/camps',
+
+app\camps\polianski-camp\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'Літні зміни PolianskiCamp у Поляні - програма To BE(e) Camp, харчування, галерея',
+  6  	description:
+
+app\camps\quest-camp\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'Квестовий дитячий табір у Поляні - командні квести, загадки, програма зміни',
+  6  	description:
+
+app\camps\theater-camp\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'Театральний дитячий заїзд у Поляні - театр, ролі, майстерні, програма зміни',
+  6  	description:
+
+app\camps\tourist-camp\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'Туристичний дитячий заїзд у Поляні - маршрути, орієнтування, програма зміни',
+  6  	description:
+
+app\camps\tourist-camp-2\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'Туристичний дитячий заїзд у Поляні - друга зміна, маршрути та програма',
+  6  	description:
+
+app\cat\[slug]\page.tsx:
+  21  		return definePageMetadata({
+  22: 			title: 'Проживання та житло в Поляні - готелі на карті',
+  23  			description:
+  24: 				'Зняти житло в Поляні, Закарпаття: готелі та апарт-готелі на інтерактивній карті. Ціни, рейтинги, адреси - проживання біля екскурсій, SPA та підйомників курорту.',
+  25  			pathname: `/cat/${slug}`,
+
+  30  		return definePageMetadata({
+  31: 			title: 'Чани, бані та SPA в Поляні - заклади й ціни',
+  32  			description:
+
+app\cat\spa-bani-chany\bani\page.tsx:
+   7  export const metadata = definePageMetadata({
+   8: 	title: 'Бані та сауни в Поляні - порівняння закладів і карта',
+   9  	description:
+  10: 		'Бані, лазні та сауни в Поляні, Закарпаття: порівняйте готелі, подивіться їх на карті та узгодьте візит. POLYANA.INFO - зручна таблиця закладів SPA та відпочинку.',
+  11  	pathname: '/cat/spa-bani-chany/bani',
+
+app\cat\spa-bani-chany\baseni\page.tsx:
+   7  export const metadata = definePageMetadata({
+   8: 	title: 'Басейни в Поляні - порівняння закладів і карта',
+   9  	description:
+  10: 		'Басейни та купальні зони в Поляні, Закарпаття: порівняйте готелі, подивіться їх на карті та узгодьте візит. POLYANA.INFO - зручна таблиця SPA та відпочинку.',
+  11  	pathname: '/cat/spa-bani-chany/baseni',
+
+app\cat\spa-bani-chany\fitobochky\page.tsx:
+   7  export const metadata = definePageMetadata({
+   8: 	title: 'Фітобочки в Поляні - заклади й карта',
+   9  	description:
+  10: 		'Фітобочки та фіто-пари в Поляні, Закарпаття: порівняйте готелі, подивіться їх на карті та узгодьте сеанс. POLYANA.INFO - зручна таблиця для відпочинку в Карпатах.',
+  11  	pathname: '/cat/spa-bani-chany/fitobochky',
+
+app\cat\spa-bani-chany\mali-chany\page.tsx:
+  6  export const metadata = definePageMetadata({
+  7: 	title: 'Малі чани в Поляні - порівняння цін і карта закладів',
+  8  	description:
+  9: 		'Порівняйте малі чани в Поляні: ціни, розташування на карті та швидке бронювання. POLYANA.INFO - зручна таблиця закладів SPA та відпочинку в Закарпатті.',
+  10  	pathname: '/cat/spa-bani-chany/mali-chany',
+
+app\cat\spa-bani-chany\masazhi\page.tsx:
+   7  export const metadata = definePageMetadata({
+   8: 	title: 'Масажі в Поляні - час сеансу, ціна, запис',
+   9  	description:
+  10: 		'Перелік SPA-масажів у Поляні: тривалість, орієнтовна вартість і запис телефоном. POLYANA.INFO - зручно спланувати відпочинок у Закарпатті.',
+  11  	pathname: '/cat/spa-bani-chany/masazhi',
+
+app\cat\spa-bani-chany\veliki-chany\page.tsx:
+  6  export const metadata = definePageMetadata({
+  7: 	title: 'Великі чани в Поляні - порівняння цін і карта закладів',
+  8  	description:
+  9: 		'Порівняйте великі чани в Поляні: ціни, розташування на карті та швидке бронювання. POLYANA.INFO - зручна таблиця закладів SPA та відпочинку в Закарпатті.',
+  10  	pathname: '/cat/spa-bani-chany/veliki-chany',
+
+app\excursions\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Екскурсії та квадроцикли в Поляні - маршрути в гори',
+  7  	description:
+  8: 		'Екскурсії в Поляні та Карпатах: квадроцикли Quadro Ride, піші маршрути в гори з Поляни, прогулянки курортом. Карта старту, описи та орієнтовні ціни на Закарпатті - POLYANA.INFO.',
+  9  	pathname: '/excursions',
+
+app\excursions\mountains\lypcha\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Гора Липча - маршрут біля Поляни (екскурсія)',
+  7  	description:
+
+app\excursions\mountains\malyi-vyzhen\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Гора Малий Вижень - маршрут біля Поляни (екскурсія)',
+  7  	description:
+
+app\excursions\mountains\rozhok\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Гора Рожок - оглядовий майданчик біля Поляни (екскурсія)',
+  7  	description:
+
+app\excursions\mountains\vedmezha\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Гора Ведмежа - маршрут біля Поляни (екскурсія)',
+  7  	description:
+
+app\excursions\mountains\velykyi-verkh\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Гора Поляна Кохання - оглядова точка (екскурсія)',
+  7  	description:
+
+app\excursions\mountains\velykyi-vyzhen\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Гора Великий Вижень - маршрут в Карпатах (екскурсія)',
+  7  	description:
+
+app\excursions\quadro-ride\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Квадроцикли в Поляні - Quadro Ride: маршрути та карта',
+  7  	description:
+  8: 		'Квадроцикли в Поляні (Quadro Ride): тури Легкий старт, Релакс, Виклик, Адреналін. Правила безпеки, фото траси та карта - організувати поїздку від курортної зони Закарпаття.',
+  9  	pathname: '/excursions/quadro-ride',
+
+app\gastronomy\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'Форель і риболовля в Поляні - галереї, ресторан, карта',
+  6  	description:
+  7: 		'Форелева риболовля й страви з форелі Закарпаття біля Поляни. Галерея фото, умови для груп і туристів, номер із шапки сайту та карта - де знайти.',
+  8  	pathname: '/gastronomy',
+
+app\poliana\page.tsx:
+  5  export const metadata = definePageMetadata({
+  6: 	title: 'Поляна - туризм, відпочинок і пригоди в Карпатах',
+  7  	description:
+
+app\polianski\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'PolianSki - гірськолижний курорт Поляна',
+  6  	description:
+
+app\privacy\page.tsx:
+   18  					<p className='mt-4 max-w-3xl text-sm text-white/90 sm:text-base'>
+   19: 						Вебсайт <span className='font-semibold'>polyana.info</span> (POLYANA.INFO) - туристичний портал
+   20  						Поляни. Ми поважаємо вашу приватність і пояснюємо, як обробляємо дані під час використання сайту.
+
+   35  								</Link>
+   36: 								. Використовуючи сайт, ви погоджуєтеся з умовами цієї Політики. Якщо ви не згодні - будь
+   37  								ласка, припиніть використання ресурсу.
+
+   61  									регіон (якщо передається стандартними заголовками), час відвідування, сторінки
+   62: 									перегляду - для стабільної роботи сайту та розуміння навантаження.
+   63  								</li>
+
+   99  								Ми застосовуємо розумні організаційні та технічні заходи, щоб убезпечити інформацію від
+  100: 								несанкціонованого доступу. Термін зберігання залежить від мети: технічні журнали - обмежений
+  101: 								час; дані з форм - поки потрібні для звʼязку з вами або поки ви не відкличете згоду.
+  102  							</p>
+
+app\search\page.tsx:
+  6  export const metadata: Metadata = definePageMetadata({
+  7: 	title: 'Пошук - готелі, чани, екскурсії Поляни',
+  8  	description:
+
+app\search\SearchPageClient.tsx:
+  23  			<p className='mt-2 text-sm text-slate-700 sm:text-base'>
+  24: 				Запит: <span className='font-semibold text-[#2D333D]'>{q || '-'}</span>
+  25  			</p>
+
+app\sitemap.xml\route.ts:
+  3  /**
+  4:  * Прямий GET `/sitemap.xml` без rewrite на `/api/sitemap` - зручніше для Googlebot
+  5   * і для Search Console (інколи rewrite давав неоднозначну відповідь).
+
+app\terms\page.tsx:
+   34  							<p className='mt-3'>
+   35: 								POLYANA.INFO - туристичний портал з інформаційними матеріалами (описи розділів, підбірки,
+   36  								поради, контакти, посилання, карта та інші довідкові дані). Контент має{' '}
+
+   95  							<p className='mt-3'>
+   96: 								Якщо ви помітили неточність, хочете запропонувати правку або маєте запит щодо контенту -
+   97  								напишіть нам на сторінці{' '}
+
+  115  								Цей документ є загальним шаблоном умов використання для інформаційного вебресурсу і не є
+  116: 								індивідуальною юридичною консультацією. За потреби - зверніться до юриста.
+  117  							</p>
+
+app\trout\page.tsx:
+  4  export const metadata = definePageMetadata({
+  5: 	title: 'Про форель у Поляні - риболовля, ресторан, карта',
+  6  	description:
+  7: 		'Форелева риболовля й страви з форелі Закарпаття біля Поляни. Галерея фото, умови для груп і туристів, номер із шапки сайту та карта - де знайти.',
+  8  	pathname: '/trout',
+
+components\accommodation\AccommodationPageContent.tsx:
+   29  
+   30: /** «P» у колі - у наборах react-icons немає стійкого Md-паркінгу для вашої версії пакета */
+   31  function IconParkingP(props: { className?: string }) {
+
+  185  											src={src}
+  186: 											alt={i > 0 ? `${hotel.name} - ${i + 1}` : hotel.name}
+  187  											fill
+
+  325  	const infoWindowsByIdRef = useRef<Map<string, any>>(new Map())
+  326: 	/** Клік по картці до готовності карти - відкриваємо InfoWindow після initMap. */
+  327  	const pendingFocusHotelIdRef = useRef<string | null>(null)
+
+  339  	)
+  340: 	/** Після кліку по маркеру теж спрацьовує click по карті - тимчасово не закриваємо вікно. */
+  341  	const mapClickLockUntilRef = useRef(0)
+
+  503  					map,
+  504: 					title: `${hotel.name} - ${priceLabel}`,
+  505  					icon: {
+
+  513  					content: hotelInfoWindowHtml(hotel),
+  514: 					/** Сховати стандартний хрестик Google у шапці; закриття - кнопка на фото + клік по карті */
+  515  					headerDisabled: true,
+
+  780  						{polyanaHotels.length}{' '}
+  781: 						{polyanaHotels.length === 1 ? 'заклад' : 'заклади'} на карті Поляни - оберіть готель у списку або
+  782  						маркер на карті.
+
+components\accommodation\HotelDetailPageContent.tsx:
+   55  
+   56: /** «P» у колі - у наборах react-icons немає стійкого Md-паркінгу для вашої версії пакета */
+   57  function IconParkingP(props: { className?: string }) {
+
+  206  							src={src}
+  207: 							alt={`${hotelName} - фото ${idx + 1}`}
+  208  							fill
+
+  370  						className='relative hidden aspect-video w-full cursor-pointer overflow-hidden lg:block lg:aspect-auto lg:min-h-0 lg:h-auto'
+  371: 						aria-label={`${hotel.name} - фото 2`}
+  372  					>
+
+  374  							src={gallery[1]}
+  375: 							alt={`${hotel.name} - 2`}
+  376  							fill
+
+  384  						className='relative hidden aspect-video w-full cursor-pointer overflow-hidden lg:block lg:aspect-auto lg:min-h-0 lg:h-auto'
+  385: 						aria-label={`${hotel.name} - фото 3`}
+  386  					>
+
+  388  							src={gallery[2]}
+  389: 							alt={`${hotel.name} - 3`}
+  390  							fill
+
+  398  						className='relative hidden aspect-video w-full cursor-pointer overflow-hidden lg:block lg:aspect-auto lg:min-h-0 lg:h-auto'
+  399: 						aria-label={`${hotel.name} - фото 4`}
+  400  					>
+
+  402  							src={gallery[3]}
+  403: 							alt={`${hotel.name} - 4`}
+  404  							fill
+
+  414  					>
+  415: 						<Image src={gallery[4]} alt={`${hotel.name} - 5`} fill className='object-cover' sizes='25vw' />
+  416  						<div className='pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-black/25 to-transparent p-3'>
+
+  486  						<p className='text-[0.9375rem] italic leading-relaxed text-sky-950/90'>
+  487: 							Ця локація часто обирають пари - зручність і сервіс оцінюють на рівні {scoreLabel.replace(',', '.')} з 10 за умовним
+  488  							балом порталу (на основі рейтингу {stars.toFixed(1).replace('.', ',')}/5).
+
+  572  					<span className='rounded bg-sky-900 px-3 py-2 text-xl font-bold text-white'>{scoreLabel}</span>
+  573: 					<span className='min-w-0 font-medium text-slate-800'>Чудово · {guestCount ?? '-'} відгуків</span>
+  574  				</div>
+
+  801  				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
+  802: 				aria-label={`Забронювати ${hotel.name} - зателефонувати`}
+  803  			>
+
+components\camps\CampsPageContent.tsx:
+  17  						Підбірка літніх і зимових програм на курорті Поляна: короткий опис заїзду, діапазон віку, дати та
+  18: 						орієнтовна вартість. Детальні сторінки кожної зміни з’являться згодом - актуальність уточнюйте
+  19  						перед записом через контакт у шапці сайту.
+
+  40  				<p className='mb-6 max-w-3xl text-sm text-slate-600'>
+  41: 					Зимові профілі змін - орієнтовно; перед стартом сезону ми оновимо дати та ціни.
+  42  				</p>
+
+components\camps\PolianskiCampBannerAndGallery.tsx:
+   15  
+   16: const LIGHTBOX_TITLE = 'PolianskiCamp - фото зі зміни'
+   17  
+
+  167  
+  168: 	/** Банер + 4 мініатюри - одна галерея для перегляду та гортання. */
+  169  	const lightboxItems = useMemo<GalleryStripItem[]>(
+
+  200  					role='region'
+  201: 					aria-label='Фото зі зміни табору - натисніть, щоб відкрити й гортати'
+  202  				>
+
+components\camps\PolianskiCampPageContent.tsx:
+   18  		points: [
+   19: 			'Похід у ліс та на гору Ріжок з інструкторами. Родзинка дня - обід на вершині, який діти готуватимуть на вогнищі! 🍳🌲',
+   20  			'Лісовий квест зі смугою перешкод від сертифікованих інструкторів 🗺️🧗‍♂️',
+
+  180  				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
+  181: 				aria-label='Забронювати табір - зателефонувати'
+  182  			>
+
+components\camps\QuestCampBannerAndGallery.tsx:
+    9  const QUEST_GALLERY_STRIP: GalleryStripItem[] = [
+   10: 	{ id: 'q1', src: '/images/kids-camps/camp2-2/camp2-1.webp', alt: 'Квестовий табір - старт зміни' },
+   11  	{ id: 'q2', src: '/images/kids-camps/camp2-2/camp2-2.webp', alt: 'Командний квест і спільне розвʼязування загадок' },
+
+   15  
+   16: const LIGHTBOX_TITLE = 'Квестовий табір - фото зі зміни'
+   17  
+   18: /** Головне фото банера - завжди кореневий `camp-2.webp`. */
+   19  const QUEST_BANNER_SRC = '/images/kids-camps/camp-2.webp'
+
+  199  					role='region'
+  200: 					aria-label='Фото зі зміни квестового табору - натисніть, щоб відкрити й гортати'
+  201  				>
+
+components\camps\QuestCampPageContent.tsx:
+   15  			'Одна головна легенда зміни: дітей ділять на команди й ведуть крізь кілька епізодів, щоб наблизити розвʼязання головної таємниці 🗺️🤝',
+   16: 			'Кожен епізод дає ключ чи підказку до фінального випробування; усі на рівних - кожен учасник має змогу внести частину в спільний успіх ⚙️🏅',
+   17  		],
+
+   29  			'Прогулянки впевненими маршрутами біля Поляни: мапи, дорожні описи групи й дотримання правил дорослого проводу 🧭🏔️',
+   30: 			'При дощовій погоді - перемикання активностей під навіси таборуючої локації, щоб продовжити квест у комфортному режимі 🌧️',
+   31  		],
+
+   35  		points: [
+   36: 			'Короткі заходи між етапами: міні-сценки, імпровізація за простими домовленими правилами - хто любить слово чи образ, пробує голос 📣🎭',
+   37: 			'Візитівка своєї команди: малюнок або колаж - як артефакт, що живе поруч із текстом звіту після перемоги 🖌️',
+   38  		],
+
+   43  			'Перепочинок біля бювету з мінеральною водою «Поляна»; режим харчування та відпочинку пояснюють при поселенні 🚰😴',
+   44: 			'За домовленістю зміни можливий вихід у басейн інфраструктури партнерів - лише з дорослими інструкторами й за графіком дня табору 🏊‍♂️',
+   45  		],
+
+   49  		points: [
+   50: 			'Настільні ігри й змагання між командами в затишній зоні; за дозволом локації - вечір біля вогнища, інакше тепле світло ламп замість відкритого полум’я 🔥🎲',
+   51  			'Підведення результатів квесту й нагороди за винахідливість, повагу до інших учасників і відданість спільній місії ✨🏆',
+
+  183  				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
+  184: 				aria-label='Забронювати табір - зателефонувати'
+  185  			>
+
+components\camps\TheaterCampBannerAndGallery.tsx:
+   15  
+   16: const LIGHTBOX_TITLE = 'Театральний заїзд - фото зі зміни'
+   17  
+
+  198  					role='region'
+  199: 					aria-label='Фото зі зміни театрального заїзду - натисніть, щоб відкрити й гортати'
+  200  				>
+
+components\camps\TheaterCampPageContent.tsx:
+   14  		points: [
+   15: 			'Вправи на увагу, ритм групи й «режисерський огляд» - як зʼявитися перед глядачем без зайвої напруги 🎬🙌',
+   16: 			'Спільний мікро-дійство з фінальною етюдною платформою: кожен учасник має місце в сцені - від епізоду до самостійної репліки 🎭',
+   17  		],
+
+   22  			'Пошук героя: жест, намір слова й стосунки з партнерами на сцені; короткий «паспорт» персонажа в зошиті чи на картці 👤📝',
+   23: 			'Робота з простором: лабіринт просторів під небом або у залі бази - простір підказує лінії й паузи вашого руху 🏟️✨',
+   24  		],
+
+   29  			'Розігрів голосового апарату, робота над диханням перед читанням сценічного тексту вголос; супровід педагога сценічної групи 📖🎚️',
+   30: 			'Музика слова без обовʼязкового співу: ритміка рядка, робота навколо фраз - хто любить електропідклад або легкий саунд, пропонуємо простий репертуар із гаджета 🎼',
+   31  		],
+
+   36  			'Прогулянки після блоків режисури або голосового тренування: легені із гірського повітря та легкий маршрут під наглядом дорослих групи 🥾🏔️',
+   37: 			'Негода або дощ не ламають сценічний блок - етюди переносять у захищені зони бази або в залі таборового корпусу 🌧️🎭',
+   38  		],
+
+   42  		points: [
+   43: 			'Режими харчування та відпочинку узгоджуються при поселенні; вода «Поляна» з бювету поблизу - для режимних перерв 🚰🍽️',
+   44: 			'За узгодженням - відвідування басейну партнерів курорту тільки в супроводі дорослих інструкторів і у вікні графіка зміни 🏊‍♂️',
+   45  		],
+
+   49  		points: [
+   50: 			'Завершальний етюд або читацький перформанс для своєї дружньої аудиторії зміни - формат обирають разом режисер і діти, без тиску виходити за межі локацій табору 🎭🙏',
+   51  			'Вечірні зустрічі біля вогню або теплових ламп: обговорити враження, обмін маленькими «артефактами» памʼяті зміни і фото з друзями табору 🔥📸',
+
+  183  				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
+  184: 				aria-label='Забронювати табір - зателефонувати'
+  185  			>
+
+components\camps\TouristCampBannerAndGallery.tsx:
+  179  	galleryStrip,
+  180: 	lightboxTitle = 'Туристичний заїзд - фото зі зміни',
+  181: 	galleryAriaLabel = 'Фото зі зміни туристичного заїзду - натисніть, щоб відкрити й гортати',
+  182  	bannerImageClassName = DEFAULT_BANNER_IMAGE_CLASS,
+
+components\camps\TouristCampPageContent.tsx:
+   37  		points: [
+   38: 			'Щодня - вихід на стежки: від легкої прогулянки по «Стежці здоров’я» до маршрутів середньої складності в околицях Поляни. Маршрут і темп пояснюють інструктори.',
+   39: 			'На карті розбирають рельєф і позначки; група йде з ведучим і замикаючим - без випередження й самовільних відгалужень.',
+   40  		],
+
+   45  			'Без зайвих гаджетів: дорожні знаки, орієнтири «на око» й короткі вправи з компасом під наглядом дорослих.',
+   46: 			'Під час ходу - невеликі завдання на пошук точок за підказкою інструктора, з дотриманням правил безпеки групи.',
+   47  		],
+
+   52  			'Мінімум сліду на природі: сміття забираємо з собою; рослини й тварин спостерігаємо спокійно, без зриву гілок і зайвого шуму.',
+   53: 			'Знайдене на трасі - показуємо інструктору, щоб прибрати або обійти безпечно.',
+   54  		],
+
+   58  		points: [
+   59: 			'Перед виходом - перевірка взуття, рюкзака й запасу води; легка розминка й нагадування про спеку, дощ і переохолодження.',
+   60: 			'У дощ чи грозу маршрут скорочують або частину занять переносять у приміщення бази - теорія карти й «клас орієнтування».',
+   61  		],
+
+   65  		points: [
+   66: 			'Режим харчування й відпочинку пояснюють при заїзді; після маршрутів - вода з бювету «Поляна».',
+   67: 			'За домовленістю - басейн партнерів курорту лише з інструкторами й у відведений час зміни.',
+   68  		],
+
+  104  			'Чеклист перед виходом: взуття, кепка, вода, дощовик; нагадування про сонцезахист і питний режим у спеку.',
+  105: 			'Якщо погода псується - коротший маршрут або заняття в залі бази без втрати програми дня.',
+  106  		],
+
+  110  		points: [
+  111: 			'Після маршруту - відновлення на території курорту; мінеральна вода «Поляна» для поповнення запасів.',
+  112: 			'За графіком зміни можливий басейн із супроводом інструкторів - лише у погоджені години.',
+  113  		],
+
+  117  		points: [
+  118: 			'Командна «карта спогадів» з маршрутами тижня - кожен позначає улюблений день і знахідку на стежці.',
+  119  			'Спільне підбиття підсумків: що вдалося в групі, чому важлива безпека й взаємодопомога в горах.',
+
+  200  						campId === 'tourist-camp-2'
+  201: 							? 'Фото зі другої зміни туристичного заїзду - натисніть, щоб відкрити й гортати'
+  202: 							: 'Фото зі зміни туристичного заїзду - натисніть, щоб відкрити й гортати'
+  203  					}
+
+  275  				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
+  276: 				aria-label='Забронювати табір - зателефонувати'
+  277  			>
+
+components\cat\SpaBaniChanyPageContent.tsx:
+  19  
+  20: /** Файли `spa-title-*.webp` - 1651×1001; співвідношення сторін без обрізання по висоті/ширині. */
+  21  const SPA_TITLE_ASPECT_CLASS = 'aspect-[1651/1001]' as const
+
+  24  const SPA_TITLE_ALT_BY_SLOT: Record<number, string> = {
+  25: 	1: 'Великий чан до 8 людей - Поляна',
+  26: 	2: 'Малий чан до 4 людей - Поляна',
+  27: 	3: 'Бані - Поляна',
+  28: 	4: 'Басейни - Поляна',
+  29: 	5: 'Оздоровчі масажі - Поляна',
+  30: 	6: 'Фітобочки - Поляна',
+  31  }
+
+  40  	imageIndex: number
+  41: 	/** Якщо задано - уся картка є посиланням. */
+  42  	href?: string
+
+  96  								const imageIndex = colIdx * 2 + row + 1
+  97: 								const bannerAlt = SPA_TITLE_ALT_BY_SLOT[imageIndex] ?? `${SECTION_LABELS[key]} - зображення ${row + 1}`
+  98  								return (
+
+components\cat\SpaBaniPageContent.tsx:
+  122  				<p className='mt-2 text-sm leading-relaxed text-slate-600 sm:text-base'>
+  123: 					Парна, лазня чи сауна після лижні чи прогулянки - підберіть заклад, подивіться розташування на карті й
+  124  					узгодьте час візиту. Орієнтовні суми в таблиці зазвичай стосуються проживання; тарифи на бані
+
+  321  							mapAriaLabel='Карта готелів з банями та саунами в Поляні'
+  322: 							embedIframeTitle='Бані в Поляні - карта Google'
+  323  							infoWindowVariant='bani'
+
+components\cat\SpaBaseniPageContent.tsx:
+  344  							mapAriaLabel='Карта готелів із басейнами в Поляні'
+  345: 							embedIframeTitle='Басейни в Поляні - карта Google'
+  346  							infoWindowVariant='baseni'
+
+components\cat\SpaChanyMap.tsx:
+  28  
+  29: /** Після fitBounds не наближати сильніше - готелі в Поляні часто поруч одне з одним. */
+  30  const SPA_CHAN_MAP_FIT_MAX_ZOOM = 15
+
+  61  	 * Після `fitBounds` не наближати сильніше за цей рівень (більше число = ближче).
+  62: 	 * Для однієї мітки Google часто дає надмірний зум - обмеження «віддаляє» карту.
+  63  	 */
+
+components\cat\SpaFitobochkyPageContent.tsx:
+  106  				<p className='mt-2 text-sm leading-relaxed text-slate-600 sm:text-base'>
+  107: 					Трав’яні пари в дерев’яній бочці - зручно після лижні чи прогулянок. Порівняйте готелі за орієнтовною
+  108  					ціною проживання, подивіться їх на карті й узгодьте сеанс у закладі: склад фіто-збору, тривалість і
+
+  303  							mapAriaLabel='Карта готелів з фітобочками в Поляні'
+  304: 							embedIframeTitle='Фітобочки в Поляні - карта Google'
+  305  							infoWindowVariant='fitobochky'
+
+components\cat\SpaMaliChanyPageContent.tsx:
+   37  
+   38: /** Вертикальна смуга зліва - той самий #53C4DA, що вкладки та іконка заголовка. */
+   39  const leftRailClass =
+
+  107  				<p className='mt-2 text-sm leading-relaxed text-slate-600 sm:text-base'>
+  108: 					Затишна купіль на чотирьох - ідеально для пари чи невеликої компанії. Порівняйте заклади за
+  109  					ціною, подивіться їх на карті й забронюйте малий чан: лишиться лише приїхати й насолодитися
+
+  308  							mapAriaLabel='Карта закладів з малими чанами'
+  309: 							embedIframeTitle='Малі чани - карта Google'
+  310  						/>
+
+components\cat\SpaMasazhiPageContent.tsx:
+   21  
+   22: /** Зум після завантаження: як на прикладі - річка, квартал, без надмірного наближення. */
+   23  const MASAZHI_MAP_MAX_ZOOM = 14
+
+  130  							windowInitCallbackName='initPolyanaMasazhiMap'
+  131: 							mapAriaLabel='Карта: масаж і SPA - Готель Катерина, Поляна'
+  132: 							embedIframeTitle='Масаж і SPA - Готель Катерина, Поляна - Google Maps'
+  133  							infoWindowVariant='masazhi'
+
+components\cat\SpaVelikiChanyPageContent.tsx:
+   56  
+   57: /** Вертикальна смуга зліва - той самий #53C4DA, що вкладки та іконка заголовка. */
+   58  const leftRailClass =
+
+  127  					Після гір чи дороги так і тягне на гарячу воду й тишу. Оберіть заклад під свій настрій і
+  128: 					гаманець, гляньте, де він стоїть на карті, і забронюйте великий чан - залишиться лише
+  129  					приїхати й зануритися в карпатське тепло.
+
+  322  							mapAriaLabel='Карта закладів з великими чанами'
+  323: 							embedIframeTitle='Великі чани - карта Google'
+  324  						/>
+
+components\excursions\ExcursionRouteModal.tsx:
+  180  			</div>
+  181: 			<p className='mt-2 text-xs text-slate-500'>Зелений прапорець - старт, червоний - фініш.</p>
+  182  		</div>
+
+components\excursions\ExcursionsPageContent.tsx:
+   38  	onOpenDetail?: () => void
+   39: 	/** Шлях детальної сторінки на цьому сайті - відкривається в тій самій вкладці. */
+   40  	detailPageHref?: string
+
+  543  					Оберіть формат: активні квадроцикли, підйоми в гори або спокійні маршрути самою Поляною. Усі точки зібрані
+  544: 					на карті внизу сторінки - зручно спланувати день.
+  545  				</p>
+
+components\excursions\LypchaDetailPage.tsx:
+   27  							<p className='mt-4 leading-relaxed text-slate-600'>
+   28: 								Варіант для тих, хто шукає менш натоптані стежки. Частина шляху проходить поблизу дороги E471 -
+   29  								дотримуйтесь безпеки та орієнтуйтеся на погоду.
+
+  105  					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  106: 						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+  107: 						<span className='font-semibold text-red-600'>червоний</span> - кінець.
+  108  					</p>
+
+components\excursions\LypchaRouteMap.tsx:
+  323  				<iframe
+  324: 					title='Гора Липча - мапа'
+  325  					src={iframeSrc}
+
+components\excursions\QuadroRideDetailPage.tsx:
+   47  		title: 'Бронювання',
+   48: 		text: 'Уточнюйте вік, умови та час - запис обов’язковий.',
+   49  	},
+
+   53  	'Кожен учасник проходить обов’язковий інструктаж перед стартом.',
+   54: 	'Шолом і захисне спорядження - протягом усього маршруту.',
+   55  	'Рух лише за маршрутом і за рекомендаціями гіда.',
+   56  	'Керування в стані алкогольного чи наркотичного сп’яніння суворо заборонено.',
+   57: 	'Тримайте безпечну швидкість - максимум задоволення без зайвого ризику.',
+   58  	'Шануйте природу Поляни та околиць: не смітіть і не псуйте довкілля.',
+
+   61  const BROCHURE_CONDITIONS = [
+   62: 	'Вікові обмеження та умови - уточнюйте під час бронювання.',
+   63  	'Документ, що посвідчує особу, обов’язковий.',
+
+   88  							<p className='mt-4 leading-relaxed text-slate-600'>
+   89: 								Без асфальту: гірські стежки, ліси та панорами. Інструктаж, шоломи й супровід гіда -
+   90  								обирайте рівень і вирушайте разом із Quadro Ride.
+
+   98  							<p className='mt-4 leading-relaxed text-slate-600'>
+   99: 								Ніякого асфальту - лише гірські маршрути, краєвиди й драйв. Обирайте складність, сідайте
+  100: 								за кермо - і вперед. Відкрийте свободу в околицях Поляни.
+  101  							</p>
+  102  							<p className='mt-4 font-medium leading-relaxed text-[#2D333D]'>
+  103: 								Quadro Ride - це про свободу руху та емоції, які залишаються з вами назавжди.
+  104  							</p>
+
+  109  								<li>
+  110: 									Навчимо, порадимо, проведемо інструктаж і супроводжуватимемо на маршруті - максимально
+  111  									просто й безпечно.
+
+  133  					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  134: 						Кадри з маршрутів і гірських краєвидів біля Поляни - та сама атмосфера, що чекає на стежках.
+  135  					</p>
+
+  143  					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  144: 						Деталі та ціну уточнюйте при бронюванні - набір може залежати від обраного маршруту.
+  145  					</p>
+
+  174  							<p className='mt-4 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base'>
+  175: 								Усе найважливіше з наших брошур - коротко, наочно й без зайвих зображень. Дотримуйтесь
+  176  								правил, щоб драйв залишив лише найкращі спогади.
+
+  229  							<blockquote className='relative mt-10 border-l-4 border-[#d4e84a] bg-white/[0.03] py-4 pl-5 pr-4 text-base font-medium leading-snug text-white sm:pl-6 sm:text-lg'>
+  230: 								Безпека - основа справжнього драйву та незабутніх вражень.
+  231  							</blockquote>
+
+  238  					<p className='mt-2 max-w-3xl text-slate-600'>
+  239: 						Чотири готові формати - від короткого знайомства до довгої «адреналінової» поїздки.
+  240  					</p>
+
+  245  							<p className='mt-3 text-sm leading-relaxed text-slate-600'>
+  246: 								Підготовлена траса на території - ідеально для першого катання. Підходить новачкам, жінкам і
+  247  								дітям.
+
+components\excursions\QuadroRideRouteMap.tsx:
+  130  
+  131: /** Без `q=` - без червоного піна; класичний embed лишає кнопки Google (fallback). */
+  132  function buildIframeFallbackSrc(end: QuadroRouteOption['end'], zoom: number) {
+
+  328  			<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  329: 				Оберіть формат поїздки - карта покаже орієнтовну зону фінішу (супутниковий знімок).
+  330  			</p>
+
+components\excursions\RozhokDetailPage.tsx:
+   26  							<h1 className='mt-2 text-3xl font-bold text-[#2D333D] sm:text-4xl'>
+   27: 								Гора Рожок - оглядовий майданчик
+   28  							</h1>
+
+   88  								src={ROZHOK_PHOTOS[0]}
+   89: 								alt='Гора Рожок - оглядовий майданчик'
+   90  								priority
+
+   96  								<p className='mt-1 text-sm text-slate-600'>
+   97: 									Зручний виїзд, гарні краєвиди та зупинки для фото - без складних переходів.
+   98  								</p>
+
+  121  					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  122: 						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+  123: 						<span className='font-semibold text-red-600'>червоний</span> - кінець.
+  124  					</p>
+
+components\excursions\RozhokRouteMap.tsx:
+  184  
+  185: /** Без `q=` - без червоного піна; embed лишає кнопки Google (fallback). */
+  186  function buildIframeFallbackSrc(end: { lat: number; lng: number }, zoom: number) {
+
+  339  				<iframe
+  340: 					title='Гора Рожок - мапа'
+  341  					src={iframeSrc}
+
+components\excursions\VedmezhaDetailPage.tsx:
+   27  							<p className='mt-4 leading-relaxed text-slate-600'>
+   28: 								Маршрут через лісові ділянки з виходом на відкриті схили. Поруч із Поляною та Уклином -
+   29  								зручно спланувати як денний вихід.
+
+  107  					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  108: 						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+  109: 						<span className='font-semibold text-red-600'>червоний</span> - кінець.
+  110  					</p>
+
+components\excursions\VedmezhaRouteMap.tsx:
+  300  				<iframe
+  301: 					title='Гора Ведмежа - мапа'
+  302  					src={iframeSrc}
+
+components\excursions\VelykyiVerkhDetailPage.tsx:
+  107  					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  108: 						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+  109: 						<span className='font-semibold text-red-600'>червоний</span> - кінець.
+  110  					</p>
+
+components\excursions\VelykyiVerkhRouteMap.tsx:
+  294  				<iframe
+  295: 					title='Великий Верх - мапа'
+  296  					src={iframeSrc}
+
+components\excursions\VyzhynBigDetailPage.tsx:
+   86  								<p className='mt-1 text-sm text-slate-600'>
+   87: 									Виразніший підйом і панорами - краще планувати з запасом часу.
+   88  								</p>
+
+  109  					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  110: 						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+  111: 						<span className='font-semibold text-red-600'>червоний</span> - кінець.
+  112  					</p>
+
+components\excursions\VyzhynBigRouteMap.tsx:
+  340  				<iframe
+  341: 					title='Гора Великий Вижень - мапа'
+  342  					src={iframeSrc}
+
+components\excursions\VyzhynSmallDetailPage.tsx:
+   88  								<p className='mt-1 text-sm text-slate-600'>
+   89: 									Невеликий підйом і панорама - хороший варіант на пів дня.
+   90  								</p>
+
+  102  					</h2>
+  103: 					<p className='mt-2 max-w-3xl text-sm text-slate-600'>Кадри з маршруту та панорам - натисніть, щоб переглянути.</p>
+  104  					<div className='mt-6'>
+
+  111  					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
+  112: 						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+  113: 						<span className='font-semibold text-red-600'>червоний</span> - кінець.
+  114  					</p>
+
+components\excursions\VyzhynSmallRouteMap.tsx:
+  332  				<iframe
+  333: 					title='Гора Малий Вижень - мапа'
+  334  					src={iframeSrc}
+
+components\gastronomy\TroutHeroFishingDecoration.tsx:
+   6  /**
+   7:  * П’ять «ліворуч → праворуч». У Phishing (24×24) кругле вушко зверху ≈ на x≈15–16 - ліску ведемо через `left` ~62% ширини іконки.
+   8   */
+
+  37  const ICON_BOX = 'w-[1.0625rem] sm:w-[1.1875rem]'
+  38: /** У viewBox 24×24 вушко (круг) ближче до центру-праворуч - ось ліски */
+  39  const LINE_X = 'left-[62%] -translate-x-1/2'
+
+  68  				</div>
+  69: 				{/* Перекриття іконки й лиски через внутрішній padding SvgIcon; риба - знизу, ніби на вістрі гачка */}
+  70  				<div
+
+components\gastronomy\TroutMapSection.tsx:
+   14   * Як на головній картою готелів: `hybrid` + ці стилі приховують POI/навігацію.
+   15:  * НЕ комбінувати `satellite` + `styles` - тайли часто не рендеряться (суцільний фон).
+   16   */
+
+   26  	className?: string
+   27: 	/** Обовʼязкова явна висота / min-height контейнера - інакше `h-full` у мапі дає 0 px. */
+   28  	frameClassName?: string
+
+   98  				map,
+   99: 				title: `${troutMapSpot.title} - відкрити маршрут у Google Maps`,
+  100  				icon: {
+
+  197  					<iframe
+  198: 						title='Форель - карта Google'
+  199  						className='absolute inset-0 h-full min-h-[280px] w-full border-0'
+
+components\gastronomy\TroutPageContent.tsx:
+   15  
+   16: /** Два рядки візуально - один номер із хедера виділено як ключовий контакт для груп і ресторанів. */
+   17  function PhoneCard() {
+
+   36  
+   37: /** Помітний фона для блоку про риболовлю - насиченіший aqua/cyan узгоджений із шапкою сайту (без фото). */
+   38  function LovlyaSectionBackdrop() {
+
+  232  						<p className='mt-5 leading-relaxed text-slate-600'>
+  233: 							Форелева риболовля - улюблена розвага дітей і дорослих у нас уже багато років. Радимо неспішно
+  234  							насолодитися риболовлею, а потім смачно поласувати спійманою рибою. Гарантовані яскраві емоції й
+
+  237  						<p className='mt-4 leading-relaxed text-slate-600'>
+  238: 							У наявності є спорядження, щоб риболовля була успішною й комфортною - персонал підказує й ділиться
+  239  							порадами.
+
+  257  						<h2 className='text-center text-xl font-extrabold uppercase leading-snug tracking-wide text-[#2B3138] sm:text-2xl'>
+  258: 							Для ресторанів і туристичних груп - окремі умови й ціни
+  259  						</h2>
+
+  284  							Найсмачніше починається тут: приготуйте свій улов самі або замовте страву з форелі в нашому
+  285: 							закладі - готуємо на вогні з ароматними зеленню або овочами, і через кілька хвилин на столі -
+  286  							свіжа та соковита риба.
+
+  288  						<p className='mt-4 leading-relaxed text-slate-600'>
+  289: 							Питання щодо меню та замовлень зручніше вирішити голосом - тим самим номером, що й у верхній
+  290  							панелі сайту.
+
+  313  						Споруди й водойми для форелевої риболовлі та туристична інфраструктура села знаходяться в{' '}
+  314: 						<strong className='font-semibold text-slate-800'>Поляні, Закарпатська область</strong> -
+  315  						дорогою між гірськими курортами, затишним кліматом і зручним під&apos;їздом із обласного центру.
+
+  317  					<p className='mx-auto mt-2 flex flex-wrap items-center justify-center gap-2 text-center text-slate-600'>
+  318: 						<span>Навігатор або питання -</span>
+  319  						<a
+
+components\home\HomeMapLegend.tsx:
+  51  				<span className='min-w-0 flex-1 touch-manipulation leading-snug'>
+  52: 					<span className={`font-semibold ${labelClassName}`}>{label}</span> - {description}
+  53  				</span>
+
+components\layout\Footer.tsx:
+  14  } from 'react-icons/fa'
+  15: /** Спільнота Polyana.info у Viber - клік або сканування QR відкриває запрошення. */
+  16  const VIBER_COMMUNITY_URL =
+
+components\layout\Header.tsx:
+  41  
+  42: 	/** Окремий пункт верхнього меню (напр. «Табори» → /camps) - не підсвічувати батьківське «Популярне». */
+  43  	const isExclusiveTopLevelHref = (href: string) => {
+
+  47  
+  48: 	/** Мобільне меню: «Популярне» має href `/`, але головна не має означати активний батьківський пункт - лише збіг з дочірніми посиланнями. */
+  49  	const isMobileParentActive = (item: NavigationItem) => {
+
+components\layout\site-navigation.ts:
+  39  			{ href: '/cat/goteli-polyany', label: 'Готелі Поляни' },
+  40: 			// Тимчасово приховано - дорозробка сторінки «Сільський туризм».
+  41  			// { href: '/cat/silskyi-turizm', label: 'Сільський туризм' },
+
+components\pages\ContactsPageContent.tsx:
+  118  					<p className='max-w-3xl text-sm text-slate-700 sm:text-base'>
+  119: 						Напишіть нам - підкажемо, порадимо, допоможемо знайти потрібне місце або додати заклад на карту.
+  120  					</p>
+
+components\pages\HomePage.tsx:
+  258  								/>
+  259: 								{/* Сердечко «обране» на картці - поки вимкнено (див. git history / toggleAccommodationFavorite) */}
+  260  								<Link
+
+components\pages\PromotionsOffersPageContent.tsx:
+   70  				<p className='mt-2 max-w-2xl text-sm text-slate-600 sm:text-base'>
+   71: 					Натисніть картку - перейдете до розділу сайту з деталями. Знижки й подарункові формати завжди
+   72  					узгоджуємо індивідуально.
+
+  115  						<p className='relative mt-3 max-w-md text-sm leading-relaxed text-white/90'>
+  116: 							Як на головній сторінці: поєднайте смак Карпат із відпочинком у чані - запитайте про актуальний
+  117  							пакет при дзвінку.
+
+  142  								<p className='mt-1 text-sm text-slate-600'>
+  143: 									Оберіть напрям із карток вище або зателефонуйте - підкажемо сумісний маршрут на 1–3 дні.
+  144  								</p>
+
+  153  								<p className='mt-1 text-sm text-slate-600'>
+  154: 									Традиції Закарпаття, свіжі продукти й спокійний темп - без зайвого галасу в описах.
+  155  								</p>
+
+  184  						<p className='mt-2 max-w-xl text-sm text-slate-600 sm:text-base'>
+  185: 							Залишились питання щодо чанів, житла чи екскурсій - зателефонуйте: допоможемо скласти зручний план
+  186  							відпочинку під ваші дати.
+
+components\search\HeroSiteSearch.tsx:
+  125  					<div className='border-t border-slate-200 bg-slate-50 px-4 py-2 text-xs text-slate-600'>
+  126: 						Порада: натисніть Enter - для «чани», «екскурсії», «проживання» відкриється відповідний розділ.
+  127  						Шукайте також «готель», «табір», «форель», «контакти».
+
+components\shared\BottomStatusToast.tsx:
+  12  	onClose: () => void
+  13: 	/** За замовчуванням - текст як у картках таборів */
+  14  	message?: string
+
+components\third-party\TawkToScript.tsx:
+   5  
+   6: /** Якщо в консолі браузера виконати localStorage.setItem(LS_HIDE_KEY, '1') і оновити сторінку - віджет не завантажиться (лише цей браузер). */
+   7  export const TAWK_LOCALSTORAGE_HIDE_KEY = 'polyana_hide_tawk'
+
+  26   * Щоб після кліку на бульбашку не з’являвся «головний» екран (привітання, Help Center,
+  27:  * пошук по базі знань), а одразу був діалог - це налаштовується в Tawk, а не в коді сайту:
+  28   * увійдіть на https://dashboard.tawk.to → Administration (Адміністрування) → Chat Widget
+  29:  * (Віджет чату) → розділ на кшталт **Widget Content** / **Content** / **Channels** - вимкніть
+  30   * **Knowledge Base** / центр допомоги та зайві картки, залиште лише чат. Після збереження
+
+data\category-placeholders.ts:
+  14  		description:
+  15: 			'Тут буде добірка чанів, лазень і SPA у Поляні: адреси, ціни, фото та бронювання. Розділ у розробці - скоро оновимо сторінку.',
+  16  	},
+
+  49  		description:
+  50: 			'Підбірка готелів та житла на карті з фільтрами. Розділ у розробці - також дивіться розділ «Проживання».',
+  51  	},
+
+data\excursions-page.ts:
+   20  	position: { lat: number; lng: number }
+   21: 	/** Маршрут для модалки. Якщо задано - картка відкриє карту з треком + прапорцями. */
+   22  	route?: {
+
+   44  
+   45: /** Екскурсії на квадроциклах - одна сітка карток під заголовком. */
+   46  export const quadExcursions: ExcursionListing[] = [
+
+   48  		id: 'quad-forest',
+   49: 		title: 'Quadro Ride - лісовий маршрут для початківців',
+   50  		description:
+   51: 			'Без асфальту: гірські стежки, ліси та панорами біля Поляни. Інструктаж, шоломи й супровід гіда - обирайте рівень і вирушайте з курортної зони.',
+   52  		image: '/images/excursions/ATV/atv-11.webp',
+
+   60  
+   61: /** Екскурсії в гори - вкладки з окремими наборами карток. */
+   62  export const mountainExcursionTabs: ExcursionTabGroup[] = [
+
+   68  				id: 'mtn-rozhok',
+   69: 				title: 'Гора Рожок - оглядовий майданчик',
+   70  				description:
+
+  104  				description:
+  105: 					'Маршрут через лісові ділянки з виходом на відкриті схили. Поруч із Поляною та Уклином - зручно спланувати як денний вихід.',
+  106  				image: '/images/excursions/mountains/peaks/peaks-4.webp',
+
+  115  				description:
+  116: 					'Варіант для тих, хто шукає менш натоптані стежки. Частина шляху проходить поблизу дороги E471 - дотримуйтесь безпеки.',
+  117  				image: '/images/excursions/mountains/peaks/peaks-5.webp',
+
+  256  				description:
+  257: 					'Менш натоптана траса з виходом на схили; частина шляху поблизу траси - будьте обережні. Повний маршрут піший, без обов’язкового трансферу.',
+  258  				image: '/images/excursions/mountains/paths/paths-3.webp',
+
+  465  
+  466: /** Екскурсії в гори з трансфером - тільки для карти (без окремої вкладки). */
+  467  export const mountainGuidedExcursions: ExcursionListing[] = [
+
+  482  		description:
+  483: 			'Короткий виїзд на оглядову точку в вечірніх променях. Тривалість - близько 3–4 годин разом із дорогою.',
+  484  		image: '/images/spa/maliy-chan.webp',
+  485: 		address: 'Поляна - околиці, Закарпатська обл.',
+  486  		position: { lat: 48.626204712025924, lng: 22.945207647879602 },
+
+  491  
+  492: /** Екскурсії Поляною - вкладки (місцеві маршрути, стежки, вода). */
+  493  export const polyanaExcursionTabs: ExcursionTabGroup[] = [
+
+  564  				description:
+  565: 					'Після пішої екскурсії - теплий чан на території комплексу. Бронювання та умови уточнюйте в закладі.',
+  566  				image: '/images/spa/maliy-chan.webp',
+
+data\home-page.ts:
+   86  	season: CampSeason
+   87: 	/** Як задано - картка веде на детальну сторінку табору */
+   88  	detailPath?: string
+
+   95  		age: 'від 8 до 14 років',
+   96: 		dates: '21.06 - 29.06',
+   97  		description: 'Літні програми в горах на базі PolianskiCamp.',
+
+  106  		age: 'від 9 до 15 років',
+  107: 		dates: '05.07 - 11.07',
+  108  		description: 'Командні квести, загадки й активності в Карпатах.',
+
+  117  		age: 'від 9 до 16 років',
+  118: 		dates: '18.07 - 26.07',
+  119  		description: 'Театр, ролі та творчі майстерні в гірському таборі.',
+
+  128  		age: 'від 10 до 16 років',
+  129: 		dates: '29.07 - 06.08',
+  130  		description: 'Маршрути, орієнтування та відкриття околиць Поляни.',
+
+  139  		age: 'від 8 до 16 років',
+  140: 		dates: '09.08 - 17.08',
+  141  		description: 'Маршрути, орієнтування та відкриття околиць Поляни.',
+
+  149  		age: 'від 7 до 15 років',
+  150: 		dates: 'січень - березень (зміни уточнюються)',
+  151  		description:
+
+  159  		age: 'від 8 до 16 років',
+  160: 		dates: '27.12 - 06.01',
+  161: 		description: 'Зимові розваги, святкова програма та прогулянки засніженою Поляною. Реєстрація - наближено до дат.',
+  162  		price: 'уточнюйте пізніше',
+
+  196  
+  197: /** Категорії блоку «Популярні категорії» на головній та в меню «Популярне» в шапці - власні SVG з `public/images/branding/categories-icons/`. */
+  198  export type CategoryNavItem = {
+
+  200  	iconSrc: string
+  201: 	/** Без посилання - картка лише для відображення (сторінка в доробці). */
+  202  	href?: string
+
+  227  	href?: string
+  228: 	/** Якщо true - посилання відкривається в новій вкладці (наприклад деталь готелю). */
+  229  	openInNewTab?: boolean
+
+data\promotions-page.ts:
+   2  
+   3: /** Сторінка «Акції та пропозиції» - шлях узгоджуй із посиланнями з головної. */
+   4  export const PROMOTIONS_PAGE_PATH = '/aktsii-ta-propozitsii' as const
+
+  18  export const promotionsHeroLead =
+  19: 	'Зібрали формати відпочинку з вигодою: комбо-пакети, сезонні ідеї та знижки для груп. Уточнюйте актуальні ціни й дати - Поляна завжди має щось особливе для гостей Закарпаття.'
+  20  
+
+  25  		badge: 'Гастро + SPA',
+  26: 		title: 'Форель і чан - свіжий смак Карпат',
+  27  		description:
+
+  37  		description:
+  38: 			'Підбір закладів із чанами й процедурами - обирайте формат від короткого ритуалу до повного дня догляду.',
+  39  		accent: 'cyan',
+
+  47  		description:
+  48: 			'Знайдіть номер поруч із підйомниками, SPA або прогулянковими стежками - порівнюйте ціни й зручність на карті.',
+  49  		accent: 'emerald',
+
+  55  		badge: 'Актив',
+  56: 		title: 'Quadro Ride - адреналін без асфальту',
+  57  		description:
+
+  67  		description:
+  68: 			'Вершини, оглядові точки та стежки поруч із курортом - сплануйте день із карти екскурсій.',
+  69  		accent: 'cyan',
+
+  77  		description:
+  78: 			'Ресторани, табори та оздоровчі формати - описуємо сценарій під вашу групу та узгоджуємо все голосом.',
+  79  		accent: 'emerald',
+
+  87  		title: 'Уточнюйте дату заздалегідь',
+  88: 		text: 'Наприкінці сезону й у свята найкращі слоти розбирають швидко - напишіть або зателефонуйте у зручний час.',
+  89  	},
+
+  91  		title: 'Комбінуйте активність і відпочинок',
+  92: 		text: 'Ранковий підйом або квадро, день у SPA або чані - так відпустка в Поляні стає насиченою без метань.',
+  93  	},
+
+  95  		title: 'Один номер для підказки',
+  96: 		text: 'Якщо не впевнені, що обрати - ми підкажемо логічний маршрут під ваш бюджет і склад групи.',
+  97  	},
+
+data\quadro-ride-page.ts:
+  17  	path?: readonly { lat: number; lng: number }[]
+  18: 	/** Колір Polyline у форматі `#rrggbb` (за замовчуванням - кислотно-зелений). */
+  19  	pathStrokeColor?: string
+  20: 	/** Відступ fitBounds у px (більше - ширший кадр). За замовчуванням 40. */
+  21  	pathFitPadding?: number
+  22  	/**
+  23: 	 * Розширити межі треку відносно центру перед одним fitBounds (>1 - одразу «далі», без другого кроку zoom).
+  24  	 * Лише JS API.
+
+  34  		description:
+  35: 			'Підготовлена траса на території - ідеальний варіант для першого катання. Підходить новачкам, жінкам і дітям.',
+  36  		end: { lat: 48.597022, lng: 22.975218 },
+
+data\spa-bani-iw-copy.ts:
+  11  		description:
+  12: 			'У «Катерині» - зона відпочинку з банями та SPA; формат сеансу, віники та додаткові послуги домовляйте на ресепшні. Зручно поєднати з номером і рестораном.',
+  13  		feature: 'Бані та SPA на території готелю',
+
+  22  			'River Side біля річки: поцікавтесь про лазню, парні та SPA-пакети. У вихідні краще бронювати заздалегідь.',
+  23: 		feature: 'Бані та SPA - уточнюйте в готелі',
+  24  	},
+
+data\spa-bani-venues.ts:
+  25   * Заклади для порівняння «бані в Поляні»: базовий SPA-перелік без River Side;
+  26:  * сеанси бані та ціни - уточнюйте в закладі, якщо не вказано в таблиці.
+  27   */
+
+data\spa-baseni-iw-copy.ts:
+  11  		description:
+  12: 			'У «Катерині» - відкритий басейн і SPA-зона; глибина, години роботи та платний доступ уточнюйте на ресепшні. Зручно поєднати з номером.',
+  13  		feature: 'Відкритий басейн · SPA',
+
+  16  		description:
+  17: 			'«Континент» - критий басейн і SPA-комплекс; дитячі зони, рушники та абонементи дізнайтесь на місці або на сайті готелю.',
+  18  		feature: 'Критий басейн · SPA',
+
+data\spa-baseni-pool-types.ts:
+  12  export const spaBaseniPoolTypesByHotelId: Record<string, SpaBaseniPoolTypesRow> = {
+  13: 	kateryna: { openAir: 'відкритий', indoor: '-' },
+  14: 	riverside: { openAir: 'відкритий', indoor: '-' },
+  15: 	kontinent: { openAir: '-', indoor: 'критий' },
+  16  }
+
+data\spa-baseni-venues.ts:
+  26  /**
+  27:  * Заклади для порівняння «басейни в Поляні»; ціни сеансів - у таблиці, якщо задані.
+  28   */
+
+data\spa-fitobochky-iw-copy.ts:
+  11  		description:
+  12: 			'У «Катерині» часто пропонують фітобочку й SPA-зону після активного дня; трав’яні збори, тривалість сеансу й запис - на ресепшні або за телефоном готелю.',
+  13: 		feature: 'Фітобочка · SPA - за домовленістю',
+  14  	},
+
+  16  		description:
+  17: 			'«Континент» - оздоровчий комплекс: фітобочка або сауна поруч із басейном; графік і умови уточнюйте на місці або на сайті готелю.',
+  18  		feature: 'Фітобочка та SPA-комплекс',
+
+  22  			'River Side біля річки: поцікавтесь про фітобочку та пакети з проживанням. У вихідні краще домовлятися заздалегідь.',
+  23: 		feature: 'Фітобочка - уточнюйте в готелі',
+  24  	},
+
+data\spa-fitobochky-venues.ts:
+  14  
+  15: /** На сторінці фітобочок - лише «Готель Катерина». */
+  16  export const SPA_FITOBOCHKY_VENUES: SpaFitobochkyVenue[] = SPA_CHAN_COMPARISON_VENUES.filter(
+
+data\spa-masazhi-iw-copy.ts:
+   6  	feature: string
+   7: 	/** Рядок ціни в InfoWindow (орієнтир за SPA); якщо немає - показується ціна проживання з картки готелю. */
+   8  	mapPriceLabel?: string
+
+  13  		description:
+  14: 			'Релакс- та оздоровчі масажі, дитячі сеанси й стоун-терапія: перелік процедур і орієнтовні ціни - у SPA-меню готелю. Тривалість сеансу й запис уточнюйте на ресепшні або за телефоном закладу.',
+  15  		feature: 'Масаж · SPA-кабінети · запис на місці',
+
+  19  		description:
+  20: 			'Масаж і SPA-послуги в оздоровчому комплексі: класичний і релакс-масаж, обгортання - графік і вартість сеансу погоджуйте на ресепшні або на сайті готелю.',
+  21  		feature: 'Масаж · SPA-процедури',
+
+  25  			'Масаж після прогулянок чи лижні: поцікавтесь у готелі про масажний кабінет і пакети з проживанням; у вихідні краще домовлятися заздалегідь.',
+  26: 		feature: 'Масаж - уточнюйте в готелі',
+  27  	},
+
+data\spa-masazhi-services.ts:
+   2  
+   3: /** Як у таблицях SPA-розділу: один клік - дзвінок на номер порталу. */
+   4  export const SPA_MASAZHI_BOOKING_HREF = `tel:${siteHeaderPhoneTel}` as const
+
+  26   * Перелік за прикладом SPA-меню ГТК «Катерина» (Поляна).
+  27:  * У інших закладах назви, час і тарифи можуть відрізнятися - завжди уточнюйте на місці.
+  28   */
+
+data\spa-masazhi-venues.ts:
+  1  /**
+  2:  * Заклади для порівняння «масажі в Поляні»: базовий SPA-перелік; колонка «Ціна» - орієнтир за проживанням.
+  3   */
+
+data\spa-veliki-chany-iw-copy.ts:
+  13  		description:
+  14: 			'Гарячий великий чан на території «Катерина» - зручно поєднати з номером і рестораном. Уточнюйте вільні слоти перед візитом.',
+  15  		feature: 'Великі чани на території готелю',
+  16: 		mapPriceLabel: '1 год - 1650 ₴ · 2 год - 2500 ₴',
+  17  	},
+
+  19  		description:
+  20: 			'У «Континенті» - басейни, сауна та SPA; про оренду великого чану й пакети «номер + чан» дізнайтесь на ресепшні або на сайті готелю.',
+  21  		feature: 'SPA · великі чани за домовленістю',
+  22: 		mapPriceLabel: '1 год - 1800 ₴ · 2 год - 2700 ₴',
+  23  	},
+
+  26  			'River Side біля річки: поцікавтесь про великий чан і формат відпочинку з проживанням. Час краще бронювати заздалегідь.',
+  27: 		feature: 'Великі чани - уточнюйте в готелі',
+  28  	},
+
+data\spa-veliki-chany-venues.ts:
+   3  
+   4: /** Той самий `tel:`, що й у `Header.tsx` - одним кліком дзвінок на бронювання. */
+   5  const SPA_CHAN_BOOKING_TEL_HREF = `tel:${siteHeaderPhoneTel}` as const
+
+   9  	name: string
+  10: 	/** Адреса готелю - для посилання «маршрут» у Google Maps. */
+  11  	address: string
+
+  15  	priceLabel: string
+  16: 	/** Кілька тарифів сеансу - для колонки «Ціна» на сторінці великих чанів. */
+  17  	priceLines?: readonly string[]
+
+  19  	lng: number
+  20: 	/** Посилання «Забронювати» (зараз - дзвінок на головний номер порталу). */
+  21  	bookingHref: string
+
+data\trout-page.ts:
+   1: /** Телефон як у components/layout/Header.tsx (href `tel:${siteHeaderPhoneTel}`) - підтримуй синхронно. */
+   2  export const siteHeaderPhoneTel = '0502149266' as const
+
+  11  	{ src: '/images/trout/trout-4.webp', alt: 'Улов форелі' },
+  12: 	{ src: '/images/trout/trout-5.webp', alt: 'Рибне господарство - атмосфера' },
+  13  ] as const
+
+lib\accommodation-urls.ts:
+  1: /** Slug категорії «Готелі Поляни» - збігається з `app/cat/[slug]` та `app/cat/goteli-polyany/[id]`. */
+  2  export const HOTELS_CATEGORY_SLUG = 'goteli-polyany'
+
+lib\apple-app-site-association.ts:
+  1  /**
+  2:  * Мінімальний AASA без прив’язки до iOS-додатка - знімає 404 у GSC для сканерів Apple/Google.
+  3   * @see https://developer.apple.com/documentation/xcode/supporting-associated-domains
+
+lib\google-map-price-marker.ts:
+   5  	const m = priceStr.match(/\d+/)
+   6: 	if (!m) return '₴ -'
+   7  	const n = parseInt(m[0], 10)
+   8: 	if (Number.isNaN(n)) return '₴ -'
+   9  	const formatted = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 0 }).format(n)
+
+  18  
+  19: /** Біла таблетка; `active` і `selected` - помаранчевий акцент (наведення / вибір). */
+  20  export type HotelPricePillVariant = 'default' | 'active' | 'selected'
+
+  23   * «Пігулка» ціни (PNG data URL для google.maps.Marker icon).
+  24:  * `active` - помаранчевий (наведення на картку в списку або на маркер на карті).
+  25:  * `selected` - той самий помаранчевий акцент (вибраний готель / відкрите вікно).
+  26   */
+
+lib\home-map-layers.ts:
+  11  
+  12: /** Старт: нічого не вибрано - міток на карті немає, доки не позначать потрібні шари. */
+  13  export const initialHomeMapLayers: Record<HomeMapLayerId, boolean> = {
+
+  44  
+  45: /** Якщо в легенді нічого не вибрано - на карті показуємо всі мітки (чекбокси залишаються незаповненими). */
+  46  export function effectiveHomeMapLayerVisibility(
+
+lib\home-map-markers.ts:
+    1: /** Мітки шарів головної карти (окрім готелів - див. polyana-hotels). */
+    2  
+
+    8  		category:
+    9: 			'Ресторан готельного комплексу «Катерина»: закарпатська й українська кухня (бограч, банош, деруни), форель з власного ставка, тераса й винна карта - зручно для сімейного обіду в Поляні.',
+   10  		image: '/images/accommodation/kateryna-v1.webp',
+
+   92  		address: 'вул. Духновича, 41, Поляна, Закарпатська обл., 89313',
+   93: 		category: 'Будівельний маркет - матеріали та інструменти',
+   94  		image: '/images/gallery/golovna-foto-2.webp',
+
+  165  	{
+  166: 		name: 'Гора Рожок - Chalet Family, оглядовий майданчик',
+  167  		address: 'с. Голубине, Закарпатська обл.',
+
+lib\home-map-pin-icons.ts:
+   4  
+   5: /** Помаранчевий пін - їжа (FoodBank). */
+   6  export const diningMapPinIconDataUrl = (() => {
+
+  20  
+  21: /** Фіолетовий пін (#6D28D9) - ShoppingCart. */
+  22  export const shoppingMapPinIconDataUrl = (() => {
+
+  36  
+  37: /** Смарагдовий пін (#047857) - LocalPharmacy. */
+  38  export const pharmacyMapPinIconDataUrl = (() => {
+
+  52  
+  53: /** Бірюзовий пін (#0E7490) - HotTub. */
+  54  export const spaMapPinIconDataUrl = (() => {
+
+  70  
+  71: /** Темно-зелений пін (#166534) - FilterHdr. */
+  72  export const touristCityMapPinIconDataUrl = (() => {
+
+lib\hotel-detail-data.ts:
+   24  
+   25: /** Усі фото для lightbox; перше - головне зображення картки готелю. */
+   26  export function galleryImagesForHotel(hotel: PolyanaHotel): string[] {
+
+   68  export function hotelListingSubtitle(): string {
+   69: 	return 'Поляна, Україна: номер у готелі - курорт'
+   70  }
+
+   81  		src: '/images/accommodation/kateryna/price-1.webp',
+   82: 		alt: 'Прайс на проживання в готелі Катерина - тарифи та номери',
+   83  		width: 1400,
+
+   87  		src: '/images/accommodation/kateryna/price-2.webp',
+   88: 		alt: 'Прайс на проживання в готелі Катерина - додаткові послуги та умови',
+   89  		width: 1400,
+
+  172  		return [
+  173: 			'Готель «Континент» розташований за адресою вул. Сонячна, 59 у центрі Поляни: тихий квартал серед дерев, поруч - річки Мала й Велика Пиня, карпатські схили та знамениті місцеві мінеральні джерела. Комплекс поєднує відпочинок із можливістю конференцій і заходів у власних залах.',
+  174: 			'На офіційному сайті заклад описують просторий сучасний корпус із лобі під відеоспостереження для безпеки гостей. Номери з балконами, кондиціонером, холодильниками та санвузлами; окремі категорії пропонують джакузі - наявність і ціну конкретного номера з’ясовуйте при бронюванні через hotel-continent.com.',
+  175: 			'Дозвілля на території: згідно з hotel-continent.com, для проживаючих передбачені критий та літній басейни без доплати до тарифу, сауна, масаж та SPA-блок, ресторан «Continent», літні альтанки, волейбольне майданчик, більярд у зоні конференц-простору. Приватний паркінг, охорона цілодобово. Конференц-зали вміщують до орієнтовно 150 та до 80 осіб - актуальність залу уточнюйте під час бронювання заходу.',
+  176: 			'На курорт часто їдуть поєднати оздоровчий SPA-відпочинок із прогулянками: до лижної зони «Ведмежа» - близько 3 км, до центральних точок Поляни - кілька хвилин пішки. Агреговані рейтинги на платформах бронювання зазвичай тримаються поблизу 4,3/5 серед тисяч оцінок - відзначають басейни, їжу в ресторані та охайність номерів.',
+  177  		]
+
+  180  		return [
+  181: 			'River Side Hotel розташований за адресою вул. Духновича, 68 у Поляні - на березі гірської річки поруч із тихими куточками курорту. За офіційним описом riverside.in.ua готель стоїть недалеко від мінеральних вод (зокрема Поляна Купель, Поляна Квасова та інші локальні джерела), гірськолижних трас і пішохідних стежок; рецепція - цілодобово.',
+  182: 			'Номери в туристичних каталогах (Hotels24, Booking-партнери) описують як сучасний фонд понад три десятки номерів: класи від «Економ» до «Люкс», з якісним ліжком, ТБ і власним санвузлом; багато номерів мають балкон із краєвидом. У топових категоріях згадують гідромасаж - перевіряйте наявність перед заселенням на riverside.in.ua.',
+  183: 			'Для гостей пропонують ресторан із закарпатськими стравами та бар, безкоштовний Wi‑Fi у зонах загального користування, безкоштовну парковку, обслуговування номерів і конференц-можливості; у каталогах зустрічаються також фітнес і резервний електрогенератор - перед туром або корпоративом уточнюйте перелік послуг у готелі.',
+  184: 			'До гірськолижної зони «Ведмежа» - приблизно 3 км, до міста Поляни та зупинок транспорту - кілька хвилин. У підбірках із Booking-суміжних платформ (Hotelmix тощо) середня агрегована оцінка найчастіше близько 7,7 із 10 за сотнями відгуків - відзначають чисті просторі кімнати, привітність персоналу, їжу в ресторані та зручність розташування для авто.',
+  185  		]
+
+  188  		return [
+  189: 			'Arena Apart-Hotel розташований на вул. Курортна, 23А (приміщення 1) у Поляні згідно з arena-hotel.com.ua - поруч зони курорту «Сонячне Закарпаття», бювети з мінеральною водою та дорога до лижної інфраструктури ГК «Ведмежа» (у каталогах - близько 10 хвилин транспортом). До аеропорту Ужгорода традиційно вказують близько 70 км.',
+  190: 			'Це апарт-готель із сучасним номерним фондом: у підбірках Hotelmix і Booking згадують орієнтовно 23 одиниці житла, багато з яких мають вид на басейн. Номери та апартаменти за описами агрегаторів оснащені кондиціонерами, технікою для самостійного приготування чаю/кави, сейфами та ванними кімнатами з душем; частина номерів - із балконом або терасою й кухонною зоною - деталі категорій уточнюйте на arena-hotel.com.ua під час бронювання.',
+  191: 			'Інфраструктура для відпочинку: відкритий басейн (активний у теплу пору року), SPA-оздоровлення, сауна, масажний кабінет, фітобочка, ресторан і піццерія на території; для сімей - дитячий майданчик і ігрова кімната (за описами zahidkurort.com та karpaty.love). Безкоштовний Wi‑Fi, парковка з охороною за даними профільних оглядів; можливі конференц-зони й трансфер - узгоджуйте з адміністрацією.',
+  192: 			'Агреговані відгуки з Booking-суміжних сервісів (наприклад Hotelmix: ~9,5/10 серед сотень оцінок) часто підкреслюють чистоту номерів, басейн і SPA, роботу персоналу та кухню. Оцінка в Google-бізнес середня ~4,3/5 із сотень відгуків - перед поїздкою звіряйте наявність послуг і ціну на офіційному сайті або в обраній системі бронювання.',
+  193  		]
+  194  	}
+  195: 	const base = `${hotel.name} розташований за адресою ${hotel.address} у затишній частині Поляни на Закарпатті. Неподалік - гірські маршрути, ресторани та оздоровчі заклади.`
+  196  	const couples =
+
+  200  	const activities =
+  201: 		'На курорті можна поєднати відпочинок із прогулянками, лижами або SPA - залежно від сезону та ваших уподобань.'
+  202  	return [base, couples, services, activities]
+
+  212  				title: 'Розташування',
+  213: 				body: 'Село Поляна, вул. Сонячна, 55 Б - курорт у долині на мінеральних водах Закарпаття. На hotel-kateryna.com описують бювет із мінеральною водою і спокійну базу для прогулянок, екскурсій і походів у гори.',
+  214  			},
+
+  217  				title: 'Ресторан і бар',
+  218: 				body: 'Власний ресторан із акцентом на домашню й закарпатську кухню; у відкритих довідниках також згадують континентальний сніданок і бар готелю - формат харчування та години роботи підтверджуйте при бронюванні.',
+  219  			},
+
+  227  				title: 'SPA та дозвілля',
+  228: 				body: 'За описами офіційного сайту й туристичних оглядів пропонують SPA й активності на території (російська лазня, масаж, чан «офуро», басейн із підігрівом тощо), форельову риболовлю й сезонні розваги - точний перелік і розклад уточнюйте безпосередньо в готелі.',
+  229  			},
+
+  241  				title: 'Харчування',
+  242: 				body: 'Ресторан «Continent» з упором на закарпатську й європейську кухню; на міжнародних майданчиках гостям часто запропонують сніданок (формат і години - підтверджуйте в готелі).',
+  243  			},
+
+  251  				title: 'Басейни та оздоровлення',
+  252: 				body: 'Критий і літній басейни, сауна, SPA та масаж (запис і умови - на місці або на hotel-continent.com). Також альтанки, волейбол і більярд.',
+  253  			},
+
+  260  				title: 'Розташування',
+  261: 				body: 'Тихий бік Поляни біля річки - зручний виїзд на дорогу; до траси «Ведмежа» близько 3 км, до залізничної станції Сваляви - близько 9 км. Поряд маршрути до мінеральних бюветів і видових локацій.',
+  262  			},
+
+  275  				title: 'Активний відпочинок',
+  276: 				body: 'Швидкий доступ до лижної інфраструктури «Ведмежа», пішого туризму й водоспадів краю - узгодьте екскурсії та трансфер на ресепшні.',
+  277  			},
+
+  284  				title: 'Розташування',
+  285: 				body: 'Курортна вулиця поблизу зони «Сонячне Закарпаття»; неподалік мінеральні бювети, до ГК «Ведмежа» - звичні у відгуках 10 хв транспортом. Зручно для прогулянок Поляною й виїздів до Сваляви.',
+  286  			},
+
+  289  				title: 'Їдальні',
+  290: 				body: 'Власний ресторан та піццерія; у турагентських оглядах радять закарпатську й європейську кухню - меню й години роботи через arena-hotel.com.ua або ресепшн.',
+  291  			},
+
+  299  				title: 'Басейн і SPA',
+  300: 				body: 'Відкритий басейн (сезонно), SPA-центр, сауну, масаж і фітобочку активно рекомендують гості Booking; графік зон оздоровлення - на місці або на сайті готелю.',
+  301  			},
+
+  312  			title: 'Інформація про сніданки',
+  313: 			body: 'Формат сніданків може бути континентальним або як у політиці вашого тарифу - уточнюйте при бронюванні.',
+  314  		},
+
+  317  			title: 'Паркінг',
+  318: 			body: 'Поруч із готелем можлива безкоштовна приватна парковка (наявність та кількість місць - при заїзді).',
+  319  		},
+
+  444  		excerpt:
+  445: 			'Брали зал для невеликої зустрічі - звук і проєктор укомплектовані. Колегам сподобалися і SPA після робочого дня.',
+  446  		bg: 'bg-cyan-700',
+
+  463  		excerpt:
+  464: 			'Їхали на машині - парковка поруч, до центру Поляни пішки хвилини. Wi‑Fi стабільний, у номері нові меблі та нормальний душ.',
+  465  		bg: 'bg-emerald-700',
+
+  482  		excerpt:
+  483: 			'Номер з видом на басейн перевершив очікування: чисто, охайно, кондиціонер працював ідеально. Заїхали родиною - дітям сподобалася розважальна кімната, ми в SPA та біля басейну щодня.',
+  484  		bg: 'bg-indigo-700',
+
+  498  		excerpt:
+  499: 			'Апартамент з міні-кухнею був дуже зручний для тривалого перебування. Басейн і SPA чисті, уранці тихо на території. Масаж ліпше замовити заздалегідь - місця розбирають швидко.',
+  500  		bg: 'bg-fuchsia-800',
+
+  512  
+  513: /** Загальні відповіді для готелів курортної Поляни; у конкретного закладу умови можуть відрізнятися - уточнюйте при бронюванні. */
+  514  export const hotelFaqEntries: HotelFaqEntry[] = [
+
+  517  		a:
+  518: 			'Так - більшість готелів Поляни пропонує сніданки: континентальний, шведський стіл або сет-меню залежно від тарифу. Формат і години роботи їдальні уточнюйте під час бронювання або на ресепшні під час поселення.',
+  519  	},
+
+  527  		a:
+  528: 			'Басейн здебільшого працює в межах готелю за оголошеними годинами та може бути сезонним. Для малих гостей чи дорослих можуть діяти окремі вікові правила або додаткові послуги (рушники, халати). Актуальний графік - у ресепшні.',
+  529  	},
+
+  532  		a:
+  533: 			'Так - біля багатьох готелів є безкоштовна або платна парковка, іноді з обмеженою кількістю місць. Радимо заздалегідь повідомити про авто або оренду стоянки на місці.',
+  534  	},
+
+  542  		a:
+  543: 			'Індивідуальний або груповий трансфер узгоджується попередньо з адміністрацією або через туроператора. Альтернатива - рейсові автобуси, таксі та залізничні сполучення (наприклад, ст. Свалява).',
+  544  	},
+
+  557  		a:
+  558: 			'У Поляні та Свалявському районі є кафе й ресторани, магазини, зупинки автобусів, залізнична станція в Сваляві. Пам’ятки природи та маршрути - у розділі «Навколо готелю» на цій сторінці та на мапі нижче.',
+  559  	},
+
+  575  export const aroundTransportItems: AroundListItem[] = [
+  576: 	{ label: 'Поїзд - Свалява', distance: '9 км' },
+  577: 	{ label: 'Поїзд - Неліпино', distance: '11 км' },
+  578  ]
+
+lib\map-info-window-html.ts:
+   56  	name: string
+   57: 	/** Заголовок у картці; якщо не задано - показується `name` (наприклад для тематичних сторінок SPA). */
+   58  	title?: string
+
+   65  	routeLink: string
+   66: 	/** Якщо немає телефону - CTA веде сюди */
+   67  	saveLink?: string
+
+   70  	/**
+   71: 	 * Якщо задано - клік по фото в галереї веде сюди (зазвичай Google Maps / маршрут).
+   72  	 * Має пріоритет над `detailHref`.
+
+   74  	galleryExternalHref?: string
+   75: 	/** Якщо задано разом - основна кнопка замість «Подзвонити» за телефоном з поля `phone`. */
+   76  	ctaLabel?: string
+   77  	ctaHref?: string
+   78: 	/** Рядок ціни (наприклад «від 1100 ₴») - один рядок у картці. */
+   79  	priceLabel?: string
+   80: 	/** Кілька тарифів - у попапі стовпчиком (як у таблиці SPA). */
+   81  	priceLines?: readonly string[]
+
+   88  
+   89: /** Поля ціни для InfoWindow SPA-карт (пріоритет - `priceLines`). */
+   90  export function spaMapIwPriceFields(opts?: SpaMapIwPriceOpts): Pick<UnifiedMapCardIw, 'priceLabel' | 'priceLines'> {
+
+  116  	const feature = escHtml(p.feature)
+  117: 	const rating = escHtml((p.rating || '').trim() || '-')
+  118  	const gallery = normalizeMapCardGallery(p.galleryImages)
+
+  126  		.map((src, i) => {
+  127: 			const alt = `${name}${i > 0 ? ` - ${i + 1}` : ''}`
+  128  			const imgInner = `<img class="polyana-accommodation-iw-img" src="${escHtml(src)}" alt="${alt}" />`
+
+  130  				galleryExternalEsc !== ''
+  131: 					? `<a class="polyana-accommodation-iw-slide-detail" href="${galleryExternalEsc}" target="_blank" rel="noopener noreferrer" aria-label="${name} - маршрут у Google Картах">${imgInner}</a>`
+  132  					: detailEsc !== ''
+  133: 						? `<a class="polyana-accommodation-iw-slide-detail" href="${detailEsc}" aria-label="${name} - детальний опис">${imgInner}</a>`
+  134  						: imgInner
+
+  321  		name: hotel.name,
+  322: 		title: `Масаж і SPA - ${hotel.name}`,
+  323  		address: hotel.address,
+
+  380  		description: body || p.category,
+  381: 		rating: rating || '-',
+  382  		feature: p.featurePill,
+
+lib\map-info-window-ui.ts:
+  19  
+  20: 	// Пока фото не завантажені - ховаємо навігацію, щоб не було "порожніх" перегортань.
+  21  	if (!isReady) {
+
+lib\polyana-hotels.ts:
+  11  	website: string
+  12: 	/** Агрегат на детальній сторінці (з 10 балів та кількість відгуків), якщо є - замість вирахування з поля rating. */
+  13  	detailReviewScoreOutOf10?: number
+  14  	detailReviewCount?: number
+  15: 	/** 4+ фото для каруселі в InfoWindow на карті; якщо нема - дубль основного */
+  16  	mapGallery?: string[]
+
+  56  		description:
+  57: 			'Готельний комплекс у Поляні: номери з балконами й краєвидом, критий та літній басейни, сауна, ресторан, SPA-послуги, конференц-зали та парковка на території серед озеленення (умови входу до басейнів та SPA - як на сайті готелю).',
+  58  		image: '/images/accommodation/kontinent-v1.webp',
+
+  78  		description:
+  79: 			'Готель біля гірської річки в Поляні: ресторан із закарпатською кухнею, бар, безкоштовний Wi‑Fi, парковка та цілодобова реєстрація. Номери різної категорії - із балконами й краєвидами; у каталогах указують понад 30 номерів.',
+  80  		image: '/images/accommodation/river-side-v1.webp',
+
+lib\site-keywords.ts:
+    2   * Ключові фрази для meta keywords та schema (допоміжно для SEO).
+    3:  * Основний сигнал для Google - унікальні title/description і видимий контент сторінок.
+    4   */
+
+   70  
+   71: /** Сторінка /cat/spa-bani-chany/bani - порівняння бань і саун */
+   72  export const spaBaniPolyanaPageKeywords: string[] = [
+
+   81  
+   82: /** Сторінка /cat/spa-bani-chany/baseni - басейни */
+   83  export const spaBaseniPolyanaPageKeywords: string[] = [
+
+   91  
+   92: /** Сторінка /cat/spa-bani-chany/masazhi - оздоровчі масажі */
+   93  export const spaMasazhiPolyanaPageKeywords: string[] = [
+
+  101  
+  102: /** Сторінка /cat/spa-bani-chany/fitobochky - фітобочки */
+  103  export const spaFitobochkyPolyanaPageKeywords: string[] = [
+
+lib\site-search.ts:
+   42  	{
+   43: 		title: 'Великі чани в Поляні - порівняння та карта',
+   44  		href: '/cat/spa-bani-chany/veliki-chany',
+
+   48  	{
+   49: 		title: 'Малі чани в Поляні - порівняння та карта',
+   50  		href: '/cat/spa-bani-chany/mali-chany',
+
+   54  	{
+   55: 		title: 'Бані та сауни в Поляні - порівняння та карта',
+   56  		href: '/cat/spa-bani-chany/bani',
+
+   60  	{
+   61: 		title: 'Басейни в Поляні - порівняння та карта',
+   62  		href: '/cat/spa-bani-chany/baseni',
+
+   66  	{
+   67: 		title: 'Оздоровчі масажі в Поляні - порівняння та карта',
+   68  		href: '/cat/spa-bani-chany/masazhi',
+
+   72  	{
+   73: 		title: 'Фітобочки в Поляні - порівняння та карта',
+   74  		href: '/cat/spa-bani-chany/fitobochky',
+
+  163  
+  164: /** Слова, які часто додають до запиту («шукаю чани») - не вважаємо їх змістом для прямого переходу. */
+  165  const SEARCH_FILLER_WORDS = new Set([
+
+  199  /**
+  200:  * Якщо запит однозначно вказує на розділ сайту - одразу відкриваємо відповідну сторінку (Enter у пошуку, /search?q=…).
+  201   * Порядок правил важливий: спочатку вужчі збіги (квадро, великі/малі чани), потім загальні.
+
+  251  
+  252: 	/** Один «значущий» токен після відсікання слів-паразитів - типові односкладові запити. */
+  253  	if (sig.length === 1) {
+
+lib\sitemap-build.ts:
+  24  
+  25: /** Формат W3C date-only (YYYY-MM-DD) - достатньо для sitemap і без зайвих мілісекунд у XML. */
+  26  function lastmodDateOnly(d: Date): string {
+
+lib\trout-phishing-marker-icon-url.ts:
+   1: /** Path з іконки `Phishing` (Material) - той самий, що `import PhishingIcon from '@mui/icons-material/Phishing'`. */
+   2  const PHISHING_ICON_PATH_D =
+
+   9  
+  10: /** Раніше - плоский квадрат іконки (залишаємо для сумісності). */
+  11  export function getTroutPhishingMarkerIconDataUrl(sizePx = 48): string {
+
+  16  /**
+  17:  * Маркер у стилі «крап + біла окантовка + темно-зелена заливка + біла іконка» - той самий прийом, що
+  18   * `hotelMapPinIconDataUrl` у `lib/google-map-hotel-pin.ts`, лише з Phishing замість Hotel.
+
+  34  
+  35: /** Розміри й опорна точка (`anchor`) для Google Maps - низ «крапка». */
+  36  export const TROUT_PIN_MARKER_SIZE = { w: 48, h: 56 } as const
+
+scripts\convert-kids-camps-images.mjs:
+   2   * Конвертує HEIC/JPEG/PNG у WebP і стискає WebP у public/images/kids-camps (+ camp-winter).
+   3:  * Картки таборів ~170×160px - вихід до 960×720 (4:3), quality 82.
+   4   */
+
+  21  
+  22: /** Літні картки - fit inside; зимові - crop 4:3 як camp-1…5 (960×720). */
+  23  const TARGET_DIRS = [
+
+scripts\convert-mountains-peaks-images.mjs:
+  101  			const after = buffer.length
+  102: 			const note = after > before ? ' (JPG був дуже стиснутий - WebP трохи більший)' : ''
+  103  			console.log(
+
+scripts\convert-preview-v2-images.mjs:
+  18  
+  19: /** Open Graph / Twitter - 1200×630 */
+  20  const MAX_WIDTH = 1200
+
+scripts\convert-trout-images.mjs:
+  2   * Конвертує PNG/HEIC/JPEG у WebP і стискає WebP у public/images/trout.
+  3:  * Галерея /trout - картки та слайди до ~1200px по довшій стороні.
+  4   */

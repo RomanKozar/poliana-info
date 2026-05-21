@@ -25,7 +25,7 @@ export default function LatestNewsPage() {
 			date: 'Травень 2026',
 			tag: 'Поради',
 			title: 'Літній відпочинок у Поляні',
-			excerpt: 'Табори, SPA, тюбінг, веломаршрути та сімейний відпочинок — ідеї на весь сезон.',
+			excerpt: 'Табори, SPA, тюбінг, веломаршрути та сімейний відпочинок - ідеї на весь сезон.',
 		},
 		{
 			href: '/blog/poliana-in-spring',
@@ -33,14 +33,14 @@ export default function LatestNewsPage() {
 			date: 'Березень 2026',
 			tag: 'Що побачити',
 			title: 'Поляна весною',
-			excerpt: 'Спокійні прогулянки, SPA та поїздки без натовпів — найкращий час для короткої подорожі.',
+			excerpt: 'Спокійні прогулянки, SPA та поїздки без натовпів - найкращий час для короткої подорожі.',
 		},
 		{
 			href: '/blog/poliana-in-winter',
 			image: '/images/entertainment/tybinh-v2-1.webp',
 			date: 'Лютий 2026',
 			tag: 'Новини Закарпаття',
-			title: 'Поляна взимку — лижі, тюбінг і чани',
+			title: 'Поляна взимку - лижі, тюбінг і чани',
 			excerpt: 'Лижна школа, тюбінг, гірськолижний курорт і теплі чани для всієї родини.',
 		},
 	] as const
@@ -175,7 +175,7 @@ export default function LatestNewsPage() {
 				<div className='mb-6 text-center'>
 					<h2 className='text-3xl font-black tracking-tight text-[#2D333D]'>Останні публікації</h2>
 					<p className='mt-2 text-sm text-slate-600 sm:text-base'>
-						Корисні поради, репортажі та статті — найцікавіше про відпочинок у Поляні та Закарпатті.
+						Корисні поради, репортажі та статті - найцікавіше про відпочинок у Поляні та Закарпатті.
 					</p>
 				</div>
 

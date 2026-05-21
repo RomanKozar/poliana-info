@@ -3,7 +3,7 @@ import { polianaDestinationKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Поляна — туризм, відпочинок і пригоди в Карпатах',
+	title: 'Поляна - туризм, відпочинок і пригоди в Карпатах',
 	description:
 		'Поляна на Закарпатті: що подивитись на курорті, санаторії й мінеральні джерела, екскурсії, лижі та тюбінг, гастрономія та план подорожі в Карпати.',
 	pathname: '/poliana',

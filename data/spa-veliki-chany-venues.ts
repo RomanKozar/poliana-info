@@ -1,23 +1,23 @@
 import { polyanaHotels } from '@/lib/polyana-hotels'
 import { siteHeaderPhoneTel } from '@/data/trout-page'
 
-/** Той самий `tel:`, що й у `Header.tsx` — одним кліком дзвінок на бронювання. */
+/** Той самий `tel:`, що й у `Header.tsx` - одним кліком дзвінок на бронювання. */
 const SPA_CHAN_BOOKING_TEL_HREF = `tel:${siteHeaderPhoneTel}` as const
 
 export type SpaVelikyiChanVenue = {
 	id: string
 	name: string
-	/** Адреса готелю — для посилання «маршрут» у Google Maps. */
+	/** Адреса готелю - для посилання «маршрут» у Google Maps. */
 	address: string
 	/** Для сортування в таблиці (береться з рядка ціни готелю на головній). */
 	priceFromUah: number
 	/** Короткий рядок ціни (сортування, fallback). */
 	priceLabel: string
-	/** Кілька тарифів сеансу — для колонки «Ціна» на сторінці великих чанів. */
+	/** Кілька тарифів сеансу - для колонки «Ціна» на сторінці великих чанів. */
 	priceLines?: readonly string[]
 	lat: number
 	lng: number
-	/** Посилання «Забронювати» (зараз — дзвінок на головний номер порталу). */
+	/** Посилання «Забронювати» (зараз - дзвінок на головний номер порталу). */
 	bookingHref: string
 }
 

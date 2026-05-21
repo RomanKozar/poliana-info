@@ -10,7 +10,7 @@ export const WIP_SECTION_TOAST_MESSAGE = 'Ця вкладка ще знаход�
 type Props = {
 	open: boolean
 	onClose: () => void
-	/** За замовчуванням — текст як у картках таборів */
+	/** За замовчуванням - текст як у картках таборів */
 	message?: string
 	id?: string
 	durationMs?: number

@@ -48,18 +48,18 @@ const googleSiteVerification =
 export const metadata: Metadata = {
 	metadataBase: new URL(SITE_URL),
 	title: {
-		default: 'POLYANA.INFO — туристичний портал Поляни',
+		default: 'POLYANA.INFO - туристичний портал Поляни',
 		template: '%s | POLYANA.INFO',
 	},
 	description:
-		'Туристичний портал Поляни: екскурсії й квадроцикли в Поляні, готелі та житло, чани й SPA в Карпатах, табори, лижі, тюбінг, санаторії. Закарпаття — карта курорту, новини та поради гостям.',
+		'Туристичний портал Поляни: екскурсії й квадроцикли в Поляні, готелі та житло, чани й SPA в Карпатах, табори, лижі, тюбінг, санаторії. Закарпаття - карта курорту, новини та поради гостям.',
 	icons: {
 		icon: '/images/branding/info1-tab.svg',
 		shortcut: '/images/branding/info1-tab.svg',
 		apple: '/images/branding/info1.png',
 	},
 	openGraph: {
-		title: 'POLYANA.INFO — туристичний портал Поляни',
+		title: 'POLYANA.INFO - туристичний портал Поляни',
 		description:
 			'POLYANA.INFO: екскурсії й квадроцикли в Поляні, готелі та житло в Карпатах, SPA, табори й розваги на Закарпатті.',
 		url: SITE_URL,
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'POLYANA.INFO — туристичний портал Поляни',
+		title: 'POLYANA.INFO - туристичний портал Поляни',
 		description:
 			'POLYANA.INFO: екскурсії й квадроцикли в Поляні, готелі та житло в Карпатах, SPA, табори й розваги на Закарпатті.',
 		images: ['/images/preview-v2/preview-v2.webp'],
@@ -115,7 +115,7 @@ const rootJsonLdGraph = {
 			url: SITE_URL,
 			publisher: { '@id': `${siteBase}/#organization` },
 			description:
-				'POLYANA.INFO — екскурсії в Поляні та на квадроциклах, карта готелів і закладів, житло, чани й SPA в Карпатах, табори й активний відпочинок на Закарпатті.',
+				'POLYANA.INFO - екскурсії в Поляні та на квадроциклах, карта готелів і закладів, житло, чани й SPA в Карпатах, табори й активний відпочинок на Закарпатті.',
 			keywords:
 				'Поляна Закарпаття, екскурсії Поляна, квадроцикли Поляна, готелі Поляна, житло Карпати, SPA чани, дитячі табори',
 			inLanguage: 'uk-UA',

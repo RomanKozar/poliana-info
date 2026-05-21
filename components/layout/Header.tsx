@@ -39,13 +39,13 @@ export default function Header() {
 		return pathname === pathOnly || pathname.startsWith(`${pathOnly}/`)
 	}
 
-	/** Окремий пункт верхнього меню (напр. «Табори» → /camps) — не підсвічувати батьківське «Популярне». */
+	/** Окремий пункт верхнього меню (напр. «Табори» → /camps) - не підсвічувати батьківське «Популярне». */
 	const isExclusiveTopLevelHref = (href: string) => {
 		const pathOnly = href.split('#')[0]
 		return siteNavigation.some(nav => !nav.children && nav.href === pathOnly)
 	}
 
-	/** Мобільне меню: «Популярне» має href `/`, але головна не має означати активний батьківський пункт — лише збіг з дочірніми посиланнями. */
+	/** Мобільне меню: «Популярне» має href `/`, але головна не має означати активний батьківський пункт - лише збіг з дочірніми посиланнями. */
 	const isMobileParentActive = (item: NavigationItem) => {
 		if (!item.children?.length) return false
 		if (item.submenuKey === 'popular') {

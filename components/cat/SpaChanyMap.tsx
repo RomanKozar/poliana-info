@@ -26,7 +26,7 @@ function spaChanyMapPinIcon(
 			}
 }
 
-/** Після fitBounds не наближати сильніше — готелі в Поляні часто поруч одне з одним. */
+/** Після fitBounds не наближати сильніше - готелі в Поляні часто поруч одне з одним. */
 const SPA_CHAN_MAP_FIT_MAX_ZOOM = 15
 
 const POLYANA_MAP_SILENT_UI = [
@@ -59,7 +59,7 @@ type Props = {
 	frameClassName?: string
 	/**
 	 * Після `fitBounds` не наближати сильніше за цей рівень (більше число = ближче).
-	 * Для однієї мітки Google часто дає надмірний зум — обмеження «віддаляє» карту.
+	 * Для однієї мітки Google часто дає надмірний зум - обмеження «віддаляє» карту.
 	 */
 	fitBoundsMaxZoom?: number
 }

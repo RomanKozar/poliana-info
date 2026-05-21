@@ -54,7 +54,7 @@ function VelikiChanyPrice({
 	return <span className='font-semibold text-[#E06D3C]'>{priceLabel}</span>
 }
 
-/** Вертикальна смуга зліва — той самий #53C4DA, що вкладки та іконка заголовка. */
+/** Вертикальна смуга зліва - той самий #53C4DA, що вкладки та іконка заголовка. */
 const leftRailClass =
 	"relative min-w-0 pl-3 sm:pl-4 before:pointer-events-none before:absolute before:left-0 before:top-3 before:bottom-3 before:w-1 before:rounded-full before:bg-[#53C4DA] before:content-['']"
 
@@ -125,7 +125,7 @@ export default function SpaVelikiChanyPageContent() {
 				</h1>
 				<p className='mt-2 text-sm leading-relaxed text-slate-600 sm:text-base'>
 					Після гір чи дороги так і тягне на гарячу воду й тишу. Оберіть заклад під свій настрій і
-					гаманець, гляньте, де він стоїть на карті, і забронюйте великий чан — залишиться лише
+					гаманець, гляньте, де він стоїть на карті, і забронюйте великий чан - залишиться лише
 					приїхати й зануритися в карпатське тепло.
 				</p>
 			</header>
@@ -320,7 +320,7 @@ export default function SpaVelikiChanyPageContent() {
 							selectedId={selectedId}
 							windowInitCallbackName='initPolyanaVelikiChanyMap'
 							mapAriaLabel='Карта закладів з великими чанами'
-							embedIframeTitle='Великі чани — карта Google'
+							embedIframeTitle='Великі чани - карта Google'
 						/>
 					) : (
 						<div className='flex min-h-[200px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-100/80 px-4 text-center text-sm text-slate-500'>

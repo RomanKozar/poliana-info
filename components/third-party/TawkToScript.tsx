@@ -3,7 +3,7 @@
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
 
-/** Якщо в консолі браузера виконати localStorage.setItem(LS_HIDE_KEY, '1') і оновити сторінку — віджет не завантажиться (лише цей браузер). */
+/** Якщо в консолі браузера виконати localStorage.setItem(LS_HIDE_KEY, '1') і оновити сторінку - віджет не завантажиться (лише цей браузер). */
 export const TAWK_LOCALSTORAGE_HIDE_KEY = 'polyana_hide_tawk'
 
 /** Повний URL віджета з панелі Tawk.to (можна перевизначити через NEXT_PUBLIC_TAWK_EMBED_SRC). */
@@ -24,9 +24,9 @@ const TAWK_EMBED_SRC =
  * Також можна керувати видимістю та розкладом у панелі Tawk.to (Dashboard).
  *
  * Щоб після кліку на бульбашку не з’являвся «головний» екран (привітання, Help Center,
- * пошук по базі знань), а одразу був діалог — це налаштовується в Tawk, а не в коді сайту:
+ * пошук по базі знань), а одразу був діалог - це налаштовується в Tawk, а не в коді сайту:
  * увійдіть на https://dashboard.tawk.to → Administration (Адміністрування) → Chat Widget
- * (Віджет чату) → розділ на кшталт **Widget Content** / **Content** / **Channels** — вимкніть
+ * (Віджет чату) → розділ на кшталт **Widget Content** / **Content** / **Channels** - вимкніть
  * **Knowledge Base** / центр допомоги та зайві картки, залиште лише чат. Після збереження
  * зміни застосовуються без оновлення коду.
  *

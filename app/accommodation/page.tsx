@@ -3,9 +3,9 @@ import { accommodationPageKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Проживання та житло в Поляні — готелі на карті',
+	title: 'Проживання та житло в Поляні - готелі на карті',
 	description:
-		'Зняти житло в Поляні, Закарпаття: готелі та апарт-готелі на інтерактивній карті. Ціни, рейтинги, адреси — проживання біля екскурсій, SPA та підйомників курорту.',
+		'Зняти житло в Поляні, Закарпаття: готелі та апарт-готелі на інтерактивній карті. Ціни, рейтинги, адреси - проживання біля екскурсій, SPA та підйомників курорту.',
 	pathname: '/accommodation',
 	keywords: accommodationPageKeywords,
 })

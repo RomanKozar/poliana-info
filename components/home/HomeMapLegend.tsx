@@ -49,7 +49,7 @@ function MapLegendLayerRow({
 					</svg>
 				</span>
 				<span className='min-w-0 flex-1 touch-manipulation leading-snug'>
-					<span className={`font-semibold ${labelClassName}`}>{label}</span> — {description}
+					<span className={`font-semibold ${labelClassName}`}>{label}</span> - {description}
 				</span>
 			</label>
 		</li>

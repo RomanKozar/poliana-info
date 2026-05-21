@@ -177,8 +177,8 @@ export default function TouristCampBannerAndGallery({
 	bannerSrc,
 	bannerAlt,
 	galleryStrip,
-	lightboxTitle = 'Туристичний заїзд — фото зі зміни',
-	galleryAriaLabel = 'Фото зі зміни туристичного заїзду — натисніть, щоб відкрити й гортати',
+	lightboxTitle = 'Туристичний заїзд - фото зі зміни',
+	galleryAriaLabel = 'Фото зі зміни туристичного заїзду - натисніть, щоб відкрити й гортати',
 	bannerImageClassName = DEFAULT_BANNER_IMAGE_CLASS,
 }: Props) {
 	const [open, setOpen] = useState(false)

@@ -1,4 +1,4 @@
-/** Slug категорії «Готелі Поляни» — збігається з `app/cat/[slug]` та `app/cat/goteli-polyany/[id]`. */
+/** Slug категорії «Готелі Поляни» - збігається з `app/cat/[slug]` та `app/cat/goteli-polyany/[id]`. */
 export const HOTELS_CATEGORY_SLUG = 'goteli-polyany'
 
 /** Канонічний URL підборки готелів на карті (меню «Готелі», блок «Популярне»). */

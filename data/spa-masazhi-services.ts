@@ -1,6 +1,6 @@
 import { siteHeaderPhoneTel } from '@/data/trout-page'
 
-/** Як у таблицях SPA-розділу: один клік — дзвінок на номер порталу. */
+/** Як у таблицях SPA-розділу: один клік - дзвінок на номер порталу. */
 export const SPA_MASAZHI_BOOKING_HREF = `tel:${siteHeaderPhoneTel}` as const
 
 export type SpaMasazhiServiceItem = {
@@ -24,7 +24,7 @@ function uah(n: number): string {
 
 /**
  * Перелік за прикладом SPA-меню ГТК «Катерина» (Поляна).
- * У інших закладах назви, час і тарифи можуть відрізнятися — завжди уточнюйте на місці.
+ * У інших закладах назви, час і тарифи можуть відрізнятися - завжди уточнюйте на місці.
  */
 export const SPA_MASAZHI_MENU_CATEGORIES: SpaMasazhiServiceCategory[] = [
 	{

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Поляна взимку — лижі, тюбінг і чани',
+	title: 'Поляна взимку - лижі, тюбінг і чани',
 	description:
 		'Зимовий відпочинок у Поляні: лижна школа, тюбінг, гірськолижний курорт і затишні чани. Плануйте зимову поїздку на Закарпаття.',
 	pathname: '/blog/poliana-in-winter',

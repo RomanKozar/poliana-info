@@ -23,7 +23,7 @@ const SPA_BANI_PRICE_BY_ID: Partial<
 
 /**
  * Заклади для порівняння «бані в Поляні»: базовий SPA-перелік без River Side;
- * сеанси бані та ціни — уточнюйте в закладі, якщо не вказано в таблиці.
+ * сеанси бані та ціни - уточнюйте в закладі, якщо не вказано в таблиці.
  */
 export const SPA_BANI_VENUES: SpaBaniVenue[] = SPA_CHAN_COMPARISON_VENUES.filter(
 	v => !SPA_BANI_EXCLUDED_HOTEL_IDS.has(v.id)

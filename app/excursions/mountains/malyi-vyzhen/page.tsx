@@ -3,7 +3,7 @@ import { vyzhynSmallExcursionKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
-	title: 'Гора Малий Вижень — маршрут біля Поляни (екскурсія)',
+	title: 'Гора Малий Вижень - маршрут біля Поляни (екскурсія)',
 	description:
 		'Гора Малий Вижень біля Поляни (Закарпаття): компактний маршрут з панорамами без довгого походу. Фото, опис і карта.',
 	pathname: '/excursions/mountains/malyi-vyzhen',

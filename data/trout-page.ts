@@ -1,4 +1,4 @@
-/** Телефон як у components/layout/Header.tsx (href `tel:${siteHeaderPhoneTel}`) — підтримуй синхронно. */
+/** Телефон як у components/layout/Header.tsx (href `tel:${siteHeaderPhoneTel}`) - підтримуй синхронно. */
 export const siteHeaderPhoneTel = '0502149266' as const
 
 export const siteHeaderPhoneDisplay = '0 (50) 214 92 66'
@@ -9,7 +9,7 @@ export const troutFishingImages = [
 	{ src: '/images/trout/trout-2.webp', alt: 'Рибалка на форелевій фермі' },
 	{ src: '/images/trout/trout-3.webp', alt: 'Риболовля й відпочинок біля водойми' },
 	{ src: '/images/trout/trout-4.webp', alt: 'Улов форелі' },
-	{ src: '/images/trout/trout-5.webp', alt: 'Рибне господарство — атмосфера' },
+	{ src: '/images/trout/trout-5.webp', alt: 'Рибне господарство - атмосфера' },
 ] as const
 
 export const troutRestaurantImages = [

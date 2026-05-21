@@ -84,7 +84,7 @@ export default function VyzhynBigDetailPage() {
 							<div className='px-4 py-4 sm:px-5'>
 								<p className='text-sm font-semibold text-[#2D333D]'>Для підготовлених туристів</p>
 								<p className='mt-1 text-sm text-slate-600'>
-									Виразніший підйом і панорами — краще планувати з запасом часу.
+									Виразніший підйом і панорами - краще планувати з запасом часу.
 								</p>
 							</div>
 						</div>
@@ -107,8 +107,8 @@ export default function VyzhynBigDetailPage() {
 				<section className='border-t border-slate-200/80 bg-white px-4 py-10 sm:px-16 lg:px-24'>
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Карта</h2>
 					<p className='mt-2 max-w-3xl text-sm text-slate-600'>
-						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> — початок,{' '}
-						<span className='font-semibold text-red-600'>червоний</span> — кінець.
+						Маршрут позначено прапорцями: <span className='font-semibold text-emerald-600'>зелений</span> - початок,{' '}
+						<span className='font-semibold text-red-600'>червоний</span> - кінець.
 					</p>
 					<VyzhynBigRouteMap />
 				</section>

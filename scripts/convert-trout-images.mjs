@@ -1,6 +1,6 @@
 /**
  * Конвертує PNG/HEIC/JPEG у WebP і стискає WebP у public/images/trout.
- * Галерея /trout — картки та слайди до ~1200px по довшій стороні.
+ * Галерея /trout - картки та слайди до ~1200px по довшій стороні.
  */
 import fs from 'fs'
 import path from 'path'

@@ -116,7 +116,7 @@ export default function ContactsPageContent() {
 				<div className='flex flex-col gap-2'>
 					<h1 className='text-3xl font-black tracking-tight text-[#2D333D] sm:text-5xl'>Зворотний звʼязок</h1>
 					<p className='max-w-3xl text-sm text-slate-700 sm:text-base'>
-						Напишіть нам — підкажемо, порадимо, допоможемо знайти потрібне місце або додати заклад на карту.
+						Напишіть нам - підкажемо, порадимо, допоможемо знайти потрібне місце або додати заклад на карту.
 					</p>
 				</div>
 

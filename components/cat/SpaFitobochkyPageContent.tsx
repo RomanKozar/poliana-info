@@ -104,7 +104,7 @@ export default function SpaFitobochkyPageContent() {
 					Фітобочки в Поляні
 				</h1>
 				<p className='mt-2 text-sm leading-relaxed text-slate-600 sm:text-base'>
-					Трав’яні пари в дерев’яній бочці — зручно після лижні чи прогулянок. Порівняйте готелі за орієнтовною
+					Трав’яні пари в дерев’яній бочці - зручно після лижні чи прогулянок. Порівняйте готелі за орієнтовною
 					ціною проживання, подивіться їх на карті й узгодьте сеанс у закладі: склад фіто-збору, тривалість і
 					тариф завжди підтверджуйте на ресепшні.
 				</p>
@@ -301,7 +301,7 @@ export default function SpaFitobochkyPageContent() {
 							selectedId={selectedId}
 							windowInitCallbackName='initPolyanaFitobochkyMap'
 							mapAriaLabel='Карта готелів з фітобочками в Поляні'
-							embedIframeTitle='Фітобочки в Поляні — карта Google'
+							embedIframeTitle='Фітобочки в Поляні - карта Google'
 							infoWindowVariant='fitobochky'
 						/>
 					) : (

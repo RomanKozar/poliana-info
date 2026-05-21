@@ -3,9 +3,9 @@
  */
 export function formatHotelPriceForMapMarker(priceStr: string): string {
 	const m = priceStr.match(/\d+/)
-	if (!m) return '₴ —'
+	if (!m) return '₴ -'
 	const n = parseInt(m[0], 10)
-	if (Number.isNaN(n)) return '₴ —'
+	if (Number.isNaN(n)) return '₴ -'
 	const formatted = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 0 }).format(n)
 	return `₴ ${formatted}`
 }
@@ -16,13 +16,13 @@ export type HotelPricePillMarker = {
 	height: number
 }
 
-/** Біла таблетка; `active` і `selected` — помаранчевий акцент (наведення / вибір). */
+/** Біла таблетка; `active` і `selected` - помаранчевий акцент (наведення / вибір). */
 export type HotelPricePillVariant = 'default' | 'active' | 'selected'
 
 /**
  * «Пігулка» ціни (PNG data URL для google.maps.Marker icon).
- * `active` — помаранчевий (наведення на картку в списку або на маркер на карті).
- * `selected` — той самий помаранчевий акцент (вибраний готель / відкрите вікно).
+ * `active` - помаранчевий (наведення на картку в списку або на маркер на карті).
+ * `selected` - той самий помаранчевий акцент (вибраний готель / відкрите вікно).
  */
 export function createHotelPricePillMarker(label: string, variant: HotelPricePillVariant = 'default'): HotelPricePillMarker {
 	const logicalH = 32

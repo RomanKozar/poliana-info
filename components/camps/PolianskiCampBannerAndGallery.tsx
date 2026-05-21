@@ -13,7 +13,7 @@ const POLIANSKI_GALLERY_STRIP: GalleryStripItem[] = [
 	{ id: 'g4', src: '/images/kids-camps/camp1-1/camp1-4.webp', alt: 'Гори та відпочинок на природі' },
 ]
 
-const LIGHTBOX_TITLE = 'PolianskiCamp — фото зі зміни'
+const LIGHTBOX_TITLE = 'PolianskiCamp - фото зі зміни'
 
 function StripLightbox({
 	open,
@@ -165,7 +165,7 @@ export default function PolianskiCampBannerAndGallery({ bannerSrc, bannerAlt }: 
 	const [open, setOpen] = useState(false)
 	const [start, setStart] = useState(0)
 
-	/** Банер + 4 мініатюри — одна галерея для перегляду та гортання. */
+	/** Банер + 4 мініатюри - одна галерея для перегляду та гортання. */
 	const lightboxItems = useMemo<GalleryStripItem[]>(
 		() => [{ id: 'banner', src: bannerSrc, alt: bannerAlt }, ...POLIANSKI_GALLERY_STRIP],
 		[bannerSrc, bannerAlt]
@@ -198,7 +198,7 @@ export default function PolianskiCampBannerAndGallery({ bannerSrc, bannerAlt }: 
 				<div
 					className='grid grid-cols-4 grid-rows-1 gap-2 sm:gap-3 md:gap-4'
 					role='region'
-					aria-label='Фото зі зміни табору — натисніть, щоб відкрити й гортати'
+					aria-label='Фото зі зміни табору - натисніть, щоб відкрити й гортати'
 				>
 					{POLIANSKI_GALLERY_STRIP.map(({ id, src, alt }, imageIndex) => (
 						<button

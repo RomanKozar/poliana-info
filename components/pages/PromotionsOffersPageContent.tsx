@@ -68,7 +68,7 @@ export default function PromotionsOffersPageContent() {
 			<section className='mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14'>
 				<h2 className='text-xl font-extrabold text-[#2D333D] sm:text-2xl'>Що зараз особливо вигідно</h2>
 				<p className='mt-2 max-w-2xl text-sm text-slate-600 sm:text-base'>
-					Натисніть картку — перейдете до розділу сайту з деталями. Знижки й подарункові формати завжди
+					Натисніть картку - перейдете до розділу сайту з деталями. Знижки й подарункові формати завжди
 					узгоджуємо індивідуально.
 				</p>
 
@@ -113,7 +113,7 @@ export default function PromotionsOffersPageContent() {
 							<span className='block text-white/95'>−20% за умовами закладу</span>
 						</p>
 						<p className='relative mt-3 max-w-md text-sm leading-relaxed text-white/90'>
-							Як на головній сторінці: поєднайте смак Карпат із відпочинком у чані — запитайте про актуальний
+							Як на головній сторінці: поєднайте смак Карпат із відпочинком у чані - запитайте про актуальний
 							пакет при дзвінку.
 						</p>
 						<div className='relative mt-6 flex flex-wrap gap-3'>
@@ -140,7 +140,7 @@ export default function PromotionsOffersPageContent() {
 							<div>
 								<p className='font-bold text-[#2D333D]'>Швидкий старт</p>
 								<p className='mt-1 text-sm text-slate-600'>
-									Оберіть напрям із карток вище або зателефонуйте — підкажемо сумісний маршрут на 1–3 дні.
+									Оберіть напрям із карток вище або зателефонуйте - підкажемо сумісний маршрут на 1–3 дні.
 								</p>
 							</div>
 						</div>
@@ -151,7 +151,7 @@ export default function PromotionsOffersPageContent() {
 							<div>
 								<p className='font-bold text-[#2D333D]'>Локально й по-доброму</p>
 								<p className='mt-1 text-sm text-slate-600'>
-									Традиції Закарпаття, свіжі продукти й спокійний темп — без зайвого галасу в описах.
+									Традиції Закарпаття, свіжі продукти й спокійний темп - без зайвого галасу в описах.
 								</p>
 							</div>
 						</div>
@@ -182,7 +182,7 @@ export default function PromotionsOffersPageContent() {
 					<div>
 						<h2 className='text-lg font-extrabold text-[#2D333D] sm:text-xl'>Готові підібрати акцію під вас?</h2>
 						<p className='mt-2 max-w-xl text-sm text-slate-600 sm:text-base'>
-							Залишились питання щодо чанів, житла чи екскурсій — зателефонуйте: допоможемо скласти зручний план
+							Залишились питання щодо чанів, житла чи екскурсій - зателефонуйте: допоможемо скласти зручний план
 							відпочинку під ваші дати.
 						</p>
 					</div>
