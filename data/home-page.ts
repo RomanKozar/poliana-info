@@ -1,7 +1,27 @@
 import type { IconType } from 'react-icons'
 import { FaRegClock, FaSpa, FaWater } from 'react-icons/fa'
 import { EXCURSIONS_MOUNTAINS_ANCHOR_ID, quadExcursions } from '@/data/excursions-page'
+import { PROMOTIONS_PAGE_PATH } from '@/data/promotions-page'
 import { accommodationHotelPath } from '@/lib/accommodation-urls'
+
+/** Банери акцій у hero-блоці головної (public/images/baner/*.webp). */
+export const homePromoBanners = [
+	{
+		src: '/images/baner/tur-5-plus-1.webp',
+		alt: 'Акція 5+1: тур у Поляну',
+		href: PROMOTIONS_PAGE_PATH,
+	},
+	{
+		src: '/images/baner/summer-5-4.webp',
+		alt: 'Літня акція 5+4 у Поляні',
+		href: PROMOTIONS_PAGE_PATH,
+	},
+	{
+		src: '/images/baner/day-off.webp',
+		alt: 'Акція Day off у Поляні',
+		href: PROMOTIONS_PAGE_PATH,
+	},
+] as const
 
 export const accommodations = [
 	{

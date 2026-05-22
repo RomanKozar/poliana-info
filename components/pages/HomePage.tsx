@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import CampProgramCard from '@/components/camps/CampProgramCard'
 import AccommodationCardImageCarousel from '@/components/home/AccommodationCardImageCarousel'
+import HomePromoBannerCarousel from '@/components/home/HomePromoBannerCarousel'
 import { homeAccommodationCardGallery } from '@/lib/hotel-detail-data'
 import BottomStatusToast, {
 	WIP_SECTION_TOAST_MESSAGE,
@@ -17,12 +18,12 @@ import {
 	categoryItems,
 	faqItems,
 	heroSlides,
+	homePromoBanners,
 	popularNow,
 	skiRecreation,
 	spaItems,
 } from '@/data/home-page'
 import { PROMOTIONS_PAGE_PATH } from '@/data/promotions-page'
-import { siteHeaderPhoneTel } from '@/data/trout-page'
 import {
 	FaChevronDown,
 	FaChevronLeft,
@@ -168,35 +169,7 @@ export default function HomePage() {
 							</div>
 						</div>
 
-						<div className='ml-auto flex w-full max-w-[520px] min-h-[210px] overflow-hidden rounded-[16px] bg-[#F08F61] text-white sm:max-w-[560px] sm:min-h-[340px] sm:rounded-[18px]'>
-							<div className='flex w-[52%] flex-col px-3 pb-3 pt-2.5 sm:w-[53%] sm:px-5 sm:pb-5 sm:pt-4'>
-								<p className='mt-1 inline-block self-start rounded-full bg-white/25 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.08em] sm:mt-2 sm:px-2.5 sm:text-[12px]'>
-									Гаряча пропозиція
-								</p>
-								<h3 className='mt-3 max-w-[250px] text-[20px] font-black leading-[1.2] sm:mt-8 sm:text-[32px] sm:leading-[1.5]'>
-									Форель + чан
-									<br />= -20%
-								</h3>
-								<p className='mt-2.5 max-w-[205px] text-[12px] leading-[1.25] text-white/90 sm:mt-4 sm:text-[16px] sm:leading-[1.5]'>
-									Відпочивай зі смаком у Поляні
-								</p>
-								<a
-									href={`tel:${siteHeaderPhoneTel}`}
-									className='mt-auto self-start cursor-pointer rounded-md bg-white px-2.5 py-1 text-[11px] font-bold text-[#E06D3C] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:px-4 sm:py-2 sm:text-[14px]'
-								>
-									ЗАБРОНЮВАТИ
-								</a>
-							</div>
-							<div className='relative w-[48%] overflow-hidden rounded-l-[72px] sm:w-[47%] sm:rounded-l-[140px]'>
-								<Image
-									src='/images/gallery/akziya.webp'
-									alt='Чан'
-									fill
-									sizes='(min-width: 1024px) 264px, 45vw'
-									className='object-cover object-center'
-								/>
-							</div>
-						</div>
+						<HomePromoBannerCarousel slides={homePromoBanners} />
 					</div>
 
 					<div className='mt-3 flex items-center justify-center gap-3 sm:mt-4'>

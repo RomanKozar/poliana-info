@@ -6,6 +6,8 @@ import {
 	FaPhoneAlt,
 	FaRegLightbulb,
 } from 'react-icons/fa'
+import HomePromoBannerCarousel from '@/components/home/HomePromoBannerCarousel'
+import { homePromoBanners } from '@/data/home-page'
 import { EXCURSIONS_MOUNTAINS_ANCHOR_ID } from '@/data/excursions-page'
 import {
 	promotionsHeroLead,
@@ -100,37 +102,10 @@ export default function PromotionsOffersPageContent() {
 
 			<section className='border-y border-slate-200/80 bg-white'>
 				<div className='mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8 lg:py-14'>
-					<div className='relative max-w-xl overflow-hidden rounded-2xl bg-gradient-to-br from-[#F08F61] via-[#ea8659] to-[#dc7349] p-6 text-white shadow-xl shadow-orange-900/20 sm:p-8'>
-						<div
-							className='pointer-events-none absolute -right-8 top-0 h-32 w-32 rounded-full bg-white/15 blur-2xl'
-							aria-hidden
-						/>
-						<p className='relative text-[11px] font-bold uppercase tracking-[0.14em] text-white/85'>
-							Хіт сезону
-						</p>
-						<p className='relative mt-2 text-2xl font-black leading-tight sm:text-3xl'>
-							Форель + чан
-							<span className='block text-white/95'>−20% за умовами закладу</span>
-						</p>
-						<p className='relative mt-3 max-w-md text-sm leading-relaxed text-white/90'>
-							Як на головній сторінці: поєднайте смак Карпат із відпочинком у чані - запитайте про актуальний
-							пакет при дзвінку.
-						</p>
-						<div className='relative mt-6 flex flex-wrap gap-3'>
-							<Link
-								href='/gastronomy'
-								className='rounded-lg bg-white px-4 py-2 text-sm font-bold text-[#c55d33] shadow-md transition hover:-translate-y-0.5 no-underline'
-							>
-								Форель і ресторани
-							</Link>
-							<Link
-								href='/cat/spa-bani-chany'
-								className='rounded-lg border border-white/45 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/15 no-underline'
-							>
-								Чани та SPA
-							</Link>
-						</div>
-					</div>
+					<HomePromoBannerCarousel
+						slides={homePromoBanners.map(({ src, alt }) => ({ src, alt }))}
+						className='w-full max-w-xl shrink-0 rounded-2xl shadow-xl shadow-orange-900/10'
+					/>
 
 					<div className='grid flex-1 gap-4 sm:max-w-md'>
 						<div className='flex gap-3 rounded-xl border border-slate-200 bg-[#F5F6F7] p-4'>
