@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "generate-sitemap": "npx --yes tsx scripts/generate-sitemap.ts",
+    "build": "npm run generate-sitemap && next build",
     "start": "next start",
     "lint": "eslint",
     "convert-atv": "node scripts/convert-atv-images.mjs",
