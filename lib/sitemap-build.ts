@@ -1,3 +1,4 @@
+import type { MetadataRoute } from 'next'
 import { categoryPlaceholderSlugs } from '@/data/category-placeholders'
 import { polyanaHotels } from '@/lib/polyana-hotels'
 import { SITE_URL } from '@/lib/seo'
@@ -84,7 +85,17 @@ function collectSitemapEntries(): SitemapUrlEntry[] {
 	]
 }
 
-/** Повний XML sitemap.org 0.9 для віддачі через Route Handler (стабільніше за вбудований metadata sitemap на частині хостингів). */
+/** Для `app/sitemap.ts` (офіційний Next.js metadata sitemap → `/sitemap.xml`). */
+export function collectPolyanaSitemapRoutes(): MetadataRoute.Sitemap {
+	return collectSitemapEntries().map(e => ({
+		url: e.loc,
+		lastModified: e.lastModified,
+		changeFrequency: e.changeFrequency,
+		priority: e.priority,
+	}))
+}
+
+/** Повний XML sitemap.org 0.9 (дублікат для `/api/sitemap`). */
 export function buildPolyanaSitemapXml(): string {
 	const entries = collectSitemapEntries()
 
