@@ -70,6 +70,8 @@ function collectSitemapEntries(): SitemapUrlEntry[] {
 		{ loc: pageUrl('/poliana'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/polianski'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/privacy'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
+		{ loc: pageUrl('/terms'), lastModified, changeFrequency: 'monthly', priority: 0.55 },
+		{ loc: pageUrl('/trout'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/search'), lastModified, changeFrequency: 'monthly', priority: 0.55 },
 		{ loc: pageUrl('/spa'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/cat/spa-bani-chany/veliki-chany'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
