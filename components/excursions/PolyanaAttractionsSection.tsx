@@ -76,7 +76,7 @@ export default function PolyanaAttractionsSection() {
 						href={getPolyanaAttractionsGoogleDirectionsHref()}
 						target='_blank'
 						rel='noopener noreferrer'
-						className='block overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm ring-1 ring-slate-900/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+						className='block cursor-pointer overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm ring-1 ring-slate-900/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
 						aria-label={`${item.title}. Відкрити маршрут у Google Maps`}
 					>
 						<AttractionImage src={item.image} alt={item.title} />
