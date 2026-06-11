@@ -18,7 +18,8 @@ export type ExcursionListing = {
 	id: string
 	title: string
 	description: string
-	image: string
+	/** Без зображення - на картці показується заглушка. */
+	image?: string
 	address: string
 	position: { lat: number; lng: number }
 	/** Маршрут для модалки. Якщо задано - картка відкриє карту з треком + прапорцями. */
@@ -31,6 +32,8 @@ export type ExcursionListing = {
 	/** Підпис на карті (InfoWindow). */
 	mapPill: string
 	priceHint?: string
+	/** Додаткові витрати (окремий рядок на картці автобусних екскурсій). */
+	extraCosts?: string
 	/** Розгорнутий опис у модальному вікні (наприклад, після кліку на картку). */
 	detailModal?: ExcursionDetailSection[]
 	/** Велике зображення в модалці (брошура, плакат). */
@@ -492,102 +495,134 @@ export const mountainGuidedExcursions: ExcursionListing[] = [
 	},
 ]
 
-/** Екскурсії Поляною - вкладки (місцеві маршрути, стежки, вода). */
-export const polyanaExcursionTabs: ExcursionTabGroup[] = [
+/** Автобусні екскурсії з Поляни по Закарпаттю (блок «Екскурсії» на /excursions). */
+export const zakarpattiaBusExcursions: ExcursionListing[] = [
 	{
-		id: 'center',
-		label: 'Від центру курорту',
-		excursions: [
-			{
-				id: 'pl-street',
-				title: 'Променад вулицями Поляни',
-				description:
-					'Спокійна прогулянка: готельні комплекси, локальні заклади, атмосфера курорту. Можна поєднати з кавою чи обідом.',
-				image: '/images/gallery/golovna-foto.webp',
-				address: 'вул. Духновича, Поляна, Закарпатська обл.',
-				position: { lat: 48.6214, lng: 22.9674 },
-				mapPill: 'Поляна',
-			},
-			{
-				id: 'pl-plaza',
-				title: 'Торговий центр та інфраструктура',
-				description:
-					'Ознайомча прогулянка: де зручно закупитися, де зупинитися з дітьми, де шукати туристичні послуги.',
-				image: '/images/gallery/golovna-foto-3.webp',
-				address: 'ТЦ Polayna Plaza, вул. Духновича, 56, Поляна',
-				position: { lat: 48.621581391228176, lng: 22.967498727610323 },
-				mapPill: 'Поляна',
-			},
-		],
+		id: 'bus-uzhhorod',
+		title: 'Ужгород',
+		description:
+			'Ужгородський замок, музей «Народної архітектури та побуту», 2 год вільного часу в центрі міста і музей гумору «Деца у нотаря».',
+		extraCosts: 'Додатково: вхід у замок 200 грн, музей 100 грн.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.6208, lng: 22.2879 },
+		mapPill: 'Екскурсії',
+		priceHint: '700 грн проїзд',
 	},
 	{
-		id: 'health',
-		label: 'Стежки здоров’я та парки',
-		excursions: [
-			{
-				id: 'pl-health-trail',
-				title: 'Стежка здоров’я',
-				description:
-					'Помірне навантаження, лавки для відпочинку, свіже повітря. Підходить людям різного віку після узгодження з лікарем.',
-				image: '/images/entertainment/tybinh-v2-3.webp',
-				address: 'Поляна, Закарпатська обл.',
-				position: { lat: 48.6242, lng: 22.951 },
-				mapPill: 'Поляна',
-			},
-			{
-				id: 'pl-park',
-				title: 'Зелені зони біля санаторіїв',
-				description:
-					'Тихі куточки для прогулянок між процедурами: поєднайте оздоровлення з легкою активністю на свіжому повітрі.',
-				image: '/images/accommodation/kontinent-v1.webp',
-				address: 'вул. Сонячна, Поляна, Закарпатська обл.',
-				position: { lat: 48.62058462616725, lng: 22.9702754849307 },
-				mapPill: 'Поляна',
-			},
-		],
+		id: 'bus-mukachevo',
+		title: 'Мукачево',
+		description: 'Замок «Паланок» і 1,5 год вільного часу в центрі міста.',
+		extraCosts: 'Додатково: вхід у замок «Паланок» 150 грн.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.4411, lng: 22.7183 },
+		mapPill: 'Екскурсії',
+		priceHint: '400 грн проїзд',
 	},
 	{
-		id: 'water',
-		label: 'Мінеральна вода та бювети',
-		excursions: [
-			{
-				id: 'pl-buvet',
-				title: 'Дегустація мінеральної води',
-				description:
-					'Коротка екскурсія з поясненням відмінностей місцевих вод, де безпечно набирати та як поєднати з відпочинком.',
-				image: '/images/spa/fitobochka.webp',
-				address: 'Курортна зона Поляни, Закарпатська обл.',
-				position: { lat: 48.62526979873458, lng: 22.94656504413456 },
-				mapPill: 'Поляна',
-				priceHint: 'часто безкоштовно / за донат',
-			},
-			{
-				id: 'pl-spa-chan',
-				title: 'Чан і вода після прогулянки',
-				description:
-					'Після пішої екскурсії - теплий чан на території комплексу. Бронювання та умови уточнюйте в закладі.',
-				image: '/images/spa/maliy-chan.webp',
-				address: 'готель «Катерина», вул. Сонячна, 55-Б, Поляна',
-				position: { lat: 48.621390668230035, lng: 22.970576982649888 },
-				mapPill: 'Поляна',
-				priceHint: 'за прайсом закладу',
-			},
-		],
+		id: 'bus-castles',
+		title: 'Замки',
+		description:
+			'Замок Шенборнів у сан. Карпати, Чинадієвський замок (Сент-Міклош) і чудотворний хрест.',
+		extraCosts: 'Додатково: вхід у сан. Карпати 75 грн, Чинадієво 75 грн.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.4833, lng: 22.5167 },
+		mapPill: 'Екскурсії',
+		priceHint: '400 грн проїзд',
+	},
+	{
+		id: 'bus-synevir',
+		title: 'Синевир',
+		description:
+			'Озеро Синевир, водоспад Шипіт, канатна дорога, долина вовків і реабілітаційний центр ведмедів. Обід у колибі на власний вибір.',
+		extraCosts:
+			'Додатково: озеро 60 грн, Шипіт 20 грн, канатка 250 грн, долина вовків 100 грн, ведмеді 60 грн.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.6172, lng: 23.6825 },
+		mapPill: 'Екскурсії',
+		priceHint: '800 грн проїзд',
+	},
+	{
+		id: 'bus-berehove-thermal',
+		title: 'Термальні води м. Берегово',
+		description: 'Відпочинок у термальних басейнах Берегова.',
+		extraCosts: 'Додатково: 2 год купання 250 грн + 30 грн шафа для речей.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.2053, lng: 22.6453 },
+		mapPill: 'Екскурсії',
+		priceHint: '500 грн проїзд',
+	},
+	{
+		id: 'bus-kosino-thermal',
+		title: 'Термальні води Косино',
+		description: 'Купання в термальних комплексах Косино.',
+		extraCosts: 'Додатково: 3 год купання 1000 грн.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.1333, lng: 22.4667 },
+		mapPill: 'Екскурсії',
+		priceHint: '600 грн проїзд',
+	},
+	{
+		id: 'bus-lumshory-chany',
+		title: 'Чани в с. Лумшори',
+		description: 'Традиційні чани в гірському селі Лумшори - купання 1 год включено в ціну.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.9686, lng: 22.9303 },
+		mapPill: 'Екскурсії',
+		priceHint: '750 грн проїзд і купання',
+	},
+	{
+		id: 'bus-vojvodino',
+		title: 'Курорт Воєводино',
+		description: 'Виїзд на курорт Воєводино - відпочинок на території комплексу.',
+		extraCosts: 'Додатково: вхідний квиток 200 грн.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.12, lng: 23.08 },
+		mapPill: 'Екскурсії',
+		priceHint: '400 грн проїзд',
+	},
+	{
+		id: 'bus-wine-tasting',
+		title: 'Дегустація вина',
+		description: 'Знайомство з закарпатськими винами - дегустація включена в ціну.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.2053, lng: 22.6453 },
+		mapPill: 'Екскурсії',
+		priceHint: '700 грн проїзд і дегустація',
+	},
+	{
+		id: 'bus-monasteries',
+		title: 'Монастирі Закарпаття',
+		description: 'Екскурсія до найвідоміших монастирів Закарпаття з Поляни.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.4411, lng: 22.7183 },
+		mapPill: 'Екскурсії',
+		priceHint: '600 грн',
+	},
+	{
+		id: 'bus-arpad-bunker',
+		title: 'Бункер лінії Арпата',
+		description: 'Екскурсія до історичного бункера лінії Арпата.',
+		extraCosts: 'Додатково: вхід 200 грн.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.653, lng: 23.15 },
+		mapPill: 'Екскурсії',
+		priceHint: '350 грн проїзд',
+	},
+	{
+		id: 'bus-mukachevo-aquapark',
+		title: 'Мукачево аквапарк «Карпатія»',
+		description: 'Аквапарк «Карпатія» в Мукачеві - 2 год купання.',
+		extraCosts: 'Додатково: купання 650 грн (сб/нд 750 грн) + 400 грн проїзд.',
+		address: 'Старт: Поляна, Закарпатська обл.',
+		position: { lat: 48.4411, lng: 22.7183 },
+		mapPill: 'Екскурсії',
+		priceHint: 'від 1050 грн',
 	},
 ]
 
-/** Усі екскурсії «Поляною» одним списком (без вкладок). */
+/** Усі автобусні екскурсії з Поляни (блок «Екскурсії»). */
 export function polyanaExcursionListings(): ExcursionListing[] {
-	const seen = new Set<string>()
-	const out: ExcursionListing[] = []
-	for (const tab of polyanaExcursionTabs) {
-		for (const e of tab.excursions) {
-			if (seen.has(e.id)) continue
-			seen.add(e.id)
-			out.push(e)
-		}
-	}
-	return out
+	return zakarpattiaBusExcursions
 }
 
 export function allExcursionListings(): ExcursionListing[] {
@@ -601,6 +636,6 @@ export function allExcursionListings(): ExcursionListing[] {
 	for (const e of quadExcursions) push(e)
 	for (const tab of mountainExcursionTabs) for (const e of tab.excursions) push(e)
 	for (const e of mountainGuidedExcursions) push(e)
-	for (const tab of polyanaExcursionTabs) for (const e of tab.excursions) push(e)
+	for (const e of zakarpattiaBusExcursions) push(e)
 	return out
 }

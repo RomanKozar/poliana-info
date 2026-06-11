@@ -270,7 +270,7 @@ export const popularNow: PopularNowItem[] = [
 		badge: 'ТОП ЕКСКУРСІЇ',
 		title: quadExcursions[0].title,
 		text: 'Лісові стежки, гори та панорами біля Поляни.',
-		image: quadExcursions[0].image,
+		image: quadExcursions[0].image!,
 		href: quadExcursions[0].detailPagePath,
 	},
 ]

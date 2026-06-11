@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
-import { FaMapMarkerAlt } from 'react-icons/fa'
+import { FaImage, FaMapMarkerAlt } from 'react-icons/fa'
 import BottomStatusToast, {
 	WIP_SECTION_TOAST_MESSAGE,
 } from '@/components/shared/BottomStatusToast'
@@ -84,7 +84,7 @@ function ExcursionCard({
 				: {})}
 		>
 			<div className='relative h-40 w-full shrink-0 sm:hidden'>
-				<Image src={item.image} alt='' fill sizes='100vw' className='object-cover' />
+				<Image src={item.image!} alt='' fill sizes='100vw' className='object-cover' />
 			</div>
 			<div className='flex flex-1 flex-col px-4 py-5'>
 				<div className='space-y-1'>
@@ -101,7 +101,7 @@ function ExcursionCard({
 			</div>
 			<div className='relative hidden w-[42%] min-w-[130px] shrink-0 sm:block'>
 				<Image
-					src={item.image}
+					src={item.image!}
 					alt=''
 					fill
 					sizes='(min-width: 640px) 18vw, 0'
@@ -211,81 +211,42 @@ function TabbedExcursionSection({
 	)
 }
 
-function PolyanaExcursionHotelStyleCard({
-	item,
-	isFavorite,
-	onToggleFavorite,
-	onCardClick,
-}: {
-	item: ExcursionListing
-	isFavorite: boolean
-	onToggleFavorite: () => void
-	onCardClick?: () => void
-}) {
-	const interactive = Boolean(onCardClick)
-
+function PolyanaExcursionHotelStyleCard({ item }: { item: ExcursionListing }) {
 	return (
-		<article
-			className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
-			{...(interactive
-				? {
-						role: 'button' as const,
-						tabIndex: 0,
-						'aria-label': `${item.title}. Розділ у розробці`,
-						onClick: () => onCardClick!(),
-						onKeyDown: (e: ReactKeyboardEvent<HTMLElement>) => {
-							if (e.key === 'Enter' || e.key === ' ') {
-								e.preventDefault()
-								onCardClick!()
-							}
-						},
-					}
-				: {})}
-		>
+		<article className='flex h-full flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm'>
 			<div className='relative h-36 sm:h-40'>
-				<Image
-					src={item.image}
-					alt={item.title}
-					fill
-					sizes='(min-width: 1024px) 28vw, (min-width: 640px) 42vw, 88vw'
-					className='object-cover'
-				/>
-				<button
-					type='button'
-					onClick={e => {
-						e.stopPropagation()
-						onToggleFavorite()
-					}}
-					aria-label={
-						isFavorite ? `Прибрати ${item.title} з обраного` : `Додати ${item.title} в обране`
-					}
-					aria-pressed={isFavorite}
-					className='heart-container'
-				>
-					<span className='sr-only'>
-						{isFavorite ? 'Прибрати з обраного' : 'Додати в обране'}
-					</span>
-					<span className={`heart-svg-container ${isFavorite ? 'is-active' : ''}`} aria-hidden>
-						<svg viewBox='0 0 24 24' className='heart-svg-outline'>
-							<path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
-						</svg>
-						<svg viewBox='0 0 24 24' className='heart-svg-filled'>
-							<path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' />
-						</svg>
-						<svg viewBox='0 0 24 24' className='heart-svg-celebrate'>
-							<path d='M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1' />
-						</svg>
-					</span>
-				</button>
+				{item.image ? (
+					<Image
+						src={item.image}
+						alt={item.title}
+						fill
+						sizes='(min-width: 1024px) 28vw, (min-width: 640px) 42vw, 88vw'
+						className='object-cover'
+					/>
+				) : (
+					<div
+						className='flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-slate-100 to-slate-200/90 text-slate-500'
+						aria-hidden
+					>
+						<FaImage className='size-8 opacity-50' />
+						<span className='text-xs font-medium'>Фото незабаром</span>
+					</div>
+				)}
 			</div>
 			<div className='flex flex-1 flex-col p-3 sm:p-4'>
 				<div className='space-y-2'>
 					<h3 className='text-[15px] font-bold leading-tight text-[#2D333D] sm:text-base'>{item.title}</h3>
-					<p className='text-[11px] leading-snug text-[#53C4DA] sm:text-xs'>
+					{item.priceHint ? (
+						<p className='text-[11px] font-semibold leading-snug text-[#53C4DA] sm:text-xs'>{item.priceHint}</p>
+					) : null}
+					<p className='text-[11px] leading-snug text-slate-500 sm:text-xs'>
 						<FaMapMarkerAlt className='mr-1 inline-block size-2.5 align-[-1px]' aria-hidden />
 						{item.address}
 					</p>
 					<p className='line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-[13px]'>{item.description}</p>
+					{item.extraCosts ? (
+						<p className='text-[11px] leading-snug text-slate-500 sm:text-xs'>{item.extraCosts}</p>
+					) : null}
 				</div>
 			</div>
 		</article>
@@ -293,7 +254,6 @@ function PolyanaExcursionHotelStyleCard({
 }
 
 export default function ExcursionsPageContent() {
-	const [favoritePolyana, setFavoritePolyana] = useState<Record<string, boolean>>({})
 	const [mapError, setMapError] = useState<string | null>(null)
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
 	const [wipToastOpen, setWipToastOpen] = useState(false)
@@ -464,7 +424,7 @@ export default function ExcursionsPageContent() {
 							name: place.title,
 							address: place.address,
 							category: categoryLine,
-							image: place.image,
+							image: place.image ?? '',
 							featurePill: place.mapPill,
 							routeLink,
 							saveLink,
@@ -572,15 +532,7 @@ export default function ExcursionsPageContent() {
 				<h2 className='mb-5 text-2xl font-bold text-[#2D333D] sm:mb-6 sm:text-[26px]'>Екскурсії</h2>
 				<div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-3'>
 					{POLYANA_EXCURSIONS.map(item => (
-						<PolyanaExcursionHotelStyleCard
-							key={item.id}
-							item={item}
-							isFavorite={Boolean(favoritePolyana[item.id])}
-							onToggleFavorite={() =>
-								setFavoritePolyana(prev => ({ ...prev, [item.id]: !prev[item.id] }))
-							}
-							onCardClick={showWipToast}
-						/>
+						<PolyanaExcursionHotelStyleCard key={item.id} item={item} />
 					))}
 				</div>
 			</section>
