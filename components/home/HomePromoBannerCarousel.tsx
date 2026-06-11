@@ -77,7 +77,8 @@ export default function HomePromoBannerCarousel({ slides, className }: Props) {
 							src={slide.src}
 							alt={slide.alt}
 							fill
-							priority={i === 0}
+							unoptimized
+							priority={i < 2}
 							sizes='(min-width: 640px) 560px, 92vw'
 							className='object-cover object-center'
 						/>
