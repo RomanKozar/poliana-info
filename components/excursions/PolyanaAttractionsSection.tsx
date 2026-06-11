@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import { FaImage } from 'react-icons/fa'
 import { EXCURSIONS_ATTRACTIONS_ANCHOR_ID } from '@/data/excursions-page'
-import { polyanaAttractionPrices, polyanaAttractions } from '@/data/polyana-attractions'
+import {
+	getPolyanaAttractionsGoogleDirectionsHref,
+	polyanaAttractionPrices,
+	polyanaAttractions,
+} from '@/data/polyana-attractions'
 
 function AttractionImage({ src, alt }: { src?: string; alt: string }) {
 	if (src) {
@@ -67,16 +71,20 @@ export default function PolyanaAttractionsSection() {
 
 			<div className='mt-8 grid gap-5 sm:grid-cols-2'>
 				{polyanaAttractions.map(item => (
-					<article
+					<a
 						key={item.id}
-						className='overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm ring-1 ring-slate-900/[0.03]'
+						href={getPolyanaAttractionsGoogleDirectionsHref()}
+						target='_blank'
+						rel='noopener noreferrer'
+						className='block overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm ring-1 ring-slate-900/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+						aria-label={`${item.title}. Відкрити маршрут у Google Maps`}
 					>
 						<AttractionImage src={item.image} alt={item.title} />
 						<div className='p-4 sm:p-5'>
 							<h3 className='text-lg font-bold text-[#2D333D]'>{item.title}</h3>
 							<p className='mt-2 text-sm leading-relaxed text-slate-600'>{item.description}</p>
 						</div>
-					</article>
+					</a>
 				))}
 			</div>
 		</section>

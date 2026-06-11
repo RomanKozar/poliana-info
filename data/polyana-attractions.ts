@@ -12,6 +12,19 @@ export type PolyanaAttraction = {
 	image?: string
 }
 
+/** Майданчик атракціонів на курорті (усі картки ведуть сюди в Google Maps). */
+export const polyanaAttractionsMapSpot = {
+	lat: 48.6204446955682,
+	lng: 22.971480337569187,
+	title: 'Атракціони в Поляні',
+} as const
+
+/** Google Maps «Маршрут» до майданчика атракціонів. */
+export function getPolyanaAttractionsGoogleDirectionsHref(): string {
+	const { lat, lng } = polyanaAttractionsMapSpot
+	return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`
+}
+
 export const polyanaAttractionPrices: PolyanaAttractionPrice[] = [
 	{
 		price: '100 ₴',
