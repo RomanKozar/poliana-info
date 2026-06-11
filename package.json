@@ -22,7 +22,8 @@
     "convert-spa-title-webp": "node scripts/convert-spa-title-webp.mjs",
     "convert-spa-images": "node scripts/convert-spa-images.mjs",
     "convert-kids-camps": "node scripts/convert-kids-camps-images.mjs",
-    "convert-home-baner": "node scripts/convert-home-baner-images.mjs"
+    "convert-home-baner": "node scripts/convert-home-baner-images.mjs",
+    "convert-attraction-images": "node scripts/convert-attraction-images.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

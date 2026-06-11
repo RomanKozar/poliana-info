@@ -3,6 +3,9 @@
 /** HTML id блоку «Екскурсії в гори» для посилань `/excursions#…`. */
 export const EXCURSIONS_MOUNTAINS_ANCHOR_ID = 'ekskursii-v-hory'
 
+/** HTML id блоку «Атракціони в Поляні» для посилань `/excursions#…`. */
+export const EXCURSIONS_ATTRACTIONS_ANCHOR_ID = 'aktivnyi-vidpochynok'
+
 export type ExcursionDetailSection = {
 	title: string
 	/** Короткий абзац під заголовком. */

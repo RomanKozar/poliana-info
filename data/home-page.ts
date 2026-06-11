@@ -1,6 +1,6 @@
 import type { IconType } from 'react-icons'
 import { FaRegClock, FaSpa, FaWater } from 'react-icons/fa'
-import { EXCURSIONS_MOUNTAINS_ANCHOR_ID, quadExcursions } from '@/data/excursions-page'
+import { EXCURSIONS_ATTRACTIONS_ANCHOR_ID, quadExcursions } from '@/data/excursions-page'
 import { PROMOTIONS_PAGE_PATH } from '@/data/promotions-page'
 import { accommodationHotelPath } from '@/lib/accommodation-urls'
 
@@ -235,7 +235,7 @@ export const categoryItems: CategoryNavItem[] = [
 	{
 		label: 'Активний відпочинок',
 		iconSrc: `${CATEGORY_ICON_BASE}/activity.svg`,
-		href: `/excursions#${EXCURSIONS_MOUNTAINS_ANCHOR_ID}`,
+		href: `/excursions#${EXCURSIONS_ATTRACTIONS_ANCHOR_ID}`,
 	},
 	{ label: 'Сувенір з Поляни', iconSrc: `${CATEGORY_ICON_BASE}/souvenirs.svg`, href: '/cat/suveniry' },
 ]

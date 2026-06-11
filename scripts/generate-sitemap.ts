@@ -8,4 +8,4 @@ const xml = buildPolyanaSitemapXml()
 fs.mkdirSync(path.dirname(out), { recursive: true })
 fs.writeFileSync(out, xml, 'utf8')
 
-console.log(`public/sitemap.xml — ${polyanaSitemapUrlCount()} URL`)
+console.log(`public/sitemap.xml - ${polyanaSitemapUrlCount()} URL`)

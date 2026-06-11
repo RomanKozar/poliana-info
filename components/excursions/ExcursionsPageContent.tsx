@@ -8,6 +8,7 @@ import BottomStatusToast, {
 	WIP_SECTION_TOAST_MESSAGE,
 } from '@/components/shared/BottomStatusToast'
 import ExcursionRouteModal from '@/components/excursions/ExcursionRouteModal'
+import PolyanaAttractionsSection from '@/components/excursions/PolyanaAttractionsSection'
 import {
 	allExcursionListings,
 	EXCURSIONS_MOUNTAINS_ANCHOR_ID,
@@ -538,12 +539,14 @@ export default function ExcursionsPageContent() {
 		<div className='flex min-h-0 w-full flex-col bg-[#F5F6F7] pb-10'>
 			<section className='border-b border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24'>
 				<p className='mb-2 text-sm font-medium uppercase tracking-wide text-[#53C4DA]'>Екскурсії</p>
-				<h1 className='text-3xl font-bold text-[#2D333D] sm:text-4xl'>Екскурсії Поляною та околицями</h1>
+				<h1 className='text-3xl font-bold text-[#2D333D] sm:text-4xl'>Екскурсії та активний відпочинок</h1>
 				<p className='mt-3 max-w-3xl text-slate-600'>
 					Оберіть формат: активні квадроцикли, підйоми в гори або спокійні маршрути самою Поляною. Усі точки зібрані
 					на карті внизу сторінки - зручно спланувати день.
 				</p>
 			</section>
+
+			<PolyanaAttractionsSection />
 
 			<section className='border-t border-slate-200/80 bg-[#F5F6F7] px-4 py-8 sm:px-16 lg:px-24'>
 				<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Екскурсії на квадроциклах</h2>
@@ -566,7 +569,7 @@ export default function ExcursionsPageContent() {
 			/>
 
 			<section className='border-t border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24'>
-				<h2 className='mb-5 text-2xl font-bold text-[#2D333D] sm:mb-6 sm:text-[26px]'>Екскурсії Поляною</h2>
+				<h2 className='mb-5 text-2xl font-bold text-[#2D333D] sm:mb-6 sm:text-[26px]'>Екскурсії</h2>
 				<div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-3'>
 					{POLYANA_EXCURSIONS.map(item => (
 						<PolyanaExcursionHotelStyleCard
