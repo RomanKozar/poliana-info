@@ -23,7 +23,9 @@
     "convert-spa-images": "node scripts/convert-spa-images.mjs",
     "convert-kids-camps": "node scripts/convert-kids-camps-images.mjs",
     "convert-home-baner": "node scripts/convert-home-baner-images.mjs",
-    "convert-attraction-images": "node scripts/convert-attraction-images.mjs"
+    "convert-attraction-images": "node scripts/convert-attraction-images.mjs",
+    "convert-tour-images": "node scripts/convert-tour-images.mjs",
+    "extract-kml-route": "node scripts/extract-kml-route.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

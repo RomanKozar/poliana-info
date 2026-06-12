@@ -1,3 +1,16 @@
+import { arpadBunkerBusRoute } from './excursion-routes/arpad-bunker-bus-path'
+import { berehoveThermalBusRoute } from './excursion-routes/berehove-thermal-bus-path'
+import { kosinoThermalBusRoute } from './excursion-routes/kosino-thermal-bus-path'
+import { lumshoryChanyBusRoute } from './excursion-routes/lumshory-chany-bus-path'
+import { castlesBusRoute } from './excursion-routes/castles-bus-path'
+import { monasteriesBusRoute } from './excursion-routes/monasteries-bus-path'
+import { mukachevoAquaparkBusRoute } from './excursion-routes/mukachevo-aquapark-bus-path'
+import { mukachevoBusRoute } from './excursion-routes/mukachevo-bus-path'
+import { synevirBusRoute } from './excursion-routes/synevir-bus-path'
+import { uzhhorodBusRoute } from './excursion-routes/uzhorod-bus-path'
+import { vojvodinoBusRoute } from './excursion-routes/vojvodino-bus-path'
+import { wineTastingBusRoute } from './excursion-routes/wine-tasting-bus-path'
+
 /** Картки екскурсій для сторінки /excursions (квадроцикли, гори, прогулянки Поляною). */
 
 /** HTML id блоку «Екскурсії в гори» для посилань `/excursions#…`. */
@@ -5,6 +18,9 @@ export const EXCURSIONS_MOUNTAINS_ANCHOR_ID = 'ekskursii-v-hory'
 
 /** HTML id блоку «Атракціони в Поляні» для посилань `/excursions#…`. */
 export const EXCURSIONS_ATTRACTIONS_ANCHOR_ID = 'aktivnyi-vidpochynok'
+
+/** HTML id блоку автобусних екскурсій з Поляни для посилань `/excursions#…`. */
+export const EXCURSIONS_BUS_ANCHOR_ID = 'ekskursii-avtobus'
 
 export type ExcursionDetailSection = {
 	title: string
@@ -20,20 +36,28 @@ export type ExcursionListing = {
 	description: string
 	/** Без зображення - на картці показується заглушка. */
 	image?: string
+	/** Галерея на картці (стрілки / свайп). Перше фото - для карти, якщо `image` не задано. */
+	images?: string[]
 	address: string
 	position: { lat: number; lng: number }
 	/** Маршрут для модалки. Якщо задано - картка відкриє карту з треком + прапорцями. */
 	route?: {
 		start: { lat: number; lng: number }
 		end: { lat: number; lng: number }
+		/** Зупинки A, B, C… з KML (маркери на карті). */
+		stops?: readonly { label: string; name: string; lat: number; lng: number }[]
 		/** Опціонально: точний трек (наприклад, з KML/KMZ), тоді малюємо його замість прямої. */
 		path?: readonly { lat: number; lng: number }[]
 	}
 	/** Підпис на карті (InfoWindow). */
 	mapPill: string
 	priceHint?: string
+	/** Час екскурсії з розкладу (наприклад, «14:00-18:00»). */
+	durationHint?: string
 	/** Додаткові витрати (окремий рядок на картці автобусних екскурсій). */
 	extraCosts?: string
+	/** Короткий факт або історія про місце призначення (модалка автобусних екскурсій). */
+	destinationIntro?: string
 	/** Розгорнутий опис у модальному вікні (наприклад, після кліку на картку). */
 	detailModal?: ExcursionDetailSection[]
 	/** Велике зображення в модалці (брошура, плакат). */
@@ -500,123 +524,242 @@ export const zakarpattiaBusExcursions: ExcursionListing[] = [
 	{
 		id: 'bus-uzhhorod',
 		title: 'Ужгород',
+		destinationIntro:
+			'Ужгород - обласний центр Закарпаття на річці Уж, місто з багатошаровою історією, де переплелися угорська, словацька, чеська та українська культури. Тут зберігається один із найкращих замкових комплексів краю, старовинні квартали та атмосфера прогулянкового міста, яке люблять за неспішний ритм і затишні набережні.\n\nНавесні Ужгород стає одним із найфотогенічніших міст Європи завдяки алеї японської сакури - її часто називають найдовшою на континенті. Поруч із замком варто звернути увагу на унікальний скансен під відкритим небом і незвичайний музей гумору, який давно став візитівкою міста.',
 		description:
 			'Ужгородський замок, музей «Народної архітектури та побуту», 2 год вільного часу в центрі міста і музей гумору «Деца у нотаря».',
 		extraCosts: 'Додатково: вхід у замок 200 грн, музей 100 грн.',
+		image: '/images/excursions/tours/Uzhorod/Uzhorod-1.webp',
+		images: [
+			'/images/excursions/tours/Uzhorod/Uzhorod-1.webp',
+			'/images/excursions/tours/Uzhorod/Uzhorod-2.webp',
+			'/images/excursions/tours/Uzhorod/Uzhorod-3.webp',
+			'/images/excursions/tours/Uzhorod/Uzhorod-4.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.6208, lng: 22.2879 },
+		route: uzhhorodBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '700 грн проїзд',
+		durationHint: '9:00-17:00',
 	},
 	{
 		id: 'bus-mukachevo',
 		title: 'Мукачево',
+		destinationIntro:
+			'Мукачево - одне з найстаріших і найвпізнаваніших міст Закарпаття, яке століттями було важливим торговим і військовим вузлом на шляху між горами та рівниною. Його серцем є замок «Паланок» на вулканічній горі - потужна фортеця з багатовіковою історією облог, повстань і легенд про князів Трансільванії.\n\nУ центрі Мукачева збереглася атмосфера старого міста: вузькі вулички, кав\'ярні, сакральна архітектура та винні історії, пов\'язані з долиною Латориці. Саме тут добре відчувається, як поруч існують історія, гастрономія та сучасний туристичний відпочинок.',
 		description: 'Замок «Паланок» і 1,5 год вільного часу в центрі міста.',
 		extraCosts: 'Додатково: вхід у замок «Паланок» 150 грн.',
+		image: '/images/excursions/tours/Mykatchevo/Mykatchevo-1.webp',
+		images: [
+			'/images/excursions/tours/Mykatchevo/Mykatchevo-1.webp',
+			'/images/excursions/tours/Mykatchevo/Mykatchevo-2.webp',
+			'/images/excursions/tours/Mykatchevo/Mykatchevo-3.webp',
+			'/images/excursions/tours/Mykatchevo/Mykatchevo-4.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.4411, lng: 22.7183 },
+		route: mukachevoBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '400 грн проїзд',
+		durationHint: '14:00-18:00',
 	},
 	{
 		id: 'bus-castles',
 		title: 'Замки',
+		destinationIntro:
+			'Замковий маршрут Закарпаття - це подорож у різні епохи: від розкішних резиденцій аристократії до міцних гірських фортець, що стояли на сторожі давніх шляхів. Палац Шенборнів біля санаторію «Карпати» вражає парком, ландшафтом і атмосферою курортної аристократії кінця XIX століття.\n\nЧинадієвський замок Сент-Міклош, навпаки, асоціюється з романтикою й легендами - його називають замком кохання, а місцеві перекази пов\'язують тут історії королів і митців. Поруч із ним - чудотворний хрест, до якого паломники й туристи приїжджають уже не одне покоління.',
 		description:
 			'Замок Шенборнів у сан. Карпати, Чинадієвський замок (Сент-Міклош) і чудотворний хрест.',
 		extraCosts: 'Додатково: вхід у сан. Карпати 75 грн, Чинадієво 75 грн.',
+		image: '/images/excursions/tours/Zamki/Zamki-1.webp',
+		images: [
+			'/images/excursions/tours/Zamki/Zamki-1.webp',
+			'/images/excursions/tours/Zamki/Zamki-2.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.4833, lng: 22.5167 },
+		route: castlesBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '400 грн проїзд',
+		durationHint: '14:00-18:00',
 	},
 	{
 		id: 'bus-synevir',
 		title: 'Синевир',
+		destinationIntro:
+			'Синевир - одне з найвідоміших озер Українських Карпат, розташоване на висоті майже 1000 метрів серед непорушної хвойної тиші. Його часто називають «оком моря» за незвичайну глибину кольору води та кільцем гір навколо. Озеро є серцем Національного природного парку «Синевир» - території, де збереглися карпатські ліси, рідкісні тварини й чисті гірські потоки.\n\nПоруч із озером туристи відвідують водоспад Шипіт, канатну дорогу з панорамами, долину вовків і реабілітаційний центр бурого ведмедя. За легендою, Синевир утворилося від сльоз дівчини Анни, які, досягнувши землі, перетворилися на гірське озеро - тому тут завжди відчувається особлива, трохи меланхолійна краса.',
 		description:
 			'Озеро Синевир, водоспад Шипіт, канатна дорога, долина вовків і реабілітаційний центр ведмедів. Обід у колибі на власний вибір.',
 		extraCosts:
 			'Додатково: озеро 60 грн, Шипіт 20 грн, канатка 250 грн, долина вовків 100 грн, ведмеді 60 грн.',
+		image: '/images/excursions/tours/Sunevir/Sunevir-1.webp',
+		images: [
+			'/images/excursions/tours/Sunevir/Sunevir-1.webp',
+			'/images/excursions/tours/Sunevir/Sunevir-2.webp',
+			'/images/excursions/tours/Sunevir/Sunevir-3.webp',
+			'/images/excursions/tours/Sunevir/Sunevir-4.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.6172, lng: 23.6825 },
+		route: synevirBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '800 грн проїзд',
+		durationHint: '9:00-18:30',
 	},
 	{
 		id: 'bus-berehove-thermal',
 		title: 'Термальні води м. Берегово',
+		destinationIntro:
+			'Берегово - місто на самому кордоні з Угорщиною, яке часто називають «маленькою Угорщиною» Закарпаття. Тут чути угорську мову в побуті, працюють виноробні та ресторани з автентичною кухнею, а вулички зберігають особливий розмірений ритм прикордонного міста.\n\nГоловна природна цінність Берегова - термальні води, багаті мінералами та теплі навіть узимку. Саме тому місто давно стало популярним напрямком для оздоровчого відпочинку: після прогулянки історичним центром можна повністю розслабитися в басейнах з цілющою водою.',
 		description: 'Відпочинок у термальних басейнах Берегова.',
 		extraCosts: 'Додатково: 2 год купання 250 грн + 30 грн шафа для речей.',
+		image: '/images/excursions/tours/Termalni-vodu-Berehovo/Termalni-vodu-Berehovo-1.webp',
+		images: [
+			'/images/excursions/tours/Termalni-vodu-Berehovo/Termalni-vodu-Berehovo-1.webp',
+			'/images/excursions/tours/Termalni-vodu-Berehovo/Termalni-vodu-Berehovo-2.webp',
+			'/images/excursions/tours/Termalni-vodu-Berehovo/Termalni-vodu-Berehovo-3.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.2053, lng: 22.6453 },
+		route: berehoveThermalBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '500 грн проїзд',
+		durationHint: '14:00-18:00',
 	},
 	{
 		id: 'bus-kosino-thermal',
 		title: 'Термальні води Косино',
+		destinationIntro:
+			'Косон - село біля Берегова, яке за останні роки стало одним із найвідоміших термальних курортів Східної Європи. Тут б\'ють гарячі мінеральні джерела, а сучасні комплекси поєднують традицію цілющих купань із комфортною інфраструктурою для родинного відпочинку.\n\nВода в басейнах Косина має природну температуру понад +40 °C і вважається корисною для суглобів, шкіри та загального розслаблення після дороги в горах. Це місце, куди їдуть не лише за процедурами, а й за відчуттям справжньої зимово-весняної «тропічної» паузи посеред Карпат.',
 		description: 'Купання в термальних комплексах Косино.',
 		extraCosts: 'Додатково: 3 год купання 1000 грн.',
+		image: '/images/excursions/tours/Termalni-vodu-Kosino/Termalni-vodu-Kosino-1.webp',
+		images: [
+			'/images/excursions/tours/Termalni-vodu-Kosino/Termalni-vodu-Kosino-1.webp',
+			'/images/excursions/tours/Termalni-vodu-Kosino/Termalni-vodu-Kosino-2.webp',
+			'/images/excursions/tours/Termalni-vodu-Kosino/Termalni-vodu-Kosino-3.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.1333, lng: 22.4667 },
+		route: kosinoThermalBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '600 грн проїзд',
+		durationHint: '14:00-19:00',
 	},
 	{
 		id: 'bus-lumshory-chany',
 		title: 'Чани в с. Лумшори',
+		destinationIntro:
+			'Лумшори - гірське село в Полонинському Бескиді, яке відоме далеко за межами Закарпаття завдяки унікальній традиції купання у великих кованих чанах на відкритому вогні. Місцеві ковалі виготовляли такі чани ще з XVI століття, і ця справа передавалася з покоління в покоління.\n\nСьогодні Лумшори - це поєднання старовинного ремесла, гірського пейзажу й незабутнього враження: коли вода в чані нагрівається живим вогнем, а навколо - карпатські схили й тиша, відчувається справжня магія гір. Саме тому село стало одним із найбільш інстаграмних і впізнаваних місць регіону.',
 		description: 'Традиційні чани в гірському селі Лумшори - купання 1 год включено в ціну.',
+		image: '/images/excursions/tours/Chani-v-Lymchorasch/Chani-v-Lymchorasch-1.webp',
+		images: [
+			'/images/excursions/tours/Chani-v-Lymchorasch/Chani-v-Lymchorasch-1.webp',
+			'/images/excursions/tours/Chani-v-Lymchorasch/Chani-v-Lymchorasch-2.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.9686, lng: 22.9303 },
+		route: lumshoryChanyBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '750 грн проїзд і купання',
+		durationHint: '14:00-18:00',
 	},
 	{
 		id: 'bus-vojvodino',
 		title: 'Курорт Воєводино',
+		destinationIntro:
+			'Курорт «Воєводино» розташований неподалік Виноградова, у мальовничій долині між виноградниками та схилами Боржавського хребта. Це сучасний гірський комплекс, створений у стилі альпійського поселення, де поєднуються відпочинок, ресторани, озера та простір для прогулянок на свіжому повітрі.\n\nТериторія курорту продумана так, щоб гості могли провести день без поспіху: прогулятися стежками, скуштувати місцеві страви, відпочити біля водойм і насолодитися панорамами, які особливо красиві на заході сонця. Це хороший варіант для тих, хто хоче побачити інший, більш сучасний бік закарпатського туризму.',
 		description: 'Виїзд на курорт Воєводино - відпочинок на території комплексу.',
 		extraCosts: 'Додатково: вхідний квиток 200 грн.',
+		image: '/images/excursions/tours/Voevodino/Voevodino-1.webp',
+		images: [
+			'/images/excursions/tours/Voevodino/Voevodino-1.webp',
+			'/images/excursions/tours/Voevodino/Voevodino-2.webp',
+			'/images/excursions/tours/Voevodino/Voevodino-3.webp',
+			'/images/excursions/tours/Voevodino/Voevodino-4.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.12, lng: 23.08 },
+		route: vojvodinoBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '400 грн проїзд',
+		durationHint: '14:00-18:00',
 	},
 	{
 		id: 'bus-wine-tasting',
 		title: 'Дегустація вина',
+		destinationIntro:
+			'Закарпаття - один із найстаріших виноробних регіонів Центральної Європи. Тут на терасах і в долинах віками вирощують сорти винограду, а у підвалах дозрівають вина з характерним карпатським темпераментом і м\'якою структурою. На смак впливають клімат, вулканічні ґрунти та багатонаціональна культура краю.\n\nДегустація вина в Закарпатті - це не лише кухоль напою, а й знайомство з історією села або господарства, розмова про традиції виробництва та поєднання вина з місцевою кухнею. Саме тому такі екскурсії особливо подобаються тим, хто хоче відпочити «на смак» і привезти додому нові враження, а не лише фото.',
 		description: 'Знайомство з закарпатськими винами - дегустація включена в ціну.',
+		image: '/images/excursions/tours/Dehustasiya-vina/Dehustasiya-vina-1.webp',
+		images: [
+			'/images/excursions/tours/Dehustasiya-vina/Dehustasiya-vina-1.webp',
+			'/images/excursions/tours/Dehustasiya-vina/Dehustasiya-vina-2.webp',
+			'/images/excursions/tours/Dehustasiya-vina/Dehustasiya-vina-3.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.2053, lng: 22.6453 },
+		route: wineTastingBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '700 грн проїзд і дегустація',
+		durationHint: '14:00-18:00',
 	},
 	{
 		id: 'bus-monasteries',
 		title: 'Монастирі Закарпаття',
+		destinationIntro:
+			'Закарпаття - край, де поруч існують православні, католицькі та греко-католицькі святині, кожна з яких береже власну історію та архітектуру. Монастирі тут часто стоять у тихих долинах або на пагорбах з краєвидом на гори, тому дорога до них сама по собі стає частиною враження.\n\nБагато обителей пережили війни, зміну кордонів і відновлювалися знову, зберігаючи старовинні ікони, книги та традиції богослужіння. Екскурсія монастирями - це можливість побачити духовне серце краю й зрозуміти, чому Закарпаття століттями було місцем зустрічі народів, культур і вірувань.',
 		description: 'Екскурсія до найвідоміших монастирів Закарпаття з Поляни.',
+		image: '/images/excursions/tours/Monastiri-Zakarpatya/Monastiri-Zakarpatya-1.webp',
+		images: [
+			'/images/excursions/tours/Monastiri-Zakarpatya/Monastiri-Zakarpatya-1.webp',
+			'/images/excursions/tours/Monastiri-Zakarpatya/Monastiri-Zakarpatya-2.webp',
+			'/images/excursions/tours/Monastiri-Zakarpatya/Monastiri-Zakarpatya-3.webp',
+			'/images/excursions/tours/Monastiri-Zakarpatya/Monastiri-Zakarpatya-4.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.4411, lng: 22.7183 },
+		route: monasteriesBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '600 грн',
+		durationHint: '14:00-18:00',
 	},
 	{
 		id: 'bus-arpad-bunker',
 		title: 'Бункер лінії Арпата',
+		destinationIntro:
+			'Лінія Арпада - оборонна система, яку угорська армія споруджувала в Карпатах на початку 1940-х років, готуючись до можливих бойових дій у гірській місцевості. Бункери, доты й підземні коридори були вибиті в скелях і розташовані так, щоб контролювати перевали та дороги.\n\nСьогодні ці споруди - нагадування про складну військову історію регіону, який не раз опинявся на перетині державних кордонів і інтересів великих імперій. Відвідування бункера дозволяє побачити інженерну спадщину часів Другої світової війни й відчути, наскільки суворими були умови служби в гірських укріпленнях.',
 		description: 'Екскурсія до історичного бункера лінії Арпата.',
 		extraCosts: 'Додатково: вхід 200 грн.',
+		image: '/images/excursions/tours/Bynker-linii-arpata/Bynker-linii-arpata-1.webp',
+		images: [
+			'/images/excursions/tours/Bynker-linii-arpata/Bynker-linii-arpata-1.webp',
+			'/images/excursions/tours/Bynker-linii-arpata/Bynker-linii-arpata-2.webp',
+			'/images/excursions/tours/Bynker-linii-arpata/Bynker-linii-arpata-3.webp',
+		],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.653, lng: 23.15 },
+		route: arpadBunkerBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: '350 грн проїзд',
+		durationHint: '14:00-17:00',
 	},
 	{
 		id: 'bus-mukachevo-aquapark',
 		title: 'Мукачево аквапарк «Карпатія»',
+		destinationIntro:
+			'Мукачево - місто, де поруч із середньовічним Паланком і старими кварталами вже давно розвивається сучасна туристична інфраструктура. Воно зручно розташоване для подорожей Закарпаттям і водночас само по собі має багато приводів зупинитися: історія, вина, кухня та види на Латорицьку долину.\n\nАквапарк «Карпатія» став одним із найпопулярніших місць сімейного відпочинку в регіоні. Після огляду міста або дороги горами це зручний спосіб провести кілька годин активно й весело, особливо для дітей і компаній, які шукають поєднання екскурсії та розваг.',
 		description: 'Аквапарк «Карпатія» в Мукачеві - 2 год купання.',
 		extraCosts: 'Додатково: купання 650 грн (сб/нд 750 грн) + 400 грн проїзд.',
+		image: '/images/excursions/tours/Karpatia/Karpatia-1.webp',
+		images: ['/images/excursions/tours/Karpatia/Karpatia-1.webp'],
 		address: 'Старт: Поляна, Закарпатська обл.',
 		position: { lat: 48.4411, lng: 22.7183 },
+		route: mukachevoAquaparkBusRoute,
 		mapPill: 'Екскурсії',
 		priceHint: 'від 1050 грн',
+		durationHint: '14:00-18:00',
 	},
 ]
 

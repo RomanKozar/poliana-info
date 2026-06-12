@@ -5,13 +5,36 @@ import { createPortal } from 'react-dom'
 import { FaTimes } from 'react-icons/fa'
 
 type LatLng = { lat: number; lng: number }
+type RouteStop = { label: string; name: string; lat: number; lng: number }
 
-function buildFlagSvgDataUrl(color: string) {
-	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <path d="M14 6c-1.1 0-2 .9-2 2v34a2 2 0 1 0 4 0V29.2c5.7-3.4 11.7 3.6 18 0V10.8c-6.3 3.6-12.3-3.4-18 0V8c0-1.1-.9-2-2-2z" fill="${color}"/>
-  <path d="M14 6c-1.1 0-2 .9-2 2v34a2 2 0 1 0 4 0V8c0-1.1-.9-2-2-2z" fill="#111827" opacity=".55"/>
-</svg>`
-	return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
+/** Стандартна форма піна Google Maps (SVG path). */
+const MAP_PIN_PATH =
+	'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'
+
+function stopPinColor(index: number, total: number) {
+	if (index === 0) return '#22c55e'
+	if (index === total - 1) return '#ef4444'
+	return '#2563eb'
+}
+
+function buildLabeledPinIcon(maps: any, fill: string) {
+	return {
+		path: MAP_PIN_PATH,
+		fillColor: fill,
+		fillOpacity: 1,
+		strokeColor: '#ffffff',
+		strokeWeight: 2,
+		scale: 1.65,
+		anchor: new maps.Point(12, 22),
+		labelOrigin: new maps.Point(12, 9),
+	}
+}
+
+function defaultRouteStops(start: LatLng, end: LatLng): RouteStop[] {
+	return [
+		{ label: 'A', name: 'Старт', lat: start.lat, lng: start.lng },
+		{ label: 'B', name: 'Фініш', lat: end.lat, lng: end.lng },
+	]
 }
 
 async function ensureGoogleMapsLoaded(apiKey: string) {
@@ -46,39 +69,32 @@ async function ensureGoogleMapsLoaded(apiKey: string) {
 	return (window as any).google.maps
 }
 
-function RouteMap({
+export function ExcursionRouteMap({
 	title,
 	start,
 	end,
 	path,
+	stops,
 }: {
 	title: string
 	start: LatLng
 	end: LatLng
 	path?: readonly LatLng[]
+	stops?: readonly RouteStop[]
 }) {
 	const containerRef = useRef<HTMLDivElement | null>(null)
 	const mapRef = useRef<any>(null)
 	const overlaysRef = useRef<{
-		startMarker?: any
-		endMarker?: any
+		stopMarkers?: any[]
 		polyline?: any
 	} | null>(null)
 	const [error, setError] = useState<string | null>(null)
 
 	const apiKey = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.trim() : ''
 
-	const startIcon = useMemo(
-		() => ({
-			url: buildFlagSvgDataUrl('#22c55e'),
-		}),
-		[],
-	)
-	const endIcon = useMemo(
-		() => ({
-			url: buildFlagSvgDataUrl('#ef4444'),
-		}),
-		[],
+	const effectiveStops = useMemo(
+		() => (stops && stops.length > 0 ? [...stops] : defaultRouteStops(start, end)),
+		[stops, start.lat, start.lng, end.lat, end.lng],
 	)
 
 	useEffect(() => {
@@ -98,6 +114,7 @@ function RouteMap({
 				const effectivePath: readonly LatLng[] = path && path.length >= 2 ? path : [start, end]
 				const bounds = new maps.LatLngBounds()
 				for (const p of effectivePath) bounds.extend(p)
+				for (const stop of effectiveStops) bounds.extend({ lat: stop.lat, lng: stop.lng })
 
 				const map = new maps.Map(root, {
 					center: start,
@@ -123,23 +140,22 @@ function RouteMap({
 				mapRef.current = map
 				overlaysRef.current = {}
 
-				const iconSize = new maps.Size(34, 34)
-				const iconAnchor = new maps.Point(10, 30)
-
-				overlaysRef.current.startMarker = new maps.Marker({
-					map,
-					position: start,
-					title: 'Старт',
-					clickable: false,
-					icon: { ...startIcon, scaledSize: iconSize, anchor: iconAnchor },
-				})
-				overlaysRef.current.endMarker = new maps.Marker({
-					map,
-					position: end,
-					title: 'Фініш',
-					clickable: false,
-					icon: { ...endIcon, scaledSize: iconSize, anchor: iconAnchor },
-				})
+				overlaysRef.current.stopMarkers = effectiveStops.map((stop, index) =>
+					new maps.Marker({
+						map,
+						position: { lat: stop.lat, lng: stop.lng },
+						title: `${stop.label}: ${stop.name}`,
+						optimized: false,
+						label: {
+							text: stop.label,
+							color: '#ffffff',
+							fontSize: '11px',
+							fontWeight: '700',
+						},
+						icon: buildLabeledPinIcon(maps, stopPinColor(index, effectiveStops.length)),
+						zIndex: index === 0 ? 3 : index === effectiveStops.length - 1 ? 2 : 1,
+					}),
+				)
 
 				overlaysRef.current.polyline = new maps.Polyline({
 					path: effectivePath,
@@ -161,13 +177,12 @@ function RouteMap({
 		return () => {
 			cancelled = true
 			const overlays = overlaysRef.current
-			overlays?.startMarker?.setMap?.(null)
-			overlays?.endMarker?.setMap?.(null)
+			for (const marker of overlays?.stopMarkers ?? []) marker?.setMap?.(null)
 			overlays?.polyline?.setMap?.(null)
 			overlaysRef.current = null
 			mapRef.current = null
 		}
-	}, [apiKey, start.lat, start.lng, end.lat, end.lng, path, startIcon, endIcon])
+	}, [apiKey, start.lat, start.lng, end.lat, end.lng, path, effectiveStops])
 
 	return (
 		<div className='flex min-h-0 w-full flex-col'>
@@ -178,7 +193,9 @@ function RouteMap({
 			<div className='mt-3 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm'>
 				<div ref={containerRef} className='h-[min(520px,70vh)] w-full min-h-[320px]' role='presentation' />
 			</div>
-			<p className='mt-2 text-xs text-slate-500'>Зелений прапорець - старт, червоний - фініш.</p>
+			<p className='mt-2 text-xs text-slate-500'>
+				Зупинки {effectiveStops.map(s => s.label).join(', ')}: {effectiveStops[0].name} → {effectiveStops[effectiveStops.length - 1].name}.
+			</p>
 		</div>
 	)
 }
@@ -190,6 +207,7 @@ export default function ExcursionRouteModal({
 	start,
 	end,
 	path,
+	stops,
 }: {
 	open: boolean
 	onClose: () => void
@@ -197,6 +215,7 @@ export default function ExcursionRouteModal({
 	start: LatLng
 	end: LatLng
 	path?: readonly LatLng[]
+	stops?: readonly RouteStop[]
 }) {
 	useEffect(() => {
 		if (!open) return
@@ -239,7 +258,7 @@ export default function ExcursionRouteModal({
 					</button>
 				</div>
 				<div className='min-h-0 p-4 sm:p-6'>
-					<RouteMap title={title} start={start} end={end} path={path} />
+					<ExcursionRouteMap title={title} start={start} end={end} path={path} stops={stops} />
 				</div>
 			</div>
 		</div>,

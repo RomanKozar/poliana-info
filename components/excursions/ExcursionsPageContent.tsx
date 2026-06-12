@@ -1,16 +1,19 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { FaImage, FaMapMarkerAlt } from 'react-icons/fa'
 import BottomStatusToast, {
 	WIP_SECTION_TOAST_MESSAGE,
 } from '@/components/shared/BottomStatusToast'
+import BusExcursionDetailModal from '@/components/excursions/BusExcursionDetailModal'
+import ExcursionCardImageCarousel from '@/components/excursions/ExcursionCardImageCarousel'
 import ExcursionRouteModal from '@/components/excursions/ExcursionRouteModal'
 import PolyanaAttractionsSection from '@/components/excursions/PolyanaAttractionsSection'
 import {
 	allExcursionListings,
+	EXCURSIONS_BUS_ANCHOR_ID,
 	EXCURSIONS_MOUNTAINS_ANCHOR_ID,
 	mountainExcursionTabs,
 	polyanaExcursionListings,
@@ -211,18 +214,32 @@ function TabbedExcursionSection({
 	)
 }
 
-function PolyanaExcursionHotelStyleCard({ item }: { item: ExcursionListing }) {
+function PolyanaExcursionHotelStyleCard({
+	item,
+	onOpen,
+}: {
+	item: ExcursionListing
+	onOpen: () => void
+}) {
+	const gallery = item.images?.length ? item.images : item.image ? [item.image] : []
+
 	return (
-		<article className='flex h-full flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm'>
+		<article
+			className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+			role='button'
+			tabIndex={0}
+			aria-label={`${item.title}. Відкрити деталі екскурсії`}
+			onClick={onOpen}
+			onKeyDown={(e: ReactKeyboardEvent<HTMLElement>) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault()
+					onOpen()
+				}
+			}}
+		>
 			<div className='relative h-36 sm:h-40'>
-				{item.image ? (
-					<Image
-						src={item.image}
-						alt={item.title}
-						fill
-						sizes='(min-width: 1024px) 28vw, (min-width: 640px) 42vw, 88vw'
-						className='object-cover'
-					/>
+				{gallery.length > 0 ? (
+					<ExcursionCardImageCarousel images={gallery} alt={item.title} />
 				) : (
 					<div
 						className='flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-slate-100 to-slate-200/90 text-slate-500'
@@ -236,8 +253,10 @@ function PolyanaExcursionHotelStyleCard({ item }: { item: ExcursionListing }) {
 			<div className='flex flex-1 flex-col p-3 sm:p-4'>
 				<div className='space-y-2'>
 					<h3 className='text-[15px] font-bold leading-tight text-[#2D333D] sm:text-base'>{item.title}</h3>
-					{item.priceHint ? (
-						<p className='text-[11px] font-semibold leading-snug text-[#53C4DA] sm:text-xs'>{item.priceHint}</p>
+					{item.priceHint || item.durationHint ? (
+						<p className='text-[11px] font-semibold leading-snug text-[#53C4DA] sm:text-xs'>
+							{[item.priceHint, item.durationHint].filter(Boolean).join(' · ')}
+						</p>
 					) : null}
 					<p className='text-[11px] leading-snug text-slate-500 sm:text-xs'>
 						<FaMapMarkerAlt className='mr-1 inline-block size-2.5 align-[-1px]' aria-hidden />
@@ -254,8 +273,11 @@ function PolyanaExcursionHotelStyleCard({ item }: { item: ExcursionListing }) {
 }
 
 export default function ExcursionsPageContent() {
+	const router = useRouter()
+	const searchParams = useSearchParams()
 	const [mapError, setMapError] = useState<string | null>(null)
 	const [isMapFallbackMode, setIsMapFallbackMode] = useState(false)
+	const [busExcursionModalItem, setBusExcursionModalItem] = useState<ExcursionListing | null>(null)
 	const [wipToastOpen, setWipToastOpen] = useState(false)
 	const wipToastId = useId()
 	const mapContainerRef = useRef<HTMLDivElement | null>(null)
@@ -263,6 +285,19 @@ export default function ExcursionsPageContent() {
 
 	const closeWipToast = useCallback(() => setWipToastOpen(false), [])
 	const showWipToast = useCallback(() => setWipToastOpen(true), [])
+	const closeBusExcursionModal = useCallback(() => {
+		setBusExcursionModalItem(null)
+		if (searchParams.get('excursion')) {
+			router.replace('/excursions', { scroll: false })
+		}
+	}, [router, searchParams])
+
+	useEffect(() => {
+		const excursionId = searchParams.get('excursion')?.trim()
+		if (!excursionId) return
+		const item = POLYANA_EXCURSIONS.find(e => e.id === excursionId)
+		if (item) setBusExcursionModalItem(item)
+	}, [searchParams])
 
 	useEffect(() => {
 		const scrollToHashTarget = () => {
@@ -528,14 +563,27 @@ export default function ExcursionsPageContent() {
 				sectionId={EXCURSIONS_MOUNTAINS_ANCHOR_ID}
 			/>
 
-			<section className='border-t border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24'>
+			<section
+				id={EXCURSIONS_BUS_ANCHOR_ID}
+				className='border-t border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24 scroll-mt-24'
+			>
 				<h2 className='mb-5 text-2xl font-bold text-[#2D333D] sm:mb-6 sm:text-[26px]'>Екскурсії</h2>
 				<div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-3'>
 					{POLYANA_EXCURSIONS.map(item => (
-						<PolyanaExcursionHotelStyleCard key={item.id} item={item} />
+						<PolyanaExcursionHotelStyleCard
+							key={item.id}
+							item={item}
+							onOpen={() => setBusExcursionModalItem(item)}
+						/>
 					))}
 				</div>
 			</section>
+
+			<BusExcursionDetailModal
+				item={busExcursionModalItem}
+				open={busExcursionModalItem !== null}
+				onClose={closeBusExcursionModal}
+			/>
 
 			<section
 				className='mt-2 border-t border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24'

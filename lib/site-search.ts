@@ -1,6 +1,11 @@
 import { siteNavigation } from '@/components/layout/site-navigation'
 import { accommodations, camps, categoryItems, type CategoryNavItem } from '@/data/home-page'
-import { allExcursionListings, EXCURSIONS_MOUNTAINS_ANCHOR_ID } from '@/data/excursions-page'
+import {
+	allExcursionListings,
+	EXCURSIONS_BUS_ANCHOR_ID,
+	EXCURSIONS_MOUNTAINS_ANCHOR_ID,
+	type ExcursionListing,
+} from '@/data/excursions-page'
 import { diningMapMarkers, touristCityMapMarkers } from '@/lib/home-map-markers'
 
 export type SiteSearchItem = {
@@ -32,6 +37,12 @@ const BASE_ITEMS: SiteSearchItem[] = [
 		title: 'Екскурсії та активний відпочинок',
 		href: `/excursions#${EXCURSIONS_MOUNTAINS_ANCHOR_ID}`,
 		keywords: ['екскурсії', 'активний відпочинок', 'гори', 'піші', 'маршрути', 'квадроцикли', 'atv', 'джипінг'],
+	},
+	{
+		title: 'Екскурсії з Поляни (автобус)',
+		href: `/excursions#${EXCURSIONS_BUS_ANCHOR_ID}`,
+		keywords: ['автобус', 'закарпаття', 'виїзд', 'тур', 'маршрут'],
+		section: 'Екскурсії',
 	},
 	{
 		title: 'Квадроцикли (Quadro Ride)',
@@ -108,8 +119,10 @@ const SITE_SEARCH_INDEX_RAW: SiteSearchItem[] = [
 	})),
 	...allExcursionListings().map(e => ({
 		title: e.title,
-		href: e.detailPagePath ?? `/excursions?excursion=${encodeURIComponent(e.id)}`,
-		keywords: [e.mapPill, e.description, e.address, e.priceHint ?? ''],
+		href:
+			e.detailPagePath ??
+			`/excursions?excursion=${encodeURIComponent(e.id)}#${EXCURSIONS_BUS_ANCHOR_ID}`,
+		keywords: excursionSearchKeywords(e),
 		section: 'Екскурсії',
 	})),
 	...accommodations.map(a => ({
@@ -151,6 +164,27 @@ function uniqByHref(items: SiteSearchItem[]): SiteSearchItem[] {
 }
 
 export const SITE_SEARCH_INDEX: SiteSearchItem[] = uniqByHref(SITE_SEARCH_INDEX_RAW)
+
+function excursionSearchKeywords(e: ExcursionListing): string[] {
+	const detailText =
+		e.detailModal
+			?.map(section =>
+				[section.title, section.intro, ...(section.items ?? [])].filter(Boolean).join(' ')
+			)
+			.join(' ') ?? ''
+
+	return [
+		e.mapPill,
+		e.description,
+		e.address,
+		e.priceHint ?? '',
+		e.durationHint ?? '',
+		e.extraCosts ?? '',
+		e.destinationIntro ?? '',
+		detailText,
+		e.id.startsWith('bus-') ? 'автобус закарпаття' : '',
+	].filter(Boolean)
+}
 
 function normalize(text: string) {
 	return text
@@ -205,6 +239,8 @@ export function getSearchDirectHref(rawQuery: string): string | null {
 	if (!q) return null
 
 	const excursionsMountainsHref = `/excursions#${EXCURSIONS_MOUNTAINS_ANCHOR_ID}`
+	const busExcursionHref = (id: string) =>
+		`/excursions?excursion=${encodeURIComponent(id)}#${EXCURSIONS_BUS_ANCHOR_ID}`
 
 	const substringRules: { needle: string; href: string }[] = [
 		{ needle: 'квадроцикли', href: '/excursions/quadro-ride' },
@@ -271,6 +307,16 @@ export function getSearchDirectHref(rawQuery: string): string | null {
 			екскурсія: excursionsMountainsHref,
 			excursion: excursionsMountainsHref,
 			excursions: excursionsMountainsHref,
+			ужгород: busExcursionHref('bus-uzhhorod'),
+			мукачево: busExcursionHref('bus-mukachevo'),
+			синевир: busExcursionHref('bus-synevir'),
+			косино: busExcursionHref('bus-kosino-thermal'),
+			берегово: busExcursionHref('bus-berehove-thermal'),
+			лумшори: busExcursionHref('bus-lumshory-chany'),
+			бункер: busExcursionHref('bus-arpad-bunker'),
+			монастирі: busExcursionHref('bus-monasteries'),
+			дегустація: busExcursionHref('bus-wine-tasting'),
+			аквапарк: busExcursionHref('bus-mukachevo-aquapark'),
 			квадро: '/excursions/quadro-ride',
 			atv: '/excursions/quadro-ride',
 			quadro: '/excursions/quadro-ride',

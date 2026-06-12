@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import ExcursionsPageContent from '@/components/excursions/ExcursionsPageContent'
 import { excursionsPageKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
@@ -13,7 +14,9 @@ export const metadata = definePageMetadata({
 export default function ExcursionsPage() {
 	return (
 		<div className='excursions-page flex min-h-0 flex-col'>
-			<ExcursionsPageContent />
+			<Suspense fallback={null}>
+				<ExcursionsPageContent />
+			</Suspense>
 		</div>
 	)
 }
