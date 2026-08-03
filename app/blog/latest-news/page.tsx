@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import LatestNewsSummerPromoSection from '@/components/blog/LatestNewsSummerPromoSection'
+import ScrollToHashOnMount from '@/components/shared/ScrollToHashOnMount'
 import { definePageMetadata } from '@/lib/seo'
 
 export const metadata = definePageMetadata({
@@ -47,6 +49,7 @@ export default function LatestNewsPage() {
 
 	return (
 		<div className='w-full bg-[#F5F6F7]'>
+			<ScrollToHashOnMount />
 			<section className='relative overflow-hidden'>
 				<div className='absolute inset-0'>
 					<Image
@@ -72,6 +75,8 @@ export default function LatestNewsPage() {
 					</p>
 				</div>
 			</section>
+
+			<LatestNewsSummerPromoSection />
 
 			<section className='mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
 				<div className='grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]'>

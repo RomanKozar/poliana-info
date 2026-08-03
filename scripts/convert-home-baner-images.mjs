@@ -19,6 +19,7 @@ const OUT_NAMES = {
 	'Day_off.png': 'day-off.webp',
 	'Summer_5_4.png': 'summer-5-4.webp',
 	'TUR_5+1.png': 'tur-5-plus-1.webp',
+	'atracion_vipochinok.jpeg': 'atracion-vidpochynok.webp',
 }
 
 async function encodeWebp(inPath, outPath) {

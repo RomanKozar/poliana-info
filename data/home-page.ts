@@ -21,6 +21,11 @@ export const homePromoBanners = [
 		alt: 'Акція Day off у Поляні',
 		href: PROMOTIONS_PAGE_PATH,
 	},
+	{
+		src: '/images/baner/atracion-vidpochynok.webp',
+		alt: 'Атракціони та активний відпочинок у Поляні',
+		href: '/blog/latest-news#litno-v-polyani',
+	},
 ] as const
 
 export const accommodations = [
