@@ -9,6 +9,7 @@ import {
 	ACCOMMODATION_MAP_EXPAND_ICON,
 	attachPolyanaMapExpandAndZoomControls,
 } from '@/lib/google-map-stack-controls'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import {
 	applyHomeMapMarkersForLayers,
 	effectiveHomeMapLayerVisibility,
@@ -180,6 +181,7 @@ export default function HomePageMapSection() {
 
 		let detachCustomControls: (() => void) | null = null
 		let detachIwUiCapture: (() => void) | null = null
+		let detachUserLocation: (() => void) | null = null
 		const clearCustomControls = () => {
 			detachCustomControls?.()
 			detachCustomControls = null
@@ -189,6 +191,8 @@ export default function HomePageMapSection() {
 			clearCustomControls()
 			detachIwUiCapture?.()
 			detachIwUiCapture = null
+			detachUserLocation?.()
+			detachUserLocation = null
 			mapInstanceRef.current = null
 			delete win.initPolyanaHotelsMap
 		}
@@ -219,6 +223,8 @@ export default function HomePageMapSection() {
 			})
 
 			mapInstanceRef.current = map
+			detachUserLocation?.()
+			detachUserLocation = attachGoogleMapUserLocation(map, win.google.maps)
 			clearCustomControls()
 			detachCustomControls = attachPolyanaMapExpandAndZoomControls(map, win.google.maps, {
 				onToggleExpand: () => setIsHomeMapExpanded(v => !v),

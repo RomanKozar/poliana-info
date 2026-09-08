@@ -22,6 +22,7 @@ import {
 	type ExcursionTabGroup,
 } from '@/data/excursions-page'
 import { attachPolyanaMapZoomControlsOnly } from '@/lib/google-map-stack-controls'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import {
 	homeMapMarkerToUnifiedCard,
 	unifiedMapCardInfoWindowHtml,
@@ -330,12 +331,15 @@ export default function ExcursionsPageContent() {
 
 		let detachZoom: (() => void) | null = null
 		let detachIwUiCapture: (() => void) | null = null
+		let detachUserLocation: (() => void) | null = null
 
 		const teardownMap = () => {
 			detachZoom?.()
 			detachZoom = null
 			detachIwUiCapture?.()
 			detachIwUiCapture = null
+			detachUserLocation?.()
+			detachUserLocation = null
 			mapInstanceRef.current = null
 			delete win.initPolyanaExcursionsMap
 		}
@@ -365,6 +369,8 @@ export default function ExcursionsPageContent() {
 			})
 
 			mapInstanceRef.current = map
+			detachUserLocation?.()
+			detachUserLocation = attachGoogleMapUserLocation(map, win.google.maps)
 			detachZoom?.()
 			detachZoom = attachPolyanaMapZoomControlsOnly(map, win.google.maps)
 

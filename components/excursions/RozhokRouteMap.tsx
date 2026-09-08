@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState, type MutableRefObject } from 'react'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 
 const ROZHOK_POS = { lat: 48.608805906666305, lng: 23.01986710639653 }
 const ROZHOK_ZOOM = 13
@@ -196,6 +197,7 @@ export default function RozhokRouteMap() {
 	const polylineRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
 	const startMarkerRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
 	const endMarkerRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
+	const userLocationDetachRef = useRef<(() => void) | null>(null)
 
 	const adjustZoom = useCallback((delta: number) => {
 		const map = mapRef.current as { getZoom?: () => number | undefined; setZoom?: (z: number) => void } | null
@@ -247,6 +249,8 @@ export default function RozhokRouteMap() {
 						{ elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 					],
 				})
+				userLocationDetachRef.current?.()
+				userLocationDetachRef.current = attachGoogleMapUserLocation(mapRef.current, g)
 			} else {
 				const map = mapRef.current as any
 				map.setCenter?.(ROZHOK_POS)
@@ -276,6 +280,8 @@ export default function RozhokRouteMap() {
 					endMarkerRef.current.setMap(null)
 					endMarkerRef.current = null
 				}
+				userLocationDetachRef.current?.()
+				userLocationDetachRef.current = null
 				mapRef.current = null
 			}
 		}
@@ -326,6 +332,8 @@ export default function RozhokRouteMap() {
 				endMarkerRef.current.setMap(null)
 				endMarkerRef.current = null
 			}
+			userLocationDetachRef.current?.()
+			userLocationDetachRef.current = null
 			mapRef.current = null
 			if (win.initRozhokRouteMapCb) delete win.initRozhokRouteMapCb
 		}

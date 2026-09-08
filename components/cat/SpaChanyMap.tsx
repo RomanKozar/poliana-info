@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { SpaVelikyiChanVenue } from '@/data/spa-veliki-chany-venues'
 import { attachPolyanaMapZoomControlsOnly } from '@/lib/google-map-stack-controls'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import { spaMapPinIconDataUrl } from '@/lib/home-map-pin-icons'
 import { spaBaniHotelInfoWindowHtml, spaBaseniHotelInfoWindowHtml, spaFitobochkyHotelInfoWindowHtml, spaMasazhiHotelInfoWindowHtml, spaVelikiChanyHotelInfoWindowHtml } from '@/lib/map-info-window-html'
 import { attachPolyanaAccommodationIwDomHandlers } from '@/lib/map-info-window-ui'
@@ -92,6 +93,7 @@ export default function SpaChanyMap({
 
 		let detachControls: (() => void) | null = null
 		let detachIwUiCapture: (() => void) | null = null
+		let detachUserLocation: (() => void) | null = null
 		let cancelled = false
 		let pollId: number | undefined
 		let maxWaitId: number | undefined
@@ -133,6 +135,8 @@ export default function SpaChanyMap({
 			})
 
 			mapInstanceRef.current = map
+			detachUserLocation?.()
+			detachUserLocation = attachGoogleMapUserLocation(map, maps)
 			detachControls?.()
 			detachControls = attachPolyanaMapZoomControlsOnly(map, maps)
 
@@ -247,6 +251,8 @@ export default function SpaChanyMap({
 			activeInfoWindowRef.current = null
 			detachControls?.()
 			detachControls = null
+			detachUserLocation?.()
+			detachUserLocation = null
 			const mapToClear = mapInstanceRef.current
 			const mapsApi = (window as Win).google?.maps
 			if (mapToClear && mapsApi?.event?.clearListeners) {

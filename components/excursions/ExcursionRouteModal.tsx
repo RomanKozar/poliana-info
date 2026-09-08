@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { FaTimes } from 'react-icons/fa'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 
 type LatLng = { lat: number; lng: number }
 type RouteStop = { label: string; name: string; lat: number; lng: number }
@@ -87,6 +88,7 @@ export function ExcursionRouteMap({
 	const overlaysRef = useRef<{
 		stopMarkers?: any[]
 		polyline?: any
+		detachUserLocation?: () => void
 	} | null>(null)
 	const [error, setError] = useState<string | null>(null)
 
@@ -139,6 +141,7 @@ export function ExcursionRouteMap({
 
 				mapRef.current = map
 				overlaysRef.current = {}
+				overlaysRef.current.detachUserLocation = attachGoogleMapUserLocation(map, maps)
 
 				overlaysRef.current.stopMarkers = effectiveStops.map((stop, index) =>
 					new maps.Marker({
@@ -177,6 +180,7 @@ export function ExcursionRouteMap({
 		return () => {
 			cancelled = true
 			const overlays = overlaysRef.current
+			overlays?.detachUserLocation?.()
 			for (const marker of overlays?.stopMarkers ?? []) marker?.setMap?.(null)
 			overlays?.polyline?.setMap?.(null)
 			overlaysRef.current = null

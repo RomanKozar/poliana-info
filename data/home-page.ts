@@ -7,6 +7,11 @@ import { accommodationHotelPath } from '@/lib/accommodation-urls'
 /** Банери акцій у hero-блоці головної (public/images/baner/*.webp). */
 export const homePromoBanners = [
 	{
+		src: '/images/baner/atracion-vidpochynok.webp',
+		alt: 'Атракціони та активний відпочинок у Поляні',
+		href: '/blog/latest-news#litno-v-polyani',
+	},
+	{
 		src: '/images/baner/tur-5-plus-1.webp',
 		alt: 'Акція 5+1: тур у Поляну',
 		href: PROMOTIONS_PAGE_PATH,
@@ -20,11 +25,6 @@ export const homePromoBanners = [
 		src: '/images/baner/day-off.webp',
 		alt: 'Акція Day off у Поляні',
 		href: PROMOTIONS_PAGE_PATH,
-	},
-	{
-		src: '/images/baner/atracion-vidpochynok.webp',
-		alt: 'Атракціони та активний відпочинок у Поляні',
-		href: '/blog/latest-news#litno-v-polyani',
 	},
 ] as const
 

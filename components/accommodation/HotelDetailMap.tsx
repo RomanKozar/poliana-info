@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { FaCompress, FaExpand } from 'react-icons/fa'
 import { attachHotelDetailMapHomeMarkers } from '@/lib/hotel-detail-map-home-markers'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import type { PolyanaHotel } from '@/lib/polyana-hotels'
 import { MapLegendList, MapLegendTitle } from '@/components/home/HomeMapLegend'
 import type { HomeMapLayerId } from '@/lib/home-map-layers'
@@ -121,6 +122,7 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 		if (!root || !apiKey) return
 
 		let detachHomeMarkers: (() => void) | null = null
+		let detachUserLocation: (() => void) | null = null
 
 		root.innerHTML = ''
 		mapInitialized.current = false
@@ -161,6 +163,8 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 			})
 
 			mapRef.current = map
+			detachUserLocation?.()
+			detachUserLocation = attachGoogleMapUserLocation(map, maps)
 
 			const attached = attachHotelDetailMapHomeMarkers({
 				map,
@@ -186,6 +190,8 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 			initMap()
 			return () => {
 				detachHomeMarkers?.()
+				detachUserLocation?.()
+				detachUserLocation = null
 				mapRef.current = null
 				mapInitialized.current = false
 			}
@@ -226,6 +232,8 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 			if (pollId !== undefined) window.clearInterval(pollId)
 			if (maxWaitId !== undefined) window.clearTimeout(maxWaitId)
 			detachHomeMarkers?.()
+			detachUserLocation?.()
+			detachUserLocation = null
 			mapRef.current = null
 			mapInitialized.current = false
 			delete win.initPolyanaHotelDetailMap

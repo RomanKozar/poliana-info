@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState, type MutableRefObject } from 'react'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 
 const VELYKYI_VERKH_POS = { lat: 48.6277, lng: 23.2892 }
 const VELYKYI_VERKH_ZOOM = 13
@@ -151,6 +152,7 @@ export default function VelykyiVerkhRouteMap() {
 	const polylineRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
 	const startMarkerRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
 	const endMarkerRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
+	const userLocationDetachRef = useRef<(() => void) | null>(null)
 
 	const adjustZoom = useCallback((delta: number) => {
 		const map = mapRef.current as { getZoom?: () => number | undefined; setZoom?: (z: number) => void } | null
@@ -202,6 +204,8 @@ export default function VelykyiVerkhRouteMap() {
 						{ elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 					],
 				})
+				userLocationDetachRef.current?.()
+				userLocationDetachRef.current = attachGoogleMapUserLocation(mapRef.current, g)
 			} else {
 				const map = mapRef.current as any
 				map.setCenter?.(VELYKYI_VERKH_POS)
@@ -231,6 +235,8 @@ export default function VelykyiVerkhRouteMap() {
 					endMarkerRef.current.setMap(null)
 					endMarkerRef.current = null
 				}
+				userLocationDetachRef.current?.()
+				userLocationDetachRef.current = null
 				mapRef.current = null
 			}
 		}
@@ -281,6 +287,8 @@ export default function VelykyiVerkhRouteMap() {
 				endMarkerRef.current.setMap(null)
 				endMarkerRef.current = null
 			}
+			userLocationDetachRef.current?.()
+			userLocationDetachRef.current = null
 			mapRef.current = null
 			if (win.initVelykyiVerkhRouteMapCb) delete win.initVelykyiVerkhRouteMapCb
 		}

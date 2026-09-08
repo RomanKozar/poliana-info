@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type MutableRefObject } from 'react'
 import { FaCompress, FaExpand } from 'react-icons/fa'
 import { quadroRideRouteOptions, type QuadroRouteOption } from '@/data/quadro-ride-page'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 
 const MAP_ZOOM_MIN = 1
 const MAP_ZOOM_MAX = 21
@@ -143,6 +144,7 @@ export function QuadroRideRouteMap() {
 	const polylineRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
 	const startMarkerRef = useRef<{ setMap: (m: unknown | null) => void; setPosition?: (p: unknown) => void } | null>(null)
 	const endMarkerRef = useRef<{ setMap: (m: unknown | null) => void; setPosition?: (p: unknown) => void } | null>(null)
+	const userLocationDetachRef = useRef<(() => void) | null>(null)
 	const activeRef = useRef(active)
 	const [isMapFullscreen, setIsMapFullscreen] = useState(false)
 
@@ -201,6 +203,8 @@ export function QuadroRideRouteMap() {
 					{ elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 				],
 			})
+			userLocationDetachRef.current?.()
+			userLocationDetachRef.current = attachGoogleMapUserLocation(mapRef.current, g)
 			applyQuadroRouteToMap(mapRef.current as any, g, activeRef.current, polylineRef, startMarkerRef, endMarkerRef)
 			return true
 		}
@@ -220,6 +224,8 @@ export function QuadroRideRouteMap() {
 					endMarkerRef.current.setMap(null)
 					endMarkerRef.current = null
 				}
+				userLocationDetachRef.current?.()
+				userLocationDetachRef.current = null
 				mapRef.current = null
 			}
 		}
@@ -266,6 +272,8 @@ export function QuadroRideRouteMap() {
 				endMarkerRef.current.setMap(null)
 				endMarkerRef.current = null
 			}
+			userLocationDetachRef.current?.()
+			userLocationDetachRef.current = null
 			mapRef.current = null
 			if (win.initQuadroRideRouteMapCb) delete win.initQuadroRideRouteMapCb
 		}

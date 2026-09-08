@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState, type MutableRefObject } from 'react'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 
 const VYZHYN_SMALL_POS = { lat: 48.673916128142324, lng: 22.947541351811637 }
 const VYZHYN_SMALL_ZOOM = 13
@@ -189,6 +190,7 @@ export default function VyzhynSmallRouteMap() {
 	const polylineRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
 	const startMarkerRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
 	const endMarkerRef = useRef<{ setMap: (m: unknown | null) => void } | null>(null)
+	const userLocationDetachRef = useRef<(() => void) | null>(null)
 
 	const adjustZoom = useCallback((delta: number) => {
 		const map = mapRef.current as { getZoom?: () => number | undefined; setZoom?: (z: number) => void } | null
@@ -240,6 +242,8 @@ export default function VyzhynSmallRouteMap() {
 						{ elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
 					],
 				})
+				userLocationDetachRef.current?.()
+				userLocationDetachRef.current = attachGoogleMapUserLocation(mapRef.current, g)
 			} else {
 				const map = mapRef.current as any
 				map.setCenter?.(VYZHYN_SMALL_POS)
@@ -269,6 +273,8 @@ export default function VyzhynSmallRouteMap() {
 					endMarkerRef.current.setMap(null)
 					endMarkerRef.current = null
 				}
+				userLocationDetachRef.current?.()
+				userLocationDetachRef.current = null
 				mapRef.current = null
 			}
 		}
@@ -319,6 +325,8 @@ export default function VyzhynSmallRouteMap() {
 				endMarkerRef.current.setMap(null)
 				endMarkerRef.current = null
 			}
+			userLocationDetachRef.current?.()
+			userLocationDetachRef.current = null
 			mapRef.current = null
 			if (win.initVyzhynSmallRouteMapCb) delete win.initVyzhynSmallRouteMapCb
 		}

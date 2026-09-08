@@ -4,6 +4,7 @@ import PhishingIcon from '@mui/icons-material/Phishing'
 import { useEffect, useRef } from 'react'
 import { getTroutMapGoogleDirectionsHref, troutMapSpot } from '@/data/trout-page'
 import { attachPolyanaMapZoomControlsOnly } from '@/lib/google-map-stack-controls'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import {
 	getTroutPhishingGoogleStylePinDataUrl,
 	TROUT_PIN_MARKER_ANCHOR,
@@ -49,6 +50,7 @@ export default function TroutMapSection({
 		}
 
 		let detachControls: (() => void) | null = null
+		let detachUserLocation: (() => void) | null = null
 		let markerDirListener: unknown = null
 		let cancelled = false
 
@@ -90,6 +92,8 @@ export default function TroutMapSection({
 			})
 
 			mapInstanceRef.current = map
+			detachUserLocation?.()
+			detachUserLocation = attachGoogleMapUserLocation(map, maps)
 			detachControls?.()
 			detachControls = attachPolyanaMapZoomControlsOnly(map, maps)
 
@@ -124,6 +128,8 @@ export default function TroutMapSection({
 				clearMarkerDirectionsListener()
 				detachControls?.()
 				detachControls = null
+				detachUserLocation?.()
+				detachUserLocation = null
 				mapInstanceRef.current = null
 				win.initPolyanaTroutMap = undefined
 				if (root) root.innerHTML = ''
@@ -164,6 +170,8 @@ export default function TroutMapSection({
 			clearMarkerDirectionsListener()
 			detachControls?.()
 			detachControls = null
+			detachUserLocation?.()
+			detachUserLocation = null
 			mapInstanceRef.current = null
 			win.initPolyanaTroutMap = undefined
 			if (root) root.innerHTML = ''

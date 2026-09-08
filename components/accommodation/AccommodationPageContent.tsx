@@ -20,6 +20,7 @@ import {
 	ACCOMMODATION_MAP_EXPAND_ICON,
 	attachPolyanaMapExpandAndZoomControls,
 } from '@/lib/google-map-stack-controls'
+import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import { accommodationHotelPath } from '@/lib/accommodation-urls'
 import { hotelInfoWindowHtml } from '@/lib/map-info-window-html'
 import { syncInfoWindowGalleryNav, toggleIwHeartActive } from '@/lib/map-info-window-ui'
@@ -445,11 +446,14 @@ export default function AccommodationPageContent() {
 	useEffect(() => {
 		let detachMapControls: (() => void) | null = null
 		let detachInfoWindowCloseClick: (() => void) | null = null
+		let detachUserLocation: (() => void) | null = null
 		const clearMapControls = () => {
 			detachMapControls?.()
 			detachMapControls = null
 			detachInfoWindowCloseClick?.()
 			detachInfoWindowCloseClick = null
+			detachUserLocation?.()
+			detachUserLocation = null
 		}
 
 		const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -485,6 +489,8 @@ export default function AccommodationPageContent() {
 				],
 			})
 			mapInstanceRef.current = map
+			detachUserLocation?.()
+			detachUserLocation = attachGoogleMapUserLocation(map, win.google.maps)
 
 			clearMapControls()
 			detachMapControls = attachPolyanaMapExpandAndZoomControls(map, win.google.maps, {

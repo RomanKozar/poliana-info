@@ -78,16 +78,16 @@ export type HotelPriceListImage = {
 
 const KATERYNA_PRICE_LIST_IMAGES: HotelPriceListImage[] = [
 	{
-		src: '/images/accommodation/kateryna/price-1.webp',
-		alt: 'Прайс на проживання в готелі Катерина - тарифи та номери',
-		width: 1400,
-		height: 1750,
+		src: '/images/accommodation/kateryna/09_2026.webp',
+		alt: 'Прайс на проживання в готелі Катерина - вересень 2026',
+		width: 1801,
+		height: 2250,
 	},
 	{
-		src: '/images/accommodation/kateryna/price-2.webp',
-		alt: 'Прайс на проживання в готелі Катерина - додаткові послуги та умови',
-		width: 1400,
-		height: 1750,
+		src: '/images/accommodation/kateryna/10_11_2026.webp',
+		alt: 'Прайс на проживання в готелі Катерина - жовтень–листопад 2026',
+		width: 1801,
+		height: 2250,
 	},
 ]
 
