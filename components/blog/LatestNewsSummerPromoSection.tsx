@@ -1,8 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { FaClock, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa'
 import { EXCURSIONS_ATTRACTIONS_ANCHOR_ID } from '@/data/excursions-page'
-import { HOME_PROMO_BANNER_CACHE_VERSION } from '@/data/home-page'
 
 /** Якір для банера `atracion_vipochinok` на головній → `/blog/latest-news#…`. */
 export const LATEST_NEWS_SUMMER_PROMO_ANCHOR_ID = 'litno-v-polyani'
@@ -18,14 +16,16 @@ export default function LatestNewsSummerPromoSection() {
 			aria-labelledby='summer-polyana-promo-heading'
 		>
 			<article className='overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md ring-1 ring-slate-900/5'>
-				<div className='relative aspect-[16/7] w-full min-h-[180px] sm:min-h-[240px]'>
-					<Image
-						src={`/images/baner/promo1.jpg?v=${HOME_PROMO_BANNER_CACHE_VERSION}`}
+				<div className='relative aspect-[16/7] w-full min-h-[180px] overflow-hidden sm:min-h-[240px]'>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img
+						src='/images/baner/promo1.jpg'
 						alt='Літні атракціони та басейн у Поляні'
-						fill
-						priority
-						sizes='(min-width: 1280px) 80vw, 100vw'
-						className='object-cover object-center'
+						width={1600}
+						height={970}
+						decoding='async'
+						loading='eager'
+						className='absolute inset-0 size-full object-cover object-center'
 					/>
 					<div className='absolute inset-0 bg-gradient-to-t from-[#1E3D53]/90 via-[#264D67]/35 to-transparent' />
 					<div className='absolute bottom-0 left-0 right-0 p-5 sm:p-8'>
