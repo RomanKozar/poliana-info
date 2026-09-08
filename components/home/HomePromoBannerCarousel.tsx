@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
@@ -68,36 +67,45 @@ export default function HomePromoBannerCarousel({ slides, className }: Props) {
 			}}
 		>
 			<div
-				className='flex h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
+				className='flex h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
 				style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
 			>
-				{slides.map((slide, i) => {
-					const inner = (
-						<Image
-							src={slide.src}
-							alt={slide.alt}
-							fill
-							unoptimized
-							priority={i < 2}
-							sizes='(min-width: 640px) 560px, 92vw'
-							className='object-cover object-center'
-						/>
-					)
-					return (
-						<div key={slide.src} className='relative h-full min-w-full shrink-0 grow-0 basis-full'>
-							{slide.href ? (
-								<Link
-									href={slide.href}
-									className='relative block h-full w-full outline-none ring-offset-2 transition-opacity hover:opacity-[0.97] focus-visible:ring-2 focus-visible:ring-cyan-400'
-								>
-									{inner}
-								</Link>
-							) : (
-								<div className='relative h-full w-full'>{inner}</div>
-							)}
-						</div>
-					)
-				})}
+				{slides.map((slide, i) => (
+					<div
+						key={slide.src}
+						className='relative h-full w-full min-w-full shrink-0 grow-0 basis-full overflow-hidden'
+					>
+						{slide.href ? (
+							<Link
+								href={slide.href}
+								className='block h-full w-full overflow-hidden outline-none ring-offset-2 transition-opacity hover:opacity-[0.97] focus-visible:ring-2 focus-visible:ring-cyan-400'
+							>
+								{/* eslint-disable-next-line @next/next/no-img-element */}
+								<img
+									src={slide.src}
+									alt={slide.alt}
+									width={1651}
+									height={1001}
+									decoding='async'
+									loading={i < 2 ? 'eager' : 'lazy'}
+									fetchPriority={i === 0 ? 'high' : undefined}
+									className='block h-full w-full object-cover object-center'
+								/>
+							</Link>
+						) : (
+							// eslint-disable-next-line @next/next/no-img-element
+							<img
+								src={slide.src}
+								alt={slide.alt}
+								width={1651}
+								height={1001}
+								decoding='async'
+								loading={i < 2 ? 'eager' : 'lazy'}
+								className='block h-full w-full object-cover object-center'
+							/>
+						)}
+					</div>
+				))}
 			</div>
 
 			{n > 1 ? (

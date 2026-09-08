@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaClock, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa'
 import { EXCURSIONS_ATTRACTIONS_ANCHOR_ID } from '@/data/excursions-page'
+import { HOME_PROMO_BANNER_CACHE_VERSION } from '@/data/home-page'
 
 /** Якір для банера `atracion_vipochinok` на головній → `/blog/latest-news#…`. */
 export const LATEST_NEWS_SUMMER_PROMO_ANCHOR_ID = 'litno-v-polyani'
@@ -19,7 +20,7 @@ export default function LatestNewsSummerPromoSection() {
 			<article className='overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md ring-1 ring-slate-900/5'>
 				<div className='relative aspect-[16/7] w-full min-h-[180px] sm:min-h-[240px]'>
 					<Image
-						src='/images/baner/atracion-vidpochynok-a.webp'
+						src={`/images/baner/promo1.jpg?v=${HOME_PROMO_BANNER_CACHE_VERSION}`}
 						alt='Літні атракціони та басейн у Поляні'
 						fill
 						priority

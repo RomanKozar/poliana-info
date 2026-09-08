@@ -169,7 +169,7 @@ export default function HomePage() {
 							</div>
 						</div>
 
-						<HomePromoBannerCarousel slides={homePromoBanners} />
+						<HomePromoBannerCarousel key='promo-banners-v4' slides={homePromoBanners} />
 					</div>
 
 					<div className='mt-3 flex items-center justify-center gap-3 sm:mt-4'>
