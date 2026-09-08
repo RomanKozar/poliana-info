@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { FaClock, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa'
 import { EXCURSIONS_ATTRACTIONS_ANCHOR_ID } from '@/data/excursions-page'
 
-/** Якір для банера `atracion-vidpochynok` на головній → `/blog/latest-news#…`. */
+/** Якір для банера `atracion_vipochinok` на головній → `/blog/latest-news#…`. */
 export const LATEST_NEWS_SUMMER_PROMO_ANCHOR_ID = 'litno-v-polyani'
 
 const BOOKING_PHONE = '+380 (50) 214 92 66'
@@ -19,7 +19,7 @@ export default function LatestNewsSummerPromoSection() {
 			<article className='overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md ring-1 ring-slate-900/5'>
 				<div className='relative aspect-[16/7] w-full min-h-[180px] sm:min-h-[240px]'>
 					<Image
-						src='/images/baner/atracion-vidpochynok.webp'
+						src='/images/baner/atracion-vidpochynok-a.webp'
 						alt='Літні атракціони та басейн у Поляні'
 						fill
 						priority
