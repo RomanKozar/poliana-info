@@ -331,7 +331,8 @@ export const faqItems = [
 ] as const
 
 export const heroSlides = [
-	'/images/gallery/golovna-foto.webp',
-	'/images/gallery/golovna-foto-2.webp',
-	'/images/gallery/golovna-foto-3.webp',
+	'/images/gallery/gol-1.webp',
+	'/images/gallery/gol-2.webp',
+	'/images/gallery/gol-3.webp',
+	'/images/gallery/gol-4.webp',
 ] as const
