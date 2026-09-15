@@ -1133,3 +1133,33 @@ main[data-accommodation-map-expanded='true'] {
   background: #e57d4a;
   color: #fff !important;
 }
+
+/*
+ * Binotel GetCall + Tawk.to: на мобільному обидві «бульбашки» внизу екрана
+ * (Binotel — зліва, Tawk — справа), як стандартний чат-віджет.
+ */
+@media (max-width: 639px) {
+  :root {
+    --polyana-floating-widget-inset-x: 1rem;
+    --polyana-floating-widget-inset-y: max(1rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  #bingc-phone-button {
+    position: fixed !important;
+    inset: auto auto var(--polyana-floating-widget-inset-y)
+      var(--polyana-floating-widget-inset-x) !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  #bingc-phone-button div.bingc-phone-button-tooltip {
+    display: none !important;
+  }
+
+  #tawk-bubble-container,
+  .tawk-min-container {
+    inset: auto var(--polyana-floating-widget-inset-x)
+      var(--polyana-floating-widget-inset-y) auto !important;
+    margin: 0 !important;
+  }
+}

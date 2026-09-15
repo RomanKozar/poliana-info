@@ -62,6 +62,12 @@ export default function TawkToScript() {
 		<Script id='tawk-to-bootstrap' strategy='lazyOnload'>
 			{`
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+Tawk_API.customStyle={
+visibility:{
+desktop:{position:'br',xOffset:20,yOffset:20},
+mobile:{position:'br',xOffset:16,yOffset:16}
+}
+};
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
 s1.async=true;
