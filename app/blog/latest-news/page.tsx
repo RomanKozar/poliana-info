@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import LatestNewsSummerPromoSection from '@/components/blog/LatestNewsSummerPromoSection'
+import PageHeroCarousel from '@/components/shared/PageHeroCarousel'
 import ScrollToHashOnMount from '@/components/shared/ScrollToHashOnMount'
 import { definePageMetadata } from '@/lib/seo'
 
@@ -50,31 +51,18 @@ export default function LatestNewsPage() {
 	return (
 		<div className='w-full bg-[#F5F6F7]'>
 			<ScrollToHashOnMount />
-			<section className='relative overflow-hidden'>
-				<div className='absolute inset-0'>
-					<Image
-						src='/images/gallery/golovna-foto-3.webp'
-						alt='Панорама Поляни'
-						fill
-						priority
-						sizes='100vw'
-						className='object-cover'
-					/>
-				</div>
-				<div className='absolute inset-0 bg-gradient-to-r from-[#1E3D53]/85 via-[#264D67]/70 to-[#294B61]/45' />
-				<div className='relative z-10 mx-auto w-full max-w-7xl px-4 py-14 text-white sm:px-6 lg:px-8'>
-					<p className='inline-flex rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em]'>
-						Останні новини
-					</p>
-					<h1 className='mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl'>
-						Поляна - лідер туристичного збору на Закарпатті
-					</h1>
-					<p className='mt-4 max-w-3xl text-sm text-white/90 sm:text-lg'>
-						Підсумки 2025 року підтверджують динамічний розвиток громади: інвестиції, розширення
-						мережі розміщення та стійкий попит на відпочинок упродовж усього року.
-					</p>
-				</div>
-			</section>
+			<PageHeroCarousel imageAlt='Панорама Поляни'>
+				<p className='inline-flex rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em]'>
+					Останні новини
+				</p>
+				<h1 className='mt-4 max-w-4xl text-3xl font-black leading-tight sm:text-5xl'>
+					Поляна - лідер туристичного збору на Закарпатті
+				</h1>
+				<p className='mt-4 max-w-3xl text-sm text-white/90 sm:text-lg'>
+					Підсумки 2025 року підтверджують динамічний розвиток громади: інвестиції, розширення
+					мережі розміщення та стійкий попит на відпочинок упродовж усього року.
+				</p>
+			</PageHeroCarousel>
 
 			<LatestNewsSummerPromoSection />
 

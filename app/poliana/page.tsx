@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import PageHeroCarousel from '@/components/shared/PageHeroCarousel'
 import { polianaDestinationKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
@@ -13,28 +14,15 @@ export const metadata = definePageMetadata({
 export default function PolyanaPage() {
 	return (
 		<div className='bg-[#F5F6F7]'>
-			<section className='relative overflow-hidden'>
-				<div className='absolute inset-0'>
-					<Image
-						src='/images/gallery/golovna-foto.webp'
-						alt='Поляна'
-						fill
-						priority
-						sizes='100vw'
-						className='object-cover'
-					/>
-				</div>
-				<div className='absolute inset-0 bg-gradient-to-r from-[#1E3D53]/80 via-[#264D67]/70 to-[#294B61]/45' />
-				<div className='relative z-10 mx-auto w-full max-w-7xl px-4 py-14 text-white sm:px-6 lg:px-8'>
-					<h1 className='max-w-3xl text-3xl font-black leading-tight sm:text-5xl'>
-						Поляна - територія незабутніх туристичних пригод у Карпатах
-					</h1>
-					<p className='mt-4 max-w-3xl text-sm text-white/90 sm:text-lg'>
-						Відпочинок, оздоровлення, активності та культурна спадщина Закарпаття в одному
-						місці.
-					</p>
-				</div>
-			</section>
+			<PageHeroCarousel imageAlt='Поляна'>
+				<h1 className='max-w-3xl text-3xl font-black leading-tight sm:text-5xl'>
+					Поляна - територія незабутніх туристичних пригод у Карпатах
+				</h1>
+				<p className='mt-4 max-w-3xl text-sm text-white/90 sm:text-lg'>
+					Відпочинок, оздоровлення, активності та культурна спадщина Закарпаття в одному
+					місці.
+				</p>
+			</PageHeroCarousel>
 
 			<section className='mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
 				<div className='rounded-2xl bg-white p-5 shadow-sm sm:p-8'>
