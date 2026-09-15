@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import TawkToScript from '@/components/third-party/TawkToScript'
+import BinotelGetCallScript from '@/components/third-party/BinotelGetCallScript'
 import { SITE_URL } from '@/lib/seo'
 
 // Налаштовуємо шрифт Geometria
@@ -153,6 +154,7 @@ export default function RootLayout({
 				</main>
 				<Footer />
 				<Analytics />
+				<BinotelGetCallScript />
 				<TawkToScript />
 			</body>
 		</html>
