@@ -86,22 +86,7 @@ export function collectSitemapEntries(): SitemapUrlEntry[] {
 	]
 }
 
-/** Для `app/sitemap.ts` (MetadataRoute.Sitemap). */
-export function polyanaSitemapForNext(): Array<{
-	url: string
-	lastModified: Date
-	changeFrequency: ChangeFreq
-	priority: number
-}> {
-	return collectSitemapEntries().map(entry => ({
-		url: entry.loc,
-		lastModified: entry.lastModified,
-		changeFrequency: entry.changeFrequency,
-		priority: entry.priority,
-	}))
-}
-
-/** Повний XML sitemap.org 0.9 (`/sitemap.xml` через Next + `/api/sitemap`). */
+/** Повний XML sitemap.org 0.9 (`/sitemap.xml` + `/api/sitemap`). */
 export function buildPolyanaSitemapXml(): string {
 	const entries = collectSitemapEntries()
 

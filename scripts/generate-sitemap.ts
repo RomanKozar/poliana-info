@@ -1,5 +1,5 @@
 /**
- * Локальна перевірка XML (основна карта — `app/sitemap.ts` → /sitemap.xml).
+ * Локальна перевірка XML (основна карта — `app/sitemap.xml/route.ts`).
  * Запуск: npx tsx scripts/generate-sitemap.ts
  */
 import { buildPolyanaSitemapXml, polyanaSitemapUrlCount } from '../lib/sitemap-build'
