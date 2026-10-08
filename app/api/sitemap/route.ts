@@ -1,9 +1,6 @@
 import { buildPolyanaSitemapXml } from '@/lib/sitemap-build'
 
-/**
- * Дублікат відповіді з `app/sitemap.xml/route.ts` (той самий XML).
- * Залишено для сумісності, якщо десь є посилання на `/api/sitemap`.
- */
+/** Той самий XML, що `/sitemap.xml` (`app/sitemap.ts`). Для сумісності з `/api/sitemap`. */
 export const dynamic = 'force-static'
 
 export async function GET() {

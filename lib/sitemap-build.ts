@@ -27,7 +27,7 @@ function lastmodDateOnly(d: Date): string {
 	return d.toISOString().slice(0, 10)
 }
 
-function collectSitemapEntries(): SitemapUrlEntry[] {
+export function collectSitemapEntries(): SitemapUrlEntry[] {
 	const lastModified = new Date()
 
 	const categoryUrls: SitemapUrlEntry[] = categoryPlaceholderSlugs.map(slug => ({
@@ -86,7 +86,22 @@ function collectSitemapEntries(): SitemapUrlEntry[] {
 	]
 }
 
-/** Повний XML sitemap.org 0.9 (`public/sitemap.xml` + `/api/sitemap`). */
+/** Для `app/sitemap.ts` (MetadataRoute.Sitemap). */
+export function polyanaSitemapForNext(): Array<{
+	url: string
+	lastModified: Date
+	changeFrequency: ChangeFreq
+	priority: number
+}> {
+	return collectSitemapEntries().map(entry => ({
+		url: entry.loc,
+		lastModified: entry.lastModified,
+		changeFrequency: entry.changeFrequency,
+		priority: entry.priority,
+	}))
+}
+
+/** Повний XML sitemap.org 0.9 (`/sitemap.xml` через Next + `/api/sitemap`). */
 export function buildPolyanaSitemapXml(): string {
 	const entries = collectSitemapEntries()
 

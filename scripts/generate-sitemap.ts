@@ -1,11 +1,8 @@
-import fs from 'fs'
-import path from 'path'
+/**
+ * Локальна перевірка XML (основна карта — `app/sitemap.ts` → /sitemap.xml).
+ * Запуск: npx tsx scripts/generate-sitemap.ts
+ */
 import { buildPolyanaSitemapXml, polyanaSitemapUrlCount } from '../lib/sitemap-build'
 
-const out = path.join(process.cwd(), 'public', 'sitemap.xml')
-const xml = buildPolyanaSitemapXml()
-
-fs.mkdirSync(path.dirname(out), { recursive: true })
-fs.writeFileSync(out, xml, 'utf8')
-
-console.log(`public/sitemap.xml - ${polyanaSitemapUrlCount()} URL`)
+console.log(`Sitemap URL count: ${polyanaSitemapUrlCount()}`)
+console.log(buildPolyanaSitemapXml().slice(0, 400) + '…')
