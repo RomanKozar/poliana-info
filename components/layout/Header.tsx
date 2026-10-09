@@ -145,7 +145,7 @@ export default function Header() {
 						alt='POLYANA INFO'
 						width={130}
 						height={40}
-						priority
+						sizes='(max-width: 1024px) 156px, 182px'
 						className='h-10 w-[130px] scale-125 object-cover sm:h-12 sm:w-[156px] md:h-14 md:w-[182px] lg:h-10 lg:w-[130px] xl:h-12 xl:w-[156px] 2xl:h-14 2xl:w-[182px]'
 					/>
 				</Link>

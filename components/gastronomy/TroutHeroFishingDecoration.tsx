@@ -1,5 +1,6 @@
 'use client'
 
+import '@/app/trout-animations.css'
 import PhishingIcon from '@mui/icons-material/Phishing'
 import { FaFish } from 'react-icons/fa'
 

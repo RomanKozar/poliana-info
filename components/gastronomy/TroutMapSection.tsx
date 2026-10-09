@@ -1,5 +1,6 @@
 'use client'
 
+import GoogleMapsUiStyles from '@/components/maps/GoogleMapsUiStyles'
 import PhishingIcon from '@mui/icons-material/Phishing'
 import { useEffect, useRef } from 'react'
 import { getTroutMapGoogleDirectionsHref, troutMapSpot } from '@/data/trout-page'
@@ -216,6 +217,7 @@ export default function TroutMapSection({
 
 	return (
 		<div className={className}>
+			<GoogleMapsUiStyles />
 			<div className={`${frameClassName} accommodation-map-frame`}>
 				<span aria-hidden className='pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0'>
 					<PhishingIcon fontSize='inherit' />

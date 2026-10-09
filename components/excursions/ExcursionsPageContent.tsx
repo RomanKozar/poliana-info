@@ -21,6 +21,7 @@ import {
 	type ExcursionListing,
 	type ExcursionTabGroup,
 } from '@/data/excursions-page'
+import GoogleMapsUiStyles from '@/components/maps/GoogleMapsUiStyles'
 import { attachPolyanaMapZoomControlsOnly } from '@/lib/google-map-stack-controls'
 import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import {
@@ -538,6 +539,7 @@ export default function ExcursionsPageContent() {
 
 	return (
 		<div className='flex min-h-0 w-full flex-col bg-[#F5F6F7] pb-10'>
+			<GoogleMapsUiStyles />
 			<section className='border-b border-slate-200/80 bg-white px-4 py-8 sm:px-16 lg:px-24'>
 				<p className='mb-2 text-sm font-medium uppercase tracking-wide text-[#53C4DA]'>Екскурсії</p>
 				<h1 className='text-3xl font-bold text-[#2D333D] sm:text-4xl'>Екскурсії та активний відпочинок</h1>

@@ -24,6 +24,7 @@ import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import { accommodationHotelPath } from '@/lib/accommodation-urls'
 import { hotelInfoWindowHtml } from '@/lib/map-info-window-html'
 import { syncInfoWindowGalleryNav, toggleIwHeartActive } from '@/lib/map-info-window-ui'
+import GoogleMapsUiStyles from '@/components/maps/GoogleMapsUiStyles'
 import { popularFacilitiesForHotel, type FacilityIconId } from '@/lib/hotel-detail-data'
 
 const MOBILE_MAP_SHEET_MQ = '(max-width: 1023px)'
@@ -759,6 +760,7 @@ export default function AccommodationPageContent() {
 
 	return (
 		<>
+			<GoogleMapsUiStyles />
 		<div
 			className={
 				isMapExpanded

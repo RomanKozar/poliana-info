@@ -1,5 +1,6 @@
 'use client'
 
+import GoogleMapsUiStyles from '@/components/maps/GoogleMapsUiStyles'
 import { useEffect, useRef, useState } from 'react'
 import type { SpaVelikyiChanVenue } from '@/data/spa-veliki-chany-venues'
 import { attachPolyanaMapZoomControlsOnly } from '@/lib/google-map-stack-controls'
@@ -335,6 +336,7 @@ export default function SpaChanyMap({
 
 	return (
 		<div className={className}>
+			<GoogleMapsUiStyles />
 			<div className={`accommodation-map-frame ${frameClassName}`}>
 				<div
 					ref={containerRef}

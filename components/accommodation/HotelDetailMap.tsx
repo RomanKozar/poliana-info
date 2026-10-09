@@ -5,6 +5,7 @@ import { FaCompress, FaExpand } from 'react-icons/fa'
 import { attachHotelDetailMapHomeMarkers } from '@/lib/hotel-detail-map-home-markers'
 import { attachGoogleMapUserLocation } from '@/lib/google-map-user-location'
 import type { PolyanaHotel } from '@/lib/polyana-hotels'
+import GoogleMapsUiStyles from '@/components/maps/GoogleMapsUiStyles'
 import { MapLegendList, MapLegendTitle } from '@/components/home/HomeMapLegend'
 import type { HomeMapLayerId } from '@/lib/home-map-layers'
 import {
@@ -300,6 +301,8 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 	}
 
 	return (
+		<>
+			<GoogleMapsUiStyles />
 		<div
 			className={
 				isMapFullscreen
@@ -398,5 +401,6 @@ export default function HotelDetailMap({ hotel }: { hotel: PolyanaHotel }) {
 				hidden={isMapFullscreen}
 			/>
 		</div>
+		</>
 	)
 }

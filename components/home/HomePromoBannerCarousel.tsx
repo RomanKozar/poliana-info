@@ -99,8 +99,7 @@ export default function HomePromoBannerCarousel({ slides, className }: Props) {
 												fill
 												sizes='(max-width: 640px) 92vw, 560px'
 												quality={78}
-												priority={i === 0}
-												loading={i === 0 ? 'eager' : 'lazy'}
+												loading='lazy'
 												className='object-cover object-center'
 											/>
 										)

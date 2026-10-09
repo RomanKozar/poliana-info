@@ -29,7 +29,8 @@ const geometria = localFont({
 	],
 	variable: '--font-geometria',
 	display: 'swap',
-	preload: true,
+	/** Без preload усіх накреслень — менше конкуренції з LCP-зображенням на mobile PSI. */
+	preload: false,
 })
 
 /** Верифікація Google Search Console (видно в HTML; можна перевизначити через NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION). */

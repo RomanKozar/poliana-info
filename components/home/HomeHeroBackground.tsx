@@ -41,7 +41,7 @@ export default function HomeHeroBackground({ activeIndex }: Props) {
 							alt='Відпочинок у Поляні'
 							fill
 							sizes='(max-width: 640px) 100vw, 1600px'
-							quality={72}
+							quality={75}
 							priority={index === 0}
 							loading={index === 0 ? 'eager' : 'lazy'}
 							className='object-cover'

@@ -1,5 +1,6 @@
 'use client'
 
+import GoogleMapsUiStyles from '@/components/maps/GoogleMapsUiStyles'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { MapLegendList, MapLegendTitle } from '@/components/home/HomeMapLegend'
@@ -701,7 +702,9 @@ export default function HomePageMapSection() {
 	}, [])
 
 	return (
-		<section
+		<>
+			<GoogleMapsUiStyles />
+			<section
 			id='polyana-map'
 			className={
 				isHomeMapExpanded
@@ -825,5 +828,6 @@ export default function HomePageMapSection() {
 				</div>
 			</div>
 		</section>
+		</>
 	)
 }
