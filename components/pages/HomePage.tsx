@@ -1,6 +1,5 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import CampProgramCard from '@/components/camps/CampProgramCard'
@@ -31,22 +30,9 @@ import {
 	FaMapMarkerAlt,
 	FaStar,
 } from 'react-icons/fa'
+import HomeHeroBackground from '@/components/home/HomeHeroBackground'
+import LazyHomePageMapSection from '@/components/home/LazyHomePageMapSection'
 import HeroSiteSearch from '@/components/search/HeroSiteSearch'
-
-const HomePageMapSection = dynamic(() => import('@/components/home/HomePageMapSection'), {
-	ssr: false,
-	loading: () => (
-		<section className='bg-[#F5F6F7] px-4 pb-4 pt-4 sm:px-16 lg:px-24'>
-			<div className='mx-auto w-full max-w-7xl'>
-				<h2 className='mb-4 text-2xl font-bold text-[#2D333D]'>Карта готелів та магазинів Поляни</h2>
-				<div
-					className='h-[420px] w-full animate-pulse rounded-2xl bg-slate-200/90 ring-1 ring-slate-900/5'
-					aria-hidden
-				/>
-			</div>
-		</section>
-	),
-})
 
 export default function HomePage() {
 	// const [favoriteAccommodations, setFavoriteAccommodations] = useState<Record<string, boolean>>({})
@@ -108,25 +94,7 @@ export default function HomePage() {
 	return (
 		<div className='w-full overflow-x-hidden'>
 			<section className='relative w-full overflow-hidden rounded-none'>
-				<div className='absolute inset-0'>
-					{heroSlides.map((slideSrc, index) => (
-						<div
-							key={slideSrc}
-							className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-								index === activeHeroSlide ? 'opacity-100' : 'opacity-0'
-							}`}
-						>
-							<Image
-								src={slideSrc}
-								alt='Відпочинок у Поляні'
-								fill
-								sizes='100vw'
-								priority={index === 0}
-								className='object-cover'
-							/>
-						</div>
-					))}
-				</div>
+				<HomeHeroBackground activeIndex={activeHeroSlide} />
 				<div className='absolute inset-0 bg-gradient-to-r from-[#1E3D53]/80 via-[#264D67]/65 to-[#294B61]/40' />
 
 				<div className='relative z-10 px-4 py-5 sm:px-16 sm:py-6 lg:px-24'>
@@ -289,6 +257,8 @@ export default function HomePage() {
 									alt={item.imageAlt}
 									fill
 									sizes='(min-width: 1024px) 11vw, (min-width: 640px) 21vw, 40vw'
+									quality={70}
+									loading='lazy'
 									className='object-cover'
 								/>
 							</div>
@@ -353,6 +323,8 @@ export default function HomePage() {
 									alt={item.title}
 									fill
 									sizes='(min-width: 1024px) 11vw, (min-width: 640px) 21vw, 40vw'
+									quality={70}
+									loading='lazy'
 									className='object-cover'
 								/>
 							</div>
@@ -414,6 +386,8 @@ export default function HomePage() {
 										alt={item.title}
 										fill
 										sizes='(min-width: 1024px) 29vw, (min-width: 640px) 44vw, 88vw'
+										quality={70}
+										loading='lazy'
 										className='object-cover'
 									/>
 								</div>
@@ -455,7 +429,7 @@ export default function HomePage() {
 				</div>
 			</section>
 
-			<HomePageMapSection />
+			<LazyHomePageMapSection />
 
 			<section className='bg-[#F5F6F7] px-4 pb-10 pt-2 sm:px-16 lg:px-24'>
 				<div className='mx-auto mt-4 w-full max-w-7xl sm:mt-5'>

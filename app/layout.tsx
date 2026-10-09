@@ -17,18 +17,8 @@ const geometria = localFont({
 			style: 'normal',
 		},
 		{
-			path: './fonts/Geometria-Medium.ttf',
-			weight: '500',
-			style: 'normal',
-		},
-		{
 			path: './fonts/Geometria-Bold.ttf',
 			weight: '700',
-			style: 'normal',
-		},
-		{
-			path: './fonts/Geometria-ExtraBold.ttf',
-			weight: '800',
 			style: 'normal',
 		},
 		{
@@ -39,6 +29,7 @@ const geometria = localFont({
 	],
 	variable: '--font-geometria',
 	display: 'swap',
+	preload: true,
 })
 
 /** Верифікація Google Search Console (видно в HTML; можна перевизначити через NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION). */

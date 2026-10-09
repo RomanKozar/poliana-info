@@ -2,6 +2,7 @@
 
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
+import { scheduleDeferredClientLoad } from '@/lib/schedule-deferred-client-load'
 
 /** Якщо в консолі браузера виконати localStorage.setItem(LS_HIDE_KEY, '1') і оновити сторінку - віджет не завантажиться (лише цей браузер). */
 export const TAWK_LOCALSTORAGE_HIDE_KEY = 'polyana_hide_tawk'
@@ -49,7 +50,7 @@ export default function TawkToScript() {
 		} catch {
 			/* приватний режим / недоступний storage */
 		}
-		setLoadWidget(true)
+		return scheduleDeferredClientLoad(() => setLoadWidget(true))
 	}, [])
 
 	if (!loadWidget) {

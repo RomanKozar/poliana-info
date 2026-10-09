@@ -5,31 +5,31 @@ import { PROMOTIONS_PAGE_PATH } from '@/data/promotions-page'
 import { accommodationHotelPath } from '@/lib/accommodation-urls'
 
 /** Версія банерів — змінюйте при заміні файлів, щоб обійти кеш браузера. */
-export const HOME_PROMO_BANNER_CACHE_VERSION = '4'
+export const HOME_PROMO_BANNER_CACHE_VERSION = '5'
 
 function homePromoBannerSrc(path: string): string {
 	return `${path}?v=${HOME_PROMO_BANNER_CACHE_VERSION}`
 }
 
-/** Банери акцій у hero-блоці головної (public/images/baner/promo*.jpg). */
+/** Банери акцій у hero-блоці головної (public/images/baner/promo*.webp). */
 export const homePromoBanners = [
 	{
-		src: homePromoBannerSrc('/images/baner/promo1.jpg'),
+		src: homePromoBannerSrc('/images/baner/promo1.webp'),
 		alt: 'Атракціони та активний відпочинок у Поляні',
 		href: '/blog/latest-news#litno-v-polyani',
 	},
 	{
-		src: homePromoBannerSrc('/images/baner/promo2.jpg'),
+		src: homePromoBannerSrc('/images/baner/promo2.webp'),
 		alt: 'Акція 5+1: тур у Поляну',
 		href: PROMOTIONS_PAGE_PATH,
 	},
 	{
-		src: homePromoBannerSrc('/images/baner/promo3.jpg'),
+		src: homePromoBannerSrc('/images/baner/promo3.webp'),
 		alt: 'Літня акція 5+4 у Поляні',
 		href: PROMOTIONS_PAGE_PATH,
 	},
 	{
-		src: homePromoBannerSrc('/images/baner/promo4.jpg'),
+		src: homePromoBannerSrc('/images/baner/promo4.webp'),
 		alt: 'Акція Day off у Поляні',
 		href: PROMOTIONS_PAGE_PATH,
 	},

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
@@ -25,7 +26,18 @@ export default function HomePromoBannerCarousel({ slides, className }: Props) {
 	const n = slides.length
 	const [index, setIndex] = useState(0)
 	const [isPaused, setIsPaused] = useState(false)
+	const [allSlidesEnabled, setAllSlidesEnabled] = useState(false)
 	const touchStartX = useRef<number | null>(null)
+
+	useEffect(() => {
+		const enable = () => setAllSlidesEnabled(true)
+		if (typeof window.requestIdleCallback === 'function') {
+			const id = window.requestIdleCallback(enable, { timeout: 2500 })
+			return () => window.cancelIdleCallback(id)
+		}
+		const t = window.setTimeout(enable, 1200)
+		return () => window.clearTimeout(t)
+	}, [])
 
 	const go = useCallback(
 		(delta: number) => {
@@ -70,42 +82,44 @@ export default function HomePromoBannerCarousel({ slides, className }: Props) {
 				className='flex h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
 				style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
 			>
-				{slides.map((slide, i) => (
-					<div
-						key={slide.src}
-						className='relative h-full w-full min-w-full shrink-0 grow-0 basis-full overflow-hidden'
-					>
-						{slide.href ? (
-							<Link
-								href={slide.href}
-								className='block h-full w-full overflow-hidden outline-none ring-offset-2 transition-opacity hover:opacity-[0.97] focus-visible:ring-2 focus-visible:ring-cyan-400'
-							>
-								{/* eslint-disable-next-line @next/next/no-img-element */}
-								<img
-									src={slide.src}
-									alt={slide.alt}
-									width={1651}
-									height={1001}
-									decoding='async'
-									loading={i < 2 ? 'eager' : 'lazy'}
-									fetchPriority={i === 0 ? 'high' : undefined}
-									className='block h-full w-full object-cover object-center'
-								/>
-							</Link>
-						) : (
-							// eslint-disable-next-line @next/next/no-img-element
-							<img
-								src={slide.src}
-								alt={slide.alt}
-								width={1651}
-								height={1001}
-								decoding='async'
-								loading={i < 2 ? 'eager' : 'lazy'}
-								className='block h-full w-full object-cover object-center'
-							/>
-						)}
-					</div>
-				))}
+				{slides.map((slide, i) => {
+					const shouldLoadImage = i === 0 || i === index || allSlidesEnabled
+
+					return (
+						<div
+							key={slide.src}
+							className='relative h-full w-full min-w-full shrink-0 grow-0 basis-full overflow-hidden'
+						>
+							{shouldLoadImage
+								? (() => {
+										const image = (
+											<Image
+												src={slide.src}
+												alt={slide.alt}
+												fill
+												sizes='(max-width: 640px) 92vw, 560px'
+												quality={78}
+												priority={i === 0}
+												loading={i === 0 ? 'eager' : 'lazy'}
+												className='object-cover object-center'
+											/>
+										)
+
+										return slide.href ? (
+											<Link
+												href={slide.href}
+												className='relative block h-full w-full overflow-hidden outline-none ring-offset-2 transition-opacity hover:opacity-[0.97] focus-visible:ring-2 focus-visible:ring-cyan-400'
+											>
+												{image}
+											</Link>
+										) : (
+											<div className='relative h-full w-full overflow-hidden'>{image}</div>
+										)
+									})()
+								: null}
+						</div>
+					)
+				})}
 			</div>
 
 			{n > 1 ? (

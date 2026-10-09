@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
 	experimental: {
 		optimizePackageImports: ['react-icons/fa'],
 	},
+	images: {
+		localPatterns: [
+			{ pathname: '/images/**' },
+			{ pathname: '/images/baner/**', search: '?v=5' },
+		],
+	},
 	// Стабільна віддача sitemap для сканерів (Google Search Console).
 	async headers() {
 		return [
@@ -24,6 +30,15 @@ const nextConfig: NextConfig = {
 					{
 						key: 'Cache-Control',
 						value: 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
+					},
+				],
+			},
+			{
+				source: '/images/:path*',
+				headers: [
+					{
+						key: 'Cache-Control',
+						value: 'public, max-age=31536000, immutable',
 					},
 				],
 			},

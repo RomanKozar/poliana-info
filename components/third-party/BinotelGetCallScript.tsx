@@ -2,6 +2,7 @@
 
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
+import { scheduleDeferredClientLoad } from '@/lib/schedule-deferred-client-load'
 
 /** Якщо в консолі: localStorage.setItem('polyana_hide_binotel_getcall','1'); location.reload() */
 export const BINOTEL_GETCALL_LOCALSTORAGE_HIDE_KEY = 'polyana_hide_binotel_getcall'
@@ -33,7 +34,7 @@ export default function BinotelGetCallScript() {
 		} catch {
 			/* приватний режим / недоступний storage */
 		}
-		setLoadWidget(true)
+		return scheduleDeferredClientLoad(() => setLoadWidget(true))
 	}, [])
 
 	if (!loadWidget) {

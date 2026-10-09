@@ -10,9 +10,17 @@ type Props = {
 	alt: string
 	href: string
 	children?: ReactNode
+	/** Лише перша картка на головній — один priority для LCP. */
+	priorityFirstSlide?: boolean
 }
 
-export default function AccommodationCardImageCarousel({ images, alt, href, children }: Props) {
+export default function AccommodationCardImageCarousel({
+	images,
+	alt,
+	href,
+	children,
+	priorityFirstSlide = false,
+}: Props) {
 	const slides = images.length > 0 ? images : ['/images/accommodation/kateryna-v1.webp']
 	const [index, setIndex] = useState(0)
 	const touchStartX = useRef<number | null>(null)
@@ -49,19 +57,23 @@ export default function AccommodationCardImageCarousel({ images, alt, href, chil
 				className='relative block h-full w-full overflow-hidden'
 				aria-label={`Відкрити «${alt}» у новій вкладці`}
 			>
-				{slides.map((src, i) => (
-					<Image
-						key={`${src}-${i}`}
-						src={src}
-						alt={i === index ? alt : ''}
-						fill
-						className={`object-cover transition-opacity duration-300 ${
-							i === index ? 'opacity-100' : 'pointer-events-none opacity-0'
-						}`}
-						sizes='(min-width: 768px) 33vw, 92vw'
-						priority={i === 0}
-					/>
-				))}
+				{slides.map((src, i) => {
+					if (i !== index) return null
+
+					return (
+						<Image
+							key={`${src}-${i}`}
+							src={src}
+							alt={alt}
+							fill
+							className='object-cover'
+							sizes='(min-width: 768px) 33vw, 92vw'
+							quality={75}
+							priority={priorityFirstSlide}
+							loading={priorityFirstSlide ? 'eager' : 'lazy'}
+						/>
+					)
+				})}
 			</Link>
 
 			{children}

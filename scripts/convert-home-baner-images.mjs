@@ -37,20 +37,45 @@ async function encodeJpeg(inPath, outPath) {
 	console.log(path.basename(inPath), '→', path.basename(outPath), `${(before / 1024).toFixed(1)} KB → ${(after / 1024).toFixed(1)} KB`)
 }
 
+const PROMO_WEBP_MAX_WIDTH = 1120
+const WEBP_QUALITY = 82
+
+async function encodePromoWebpFromJpeg(jpegName) {
+	const inPath = path.join(dir, jpegName)
+	if (!fs.existsSync(inPath)) return
+	const outPath = path.join(dir, jpegName.replace(/\.jpe?g$/i, '.webp'))
+	const before = fs.statSync(inPath).size
+	const buffer = await sharp(inPath)
+		.rotate()
+		.resize({ width: PROMO_WEBP_MAX_WIDTH, withoutEnlargement: true })
+		.webp({ quality: WEBP_QUALITY })
+		.toBuffer()
+	fs.writeFileSync(outPath, buffer)
+	const after = buffer.length
+	console.log(
+		jpegName,
+		'→',
+		path.basename(outPath),
+		`${(before / 1024).toFixed(1)} KB → ${(after / 1024).toFixed(1)} KB`
+	)
+}
+
 async function main() {
 	if (!fs.existsSync(dir)) {
 		console.error('missing:', dir)
 		process.exit(1)
 	}
-	const files = fs.readdirSync(dir).filter(f => INPUT_EXTS.test(f) && !/^promo[1-4]\.jpg$/i.test(f))
-	if (files.length === 0) {
-		console.log('no input images in', dir)
-		return
-	}
+	const files = fs.readdirSync(dir).filter(f => INPUT_EXTS.test(f) && !/^promo[1-4]\.(jpg|webp)$/i.test(f))
 	for (const file of files) {
 		const outName = OUT_NAMES[file]
 		if (!outName) continue
 		await encodeJpeg(path.join(dir, file), path.join(dir, outName))
+	}
+	for (let i = 1; i <= 4; i++) {
+		await encodePromoWebpFromJpeg(`promo${i}.jpg`)
+	}
+	if (files.length === 0) {
+		console.log('(no extra source images; promo webp refreshed from promo*.jpg)')
 	}
 }
 

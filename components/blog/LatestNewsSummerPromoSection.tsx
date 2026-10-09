@@ -1,4 +1,6 @@
+import Image from 'next/image'
 import Link from 'next/link'
+import { HOME_PROMO_BANNER_CACHE_VERSION } from '@/data/home-page'
 import { FaClock, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa'
 import { EXCURSIONS_ATTRACTIONS_ANCHOR_ID } from '@/data/excursions-page'
 
@@ -17,15 +19,14 @@ export default function LatestNewsSummerPromoSection() {
 		>
 			<article className='overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-md ring-1 ring-slate-900/5'>
 				<div className='relative aspect-[16/7] w-full min-h-[180px] overflow-hidden sm:min-h-[240px]'>
-					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<img
-						src='/images/baner/promo1.jpg'
+					<Image
+						src={`/images/baner/promo1.webp?v=${HOME_PROMO_BANNER_CACHE_VERSION}`}
 						alt='Літні атракціони та басейн у Поляні'
-						width={1600}
-						height={970}
-						decoding='async'
-						loading='eager'
-						className='absolute inset-0 size-full object-cover object-center'
+						fill
+						sizes='(max-width: 768px) 100vw, 80rem'
+						quality={78}
+						className='object-cover object-center'
+						priority
 					/>
 					<div className='absolute inset-0 bg-gradient-to-t from-[#1E3D53]/90 via-[#264D67]/35 to-transparent' />
 					<div className='absolute bottom-0 left-0 right-0 p-5 sm:p-8'>
