@@ -10,7 +10,7 @@ type Props = {
 	alt: string
 	href: string
 	children?: ReactNode
-	/** Лише перша картка на головній — один priority для LCP. */
+	/** Лише перша картка на головній - один priority для LCP. */
 	priorityFirstSlide?: boolean
 }
 

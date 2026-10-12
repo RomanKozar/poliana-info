@@ -14,7 +14,7 @@ export const BINOTEL_GETCALL_SCRIPT_SRC =
 	'https://widgets.binotel.com/getcall/widgets/om32a54jvavta3ccsaug.js'
 
 /**
- * Binotel GetCall — кнопка «замовити дзвінок» на всіх сторінках.
+ * Binotel GetCall - кнопка «замовити дзвінок» на всіх сторінках.
  * Працює разом із Tawk.to: на мобільному обидві кнопки внизу (див. app/globals.css).
  *
  * Вимкнути для всіх: NEXT_PUBLIC_BINOTEL_GETCALL_DISABLED=true

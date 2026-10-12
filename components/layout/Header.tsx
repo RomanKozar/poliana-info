@@ -18,6 +18,8 @@ export default function Header() {
 	const [isDesktopPopularOpen, setIsDesktopPopularOpen] = useState(false)
 	const [isDesktopAccommodationOpen, setIsDesktopAccommodationOpen] = useState(false)
 	const headerRef = useRef<HTMLElement | null>(null)
+	/** Після кліку по лого з іншої сторінки головна лишається на тій самій висоті прокрутки — докручуємо її вгору. */
+	const scrollHomeToTopRef = useRef(false)
 	const pathname = usePathname()
 	const router = useRouter()
 
@@ -28,6 +30,35 @@ export default function Header() {
 		setIsDesktopNewsOpen(false)
 		setIsDesktopPopularOpen(false)
 		setIsDesktopAccommodationOpen(false)
+	}, [pathname])
+
+	useEffect(() => {
+		if (pathname !== '/' || !scrollHomeToTopRef.current) return
+		scrollHomeToTopRef.current = false
+
+		const behavior: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+			? 'auto'
+			: 'smooth'
+
+		let kicked = false
+		const scrollUp = () => {
+			if (kicked) return
+			const top = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop
+			if (top <= 0) return
+			kicked = true
+			window.scrollTo({ top: 0, left: 0, behavior })
+		}
+
+		// Next відновлює позицію прокрутки після малювання маршруту. Чекаємо цей крок, потім їдемо вгору.
+		const frame = window.requestAnimationFrame(() => {
+			window.requestAnimationFrame(scrollUp)
+		})
+		const timer = window.setTimeout(scrollUp, 80)
+
+		return () => {
+			window.cancelAnimationFrame(frame)
+			window.clearTimeout(timer)
+		}
 	}, [pathname])
 
 	const isActivePath = (href: string) => {
@@ -88,10 +119,12 @@ export default function Header() {
 			const hasQueryOrHash = Boolean(window.location.search) || Boolean(window.location.hash)
 			if (hasQueryOrHash) {
 				router.replace('/')
-			} else {
-				window.scrollTo({ top: 0, behavior: 'smooth' })
 			}
+			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+			return
 		}
+
+		scrollHomeToTopRef.current = true
 	}
 
 	useLayoutEffect(() => {
@@ -137,6 +170,7 @@ export default function Header() {
 
 				<Link
 					href='/'
+					scroll={false}
 					onClick={handleLogoClick}
 					className='shrink-0 flex items-center overflow-hidden text-white sm:-ml-3'
 				>

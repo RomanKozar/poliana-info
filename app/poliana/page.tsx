@@ -1,12 +1,38 @@
 import Image from 'next/image'
 import PageHeroCarousel from '@/components/shared/PageHeroCarousel'
 import { polianaDestinationKeywords } from '@/lib/site-keywords'
-import { definePageMetadata } from '@/lib/seo'
+import { definePageMetadata, SITE_URL } from '@/lib/seo'
+
+/** Центр скупчення міток на головній карті села. */
+const POLIANA_GEO = { latitude: 48.622, longitude: 22.968 }
+
+const polianaPlaceJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'TouristDestination',
+	name: 'Поляна',
+	alternateName: 'Поляна, Закарпаття',
+	description:
+		'Курортне село Поляна в Мукачівському районі Закарпатської області, близько 10 км від Сваляви. Мінеральні джерела, санаторії, готелі, чани й екскурсії.',
+	url: `${SITE_URL}/poliana`,
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: 'с. Поляна',
+		addressLocality: 'Поляна',
+		addressRegion: 'Закарпатська область',
+		postalCode: '89313',
+		addressCountry: 'UA',
+	},
+	geo: {
+		'@type': 'GeoCoordinates',
+		latitude: POLIANA_GEO.latitude,
+		longitude: POLIANA_GEO.longitude,
+	},
+}
 
 export const metadata = definePageMetadata({
-	title: 'Поляна - туризм, відпочинок і пригоди в Карпатах',
+	title: 'Поляна, Закарпаття - туризм і відпочинок',
 	description:
-		'Поляна на Закарпатті: що подивитись на курорті, санаторії й мінеральні джерела, екскурсії, лижі та тюбінг, гастрономія та план подорожі в Карпати.',
+		'Поляна, Закарпаття: курортне село в Мукачівському районі, близько 10 км від Сваляви. Санаторії, мінеральні джерела, екскурсії, лижі, тюбінг і план подорожі.',
 	pathname: '/poliana',
 	keywords: polianaDestinationKeywords,
 })
@@ -14,9 +40,13 @@ export const metadata = definePageMetadata({
 export default function PolyanaPage() {
 	return (
 		<div className='bg-[#F5F6F7]'>
-			<PageHeroCarousel imageAlt='Поляна'>
+			<script
+				type='application/ld+json'
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(polianaPlaceJsonLd) }}
+			/>
+			<PageHeroCarousel imageAlt='Поляна, Закарпаття'>
 				<h1 className='max-w-3xl text-3xl font-black leading-tight sm:text-5xl'>
-					Поляна - територія незабутніх туристичних пригод у Карпатах
+					Поляна, Закарпаття
 				</h1>
 				<p className='mt-4 max-w-3xl text-sm text-white/90 sm:text-lg'>
 					Відпочинок, оздоровлення, активності та культурна спадщина Закарпаття в одному
@@ -28,12 +58,11 @@ export default function PolyanaPage() {
 				<div className='rounded-2xl bg-white p-5 shadow-sm sm:p-8'>
 					<div className='space-y-5 text-sm leading-relaxed text-slate-700 sm:text-base'>
 						<p>
-							<span className='font-semibold text-cyan-700'>Поляна</span> - відомий курорт{' '}
-							<span className='font-semibold text-cyan-700'>сімейного відпочинку на Закарпатті</span>,
-							що розташований у мальовничій місцевості серед лісистих гір. Відома своєю{' '}
-							<span className='font-semibold text-cyan-700'>лікувальною водою</span>, Поляна почала
-							готувати нові туристичні продукти, які підходять для всієї родини, і зараз вона
-							відомa як територія незабутніх туристичних пригод у Карпатах.
+							<span className='font-semibold text-cyan-700'>Поляна, Закарпаття</span> - курортне
+							село в Мукачівському районі, близько 10 км від Сваляви, серед лісистих гір. Відоме
+							своєю <span className='font-semibold text-cyan-700'>лікувальною водою</span>, село
+							готує туристичні продукти для всієї родини і зараз відоме як територія незабутніх
+							туристичних пригод у Карпатах.
 						</p>
 						<p>
 							Відпочинок на лижах та тюбінг у центральній частині Закарпаття обирає щороку все

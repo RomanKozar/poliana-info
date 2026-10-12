@@ -193,14 +193,25 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 			</section>
 
 			<section className='bg-white px-4 py-6 sm:px-16 lg:px-24'>
-				<div className='mb-4 flex items-center justify-between'>
-					<h2 className='text-2xl font-bold text-[#2D333D]'>Проживання в Поляні</h2>
-					<Link
-						href='/cat/goteli-polyany'
-						className='cursor-pointer text-sm font-semibold text-[var(--brand-link)] transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--brand-link-hover)]'
-					>
-						Показати ще →
-					</Link>
+				<div className='mb-4'>
+					<div className='flex items-center justify-between'>
+						<h2 className='text-2xl font-bold text-[#2D333D]'>Проживання в Поляні</h2>
+						<Link
+							href='/cat/goteli-polyany'
+							className='cursor-pointer text-sm font-semibold text-[var(--brand-link)] transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--brand-link-hover)]'
+						>
+							Показати ще →
+						</Link>
+					</div>
+					<p className='mt-1 text-sm text-slate-600'>
+						Готелі в{' '}
+						<Link
+							href='/poliana'
+							className='font-semibold text-[var(--brand-link)] no-underline hover:text-[var(--brand-link-hover)]'
+						>
+							Поляна, Закарпаття
+						</Link>
+					</p>
 				</div>
 				<div className='grid grid-cols-1 gap-5 md:grid-cols-3'>
 					{accommodations.map(item => {
@@ -247,14 +258,25 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 			</section>
 
 			<section className='rounded-none bg-[#EEF4EA] px-4 py-6 sm:px-16 lg:px-24'>
-				<div className='mb-4 flex items-center justify-between'>
-					<h2 className='text-2xl font-bold text-[#2D333D]'>SPA та відпочинок</h2>
-					<Link
-						href='/cat/spa-bani-chany'
-						className='cursor-pointer text-sm font-semibold text-[var(--brand-link)] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--brand-link-hover)]'
-					>
-						Дивитись все →
-					</Link>
+				<div className='mb-4'>
+					<div className='flex items-center justify-between'>
+						<h2 className='text-2xl font-bold text-[#2D333D]'>SPA та відпочинок</h2>
+						<Link
+							href='/cat/spa-bani-chany'
+							className='cursor-pointer text-sm font-semibold text-[var(--brand-link)] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--brand-link-hover)]'
+						>
+							Дивитись все →
+						</Link>
+					</div>
+					<p className='mt-1 text-sm text-slate-600'>
+						Чани й SPA в{' '}
+						<Link
+							href='/poliana'
+							className='font-semibold text-[var(--brand-link)] no-underline hover:text-[var(--brand-link-hover)]'
+						>
+							Поляна, Закарпаття
+						</Link>
+					</p>
 				</div>
 				<div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
 					{spaItems.map(item => (

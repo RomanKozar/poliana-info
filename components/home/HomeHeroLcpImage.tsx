@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { heroSlides } from '@/data/home-page'
 
 /**
- * LCP-шар героя — серверний, з `preload` у `<head>` (Next.js 16).
+ * LCP-шар героя - серверний, з `preload` у `<head>` (Next.js 16).
  * Клієнтська карусель (`HomeHeroBackground`) не дублює перший слайд.
  */
 export default function HomeHeroLcpImage() {

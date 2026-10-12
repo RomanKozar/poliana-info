@@ -9,7 +9,7 @@ type Props = {
 }
 
 /**
- * Спочатку лише перший слайд (LCP). Решту підвантажуємо після idle — менше конкуренції за мережу на mobile.
+ * Спочатку лише перший слайд (LCP). Решту підвантажуємо після idle - менше конкуренції за мережу на mobile.
  */
 export default function HomeHeroBackground({ activeIndex }: Props) {
 	const [allSlidesEnabled, setAllSlidesEnabled] = useState(false)
@@ -27,7 +27,7 @@ export default function HomeHeroBackground({ activeIndex }: Props) {
 	return (
 		<div className='absolute inset-0'>
 			{heroSlides.map((slideSrc, index) => {
-				// Перший слайд — серверний `HomeHeroLcpImage` (preload LCP).
+				// Перший слайд - серверний `HomeHeroLcpImage` (preload LCP).
 				if (index === 0) return null
 				if (!allSlidesEnabled) return null
 
