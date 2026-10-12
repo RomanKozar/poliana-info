@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import HomeHeroLcpImage from '@/components/home/HomeHeroLcpImage'
 import HomePage from '@/components/pages/HomePage'
 import { homePageKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
@@ -12,5 +13,7 @@ export const metadata: Metadata = definePageMetadata({
 })
 
 export default function Home() {
-	return <HomePage />
+	return (
+		<HomePage heroLcpLayer={<HomeHeroLcpImage />} />
+	)
 }

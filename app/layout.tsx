@@ -133,6 +133,13 @@ export default function RootLayout({
 	return (
 		<html lang='uk' className={`${geometria.variable} h-full antialiased`}>
 			<body className='min-h-full flex flex-col overflow-x-hidden font-sans' suppressHydrationWarning>
+				<style
+					// Мінімальні стилі до завантаження основного CSS — швидший перший кадр (PSI render-blocking).
+					dangerouslySetInnerHTML={{
+						__html:
+							':root{--background:#f5f6f7;--foreground:#2d333d}html,body{margin:0;overflow-x:clip}body{background:var(--background);color:var(--foreground)}',
+					}}
+				/>
 				<script
 					type='application/ld+json'
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(rootJsonLdGraph) }}

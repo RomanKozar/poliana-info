@@ -20,6 +20,8 @@ export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps
 	const blurTimerRef = useRef<number | null>(null)
 
 	const results = useMemo(() => searchSite(query, 8), [query])
+	const resultsPanelId = `${inputId}-results`
+	const showResultsPanel = open && query.trim().length > 0
 
 	useEffect(() => {
 		const onReset = () => {
@@ -43,9 +45,11 @@ export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps
 			<input
 				id={inputId}
 				type='text'
+				role='combobox'
 				placeholder=' '
 				className='hero-input-field'
 				value={query}
+				aria-label={placeholderLabel}
 				onChange={e => {
 					setQuery(e.target.value)
 					setOpen(true)
@@ -79,8 +83,9 @@ export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps
 					}
 				}}
 				aria-autocomplete='list'
-				aria-expanded={open}
-				aria-controls={`${inputId}-results`}
+				aria-haspopup='listbox'
+				aria-expanded={showResultsPanel}
+				{...(showResultsPanel ? { 'aria-controls': resultsPanelId } : {})}
 				autoComplete='off'
 				spellCheck={false}
 			/>
@@ -89,10 +94,11 @@ export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps
 			</label>
 			<span className='hero-input-underline' />
 
-			{open && query.trim().length > 0 ? (
+			{showResultsPanel ? (
 				<div
-					id={`${inputId}-results`}
+					id={resultsPanelId}
 					role='listbox'
+					aria-label='Результати пошуку'
 					className='absolute left-0 right-0 top-full z-[80] mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg ring-1 ring-slate-900/5'
 					onMouseDown={e => {
 						// Keep focus while clicking results.

@@ -197,14 +197,29 @@ export default function Footer() {
 								індустрії туризму, розвитку культурних традицій та промоції регіону
 							</p>
 							<div className='flex items-center gap-3 text-white/75'>
-								<Link href='https://instagram.com' target='_blank' rel='noreferrer'>
-									<FaInstagram className='size-4 transition-colors hover:text-white' />
+								<Link
+									href='https://www.instagram.com/polyanainfo?igsh=eGdkaDB1eGh5MTJh'
+									target='_blank'
+									rel='noopener noreferrer'
+									aria-label='POLYANA.INFO в Instagram'
+								>
+									<FaInstagram className='size-4 transition-colors hover:text-white' aria-hidden />
 								</Link>
-								<Link href='https://facebook.com' target='_blank' rel='noreferrer'>
-									<FaFacebookF className='size-3.5 transition-colors hover:text-white' />
+								<Link
+									href='https://www.facebook.com/share/1J3Zr2Ms6K/?mibextid=wwXIfr'
+									target='_blank'
+									rel='noopener noreferrer'
+									aria-label='POLYANA.INFO у Facebook'
+								>
+									<FaFacebookF className='size-3.5 transition-colors hover:text-white' aria-hidden />
 								</Link>
-								<Link href='https://tiktok.com' target='_blank' rel='noreferrer'>
-									<FaTiktok className='size-3.5 transition-colors hover:text-white' />
+								<Link
+									href='https://www.tiktok.com/@denysman8?_r=1&_t=ZS-96Vqw4e4uv3'
+									target='_blank'
+									rel='noopener noreferrer'
+									aria-label='POLYANA.INFO у TikTok'
+								>
+									<FaTiktok className='size-3.5 transition-colors hover:text-white' aria-hidden />
 								</Link>
 							</div>
 						</div>

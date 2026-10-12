@@ -9,7 +9,7 @@ import { homeAccommodationCardGallery } from '@/lib/hotel-detail-data'
 import BottomStatusToast, {
 	WIP_SECTION_TOAST_MESSAGE,
 } from '@/components/shared/BottomStatusToast'
-import { useCallback, useEffect, useId, useState } from 'react'
+import { useCallback, useEffect, useId, useState, type ReactNode } from 'react'
 import { accommodationHotelPath } from '@/lib/accommodation-urls'
 import {
 	accommodations,
@@ -34,7 +34,12 @@ import HomeHeroBackground from '@/components/home/HomeHeroBackground'
 import LazyHomePageMapSection from '@/components/home/LazyHomePageMapSection'
 import HeroSiteSearch from '@/components/search/HeroSiteSearch'
 
-export default function HomePage() {
+type HomePageProps = {
+	/** Серверний LCP-шар (перший кадр hero), з app/page.tsx. */
+	heroLcpLayer?: ReactNode
+}
+
+export default function HomePage({ heroLcpLayer }: HomePageProps) {
 	// const [favoriteAccommodations, setFavoriteAccommodations] = useState<Record<string, boolean>>({})
 	const [activeHeroSlide, setActiveHeroSlide] = useState(0)
 	const [openFaqIndexes, setOpenFaqIndexes] = useState<Set<number>>(new Set())
@@ -94,6 +99,15 @@ export default function HomePage() {
 	return (
 		<div className='w-full overflow-x-hidden'>
 			<section className='relative w-full overflow-hidden rounded-none'>
+				{heroLcpLayer ? (
+					<div
+						className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+							activeHeroSlide === 0 ? 'opacity-100' : 'opacity-0'
+						}`}
+					>
+						{heroLcpLayer}
+					</div>
+				) : null}
 				<HomeHeroBackground activeIndex={activeHeroSlide} />
 				<div className='absolute inset-0 bg-gradient-to-r from-[#1E3D53]/80 via-[#264D67]/65 to-[#294B61]/40' />
 

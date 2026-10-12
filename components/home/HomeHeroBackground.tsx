@@ -27,7 +27,9 @@ export default function HomeHeroBackground({ activeIndex }: Props) {
 	return (
 		<div className='absolute inset-0'>
 			{heroSlides.map((slideSrc, index) => {
-				if (index !== 0 && !allSlidesEnabled) return null
+				// Перший слайд — серверний `HomeHeroLcpImage` (preload LCP).
+				if (index === 0) return null
+				if (!allSlidesEnabled) return null
 
 				return (
 					<div
@@ -42,8 +44,7 @@ export default function HomeHeroBackground({ activeIndex }: Props) {
 							fill
 							sizes='(max-width: 640px) 100vw, 1600px'
 							quality={75}
-							priority={index === 0}
-							loading={index === 0 ? 'eager' : 'lazy'}
+							loading='lazy'
 							className='object-cover'
 						/>
 					</div>
