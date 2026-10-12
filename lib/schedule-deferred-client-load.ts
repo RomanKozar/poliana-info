@@ -19,9 +19,9 @@ export function scheduleDeferredClientLoad(onLoad: () => void): () => void {
 
 	let idleId: number | undefined
 	if (typeof window.requestIdleCallback === 'function') {
-		idleId = window.requestIdleCallback(run, { timeout: 8000 })
+		idleId = window.requestIdleCallback(run, { timeout: 12000 })
 	}
-	const timeoutId = window.setTimeout(run, 8000)
+	const timeoutId = window.setTimeout(run, 12000)
 
 	function cleanup() {
 		for (const event of events) {

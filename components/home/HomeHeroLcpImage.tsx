@@ -13,7 +13,8 @@ export default function HomeHeroLcpImage() {
 			fill
 			sizes='(max-width: 640px) 100vw, 1600px'
 			quality={75}
-			preload
+			loading='eager'
+			fetchPriority='high'
 			className='object-cover'
 		/>
 	)

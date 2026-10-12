@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import HomeHeroLcpImage from '@/components/home/HomeHeroLcpImage'
 import HomePage from '@/components/pages/HomePage'
+import { homeHeroLcpPreload } from '@/lib/home-hero-lcp-preload'
 import { homePageKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
@@ -13,7 +14,19 @@ export const metadata: Metadata = definePageMetadata({
 })
 
 export default function Home() {
+	const lcp = homeHeroLcpPreload.props
+
 	return (
-		<HomePage heroLcpLayer={<HomeHeroLcpImage />} />
+		<>
+			<link
+				rel='preload'
+				as='image'
+				href={lcp.src}
+				imageSrcSet={lcp.srcSet}
+				imageSizes={lcp.sizes}
+				fetchPriority='high'
+			/>
+			<HomePage heroLcpLayer={<HomeHeroLcpImage />} />
+		</>
 	)
 }
