@@ -38,12 +38,12 @@ export default function CampProgramCard({
 			</div>
 			<div className='space-y-2 bg-white p-3'>
 				<h3 className='text-sm font-bold text-[#2D333D] sm:text-base'>{camp.title}</h3>
-				<p className='text-xs text-[#53C4DA]'>{camp.age}</p>
-				<span className='inline-flex w-fit rounded-full bg-[#F3A169] px-2 py-0.5 text-[10px] font-bold tabular-nums text-white'>
+				<p className='text-xs font-medium text-[var(--brand-link)]'>{camp.age}</p>
+				<span className='inline-flex w-fit rounded-full bg-[var(--brand-cta-promo)] px-2.5 py-1 text-[11px] font-bold tabular-nums text-white'>
 					{camp.dates}
 				</span>
 				<p className='text-xs leading-snug text-slate-600'>{camp.description}</p>
-				<p className='text-right text-sm font-bold text-[#E06D3C]'>{camp.price}</p>
+				<p className='text-right text-sm font-bold text-[var(--brand-price)]'>{camp.price}</p>
 			</div>
 		</>
 	)

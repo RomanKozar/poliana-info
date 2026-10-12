@@ -138,13 +138,13 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 							<div className='mt-5 flex gap-2 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-5'>
 								<Link
 									href='/cat/goteli-polyany'
-									className='inline-flex w-1/2 cursor-pointer items-center justify-center rounded-md bg-[#53C4DA] px-3 py-2.5 text-[11px] font-bold text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
+									className='inline-flex w-1/2 cursor-pointer items-center justify-center rounded-md bg-[var(--brand-cta)] px-3 py-2.5 text-[11px] font-bold text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0c6880] hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
 								>
 									ЗНАЙТИ ЖИТЛО
 								</Link>
 								<Link
 									href={PROMOTIONS_PAGE_PATH}
-									className='inline-flex w-1/2 cursor-pointer items-center justify-center rounded-md bg-[#F68F5D] px-3 py-2.5 text-[11px] font-bold text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
+									className='inline-flex w-1/2 cursor-pointer items-center justify-center rounded-md bg-[var(--brand-cta-promo)] px-3 py-2.5 text-[11px] font-bold text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#9a3412] hover:shadow-md sm:w-auto sm:px-7 sm:py-3 sm:text-sm'
 								>
 									АКЦІЇ ТА ПРОПОЗИЦІЇ
 								</Link>
@@ -154,7 +154,7 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 						<HomePromoBannerCarousel key='promo-banners-v4' slides={homePromoBanners} />
 					</div>
 
-					<div className='mt-3 flex items-center justify-center gap-3 sm:mt-4'>
+					<div className='mt-3 flex items-center justify-center gap-0 sm:mt-4'>
 						<button
 							type='button'
 							onClick={goToPrevHeroSlide}
@@ -170,10 +170,15 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 								onClick={() => goToHeroSlide(index)}
 								aria-label={`Перейти до фото ${index + 1}`}
 								aria-pressed={index === activeHeroSlide}
-								className={`h-2.5 w-2.5 rounded-full transition-colors duration-500 ${
-									index === activeHeroSlide ? 'bg-white' : 'bg-white/50'
-								}`}
-							/>
+								className='inline-flex size-11 cursor-pointer items-center justify-center rounded-full'
+							>
+								<span
+									aria-hidden
+									className={`block rounded-full transition-colors duration-500 ${
+										index === activeHeroSlide ? 'size-2.5 bg-white' : 'size-2.5 bg-white/50'
+									}`}
+								/>
+							</button>
 						))}
 						<button
 							type='button'
@@ -192,7 +197,7 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Проживання в Поляні</h2>
 					<Link
 						href='/cat/goteli-polyany'
-						className='cursor-pointer text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'
+						className='cursor-pointer text-sm font-semibold text-[var(--brand-link)] transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--brand-link-hover)]'
 					>
 						Показати ще →
 					</Link>
@@ -220,8 +225,8 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 								>
 									<div className='space-y-1.5'>
 										<h3 className='text-[13px] font-bold leading-tight text-[#2D333D]'>{item.title}</h3>
-										<p className='text-[10px] leading-snug text-[#53C4DA]'>
-											<FaMapMarkerAlt className='mr-1 inline-block size-2.5 align-[-1px]' />
+										<p className='text-[11px] leading-snug text-slate-600'>
+											<FaMapMarkerAlt className='mr-1 inline-block size-2.5 align-[-1px] text-[var(--brand-link)]' />
 											{item.location}
 										</p>
 										<p className='text-xs text-slate-600'>{item.description}</p>
@@ -231,7 +236,7 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 											<FaStar className='size-3 text-[#F7C948]' />
 											{item.rating}
 										</span>
-										<span className='text-[13px] font-bold text-[#E06D3C]'>{item.price}</span>
+										<span className='text-[13px] font-bold text-[var(--brand-price)]'>{item.price}</span>
 									</div>
 									<span className='sr-only'>Відкриється у новій вкладці</span>
 								</Link>
@@ -246,7 +251,7 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 					<h2 className='text-2xl font-bold text-[#2D333D]'>SPA та відпочинок</h2>
 					<Link
 						href='/cat/spa-bani-chany'
-						className='cursor-pointer text-sm font-semibold text-[#53C4DA] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8]'
+						className='cursor-pointer text-sm font-semibold text-[var(--brand-link)] no-underline transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--brand-link-hover)]'
 					>
 						Дивитись все →
 					</Link>
@@ -286,7 +291,7 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Дитячі табори</h2>
 					<Link
 						href='/camps'
-						className='text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:shrink-0'
+						className='text-sm font-semibold text-[var(--brand-link)] transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--brand-link-hover)] sm:shrink-0'
 					>
 						Всі табори →
 					</Link>
@@ -307,7 +312,7 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 					<h2 className='text-2xl font-bold text-[#2D333D]'>Гірськолижний відпочинок</h2>
 					<button
 						type='button'
-						className='cursor-pointer self-start text-sm font-semibold text-[#53C4DA] transition-all duration-200 hover:-translate-y-0.5 hover:text-[#2FAFC8] sm:self-auto'
+						className='cursor-pointer self-start text-sm font-semibold text-[var(--brand-link)] transition-all duration-200 hover:-translate-y-0.5 hover:text-[var(--brand-link-hover)] sm:self-auto'
 						onClick={showBookingNotice}
 						aria-describedby={bookingNoticeDescribedBy}
 					>
@@ -326,10 +331,10 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 							<div className='flex flex-1 flex-col px-4 py-8'>
 								<div className='space-y-1'>
 									<h3 className='text-lg font-bold text-[#2D333D]'>{item.title}</h3>
-									<p className='text-sm text-[#53C4DA]'>{item.label}</p>
+									<p className='text-sm font-medium text-[var(--brand-link)]'>{item.label}</p>
 									<p className='text-sm text-slate-600'>{item.description}</p>
 								</div>
-								<p className='mt-auto pt-2 text-sm font-bold text-[#E06D3C]'>{item.price}</p>
+								<p className='mt-auto pt-2 text-sm font-bold text-[var(--brand-price)]'>{item.price}</p>
 							</div>
 							<div className='relative w-[46%] min-w-[150px]'>
 								<Image
@@ -406,7 +411,7 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 									/>
 								</div>
 								<div className='space-y-2 bg-white p-3'>
-									<span className='inline-flex rounded-full bg-[#F3A169] px-2 py-0.5 text-[10px] font-bold text-white'>
+									<span className='inline-flex rounded-full bg-[var(--brand-cta-promo)] px-2.5 py-1 text-[11px] font-bold text-white'>
 										{item.badge}
 									</span>
 									<h3 className='text-sm font-bold text-[#2D333D]'>{item.title}</h3>

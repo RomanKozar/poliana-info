@@ -2,6 +2,7 @@
 
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
+import { observeBinotelWidgetDom, patchBinotelWidgetAnchors } from '@/lib/binotel-widget-dom-patch'
 import { scheduleDeferredClientLoad } from '@/lib/schedule-deferred-client-load'
 
 /** Якщо в консолі: localStorage.setItem('polyana_hide_binotel_getcall','1'); location.reload() */
@@ -37,6 +38,11 @@ export default function BinotelGetCallScript() {
 		return scheduleDeferredClientLoad(() => setLoadWidget(true))
 	}, [])
 
+	useEffect(() => {
+		if (!loadWidget) return
+		return observeBinotelWidgetDom()
+	}, [loadWidget])
+
 	if (!loadWidget) {
 		return null
 	}
@@ -46,6 +52,7 @@ export default function BinotelGetCallScript() {
 			id='binotel-getcall-widget'
 			src={BINOTEL_GETCALL_SCRIPT_SRC}
 			strategy='lazyOnload'
+			onLoad={() => patchBinotelWidgetAnchors()}
 		/>
 	)
 }

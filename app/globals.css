@@ -7,6 +7,13 @@
   --foreground: #2d333d;
   /* Як смуга хедера: components/layout/Header.tsx → bg-cyan-500 */
   --header-bar: #06b6d4;
+  /* WCAG AA на білому фоні (посилання, дрібні акценти) */
+  --brand-link: #0b7285;
+  --brand-link-hover: #095c6b;
+  /* Кнопки / смуги з білим текстом */
+  --brand-cta: #0e7490;
+  --brand-cta-promo: #c2410c;
+  --brand-price: #c2410c;
 }
 
 @theme inline {

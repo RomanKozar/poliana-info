@@ -284,7 +284,7 @@ export default function Header() {
 
 					<a
 						href='tel:0502149266'
-						className='shrink-0 whitespace-nowrap rounded-md bg-cyan-600 px-2.5 py-1.5 text-xs font-bold text-white transition-colors hover:bg-cyan-400 sm:px-3 sm:py-2 sm:text-sm lg:px-3 lg:text-sm xl:px-4 xl:text-base'
+						className='inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-md bg-[#0e7490] px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-[#0c6880] sm:px-3 sm:text-sm lg:text-sm xl:px-4 xl:text-base'
 					>
 						0 (50) 214 92 66
 					</a>

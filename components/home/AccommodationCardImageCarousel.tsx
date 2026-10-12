@@ -87,7 +87,7 @@ export default function AccommodationCardImageCarousel({
 							e.stopPropagation()
 							go(-1)
 						}}
-						className='absolute left-1.5 top-1/2 z-[2] flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/45 text-white opacity-100 shadow-sm transition hover:bg-black/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:opacity-0 md:group-hover/carousel:opacity-100 sm:left-2'
+						className='absolute left-1 top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/45 text-white opacity-100 shadow-sm transition hover:bg-black/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:opacity-0 md:group-hover/carousel:opacity-100 sm:left-2'
 						aria-label='Попереднє фото'
 					>
 						<FaChevronLeft className='size-3.5' aria-hidden />
@@ -99,7 +99,7 @@ export default function AccommodationCardImageCarousel({
 							e.stopPropagation()
 							go(1)
 						}}
-						className='absolute right-1.5 top-1/2 z-[2] flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/45 text-white opacity-100 shadow-sm transition hover:bg-black/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:opacity-0 md:group-hover/carousel:opacity-100 sm:right-2'
+						className='absolute right-1 top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/45 text-white opacity-100 shadow-sm transition hover:bg-black/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:opacity-0 md:group-hover/carousel:opacity-100 sm:right-2'
 						aria-label='Наступне фото'
 					>
 						<FaChevronRight className='size-3.5' aria-hidden />
