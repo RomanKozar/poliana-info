@@ -1,4 +1,5 @@
 import { categoryPlaceholderSlugs } from '@/data/category-placeholders'
+import { excursionDetailSitemapPaths } from '@/data/excursions-page'
 import { polyanaHotels } from '@/lib/polyana-hotels'
 import { SITE_URL } from '@/lib/seo'
 
@@ -44,6 +45,13 @@ export function collectSitemapEntries(): SitemapUrlEntry[] {
 		priority: 0.75,
 	}))
 
+	const excursionDetailUrls: SitemapUrlEntry[] = excursionDetailSitemapPaths().map(pathname => ({
+		loc: pageUrl(pathname),
+		lastModified,
+		changeFrequency: 'weekly',
+		priority: 0.8,
+	}))
+
 	return [
 		{ loc: pageUrl('/'), lastModified, changeFrequency: 'weekly', priority: 1 },
 		{ loc: pageUrl('/aktsii-ta-propozitsii'), lastModified, changeFrequency: 'weekly', priority: 0.82 },
@@ -63,24 +71,18 @@ export function collectSitemapEntries(): SitemapUrlEntry[] {
 		{ loc: pageUrl('/camps/tourist-camp-2'), lastModified, changeFrequency: 'monthly', priority: 0.76 },
 		{ loc: pageUrl('/contacts'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/excursions'), lastModified, changeFrequency: 'weekly', priority: 0.85 },
-		{ loc: pageUrl('/excursions/quadro-ride'), lastModified, changeFrequency: 'weekly', priority: 0.82 },
-		{ loc: pageUrl('/entertainment'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
-		{ loc: pageUrl('/gastronomy'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
-		{ loc: pageUrl('/kids-camps'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
+		...excursionDetailUrls,
 		{ loc: pageUrl('/poliana'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
-		{ loc: pageUrl('/polianski'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/privacy'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/terms'), lastModified, changeFrequency: 'monthly', priority: 0.55 },
 		{ loc: pageUrl('/trout'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/search'), lastModified, changeFrequency: 'monthly', priority: 0.55 },
-		{ loc: pageUrl('/spa'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		{ loc: pageUrl('/cat/spa-bani-chany/veliki-chany'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
 		{ loc: pageUrl('/cat/spa-bani-chany/mali-chany'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
 		{ loc: pageUrl('/cat/spa-bani-chany/bani'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
 		{ loc: pageUrl('/cat/spa-bani-chany/baseni'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
 		{ loc: pageUrl('/cat/spa-bani-chany/masazhi'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
 		{ loc: pageUrl('/cat/spa-bani-chany/fitobochky'), lastModified, changeFrequency: 'monthly', priority: 0.68 },
-		{ loc: pageUrl('/wellness'), lastModified, changeFrequency: 'monthly', priority: 0.8 },
 		...accommodationDetailUrls,
 		...categoryUrls,
 	]

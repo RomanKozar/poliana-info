@@ -27,7 +27,7 @@ export const promotionsOffers: PromoOffer[] = [
 		description:
 			'Поєднайте відпочинок біля водойми зігрітими чанами: локальна форель, карпатський настрій і мінус стрес.',
 		accent: 'coral',
-		href: '/gastronomy',
+		href: '/trout',
 		cta: 'Форель і риболовля',
 	},
 	{

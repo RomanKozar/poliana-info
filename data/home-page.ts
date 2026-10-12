@@ -237,7 +237,7 @@ export type CategoryNavItem = {
 
 export const categoryItems: CategoryNavItem[] = [
 	{ label: 'Чани, бані, SPA центри', iconSrc: `${CATEGORY_ICON_BASE}/SPA.svg`, href: '/cat/spa-bani-chany' },
-	{ label: 'Сільський туризм', iconSrc: `${CATEGORY_ICON_BASE}/tourism.svg` },
+	{ label: 'Сільський туризм', iconSrc: `${CATEGORY_ICON_BASE}/tourism.svg`, href: '/cat/silskyi-turizm' },
 	{ label: 'Санаторії Поляни', iconSrc: `${CATEGORY_ICON_BASE}/sanatoriums.svg`, href: '/cat/sanatorii-polyany' },
 	{ label: 'Конференц сервіс', iconSrc: `${CATEGORY_ICON_BASE}/conferences.svg`, href: '/cat/konferenc-servis' },
 	{ label: 'Їжа та напої', iconSrc: `${CATEGORY_ICON_BASE}/food_drinks.svg`, href: '/cat/yizha-napoyi' },

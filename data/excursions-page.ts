@@ -782,3 +782,12 @@ export function allExcursionListings(): ExcursionListing[] {
 	for (const e of zakarpattiaBusExcursions) push(e)
 	return out
 }
+
+/** Усі детальні URL екскурсій (`detailPagePath`) для sitemap і SEO. */
+export function excursionDetailSitemapPaths(): string[] {
+	const paths = new Set<string>()
+	for (const listing of allExcursionListings()) {
+		if (listing.detailPagePath) paths.add(listing.detailPagePath)
+	}
+	return [...paths].sort()
+}

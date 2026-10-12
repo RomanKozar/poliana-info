@@ -71,6 +71,27 @@ const nextConfig: NextConfig = {
 				destination: '/privacy',
 				permanent: true,
 			},
+			// Заглушки та дублікати → канонічні розділи (SEO + sitemap без цих URL)
+			{ source: '/gastronomy', destination: '/trout', permanent: true },
+			{ source: '/gastronomy/', destination: '/trout', permanent: true },
+			{ source: '/kids-camps', destination: '/camps', permanent: true },
+			{ source: '/kids-camps/', destination: '/camps', permanent: true },
+			{ source: '/spa', destination: '/cat/spa-bani-chany', permanent: true },
+			{ source: '/spa/', destination: '/cat/spa-bani-chany', permanent: true },
+			{ source: '/wellness', destination: '/cat/sanatorii-polyany', permanent: true },
+			{ source: '/wellness/', destination: '/cat/sanatorii-polyany', permanent: true },
+			{ source: '/polianski', destination: '/camps/polianski-camp', permanent: true },
+			{ source: '/polianski/', destination: '/camps/polianski-camp', permanent: true },
+			{
+				source: '/entertainment',
+				destination: '/excursions#aktivnyi-vidpochynok',
+				permanent: true,
+			},
+			{
+				source: '/entertainment/',
+				destination: '/excursions#aktivnyi-vidpochynok',
+				permanent: true,
+			},
 		]
 	},
 }

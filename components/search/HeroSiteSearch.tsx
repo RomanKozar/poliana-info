@@ -84,8 +84,8 @@ export default function HeroSiteSearch({ placeholderLabel }: HeroSiteSearchProps
 				}}
 				aria-autocomplete='list'
 				aria-haspopup='listbox'
+				aria-controls={resultsPanelId}
 				aria-expanded={showResultsPanel}
-				{...(showResultsPanel ? { 'aria-controls': resultsPanelId } : {})}
 				autoComplete='off'
 				spellCheck={false}
 			/>

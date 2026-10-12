@@ -20,7 +20,6 @@ export function attachGoogleMapUserLocation(
 
 	let marker: InstanceType<typeof maps.Marker> | null = null
 	let accuracyCircle: InstanceType<typeof maps.Circle> | null = null
-	let watchId: number | undefined
 
 	const updatePosition = (position: GeolocationPosition) => {
 		const pos = { lat: position.coords.latitude, lng: position.coords.longitude }
@@ -66,7 +65,7 @@ export function attachGoogleMapUserLocation(
 		}
 	}
 
-	watchId = navigator.geolocation.watchPosition(updatePosition, () => {}, {
+	const watchId = navigator.geolocation.watchPosition(updatePosition, () => {}, {
 		enableHighAccuracy: true,
 		maximumAge: 15_000,
 		timeout: 12_000,

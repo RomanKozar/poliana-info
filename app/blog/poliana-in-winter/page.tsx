@@ -77,7 +77,7 @@ export default function PolyanaInWinterPage() {
 
 						<div className='mt-7 grid gap-3 sm:grid-cols-2'>
 							<Link
-								href='/entertainment'
+								href='/excursions#aktivnyi-vidpochynok'
 								className='inline-flex justify-center rounded-md bg-[#53C4DA] px-4 py-2 text-xs font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] sm:text-sm'
 							>
 								Зимові активності
