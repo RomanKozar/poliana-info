@@ -99,6 +99,7 @@ export default function PolyanaPage() {
 								className='object-cover'
 							/>
 						</div>
+						{/* Поки не співпрацюємо з «Континент» — фото приховано.
 						<div className='relative h-44 overflow-hidden rounded-xl'>
 							<Image
 								src='/images/accommodation/kontinent-v1.webp'
@@ -108,6 +109,7 @@ export default function PolyanaPage() {
 								className='object-cover'
 							/>
 						</div>
+						*/}
 					</div>
 
 					<div className='mt-7 space-y-5 text-sm leading-relaxed text-slate-700 sm:text-base'>

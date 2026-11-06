@@ -47,27 +47,39 @@ export const accommodations = [
 		image: '/images/accommodation/kateryna-v1.webp',
 		website: 'https://hotel-kateryna.com/',
 	},
+	// Поки не співпрацюємо — картки «Континент» і River Side приховані з головної.
+	// {
+	// 	id: 'kontinent',
+	// 	title: 'Готель "Континент"',
+	// 	location: 'вул. Сонячна, 59, Поляна, Закарпатська область, 89313',
+	// 	description:
+	// 		'Комплекс з басейнами (критим і відкритим), рестораном, SPA й конференц-зонами у центрі курорту.',
+	// 	price: 'від 1350 грн',
+	// 	rating: '4.3 (1256)',
+	// 	image: '/images/accommodation/kontinent-v1.webp',
+	// 	website: 'https://www.hotel-continent.com/',
+	// },
+	// {
+	// 	id: 'riverside',
+	// 	title: 'River Side Hotel',
+	// 	location: 'вул. Духновича, 68, Поляна, Закарпатська область, 89313',
+	// 	description:
+	// 		'Тихий готель біля річки з рестораном і номерами з балконом; зручно для авто й прогулянок до траси «Ведмежа».',
+	// 	price: 'від 1030 грн',
+	// 	rating: '3.9 (399)',
+	// 	image: '/images/accommodation/river-side-v1.webp',
+	// 	website: 'https://www.riverside.in.ua/',
+	// },
 	{
-		id: 'kontinent',
-		title: 'Готель "Континент"',
-		location: 'вул. Сонячна, 59, Поляна, Закарпатська область, 89313',
+		id: 'shale-vedmezhe',
+		title: 'Шале Ведмеже',
+		location: 'вул. Духновича, 158, Поляна, Закарпатська область, 89313',
 		description:
-			'Комплекс з басейнами (критим і відкритим), рестораном, SPA й конференц-зонами у центрі курорту.',
-		price: 'від 1350 грн',
-		rating: '4.3 (1256)',
-		image: '/images/accommodation/kontinent-v1.webp',
-		website: 'https://www.hotel-continent.com/',
-	},
-	{
-		id: 'riverside',
-		title: 'River Side Hotel',
-		location: 'вул. Духновича, 68, Поляна, Закарпатська область, 89313',
-		description:
-			'Тихий готель біля річки з рестораном і номерами з балконом; зручно для авто й прогулянок до траси «Ведмежа».',
-		price: 'від 1030 грн',
-		rating: '3.9 (399)',
-		image: '/images/accommodation/river-side-v1.webp',
-		website: 'https://www.riverside.in.ua/',
+			'Сімейний комплекс біля траси «Ведмежа»: котеджі й таунхауси, чан, баня і сезонний басейн на джерельній воді.',
+		price: 'від 1660 грн',
+		rating: '9.2/10 (41)',
+		image: '/images/accommodation/Shale-vedme/23.webp',
+		website: 'https://www.booking.com/hotel/ua/shale-vedmezhe-poliana1.uk.html',
 	},
 ] as const
 
@@ -198,8 +210,8 @@ export const camps: CampCardItem[] = [
 	},
 ]
 
-/** П’ять літніх заїздів у блоці «Дитячі табори» на головній. */
-export const campsHomeFeatured = camps.filter(c => c.season === 'summer').slice(0, 5)
+/** Зимові зміни в блоці «Дитячі табори» на головній. */
+export const campsHomeFeatured = camps.filter(c => c.season === 'winter')
 
 export const skiRecreation = [
 	{

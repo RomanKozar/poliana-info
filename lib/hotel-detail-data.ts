@@ -22,6 +22,13 @@ const RIVERSIDE_HOTEL_GALLERY_IMAGES = Array.from(
 	(_, i) => `/images/accommodation/river-side/river-side-hotel-${i + 1}.webp`
 )
 
+const SHALE_VEDMEZHE_MAIN_IMAGE = '/images/accommodation/Shale-vedme/23.webp'
+
+const SHALE_VEDMEZHE_GALLERY_IMAGES = Array.from(
+	{ length: 15 },
+	(_, i) => `/images/accommodation/shale-vedmezhe/shale-vedmezhe-${i + 1}.webp`
+)
+
 /** Усі фото для lightbox; перше - головне зображення картки готелю. */
 export function galleryImagesForHotel(hotel: PolyanaHotel): string[] {
 	if (hotel.id === 'kateryna') {
@@ -32,6 +39,9 @@ export function galleryImagesForHotel(hotel: PolyanaHotel): string[] {
 	}
 	if (hotel.id === 'riverside') {
 		return [RIVERSIDE_MAIN_IMAGE, ...RIVERSIDE_HOTEL_GALLERY_IMAGES]
+	}
+	if (hotel.id === 'shale-vedmezhe') {
+		return [SHALE_VEDMEZHE_MAIN_IMAGE, ...SHALE_VEDMEZHE_GALLERY_IMAGES]
 	}
 	const g = getHotelMapGallery(hotel)
 	const out = [...g]
@@ -164,6 +174,12 @@ export function popularFacilitiesForHotel(hotelId: string): FacilityItem[] {
 	if (hotelId === 'riverside') {
 		return facilitiesByOrder(['6', '9', '4', '3', '10', '5', '1', '2', '8', '7'])
 	}
+	if (hotelId === 'shale-vedmezhe') {
+		return ['1', '2', '3', '4', '5', '8'].flatMap(id => {
+			const item = FACILITY_BY_ID.get(id)
+			return item ? [item] : []
+		})
+	}
 	return popularFacilities
 }
 
@@ -190,6 +206,14 @@ export function longDescriptionParagraphs(hotel: PolyanaHotel): string[] {
 			'Це апарт-готель із сучасним номерним фондом: у підбірках Hotelmix і Booking згадують орієнтовно 23 одиниці житла, багато з яких мають вид на басейн. Номери та апартаменти за описами агрегаторів оснащені кондиціонерами, технікою для самостійного приготування чаю/кави, сейфами та ванними кімнатами з душем; частина номерів - із балконом або терасою й кухонною зоною - деталі категорій уточнюйте на arena-hotel.com.ua під час бронювання.',
 			'Інфраструктура для відпочинку: відкритий басейн (активний у теплу пору року), SPA-оздоровлення, сауна, масажний кабінет, фітобочка, ресторан і піццерія на території; для сімей - дитячий майданчик і ігрова кімната (за описами zahidkurort.com та karpaty.love). Безкоштовний Wi‑Fi, парковка з охороною за даними профільних оглядів; можливі конференц-зони й трансфер - узгоджуйте з адміністрацією.',
 			'Агреговані відгуки з Booking-суміжних сервісів (наприклад Hotelmix: ~9,5/10 серед сотень оцінок) часто підкреслюють чистоту номерів, басейн і SPA, роботу персоналу та кухню. Оцінка в Google-бізнес середня ~4,3/5 із сотень відгуків - перед поїздкою звіряйте наявність послуг і ціну на офіційному сайті або в обраній системі бронювання.',
+		]
+	}
+	if (hotel.id === 'shale-vedmezhe') {
+		return [
+			'«Шале Ведмеже» - сімейний комплекс відпочинку на вул. Духновича, 158 у курортній Поляні. Навколо карпатський ліс, поруч дві річки; з панорамної тераси видно схили. Сюди їдуть пари, родини з дітьми, компанії друзів і туристичні групи.',
+			'На території 15 одиниць розміщення, разом 58 основних місць, у частині номерів можна додати гостей. Основний котедж - 6 номерів для двох: частина з панорамними терасами, у чотирьох можливе додаткове місце для одного дорослого або двох дітей. Три двоповерхові котеджі - до 6 гостей, з кухнею-вітальнею на першому поверсі і двома спальнями на другому. Два одноповерхові будиночки - для двох, з кухнею і спальнею. Чотири таунхауси - до 6 гостей: студія, велика спальня і два санвузли. У деяких номерах є кухня з холодильником, мікрохвильовою піччю і міні-баром.',
+			'На території - карпатський чан на дровах, баня на дровах, масаж за попереднім замовленням, сон на вуликах, ранкова йога і винний льох. Улітку працює сезонний відкритий басейн на природній джерельній воді без хімічних добавок. Для гостей - безкоштовна приватна парковка і безкоштовний Wi-Fi. На рецепції спілкуються українською та російською.',
+			'Подвір’я з альтанками, мангальними зонами і дитячими майданчиками. Форелева риболовля на території безкоштовна - оплачується лише виловлена риба. Є прокат велосипедів і лиж, поруч лісові стежки і траса «Ведмежа». Взимку - баня, чан і гірські краєвиди, восени - ліс і тиша, влітку - басейн, річка і вечори в альтанках.',
 		]
 	}
 	const base = `${hotel.name} розташований за адресою ${hotel.address} у затишній частині Поляни на Закарпатті. Неподалік - гірські маршрути, ресторани та оздоровчі заклади.`
@@ -298,6 +322,30 @@ export function propertyHighlights(hotel: PolyanaHotel): SidebarHighlight[] {
 				icon: 'ski',
 				title: 'Басейн і SPA',
 				body: 'Відкритий басейн (сезонно), SPA-центр, сауну, масаж і фітобочку активно рекомендують гості Booking; графік зон оздоровлення - на місці або на сайті готелю.',
+			},
+		]
+	}
+	if (hotel.id === 'shale-vedmezhe') {
+		return [
+			{
+				icon: 'pin',
+				title: 'Розташування',
+				body: 'вул. Духновича, 158, с. Поляна - ліс, дві річки поруч і траса «Ведмежа». З тераси видно карпатські схили.',
+			},
+			{
+				icon: 'breakfast',
+				title: 'Проживання',
+				body: '15 будиночків і номерів на 58 основних місць: котедж на 6 номерів, три двоповерхові котеджі і чотири таунхауси до 6 гостей, два будиночки для двох. Частина номерів - з кухнею і терасою.',
+			},
+			{
+				icon: 'parking',
+				title: 'Парковка і Wi-Fi',
+				body: 'Безкоштовна приватна парковка на території і безкоштовний Wi-Fi. На рецепції спілкуються українською та російською.',
+			},
+			{
+				icon: 'ski',
+				title: 'Чан, баня і басейн',
+				body: 'Чан і баня на дровах, масаж за записом, сезонний басейн на джерельній воді. Також альтанки, мангали, форель, прокат велосипедів і лиж, дитячі майданчики.',
 			},
 		]
 	}
@@ -474,6 +522,30 @@ const sampleReviewCardsRiverside: SampleReviewCard[] = [
 	},
 ]
 
+const sampleReviewCardsShaleVedmezhe: SampleReviewCard[] = [
+	{
+		initial: 'О',
+		name: 'Оксана',
+		country: 'Україна',
+		excerpt: 'Дерев’яний будиночок теплий і тихий, з балкона видно ліс. Дітям сподобався майданчик.',
+		bg: 'bg-sky-600',
+	},
+	{
+		initial: 'М',
+		name: 'Марія',
+		country: 'Україна',
+		excerpt: 'Зручно до траси «Ведмежа». На території є альтанка, можна посидіти надворі.',
+		bg: 'bg-emerald-600',
+	},
+	{
+		initial: 'С',
+		name: 'Світлана',
+		country: 'Україна',
+		excerpt: 'Затишно, усе як на фото. Повернемося ще.',
+		bg: 'bg-teal-700',
+	},
+]
+
 const sampleReviewCardsArena: SampleReviewCard[] = [
 	{
 		initial: 'К',
@@ -505,6 +577,7 @@ export function sampleReviewCardsForHotel(hotelId: string): SampleReviewCard[] {
 	if (hotelId === 'kontinent') return sampleReviewCardsKontinent
 	if (hotelId === 'riverside') return sampleReviewCardsRiverside
 	if (hotelId === 'arena') return sampleReviewCardsArena
+	if (hotelId === 'shale-vedmezhe') return sampleReviewCardsShaleVedmezhe
 	return sampleReviewCards
 }
 

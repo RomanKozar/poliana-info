@@ -29,7 +29,7 @@ function priceFromUahFromHotelPrice(price: string): number {
 }
 
 /** Не показуємо в порівняльних таблицях і SPA-картах. */
-const SPA_VENUE_EXCLUDED_HOTEL_IDS = new Set<string>()
+const SPA_VENUE_EXCLUDED_HOTEL_IDS = new Set<string>(['shale-vedmezhe'])
 
 function mapPolyanaHotelsToSpaVenues(
 	hotels: typeof polyanaHotels,
@@ -68,7 +68,7 @@ const SPA_VELIKI_CHANY_CHAN_PRICE_BY_ID: Partial<
 	kateryna: {
 		priceFromUah: 1650,
 		priceLabel: '1 год - 1650 ₴',
-		priceLines: ['1 год - 1650 ₴', '2 год - 2500 ₴'],
+		priceLines: ['1 год - 1650 ₴', '2 год - 2500 ₴', 'кожна наступна особа +50 ₴'],
 	},
 	kontinent: {
 		priceFromUah: 1800,

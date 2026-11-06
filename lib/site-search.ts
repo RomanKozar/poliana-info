@@ -128,7 +128,7 @@ const SITE_SEARCH_INDEX_RAW: SiteSearchItem[] = [
 	})),
 	...accommodations.map(a => ({
 		title: a.title,
-		href: `/cat/goteli-polyany/${a.id}`,
+		href: 'href' in a ? a.href : `/cat/goteli-polyany/${a.id}`,
 		keywords: [a.location, a.description],
 		section: 'Проживання',
 	})),

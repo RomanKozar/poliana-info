@@ -13,7 +13,7 @@ export const spaVelikiChanyIwCopyByHotelId: Record<string, SpaVelikiChanyIwCopy>
 		description:
 			'Гарячий великий чан на території «Катерина» - зручно поєднати з номером і рестораном. Уточнюйте вільні слоти перед візитом.',
 		feature: 'Великі чани на території готелю',
-		mapPriceLabel: '1 год - 1650 ₴ · 2 год - 2500 ₴',
+		mapPriceLabel: '1 год - 1650 ₴ · 2 год - 2500 ₴ · наступна особа +50 ₴',
 	},
 	kontinent: {
 		description:

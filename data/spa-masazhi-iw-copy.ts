@@ -13,7 +13,7 @@ export const spaMasazhiIwCopyByHotelId: Record<string, SpaMasazhiIwCopy> = {
 		description:
 			'Релакс- та оздоровчі масажі, дитячі сеанси й стоун-терапія: перелік процедур і орієнтовні ціни - у SPA-меню готелю. Тривалість сеансу й запис уточнюйте на ресепшні або за телефоном закладу.',
 		feature: 'Масаж · SPA-кабінети · запис на місці',
-		mapPriceLabel: 'від 500 ₴',
+		mapPriceLabel: 'від 200 ₴',
 	},
 	kontinent: {
 		description:

@@ -213,23 +213,25 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 						</Link>
 					</p>
 				</div>
-				<div className='grid grid-cols-1 gap-5 md:grid-cols-3'>
+				<div className='flex flex-wrap justify-center gap-5'>
 					{accommodations.map(item => {
 						// const isFavorite = Boolean(favoriteAccommodations[item.id])
+						const cardHref = 'href' in item ? item.href : accommodationHotelPath(item.id)
+						const gallery = homeAccommodationCardGallery(item.id)
 
 						return (
 							<article
 								key={item.id}
-								className='flex h-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+								className='flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-[10px] border border-[#E4EBEE] bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md md:w-[calc((100%-2.5rem)/3)]'
 							>
 								<AccommodationCardImageCarousel
-									images={homeAccommodationCardGallery(item.id)}
+									images={gallery.length > 0 ? gallery : [item.image]}
 									alt={item.title}
-									href={accommodationHotelPath(item.id)}
+									href={cardHref}
 								/>
 								{/* Сердечко «обране» на картці - поки вимкнено (див. git history / toggleAccommodationFavorite) */}
 								<Link
-									href={accommodationHotelPath(item.id)}
+									href={cardHref}
 									target='_blank'
 									rel='noopener noreferrer'
 									className='flex flex-1 flex-col p-2.5 outline-none ring-offset-2 transition-colors hover:bg-slate-50/90 focus-visible:ring-2 focus-visible:ring-cyan-500'
@@ -318,13 +320,14 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 						Всі табори →
 					</Link>
 				</div>
-				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-5'>
+				<div className='flex flex-wrap justify-center gap-4'>
 					{campsHomeFeatured.map(item => (
-						<CampProgramCard
+						<div
 							key={item.id ?? `${item.title}-${item.dates}`}
-							camp={item}
-							variant='home'
-						/>
+							className='w-full sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]'
+						>
+							<CampProgramCard camp={item} variant='home' />
+						</div>
 					))}
 				</div>
 			</section>

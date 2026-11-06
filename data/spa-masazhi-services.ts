@@ -62,12 +62,6 @@ export const SPA_MASAZHI_MENU_CATEGORIES: SpaMasazhiServiceCategory[] = [
 				priceUah: 1000,
 			},
 			{
-				id: 'wellness-acupuncture',
-				name: 'Голкотерапія + загальний оздоровчий масаж',
-				duration: '90 хв',
-				priceUah: 1150,
-			},
-			{
 				id: 'wellness-anticellulite-legs',
 				name: 'Антицелюлітний масаж ніг (передня 10 хв та задня 15 хв)',
 				duration: '25 хв',
@@ -132,6 +126,18 @@ export const SPA_MASAZHI_MENU_CATEGORIES: SpaMasazhiServiceCategory[] = [
 				name: 'Загальний оздоровчий масаж',
 				duration: '30 хв',
 				priceUah: 450,
+			},
+		],
+	},
+	{
+		id: 'face',
+		title: 'Масаж обличчя',
+		items: [
+			{
+				id: 'face-massage',
+				name: 'Масаж обличчя',
+				duration: '15 хв',
+				priceUah: 300,
 			},
 		],
 	},

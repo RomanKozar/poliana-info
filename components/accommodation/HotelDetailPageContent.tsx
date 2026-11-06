@@ -484,8 +484,8 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 					<section className='space-y-3'>
 						<h3 className='text-lg font-semibold text-[#2D333D]'>Про помешкання</h3>
 						<p className='text-[0.9375rem] italic leading-relaxed text-sky-950/90'>
-							Ця локація часто обирають пари - зручність і сервіс оцінюють на рівні {scoreLabel.replace(',', '.')} з 10 за умовним
-							балом порталу (на основі рейтингу {stars.toFixed(1).replace('.', ',')}/5).
+							Цю локацію часто обирають пари - зручність і сервіс оцінюють на рівні {scoreLabel.replace(',', '.')} з 10 за умовним
+							балом порталу (на основі рейтингу {(stars > 5 ? stars / 2 : stars).toFixed(1).replace('.', ',')}/5).
 						</p>
 						<div
 							className={`space-y-3 text-[0.9375rem] leading-relaxed text-slate-700 ${!descExpanded ? 'max-h-[7.5rem] overflow-hidden' : ''}`}
