@@ -216,7 +216,7 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 				<div className='flex flex-wrap justify-center gap-5'>
 					{accommodations.map(item => {
 						// const isFavorite = Boolean(favoriteAccommodations[item.id])
-						const cardHref = 'href' in item ? item.href : accommodationHotelPath(item.id)
+						const cardHref = accommodationHotelPath(item.id)
 						const gallery = homeAccommodationCardGallery(item.id)
 
 						return (
