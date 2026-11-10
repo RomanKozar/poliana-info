@@ -14,6 +14,7 @@ type Props = {
 	message?: string
 	id?: string
 	durationMs?: number
+	className?: string
 }
 
 export default function BottomStatusToast({
@@ -22,6 +23,7 @@ export default function BottomStatusToast({
 	message = BOOKING_NOTICE_MESSAGE,
 	id,
 	durationMs = 4200,
+	className,
 }: Props) {
 	useEffect(() => {
 		if (!open) return
@@ -34,7 +36,7 @@ export default function BottomStatusToast({
 	return (
 		<div
 			{...(id ? { id } : {})}
-			className='fixed bottom-6 left-1/2 z-[100] max-w-[min(90vw,24rem)] -translate-x-1/2 rounded-full bg-[var(--brand-cta-promo)] px-4 py-2.5 text-center text-sm font-bold text-white shadow-lg'
+			className={`${className?.includes('z-') ? '' : 'z-[100] '}fixed bottom-6 left-1/2 max-w-[min(90vw,24rem)] -translate-x-1/2 rounded-full bg-[var(--brand-cta-promo)] px-4 py-2.5 text-center text-sm font-bold text-white shadow-lg${className ? ` ${className}` : ''}`}
 			role='status'
 		>
 			{message}
