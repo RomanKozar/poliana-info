@@ -86,7 +86,7 @@ export default function AutumnVacationPage() {
 							</Link>
 							<Link
 								href='/cat/spa-bani-chany'
-								className='inline-flex justify-center rounded-md bg-[#F68F5D] px-4 py-2 text-xs font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#E9753E] sm:text-sm'
+								className='inline-flex justify-center rounded-md bg-[var(--brand-cta-promo)] px-4 py-2 text-xs font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#9a3412] sm:text-sm'
 							>
 								SPA та чани
 							</Link>

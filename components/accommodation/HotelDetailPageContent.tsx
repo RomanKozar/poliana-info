@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import BinotelBookButton from '@/components/shared/BinotelBookButton'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
 	FaChevronLeft,
@@ -796,13 +797,14 @@ export default function HotelDetailPageContent({ hotel }: { hotel: PolyanaHotel 
 				images={galleryAll}
 				hotelName={hotel.name}
 			/>
-			<a
-				href={`tel:${hotel.phone.replace(/[^\d+]/g, '')}`}
+			<BinotelBookButton
+				description={`Бронювання: ${hotel.name}`}
+				tel={hotel.phone}
 				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
-				aria-label={`Забронювати ${hotel.name} - зателефонувати`}
+				ariaLabel={`Забронювати ${hotel.name}`}
 			>
 				Забронювати
-			</a>
+			</BinotelBookButton>
 		</div>
 	)
 }

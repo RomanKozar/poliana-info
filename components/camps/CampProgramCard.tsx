@@ -42,6 +42,7 @@ export default function CampProgramCard({
 				<span className='inline-flex w-fit rounded-full bg-[var(--brand-cta-promo)] px-2.5 py-1 text-[11px] font-bold tabular-nums text-white'>
 					{camp.dates}
 				</span>
+				{camp.note ? <p className='text-[11px] font-semibold text-slate-500'>{camp.note}</p> : null}
 				<p className='text-xs leading-snug text-slate-600'>{camp.description}</p>
 				<p className='text-right text-sm font-bold text-[var(--brand-price)]'>{camp.price}</p>
 			</div>

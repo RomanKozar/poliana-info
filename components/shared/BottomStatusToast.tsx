@@ -34,7 +34,7 @@ export default function BottomStatusToast({
 	return (
 		<div
 			{...(id ? { id } : {})}
-			className='fixed bottom-6 left-1/2 z-[100] max-w-[min(90vw,24rem)] -translate-x-1/2 rounded-full bg-[#F3A169] px-4 py-2.5 text-center text-sm font-bold text-white shadow-lg'
+			className='fixed bottom-6 left-1/2 z-[100] max-w-[min(90vw,24rem)] -translate-x-1/2 rounded-full bg-[var(--brand-cta-promo)] px-4 py-2.5 text-center text-sm font-bold text-white shadow-lg'
 			role='status'
 		>
 			{message}

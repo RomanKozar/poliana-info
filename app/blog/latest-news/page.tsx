@@ -190,7 +190,7 @@ export default function LatestNewsPage() {
 							</div>
 							<div className='flex flex-1 flex-col p-4'>
 								<p className='text-[11px] font-medium text-slate-500'>{item.date}</p>
-								<p className='text-[11px] font-semibold uppercase tracking-wide text-[#E06D3C]'>
+								<p className='text-[11px] font-semibold uppercase tracking-wide text-[var(--brand-price)]'>
 									{item.tag}
 								</p>
 								<h3 className='mt-2 text-[15px] font-extrabold leading-snug text-[#2D333D]'>

@@ -53,11 +53,11 @@ export function createHotelPricePillMarker(label: string, variant: HotelPricePil
 	const r = logicalH / 2
 	const accent = variant === 'active' || variant === 'selected'
 
-	const selBg = '#F68F5D'
-	const selStroke = '#e57d4a'
+	const selBg = '#c2410c'
+	const selStroke = '#9a3412'
 
 	ctx.save()
-	ctx.shadowColor = accent ? 'rgba(246, 143, 93, 0.45)' : 'rgba(15, 23, 42, 0.14)'
+	ctx.shadowColor = accent ? 'rgba(194, 65, 12, 0.45)' : 'rgba(15, 23, 42, 0.14)'
 	ctx.shadowBlur = accent ? 8 : 5
 	ctx.shadowOffsetY = 1
 	ctx.fillStyle = accent ? selBg : '#ffffff'

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import BinotelBookButton from '@/components/shared/BinotelBookButton'
 import TheaterCampBannerAndGallery from '@/components/camps/TheaterCampBannerAndGallery'
 import { camps } from '@/data/home-page'
 
@@ -91,14 +92,14 @@ export default function TheaterCampPageContent() {
 							</h1>
 							<p className='mt-1 text-sm leading-snug text-[#53C4DA] sm:text-base'>{theaterCamp.age}</p>
 							<div className='mt-2 flex flex-wrap items-center gap-2 sm:gap-3'>
-								<span className='inline-flex rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:text-sm'>
+								<span className='inline-flex rounded-full bg-[var(--brand-cta-promo)] px-3 py-1 text-xs font-bold tabular-nums text-white sm:text-sm'>
 									{theaterCamp.dates}
 								</span>
 							</div>
 							<p className='mt-2 max-w-3xl text-sm leading-snug text-slate-600 sm:text-[0.9375rem]'>{theaterCamp.description}</p>
 						</div>
 						<div className='relative flex w-full shrink-0 flex-col items-end self-stretch lg:flex-1 lg:justify-center'>
-							<span className='inline-flex w-auto shrink-0 items-center justify-center self-end rounded-full bg-[#F3A169] px-3 py-1 text-xs font-bold tabular-nums text-white sm:text-sm lg:absolute lg:right-0 lg:bottom-0 lg:z-[1]'>
+							<span className='inline-flex w-auto shrink-0 items-center justify-center self-end rounded-full bg-[var(--brand-cta-promo)] px-3 py-1 text-xs font-bold tabular-nums text-white sm:text-sm lg:absolute lg:right-0 lg:bottom-0 lg:z-[1]'>
 								{theaterCamp.price}
 							</span>
 						</div>
@@ -178,13 +179,13 @@ export default function TheaterCampPageContent() {
 					</a>
 				</div>
 			</div>
-			<a
-				href='tel:0502149266'
+			<BinotelBookButton
+				description={`Бронювання табору: ${theaterCamp.title}`}
 				className='animate-wiggle fixed bottom-5 left-4 z-40 inline-flex min-h-11 items-center justify-center rounded-full bg-[#53C4DA] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg ring-1 ring-cyan-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2FAFC8] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#53C4DA] focus-visible:ring-offset-2 sm:bottom-6 sm:left-6 sm:px-6 sm:text-sm'
-				aria-label='Забронювати табір - зателефонувати'
+				ariaLabel={`Забронювати табір: ${theaterCamp.title}`}
 			>
 				Забронювати
-			</a>
+			</BinotelBookButton>
 		</div>
 	)
 }

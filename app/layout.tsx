@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import TawkToScript from '@/components/third-party/TawkToScript'
+import BinotelBookBridge from '@/components/third-party/BinotelBookBridge'
 import BinotelGetCallScript from '@/components/third-party/BinotelGetCallScript'
 import FacebookPixel from '@/components/third-party/FacebookPixel'
 import { SITE_URL } from '@/lib/seo'
@@ -155,6 +156,7 @@ export default function RootLayout({
 				<Footer />
 				<Analytics />
 				<FacebookPixel />
+				<BinotelBookBridge />
 				<BinotelGetCallScript />
 				<TawkToScript />
 			</body>

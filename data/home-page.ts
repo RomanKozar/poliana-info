@@ -131,6 +131,20 @@ export type CampCardItem = {
 	season: CampSeason
 	/** Як задано - картка веде на детальну сторінку табору */
 	detailPath?: string
+	/** Фото галереї детальної сторінки, перше збігається з карткою */
+	gallery?: readonly string[]
+	/** Короткий статус місць, якщо він відомий */
+	note?: string
+}
+
+const WINTER_CAMP_DESCRIPTION =
+	'Лижний табір PolianSki CAMP: п’ять ранків з інструктором, близько 24 годин на схилі, спорядження і скіпас включені. До 20 дітей.'
+
+function winterCampPhotos(session: number): string[] {
+	return Array.from(
+		{ length: 5 },
+		(_, i) => `/images/kids-camps/camp-winter${session}-${session}/camp-winter${session}-${i + 1}.webp`
+	)
 }
 
 export const camps: CampCardItem[] = [
@@ -189,25 +203,30 @@ export const camps: CampCardItem[] = [
 		season: 'summer',
 		detailPath: '/camps/tourist-camp-2',
 	},
-	{
-		title: 'Зимові канікули в горах',
-		age: 'від 7 до 15 років',
-		dates: 'січень - березень (зміни уточнюються)',
-		description:
-			'Лижі, тюбінг на курорті, ігри в снігу та анімація. Програму та дати оголосимо напередодні сезону.',
-		price: 'за запитом',
-		image: '/images/kids-camps/camp-winter/camp-winter-1.webp',
-		season: 'winter',
-	},
-	{
-		title: 'Святковий зимовий табір',
-		age: 'від 8 до 16 років',
-		dates: '27.12 - 06.01',
-		description: 'Зимові розваги, святкова програма та прогулянки засніженою Поляною. Реєстрація - наближено до дат.',
-		price: 'уточнюйте пізніше',
-		image: '/images/kids-camps/camp-winter/camp-winter-2.webp',
-		season: 'winter',
-	},
+	...[1, 2, 3, 4, 5].map(session => {
+		const photos = winterCampPhotos(session)
+		const sessions = {
+			1: { dates: '04.01 - 09.01.2027', price: '27 000 грн', note: 'Майже всі місця зайняті' },
+			2: { dates: '11.01 - 16.01.2027', price: '25 500 грн', note: 'Зайнято близько 20% місць' },
+			3: { dates: '25.01 - 30.01.2027', price: '25 500 грн' },
+			4: { dates: '01.02 - 06.02.2027', price: '25 500 грн' },
+			5: { dates: '08.02 - 13.02.2027', price: '25 500 грн' },
+		} as const
+		const info = sessions[session as 1 | 2 | 3 | 4 | 5]
+		return {
+			id: `winter-camp-${session}`,
+			title: `${session}-й заїзд PolianSki CAMP`,
+			age: 'від 9 до 15 років',
+			dates: info.dates,
+			description: WINTER_CAMP_DESCRIPTION,
+			price: info.price,
+			image: photos[0],
+			gallery: photos,
+			season: 'winter' as const,
+			detailPath: `/camps/winter-camp-${session}`,
+			...('note' in info ? { note: info.note } : {}),
+		}
+	}),
 ]
 
 /** Зимові зміни в блоці «Дитячі табори» на головній. */

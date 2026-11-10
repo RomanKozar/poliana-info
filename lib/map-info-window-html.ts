@@ -154,7 +154,9 @@ export function unifiedMapCardInfoWindowHtml(p: UnifiedMapCardIw): string {
 	const ctaHrefCustom = (p.ctaHref || '').trim()
 	const ctaBlock =
 		ctaLabelCustom && ctaHrefCustom
-			? `<a class="polyana-accommodation-iw-cta" href="${escHtml(ctaHrefCustom)}">${escHtml(ctaLabelCustom)}</a>`
+			? ctaLabelCustom === 'Забронювати'
+				? `<a class="polyana-accommodation-iw-cta polyana-binotel-book" href="#" data-binotel-description="${escHtml(`Бронювання: ${p.name}`)}" data-binotel-tel="${escHtml(ctaHrefCustom.replace(/^tel:/, ''))}">${escHtml(ctaLabelCustom)}</a>`
+				: `<a class="polyana-accommodation-iw-cta" href="${escHtml(ctaHrefCustom)}">${escHtml(ctaLabelCustom)}</a>`
 			: telHref
 				? `<a class="polyana-accommodation-iw-cta" href="tel:${escHtml(telHref)}">Подзвонити</a>`
 				: save

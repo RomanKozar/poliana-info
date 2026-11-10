@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import BinotelBookButton from '@/components/shared/BinotelBookButton'
 import Link from 'next/link'
 import { HOME_PROMO_BANNER_CACHE_VERSION } from '@/data/home-page'
 import { FaClock, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa'
@@ -109,12 +110,14 @@ export default function LatestNewsSummerPromoSection() {
 					</ul>
 
 					<div className='flex flex-col gap-3 border-t border-slate-100 pt-6 sm:flex-row sm:flex-wrap'>
-						<a
-							href={`tel:${BOOKING_TEL}`}
+						<BinotelBookButton
+							description='Бронювання з новини про літо в Поляні'
+							tel={BOOKING_TEL}
 							className='inline-flex h-11 flex-1 items-center justify-center rounded-xl bg-[#53C4DA] px-5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-cyan-500 hover:shadow-md sm:min-w-[200px] sm:flex-none'
+							ariaLabel='Забронювати зараз'
 						>
 							Забронювати зараз
-						</a>
+						</BinotelBookButton>
 						<Link
 							href={`/cat/goteli-polyany/kateryna`}
 							className='inline-flex h-11 flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 text-sm font-bold text-[#2D333D] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[#53C4DA]/40 hover:shadow-md sm:min-w-[200px] sm:flex-none'
@@ -123,7 +126,7 @@ export default function LatestNewsSummerPromoSection() {
 						</Link>
 						<Link
 							href={`/excursions#${EXCURSIONS_ATTRACTIONS_ANCHOR_ID}`}
-							className='inline-flex h-11 flex-1 items-center justify-center rounded-xl bg-[#F68F5D] px-5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#E9753E] hover:shadow-md sm:min-w-[200px] sm:flex-none'
+							className='inline-flex h-11 flex-1 items-center justify-center rounded-xl bg-[var(--brand-cta-promo)] px-5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#9a3412] hover:shadow-md sm:min-w-[200px] sm:flex-none'
 						>
 							Атракціони в Поляні
 						</Link>

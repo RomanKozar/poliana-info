@@ -320,14 +320,13 @@ export default function HomePage({ heroLcpLayer }: HomePageProps) {
 						Всі табори →
 					</Link>
 				</div>
-				<div className='flex flex-wrap justify-center gap-4'>
+				<div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-5'>
 					{campsHomeFeatured.map(item => (
-						<div
+						<CampProgramCard
 							key={item.id ?? `${item.title}-${item.dates}`}
-							className='w-full sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]'
-						>
-							<CampProgramCard camp={item} variant='home' />
-						</div>
+							camp={item}
+							variant='home'
+						/>
 					))}
 				</div>
 			</section>

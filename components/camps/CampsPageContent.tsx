@@ -38,16 +38,11 @@ export default function CampsPageContent() {
 			<section className='mx-auto max-w-7xl border-t border-slate-200/90 px-4 py-10 sm:px-16 lg:px-24'>
 				<h2 className='mb-6 text-xl font-bold text-[#2D333D] sm:text-2xl'>Зима та канікули</h2>
 				<p className='mb-6 max-w-3xl text-sm text-slate-600'>
-					Зимові профілі змін - орієнтовно; перед стартом сезону ми оновимо дати та ціни.
+					П’ять лижних заїздів PolianSki CAMP сезону 2027. У вартість входять навчання, спорядження і скіпас.
 				</p>
-				<div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-4'>
+				<div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-5'>
 					{winter.map(item => (
-						<CampProgramCard
-							key={item.title + item.dates}
-							camp={item}
-							variant='page'
-							bookingNoticeOnClick
-						/>
+						<CampProgramCard key={item.id ?? item.title + item.dates} camp={item} variant='page' />
 					))}
 				</div>
 			</section>

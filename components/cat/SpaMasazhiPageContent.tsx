@@ -1,15 +1,11 @@
 'use client'
 
 import Link from 'next/link'
+import BinotelBookButton from '@/components/shared/BinotelBookButton'
 import { useMemo } from 'react'
 import { FaChevronLeft, FaSpa } from 'react-icons/fa'
-import {
-	SPA_MASAZHI_BOOKING_HREF,
-	SPA_MASAZHI_MENU_CATEGORIES,
-	spaMasazhiPriceLabel,
-} from '@/data/spa-masazhi-services'
+import { SPA_MASAZHI_MENU_CATEGORIES, spaMasazhiPriceLabel } from '@/data/spa-masazhi-services'
 import { SPA_MASAZHI_VENUES } from '@/data/spa-masazhi-venues'
-import { siteHeaderPhoneDisplay } from '@/data/trout-page'
 import SpaBaniChanyComparisonTabs from '@/components/cat/SpaBaniChanyComparisonTabs'
 import SpaChanyMap from '@/components/cat/SpaChanyMap'
 
@@ -27,7 +23,7 @@ const accent = {
 	leftRail:
 		"relative min-w-0 pl-3 sm:pl-4 before:pointer-events-none before:absolute before:left-0 before:top-3 before:bottom-3 before:w-1 before:rounded-full before:bg-[#53C4DA] before:content-['']",
 	bookBtn:
-		'inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full bg-[#f68f5d] px-3 py-2 text-xs font-semibold text-white no-underline transition-colors duration-150 hover:bg-[#e57d4a] hover:text-white sm:px-4 sm:text-sm',
+		'inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full bg-[var(--brand-cta-promo)] px-3 py-2 text-xs font-semibold text-white no-underline transition-colors duration-150 hover:bg-[#9a3412] hover:text-white sm:px-4 sm:text-sm',
 }
 
 export default function SpaMasazhiPageContent() {
@@ -100,18 +96,17 @@ export default function SpaMasazhiPageContent() {
 													<span className='font-bold text-slate-500 lg:hidden'>Час: </span>
 													{item.duration}
 												</p>
-												<p className='text-sm font-bold tabular-nums text-[#E06D3C] lg:text-center lg:font-semibold'>
+												<p className='text-sm font-bold tabular-nums text-[var(--brand-price)] lg:text-center lg:font-semibold'>
 													<span className='font-bold text-slate-500 lg:hidden'>Ціна: </span>
 													{spaMasazhiPriceLabel(item.priceUah)}
 												</p>
-												<Link
-													href={SPA_MASAZHI_BOOKING_HREF}
-													prefetch={false}
+												<BinotelBookButton
+													description={`Бронювання масажу: ${item.name}`}
 													className={`${accent.bookBtn} lg:justify-self-end`}
-													aria-label={`Зателефонувати для запису: ${siteHeaderPhoneDisplay}`}
+													ariaLabel={`Забронювати: ${item.name}`}
 												>
 													Забронювати
-												</Link>
+												</BinotelBookButton>
 											</div>
 										</li>
 									))}

@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import BinotelBookButton from '@/components/shared/BinotelBookButton'
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { FaMapMarkerAlt, FaMugHot, FaStar, FaTimes, FaUsers } from 'react-icons/fa'
@@ -304,12 +305,14 @@ function AccommodationMapMobileBottomSheet({
 							<div className='min-w-0'>
 								<PopularFacilitiesIconRow hotelId={hotel.id} max={5} />
 							</div>
-							<a
-								href={`tel:${hotel.phone}`}
-								className='inline-flex w-fit min-w-[9rem] items-center justify-center rounded-full bg-[#F68F5D] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e57d4a]'
+							<BinotelBookButton
+								description={`Бронювання: ${hotel.name}`}
+								tel={hotel.phone}
+								className='inline-flex w-fit min-w-[9rem] items-center justify-center rounded-full bg-[var(--brand-cta-promo)] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#9a3412]'
+								ariaLabel={`Забронювати: ${hotel.name}`}
 							>
 								Забронювати
-							</a>
+							</BinotelBookButton>
 						</div>
 					</div>
 				</div>
@@ -860,12 +863,14 @@ export default function AccommodationPageContent() {
 										<div className='min-w-0'>
 											<PopularFacilitiesIconRow hotelId={hotel.id} max={6} />
 										</div>
-										<a
-											href={`tel:${hotel.phone}`}
-											className='relative z-[1] inline-flex w-fit cursor-pointer rounded-full bg-[#F68F5D] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#e57d4a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F68F5D]'
+										<BinotelBookButton
+											description={`Бронювання: ${hotel.name}`}
+											tel={hotel.phone}
+											className='relative z-[1] inline-flex w-fit cursor-pointer rounded-full bg-[var(--brand-cta-promo)] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#9a3412] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-cta-promo)]'
+											ariaLabel={`Забронювати: ${hotel.name}`}
 										>
 											Забронювати
-										</a>
+										</BinotelBookButton>
 									</div>
 								</div>
 							</article>

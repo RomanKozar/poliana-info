@@ -20,22 +20,28 @@ function StripLightbox({
 	startIndex,
 	onClose,
 	items,
+	title = LIGHTBOX_TITLE,
 }: {
 	open: boolean
 	startIndex: number
 	onClose: () => void
 	items: GalleryStripItem[]
+	title?: string
 }) {
 	const [idx, setIdx] = useState(startIndex)
 	const touchStartX = useRef<number | null>(null)
 	const [isSlideLoading, setIsSlideLoading] = useState(false)
-
-	useEffect(() => {
+	// -1 поки галерея закрита. Індекс ставимо під час рендера, інакше перший кадр
+	// встигає показати фото №1, а потрібне з’являється лише після ефекту.
+	const openSession = open ? startIndex : -1
+	const [session, setSession] = useState(openSession)
+	if (session !== openSession) {
+		setSession(openSession)
 		if (open) {
 			setIdx(startIndex)
 			setIsSlideLoading(true)
 		}
-	}, [open, startIndex])
+	}
 
 	const n = Math.max(1, items.length)
 	const go = useCallback(
@@ -73,7 +79,7 @@ function StripLightbox({
 	const slide = items[idx] ?? items[0]
 
 	return (
-		<div className='fixed inset-0 z-[200]' role='dialog' aria-modal='true' aria-label={LIGHTBOX_TITLE}>
+		<div className='fixed inset-0 z-[200]' role='dialog' aria-modal='true' aria-label={title}>
 			<button
 				type='button'
 				aria-label='Закрити галерею'
@@ -159,16 +165,24 @@ type Props = {
 	bannerSrc: string
 	/** Підпис для alt / відкриття галереї */
 	bannerAlt: string
+	/** Мініатюри під банером. Якщо не задано - галерея літньої зміни. */
+	strip?: GalleryStripItem[]
+	lightboxTitle?: string
 }
 
-export default function PolianskiCampBannerAndGallery({ bannerSrc, bannerAlt }: Props) {
+export default function PolianskiCampBannerAndGallery({
+	bannerSrc,
+	bannerAlt,
+	strip = POLIANSKI_GALLERY_STRIP,
+	lightboxTitle = LIGHTBOX_TITLE,
+}: Props) {
 	const [open, setOpen] = useState(false)
 	const [start, setStart] = useState(0)
 
-	/** Банер + 4 мініатюри - одна галерея для перегляду та гортання. */
+	/** Банер + мініатюри - одна галерея для перегляду та гортання. */
 	const lightboxItems = useMemo<GalleryStripItem[]>(
-		() => [{ id: 'banner', src: bannerSrc, alt: bannerAlt }, ...POLIANSKI_GALLERY_STRIP],
-		[bannerSrc, bannerAlt]
+		() => [{ id: 'banner', src: bannerSrc, alt: bannerAlt }, ...strip],
+		[bannerSrc, bannerAlt, strip]
 	)
 
 	const openFromBanner = () => {
@@ -200,7 +214,7 @@ export default function PolianskiCampBannerAndGallery({ bannerSrc, bannerAlt }: 
 					role='region'
 					aria-label='Фото зі зміни табору - натисніть, щоб відкрити й гортати'
 				>
-					{POLIANSKI_GALLERY_STRIP.map(({ id, src, alt }, imageIndex) => (
+					{strip.map(({ id, src, alt }, imageIndex) => (
 						<button
 							key={id}
 							type='button'
@@ -223,7 +237,13 @@ export default function PolianskiCampBannerAndGallery({ bannerSrc, bannerAlt }: 
 				</div>
 			</div>
 
-			<StripLightbox open={open} startIndex={start} onClose={() => setOpen(false)} items={lightboxItems} />
+			<StripLightbox
+				open={open}
+				startIndex={start}
+				onClose={() => setOpen(false)}
+				items={lightboxItems}
+				title={lightboxTitle}
+			/>
 		</>
 	)
 }

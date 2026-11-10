@@ -18,7 +18,7 @@ import {
 import { siteHeaderPhoneDisplay, siteHeaderPhoneTel } from '@/data/trout-page'
 
 const accentBorder: Record<PromoAccent, string> = {
-	coral: 'border-l-[#F08F61]',
+	coral: 'border-l-[var(--brand-cta-promo)]',
 	cyan: 'border-l-[#53C4DA]',
 	emerald: 'border-l-emerald-500',
 	amber: 'border-l-amber-400',
@@ -35,7 +35,7 @@ export default function PromotionsOffersPageContent() {
 					aria-hidden
 				/>
 				<div
-					className='pointer-events-none absolute -bottom-16 left-[-10%] h-56 w-[55%] max-w-md rounded-full bg-[#F68F5D]/20 blur-[70px]'
+					className='pointer-events-none absolute -bottom-16 left-[-10%] h-56 w-[55%] max-w-md rounded-full bg-[var(--brand-cta-promo)]/20 blur-[70px]'
 					aria-hidden
 				/>
 				<div className='relative mx-auto max-w-4xl'>

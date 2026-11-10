@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import BinotelBookButton from '@/components/shared/BinotelBookButton'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { FaChevronDown, FaChevronLeft, FaMapMarkedAlt } from 'react-icons/fa'
 import { SPA_VELIKI_CHANY_VENUES } from '@/data/spa-veliki-chany-venues'
-import { siteHeaderPhoneDisplay } from '@/data/trout-page'
 import SpaBaniChanyComparisonTabs from '@/components/cat/SpaBaniChanyComparisonTabs'
 import SpaChanyMap from '@/components/cat/SpaChanyMap'
 
@@ -31,9 +31,9 @@ function VelikiChanyPrice({
 	if (priceLines?.length) {
 		if (variant === 'card') {
 			return (
-				<div className='w-full rounded-xl bg-[#FFF4EE] px-3 py-2.5 ring-1 ring-[#f68f5d]/20'>
+				<div className='w-full rounded-xl bg-[#FFF4EE] px-3 py-2.5 ring-1 ring-[var(--brand-cta-promo)]/25'>
 					<p className='mb-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500'>Ціна</p>
-					<ul className='flex flex-col gap-1 text-sm font-bold leading-snug text-[#E06D3C]'>
+					<ul className='flex flex-col gap-1 text-sm font-bold leading-snug text-[var(--brand-price)]'>
 						{priceLines.map(line => (
 							<li key={line}>{line}</li>
 						))}
@@ -42,7 +42,7 @@ function VelikiChanyPrice({
 			)
 		}
 		return (
-			<div className='inline-flex min-w-[8.5rem] flex-col items-center justify-center gap-0.5 text-xs font-semibold leading-snug text-[#E06D3C] sm:text-sm'>
+			<div className='inline-flex min-w-[8.5rem] flex-col items-center justify-center gap-0.5 text-xs font-semibold leading-snug text-[var(--brand-price)] sm:text-sm'>
 				{priceLines.map(line => (
 					<span key={line} className='whitespace-nowrap'>
 						{line}
@@ -51,7 +51,7 @@ function VelikiChanyPrice({
 			</div>
 		)
 	}
-	return <span className='font-semibold text-[#E06D3C]'>{priceLabel}</span>
+	return <span className='font-semibold text-[var(--brand-price)]'>{priceLabel}</span>
 }
 
 /** Вертикальна смуга зліва - той самий #53C4DA, що вкладки та іконка заголовка. */
@@ -253,14 +253,13 @@ export default function SpaVelikiChanyPageContent() {
 													</button>
 												</td>
 												<td className='px-4 py-3.5'>
-													<Link
-														href={v.bookingHref}
-														prefetch={false}
-														className='inline-flex cursor-pointer items-center justify-center rounded-full bg-[#f68f5d] px-2.5 py-2 text-xs font-semibold text-white no-underline transition-colors duration-150 hover:bg-[#e57d4a] hover:text-white'
-														aria-label={`Зателефонувати для бронювання: ${siteHeaderPhoneDisplay}`}
+													<BinotelBookButton
+														description={`Бронювання: ${v.name}`}
+														className='inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--brand-cta-promo)] px-2.5 py-2 text-xs font-semibold text-white no-underline transition-colors duration-150 hover:bg-[#9a3412] hover:text-white'
+														ariaLabel={`Забронювати: ${v.name}`}
 													>
 														Забронювати
-													</Link>
+													</BinotelBookButton>
 												</td>
 											</tr>
 											)
@@ -294,14 +293,13 @@ export default function SpaVelikiChanyPageContent() {
 												>
 													На карті
 												</button>
-												<Link
-													href={v.bookingHref}
-													prefetch={false}
-													className='inline-flex cursor-pointer items-center justify-center rounded-full bg-[#f68f5d] px-4 py-2 text-sm font-semibold text-white no-underline transition-colors duration-150 hover:bg-[#e57d4a] hover:text-white'
-													aria-label={`Зателефонувати для бронювання: ${siteHeaderPhoneDisplay}`}
+												<BinotelBookButton
+													description={`Бронювання: ${v.name}`}
+													className='inline-flex cursor-pointer items-center justify-center rounded-full bg-[var(--brand-cta-promo)] px-4 py-2 text-sm font-semibold text-white no-underline transition-colors duration-150 hover:bg-[#9a3412] hover:text-white'
+													ariaLabel={`Забронювати: ${v.name}`}
 												>
 													Забронювати
-												</Link>
+												</BinotelBookButton>
 											</div>
 										</div>
 									</li>
