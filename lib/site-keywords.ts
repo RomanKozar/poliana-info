@@ -197,6 +197,17 @@ export const accommodationPageKeywords: string[] = [
 	'проживання Закарпаття',
 ]
 
+/** Сторінка /cat/yizha-napoyi */
+export const foodDrinksPageKeywords: string[] = [
+	'їжа Поляна',
+	'ресторан Поляна',
+	'ресторан Катерина',
+	'форель Поляна',
+	'меню Катерина',
+	'доставка їжі Поляна',
+	'закарпатська кухня Поляна',
+]
+
 /** Сторінка /entertainment */
 export const entertainmentPageKeywords: string[] = [
 	'розваги Поляна',

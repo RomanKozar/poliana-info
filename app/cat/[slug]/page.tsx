@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation'
 import AccommodationPageContent from '@/components/accommodation/AccommodationPageContent'
 import SpaBaniChanyPageContent from '@/components/cat/SpaBaniChanyPageContent'
+import FoodDrinksPageContent from '@/components/gastronomy/FoodDrinksPageContent'
 import PagePlaceholder from '@/components/shared/PagePlaceholder'
 import { categoryPlaceholders, categoryPlaceholderSlugs } from '@/data/category-placeholders'
 import { HOTELS_CATEGORY_SLUG } from '@/lib/accommodation-urls'
-import { accommodationPageKeywords, spaBaniChanyPageKeywords } from '@/lib/site-keywords'
+import { accommodationPageKeywords, foodDrinksPageKeywords, spaBaniChanyPageKeywords } from '@/lib/site-keywords'
 import { definePageMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-static'
@@ -35,6 +36,15 @@ export async function generateMetadata({ params }: Props) {
 			keywords: spaBaniChanyPageKeywords,
 		})
 	}
+	if (slug === 'yizha-napoyi') {
+		return definePageMetadata({
+			title: 'Їжа та напої в Поляні - ресторан готелю Катерина',
+			description:
+				'Ресторан у готелі «Катерина» в Поляні: форель, закарпатська кухня, піца, кава та доставка. Меню з цінами, годинами роботи і QR-кодом.',
+			pathname: `/cat/${slug}`,
+			keywords: foodDrinksPageKeywords,
+		})
+	}
 	const p = categoryPlaceholders[slug]
 	if (!p) return {}
 	return definePageMetadata({
@@ -60,6 +70,9 @@ export default async function CategoryPlaceholderPage({ params }: Props) {
 				<SpaBaniChanyPageContent />
 			</div>
 		)
+	}
+	if (slug === 'yizha-napoyi') {
+		return <FoodDrinksPageContent />
 	}
 	const p = categoryPlaceholders[slug]
 	if (!p) notFound()

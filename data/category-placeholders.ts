@@ -37,7 +37,7 @@ export const categoryPlaceholders: Record<string, CategoryPlaceholder> = {
 	'yizha-napoyi': {
 		title: 'Їжа та напої',
 		description:
-			'Ресторани, кафе та локальні смаколики курорту. Розділ у розробці.',
+			'Ресторан у готелі «Катерина» в Поляні: форель, закарпатська кухня, піца, напої та доставка. Меню з цінами й QR-код.',
 	},
 	dehustacii: {
 		title: 'Дегустації',
