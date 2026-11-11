@@ -14,7 +14,7 @@ export default function CampsPageContent() {
 						Табори відпочинку в Поляні
 					</h1>
 					<p className='mt-4 max-w-3xl text-sm leading-relaxed text-slate-600 sm:text-base'>
-						Підбірка літніх і зимових програм на курорті Поляна: короткий опис заїзду, діапазон віку, дати та
+						Підбірка зимових і літніх програм на курорті Поляна: короткий опис заїзду, діапазон віку, дати та
 						орієнтовна вартість. Детальні сторінки кожної зміни з’являться згодом - актуальність уточнюйте
 						перед записом через контакт у шапці сайту.
 					</p>
@@ -27,15 +27,6 @@ export default function CampsPageContent() {
 			</section>
 
 			<section className='mx-auto max-w-7xl px-4 py-10 sm:px-16 lg:px-24'>
-				<h2 className='mb-6 text-xl font-bold text-[#2D333D] sm:text-2xl'>Літні табори й зміни</h2>
-				<div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-5'>
-					{summer.map(item => (
-						<CampProgramCard key={item.title + item.dates} camp={item} variant='page' />
-					))}
-				</div>
-			</section>
-
-			<section className='mx-auto max-w-7xl border-t border-slate-200/90 px-4 py-10 sm:px-16 lg:px-24'>
 				<h2 className='mb-6 text-xl font-bold text-[#2D333D] sm:text-2xl'>Зима та канікули</h2>
 				<p className='mb-6 max-w-3xl text-sm text-slate-600'>
 					П’ять лижних заїздів PolianSki CAMP сезону 2027. У вартість входять навчання, спорядження і скіпас.
@@ -43,6 +34,15 @@ export default function CampsPageContent() {
 				<div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-5'>
 					{winter.map(item => (
 						<CampProgramCard key={item.id ?? item.title + item.dates} camp={item} variant='page' />
+					))}
+				</div>
+			</section>
+
+			<section className='mx-auto max-w-7xl border-t border-slate-200/90 px-4 py-10 sm:px-16 lg:px-24'>
+				<h2 className='mb-6 text-xl font-bold text-[#2D333D] sm:text-2xl'>Літні табори й зміни</h2>
+				<div className='grid gap-5 sm:grid-cols-2 lg:grid-cols-5'>
+					{summer.map(item => (
+						<CampProgramCard key={item.title + item.dates} camp={item} variant='page' />
 					))}
 				</div>
 			</section>
